@@ -1,34 +1,67 @@
 ---
+social: true
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: ☕️ Lover. I really love iced latte!
 
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>terry.kim@berkeley.edu</p>
+    <p>Computer Science @ UC Berkeley</p>
+    <p>AI for Biology, Genomics, Molecules</p>
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+selected_papers: true
 
 announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
+  enabled: false
+  scrollable: true
+  limit: 5
 
 latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  enabled: false
+  scrollable: true
+  limit: 3
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Hi! I'm **Terry (Taehan) Kim**, a Computer Science student at UC Berkeley working at the intersection of **machine learning and biology**. I'm passionate about building useful, interpretable tools that are accessible and trustworthy to both biologists and computer scientists.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+During undergrad, I’ve done my best to explore a wide range of problems in computational biology — from small molecule generative design to protein structure prediction, RNA secondary structure learning, and single-cell modeling with probabilistic inference. I began with traditional ML tasks and gradually pushed myself toward projects that required deeper integration with biological domain knowledge, bridging the gap between engineering and life sciences.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+I also love building educational content to make these ideas more accessible — you can find it on [AI4Science Blog](http://tinyurl.com/3mctvcap).
+
+---
+
+### 🔬 Research & Work Experience
+- **Independent Reserach Project**  
+  *Generative Toxicity-Aware Pesticide (Small Molecule) Design Model*
+
+- **QSURE Fellow @ Memorial Sloan Kettering (MSKCC)**  
+  *Single-cell probabilistic modeling and gene expression inference*
+
+- **ML Research Intern @ Diffuse Bio**  
+  *AI Drug Discovery: Protein structure (nanobody binder) design*
+
+- **Undergraduate Researcher @ Doudna & Cate Labs (IGI)**  
+  *ML-Based RNA secondary Structure Prediction*
+
+- **Undergraduate Researcher @ ACE Lab (Berkeley)**  
+  *LLM-based tools for CS Education*
+
+- **Data Science Intern @ LG Chem**  
+  *Resolving Data Leakage Issues in Plant Disease Classification Model*
+
+---
+### Kaggle Competition Expert Rank
+Kaggle is where I started learning ML. I occasionally participate in different competition to generate educational content for my AI4Science Blog. Trying my best to give back to the community.
+- **Detect AI Generated Text (Top 0.7%, 34/4484), Lead All Submissions**  
+- **LLM Science Exam (Top 8%)**  
+  
+### ✍️ Communicating Science
+
+I enjoy **explaining hard things simply**, **having coffee chat**, and **bridging the gap** between AI researchers and life scientists.  
+Let’s connect on [GitHub](https://github.com/winterrykim), [LinkedIn](https://linkedin.com/in/winterrykim), or [AI4Science Blog](https://tinyurl.com/3mctvcap).
+
