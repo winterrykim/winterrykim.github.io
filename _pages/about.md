@@ -60,8 +60,11 @@ Kaggle is where I started learning ML. I occasionally participate in different c
 - **Detect AI Generated Text (Top 0.7%, 34/4484), Lead All Submissions**  
 - **LLM Science Exam (Top 8%)**  
   
+---
+
 ### ✍️ Communicating Science
 
 I enjoy **explaining hard things simply**, **having coffee chat**, and **bridging the gap** between AI researchers and life scientists.  
 Let’s connect on [GitHub](https://github.com/winterrykim), [LinkedIn](https://linkedin.com/in/winterrykim), or [AI4Science Blog](https://tinyurl.com/3mctvcap).
 
+---
