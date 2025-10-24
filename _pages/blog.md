@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ai4Science blog
+title: AI4Science Blog
 permalink: /blog/
 nav: true
 nav_order: 2

@@ -1,12 +1,11 @@
 ---
 layout: page
 permalink: /big_life_moments/
-title: meaning of life
+title: Life
 description: List of my efforts to figure out my meaning of life.
 nav: true
 nav_order: 1
 ---
-
 I believe everyone experiences pivotal moments that shape the course of their life. I wanted to record some of mine on this page. More reflections are also written in my AI4Science blog.
 
 ### Phase of Confusion and Existential Crisis (~High School)
@@ -27,7 +26,7 @@ We also participated in the military AI competition, often sneaking into the lab
 
 ### AI4Science
 
-After returning to Berkeley, I still wasn’t sure what I wanted to pursue. I enjoyed working on machine learning but didn’t know which direction to take. A good friend, Samarth Jajoo from Machine Learning @ Berkeley, introduced me to *CryoDRGN* from Ellen Zhong’s group—it reconstructs cryo-EM structures from images. There was also Seyone who gave me many advices along with Samarth.
+When I returned to Berkeley, I was still figuring out what direction I wanted to take in machine learning. A good friend, Samarth Jajoo from Machine Learning @ Berkeley, introduced me to the world of biology — and along with Seyone, offered invaluable guidance as I explored it.
 
 Very fortunately, just a week after I got interested in BioML, Demis Hassabis (this was before he won the Nobel Prize) and Ellen Zhong both visited Berkeley to give a talk. Something clicked inside me, and I knew this was finally it - after years of search.
 
