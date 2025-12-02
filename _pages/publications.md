@@ -7,7 +7,6 @@ nav: true
 nav_order: 2
 ---
 
-### Publications
 
 **Improving RNA Secondary Structure Prediction Through Expanded Training Data**  
 C. J. Langeberg, **T. Kim**, R. Nagle, C. Meredith, D. A. Garuadapuri, J. A. Doudna†, J. H. D. Cate†  
@@ -16,7 +15,7 @@ C. J. Langeberg, **T. Kim**, R. Nagle, C. Meredith, D. A. Garuadapuri, J. A. Dou
 
 **Pesti-Gen: Unleashing a Generative Molecule Approach for Toxicity-Aware Pesticide Design**  
 **T. Kim** **, W. Seo *
-*IEEE EMBC 2025(Oral)*, *RECOMB 2025(Poster)*, 2025  
+IEEE EMBC 2025(Oral)*, *RECOMB 2025(Poster)*, 2025  
 [Link](https://arxiv.org/abs/2501.14469)
 
 **SAE-RNA: A Sparse Autoencoder Model for Interpreting RNA Language Model Representations**  
@@ -25,7 +24,7 @@ Under Review
 [Link](https://arxiv.org/abs/2510.02734)
 
 **Towards Explainable Inverse Design for Photonics via Integrated Gradients**  
-J. Park, **T. Kim** Et al.
+J. Park *, **T. Kim** *  Et al. 
 *AAAI XAI4science Workshop 2026* 
 [Link](https://arxiv.org/abs/2510.22176)
 
