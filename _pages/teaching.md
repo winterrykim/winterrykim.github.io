@@ -4,10 +4,11 @@ permalink: /teaching/
 title: Teaching
 description: Teaching experience at UC Berkeley.
 nav: true
-nav_order: 6
+nav_order: 5
 ---
 
 ### Teaching Experience
+**Spring 2026** – *Data 188: Introduction to Deep Learning*, UC Berkeley  
 
 **Fall 2025** – *CS 189/289A: Introduction to Machine Learning*, UC Berkeley  
 Teaching Assistant (UCS2) – Content-focused; 15 hr/week  

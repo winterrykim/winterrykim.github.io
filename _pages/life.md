@@ -4,7 +4,7 @@ permalink: /big_life_moments/
 title: Life
 description: List of my efforts to figure out my meaning of life.
 nav: true
-nav_order: 1
+nav_order: 3
 ---
 I believe everyone experiences pivotal moments that shape the course of their life. I wanted to record some of mine on this page. More reflections are also written in my AI4Science blog.
 

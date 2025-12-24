@@ -16,7 +16,7 @@ announcements:
   enabled: false
 
 latest_posts:
-  enabled: false
+  enabled: true
 ---
 
 Hi! I'm **Terry (Taehan) Kim**, a Computer Science student at UC Berkeley researching at the intersection of **machine learning and biology**. I build **interpretable and generative models for biology**, aiming to make biological discovery more explainable and actionable.
