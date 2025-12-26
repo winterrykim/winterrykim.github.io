@@ -1417,3 +1417,29 @@ figure.cover {
     color: #23212d !important;
   }
 }
+
+
+
+/* OVERWRITE */
+/* ------------------------------------------------------------------------------------*/
+/* Post typography: normalize body vs headings vs quotes */
+.post,
+.post-content {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.post p,
+.post li {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* Make quotes same size as body (or slightly larger if you want) */
+.post blockquote {
+  font-size: 1.05rem; // change to 1.10rem if you want it a bit bigger
+}
+
+.post blockquote p {
+  font-size: inherit;
+}
