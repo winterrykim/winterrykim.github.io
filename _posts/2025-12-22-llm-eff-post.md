@@ -8,18 +8,11 @@ categories: [technical-blogs]
 featured: true
 ---
 
-This post summarizes the major developments for efficiency / background knowledge.
-### Optimization Layers 
-
-- **Architecture:** MQA, GQA, MoE, Sparse
-- **System / Kernel:** FlashAttention (IO), PagedAttention (KV cache)
-- **Modeling:** RoPE
-  
-Here, we go over the first layer.
+This post summarizes my notes for studying background knowledge / summary for efficiency.
 
 ---
 
-### Architecture
+#### Transformer Architecture Change
 
 Vanilla Transformer has MHA (Multi-Head Attention). The improvements are mainly made by adjusting the dimension of heads.
 
@@ -66,13 +59,53 @@ MHA -> GQA: You can pool and combine the initial ones without having to train fr
 
 2. GQA: Simply the middle ground between MHA and MQA. Which is why it mentions based on the count it just becomes MHA or MQA.
   
-> "Grouped-query attention divides query heads into G groups, each of which shares a single key head and value head. GQA-G refers to grouped-query with G groups."
-> "GQA-1, with a single group and therefore single key and value head, is equivalent to MQA, while GQA-H, with groups equal to number of heads, is equivalent to MHA."
+> "Grouped-query attention divides query heads into G groups, each of which shares a single key head and value head. GQA-G refers to grouped-query with G groups. GQA-1, with a single group and therefore single key and value head, is equivalent to MQA, while GQA-H, with groups equal to number of heads, is equivalent to MHA."
 
 ---
 
+#### Parallels
+
+<div style="text-align:center; margin: 1rem 0;">
+  <img
+    src="{{ '/assets/img/blog_img/llm_eff/model_data_parallel.png' | relative_url }}"
+    alt="Diagram comparing data parallelism and model parallelism"
+    style="max-width: 900px; width: 100%; height: auto;"
+  />
+</div>
+
+
+
+#### Data Parallel
+Each device each has a copy of the model, and gets independent batch of data.
+
+**Limitations**
+1. HBM capacity: the full model must fit on each device.
+2. Too much communication (e.g., all-reduce) 
+
+
+
+#### Model Parallel
+The model layers itself is split across different devices.
+This allows bigger models to be split and fit to devices.
+
+
+
+#### Tensor Parallel
+Tensor Computation itself is split across different devices.
+
+<div style="text-align:center; margin: 1rem 0;">
+  <img
+    src="{{ '/assets/img/blog_img/llm_eff/tensor_parallel.png' | relative_url }}"
+    alt="Tensor Parallel"
+    style="max-width: 900px; width: 100%; height: auto;"
+  />
+</div>
+
+
+---
 
 #### Mixture of Experts (MoE): why it shows up in “efficient modeling”
+
 
 ##### Main idea / Why MoE is “efficient”
 
@@ -83,6 +116,8 @@ MoE uses **conditional computation**: instead of running the same dense subnetwo
 
 2) **Scaling efficiency (quality-per-compute):**  
    For the *same* FLOPs budget, MoE often buys you a larger effective parameter count.
+
+
 
 
 ##### Core challenges 
@@ -100,15 +135,9 @@ Let:
 Expected tokens per expert (very roughly):
 - tokens_per_expert ≈ (K / N) * B
 
-If (K / N) * B << 1, most experts receive ~0 tokens → wasted capacity + inefficient execution.
-
 >  “This causes a naive MoE implementation to become very inefficient as the number of experts increases. The solution to this shrinking batch problem is to make the original batch size as large as possible. However, batch size tends to be limited by the memory necessary to store activations between the forwards and backwards passes.”
 
 **Solution: Data Parallelism + Model Parallelism**
-
-- **Data parallel**: “distribute the standard layers of the model and the gating network according to conventional data-parallel schemes, but keep only one shared copy of each expert.”
-
-- **Model parallel for experts**: keep **one shared copy** of each expert *sharded across devices*; Each expert in the MoE layer receives a combined batch consisting of the relevant examples from all of the data-parallel input batches.
 
 With this parallel, we go from first to second (N/K) * B << (N/K) * B * D
 
@@ -124,16 +153,11 @@ If each expert does only a tiny amount of compute, GPUs can become **network-bou
 The point is not “communication time decreases.”  
 It’s: *if communication is fixed, make the expert compute large enough that communication becomes hidden/overlapped and no longer dominates step time.*
 
-A useful mental ratio is:
-
-`(expert_compute / activation_bytes_moved)  >  (device_compute / network_bandwidth)`
-
-
-"Conveniently, we can increase computational efficiency simply by using a larger
+> "Conveniently, we can increase computational efficiency simply by using a larger
 hidden layer, or more hidden layers."
 
 
-#### 3) Load balancing (avoid routing collapse)
+##### 3) Load balancing (avoid routing collapse)
 
 Without constraints, the router might send too many tokens to a few experts.
 
@@ -147,8 +171,17 @@ Goal: keep usage reasonably spread so all experts train and hardware stays utili
 
 ---
 
+#### (Switch Transformer) Why MoE pairs naturally with Transformers
 
-### (Switch Transformer) Why MoE pairs naturally with Transformers
+
+<div style="text-align:center; margin: 1rem 0;">
+  <img
+    src="{{ '/assets/img/blog_img/llm_eff/switch_transformer.png' | relative_url }}"
+    alt="Switch Transformer"
+    style="max-width: 900px; width: 100%; height: auto;"
+  />
+</div>
+
 
 RNN-style model has strong sequential dependencies across timesteps during training that makes “one giant batch over time” harder to exploit. The limitation of the MoE as athor suggested “we wait for the previous layer to finish, we can apply the MoE to all the time steps together as one big batch” If you try to put an MoE inside an RNN (like an LSTM), the “one timestep depends on the output of the MoE at the previous timestep”
 
@@ -160,16 +193,26 @@ In contrast, Transformers enable large, parallel token computation during traini
 This is one practical reason MoE is often discussed as “Transformer + sparse FFN”:
 - keep attention dense (or not—orthogonal choice),
 - swap dense FFN blocks for **MoE / Switch FFN** blocks.
+  
 
 ---
 
-### Thoughts  
+#### KV Cache, Flash Attention, Paged Attention, Sliding Window Attention
+Great blog below
+https://www.omrimallis.com/posts/techniques-for-kv-cache-optimization/
+
+---
+
+
+
+#### Thoughts  
 I believe these philosophies are very useful for scientific models, especially as we scale them up. For example, Model parameters for genomic language models are also slowly increasing, and the same ideas should be useful for catching up with this trend.
 
 - This naturally raises the question I’m trying to explore next: how alternative generation regimes (e.g., **Diffusion Language Models**) shift the bottlenecks—memory, communication, and parallelism.
 
 
-**Key references**
+---
+Key references
 - **[2019] _Fast Transformer Decoding: One Write-Head is All You Need_** — Noam Shazeer
 - **[2023] _GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints_** — Joshua Ainslie, James Lee-Thorp, Michiel de Jong, Yury Zemlyanskiy, Federico Lebrón, Sumit Sanghai
 
