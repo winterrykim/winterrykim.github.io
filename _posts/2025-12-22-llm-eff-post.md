@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Transformer and LLM Efficiency"
+title: "Transformer, Scaling, and Efficiency"
 date: 2025-12-22 18:00:00 -0800
 description: "Summary Notes on Catching Up"
 tags: [ml, notes]
@@ -8,7 +8,7 @@ categories: [technical-blogs]
 featured: true
 ---
 
-This post summarizes my notes for studying background knowledge / summary for efficiency.
+This post summarizes my notes for studying background knowledge / summary for scaling and efficiency.
 
 ---
 
