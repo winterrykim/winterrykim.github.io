@@ -44,9 +44,20 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-transformer-and-llm-efficiency",
+        },{id: "post-more-on-parallelism",
         
-          title: "Transformer and LLM Efficiency",
+          title: "More on Parallelism",
+        
+        description: "More on Sharding and Parallelism",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/sharding-post/";
+          
+        },
+      },{id: "post-transformer-scaling-and-efficiency",
+        
+          title: "Transformer, Scaling, and Efficiency",
         
         description: "Summary Notes on Catching Up",
         section: "Posts",
