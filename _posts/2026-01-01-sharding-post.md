@@ -9,8 +9,6 @@ featured: true
 math: true
 ---
 
-So the whole point is:
-
 In the previous post, I went through an overview of strategies related to scaling. A natural follow-up question, when thinking about parallelism, is **“how” and “what” the devices are communicating with each other**.
 
 More concretely:
@@ -51,7 +49,9 @@ This is similar to the case illustrated in the image I drew above:
 
 $$
 \mathbf{A}[I, J_X] \cdot \mathbf{B}[J, K] \rightarrow \mathbf{C}[I, K] \\
+
 \mathbf{AllGather}_X[I, J_X] \rightarrow \mathbf{A}[I, J] \\
+
 \mathbf{A}[I, J] \cdot \mathbf{B}[J, K] \rightarrow \mathbf{C}[I, K]
 $$
 
@@ -105,6 +105,15 @@ The key idea is that **AllReduce** (for summing partial results / gradients) can
   → lower peak memory during the reduce phase  
   → less data to move per step (often bandwidth-optimal)
 
+- **All Gather**
+
+<div style="text-align:center; margin: 1rem 0;">
+  <img
+    src="{{ '/assets/img/blog_img/shard-parallel/all_reduce_fb_eng.png' | relative_url }}"
+    alt="AllReduce"
+    style="max-width: 900px; width: 100%; height: auto;"
+  />
+</div>
 ---
 
 ### Auxiliary: FSDP (Fully-Sharded Data Parallelism) vs Tensor Parallel
@@ -119,7 +128,7 @@ $$
 \text{In}[B_X, D] \cdot_D W_\text{in}[D_X, F] \cdot_F W_\text{out}[F, D_X] \rightarrow \text{Out}[B_X, D]
 $$
 
-We can see that the **batch** dimension of the input data is sharded (\(B_X\)). Also notice that some weight dimensions are sharded (e.g., \(D_X\)). Since this is still “data-parallel-style” execution, each device processes its own batch shard independently. The main difference is that **the weights are sharded in memory**, so we need communication to make the layer’s weights available for computation.
+We can see that the **batch** dimension of the input data is sharded (B_X). Also notice that some weight dimensions are sharded (e.g., D_X). Since this is still “data-parallel-style” execution, each device processes its own batch shard independently. The main difference is that **the weights are sharded in memory**, so we need communication to make the layer’s weights available for computation.
 
 **Q. (FSDP)** In the forward pass (just computation, not backprop), which operations above will we be using (AllGather, AllReduce, etc.)?
 

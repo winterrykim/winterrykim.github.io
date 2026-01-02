@@ -11,12 +11,8 @@ featured: true
 This post summarizes my notes for studying background knowledge / summary for scaling and efficiency.
 
 ---
-
-#### Transformer Architecture Change
-
+#### Transformers
 Vanilla Transformer has MHA (Multi-Head Attention). The improvements are mainly made by adjusting the dimension of heads.
-
----
 
 #### MQA (Multi-Query Attention) [2019, Noam Shazeer]
 
