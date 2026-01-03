@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-more-on-parallelism",
+        },{id: "post-minimum-math-review-for-diffusion-lm",
+        
+          title: "Minimum Math Review for Diffusion LM",
+        
+        description: "Review For Myself",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/diffusion-review/";
+          
+        },
+      },{id: "post-more-on-parallelism",
         
           title: "More on Parallelism",
         
