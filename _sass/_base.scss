@@ -1443,3 +1443,65 @@ figure.cover {
 .post blockquote p {
   font-size: inherit;
 }
+
+
+
+
+/* OVERWRITE THUMBNAIL*/
+/* ------------------------------------------------------------------------------------*/
+/* modify along with latest_posts.liquid */
+.post,
+
+/* Latest posts: spacing + alignment */
+.latest-posts-table .latest-post-date{
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.latest-posts-table .latest-post-cell{
+  vertical-align: middle;
+}
+
+/* Row layout: text left, thumbnail right */
+.news .post-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Text block */
+.news .post-meta{
+  min-width: 0;         /* enables truncation nicely */
+  flex: 1 1 auto;
+}
+
+.news .post-preview{
+  margin-top: 3px;
+  font-size: 0.92rem;
+  opacity: 0.85;
+}
+
+/* Thumb on the right */
+.news .post-thumb-link{
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.news img.post-thumb{
+  width: 120px;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Optional: responsive tweak (smaller thumbs on narrow screens) */
+@media (max-width: 640px){
+  .news img.post-thumb{
+    width: 96px;
+    height: 62px;
+  }
+}

@@ -2,7 +2,7 @@
 layout: post
 title: "Minimum Math Review for Diffusion LM"
 date: 2026-01-02
-description: "Review For Myself"
+description: "Diffusion Objective, Variational Inference, and KL"
 tags: [ml, notes]
 categories: [technical-blogs]
 featured: true
