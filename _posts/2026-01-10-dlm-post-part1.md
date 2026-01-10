@@ -7,7 +7,6 @@ tags: [ml, notes]
 categories: [technical-blogs]
 featured: true
 math: true
-img: /assets/img/blog_img/dif-lm/diffusion-lm-thumbnail.png
 ---
 
 Most language models today are **autoregressive (AR)**: they generate tokens left-to-right, where the next token is decoded based on the previous ones.
