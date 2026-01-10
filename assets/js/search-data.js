@@ -44,11 +44,22 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-minimum-math-review-for-diffusion-lm",
+        },{id: "post-diffusion-lm-part-1-method",
+        
+          title: "Diffusion LM (Part 1: Method)",
+        
+        description: "Diffusion LM Set Up",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/dlm-post/";
+          
+        },
+      },{id: "post-minimum-math-review-for-diffusion-lm",
         
           title: "Minimum Math Review for Diffusion LM",
         
-        description: "Review For Myself",
+        description: "Diffusion Objective, Variational Inference, and KL",
         section: "Posts",
         handler: () => {
           
