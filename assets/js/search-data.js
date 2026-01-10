@@ -52,7 +52,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2026/dlm-post/";
+            window.location.href = "/blog/2026/dlm-post-part1/";
           
         },
       },{id: "post-minimum-math-review-for-diffusion-lm",
