@@ -12,10 +12,11 @@ math: true
 Most language models today are **autoregressive (AR)**: they generate tokens left-to-right, where the next token is decoded based on the previous ones.
 
 In earlier posts I reviewed **KV cache** / **memory** considerations and **scaling strategies** for AR Transformers.  
-This post is my “future-me friendly” dive into **Diffusion Language Models (DLMs)**—specifically the **method**: what the forward “noising” process is, what the reverse model predicts, and how sampling works.
+This post is my “future-me friendly” dive into **Diffusion Language Models (DLMs)**, specifically the **method**: what the forward “noising” process is, what the reverse model predicts, and the objective formulation.
 
 If you need a **math review** for the objectives defined below, they are also all provided in the previous post
 (Standard Diffusion Objective, KL, Variational Inference etc.)
+
 ---
 
 ## I. Motivation
@@ -26,8 +27,6 @@ Diffusion offers a different generation regime:
 
 - **Iterative refinement** instead of strict left-to-right decoding  
 - Potential for **more parallelism** during generation (update many positions at once)  
-- **Editing / infilling** feels natural: keep some parts fixed, denoise the rest  
-- Different control knobs: guide generation across multiple refinement steps  
 
 The cost is that you trade a single left-to-right pass for **multiple denoising steps**.
 
@@ -62,7 +61,7 @@ A representative approach here is **Diffusion-LM (2022, Percy Liang et al.)**, w
   <img
     src="{{ '/assets/img/blog_img/dif-lm/dif-lm.png' | relative_url }}"
     alt="Diffusion-LM (2022) continuous diffusion walkthrough"
-    style="max-width: 900px; width: 100%; height: auto;"
+    style="max-width: 900px; width: 90%; height: auto;"
   />
 </div>
 
@@ -95,52 +94,75 @@ This figure is the full story: how the discrete Markov chain is defined, how the
   Figure: Discrete diffusion posterior with a concrete matrix example.
 </p>
 
-### Main parts (reading guide)
 
-**(1) Forward process is categorical.** The forward noising distribution can be written as:
+### The Core Takeaway before V.
+Before diving into the next sections, some take-aways to keep in mind:
 
-$$
-q(x_t\mid x_0)=\mathrm{Cat}\!\left(x_t;\, x_0\bar Q_t\right),
-$$
+1. **Forward Process is Categorical** Unlike image diffusion that adds Gaussian blur, text diffusion operates on categorical transitions. We model noise as:
+   $$q(x_t \mid x_0) = \mathrm{Cat}(x_t; x_0\bar Q_t)$$
+   where $\bar Q_t = Q_1Q_2\cdots Q_t$ is the cumulative transition matrix.
 
-where
+2. **Reparameterization: Predict $x_0$** Instead of learning tiny incremental steps ($x_t \to x_{t-1}$), we train the model to "peek" through the noise and predict the original $x_0$ from a noisy $x_t$. This $x_0$ prediction is then used to mathematically derive the reverse step.
 
-$$
-\bar Q_t = Q_1Q_2\cdots Q_t.
-$$
+3. **`[MASK]` as an Absorbing State** In text, noise is often "masking." We treat `[MASK]` as an **absorbing state**: once a token is masked, it stays masked until the reverse process "recovers" it. This makes the corruption process native to how we handle language.
 
-**(2) Reparameterization + loss (high-level).** The model is trained via a reparameterization that makes the reverse transition learnable, and the objective includes an extra term that encourages decoding the original \(x_0\).
 
-**(3) Forward \(Q\) is important, and adjusted for task.** For masking-style diffusion in text, `[MASK]` can be treated like an **absorbing state** (once `[MASK]`, stays `[MASK]`). This makes the corruption process simple and very “language-native.”
+**Q. We hear that Diffusion LM is fast and efficient. Why is this? How is the model in terms of scaling perspective?**
+
+## V. The Rise: Simple and Effective Masked Diffusion Language Models
+This is where it the DLM theory is now starting to meet industry-grade performance. 
+The MDLM project page also notes that the approach is used in: ByteDance Seed Diffusion, Nvidia's Genmol.
+
+https://s-sahoo.com/mdlm/
+
+<div style="text-align:center; margin: 1rem 0;">
+  <img
+    src="{{ '/assets/img/blog_img/dif-lm/simple_effective_dlm.png' | relative_url }}"
+    alt="Simple and Effective Masked DLM"
+    style="max-width: 900px; width: 85%; height: auto;"
+  />
+</div>
+
+<p style="text-align:center; font-size: 0.95em; color: #666;">
+  Figure: Simple and Effective Masked DLM (Subham Sekhar Sahoo, Marianne Arriola et al.
+</p>
+
 
 ---
 
-## V. What I should take away from Part 1
+## What you should take away from Part 1
 
 - Diffusion LMs are **iterative denoisers**, not next-token predictors.
-- The defining choice and main question is: **what is noise for text?**
-  - Continuous regime (Diffusion-LM 2022): diffuse in continuous vectors, then decode (rounding can hurt fluency)
-  - Discrete regime: diffuse directly in token/categorical space using a Markov chain (no rounding step)
-- A common stable parameterization is: predict an \(x_0\)-like distribution from \(x_t\), then combine with the forward chain to build reverse transitions.
+- The defining design question is: **what does “noise” mean for text?**
+  - **Continuous diffusion** (e.g., Diffusion-LM): diffuse in a continuous space, then decode back to tokens (the final projection can hurt fluency).
+  - **Discrete diffusion**: diffuse directly in token space via a categorical Markov chain (no continuous→discrete projection at the end).
+- A common, stable parameterization is: predict an \(x_0\)-like distribution from \(x_t\), then combine it with the forward chain/posterior to construct the reverse transition \(p_\theta(x_{t-1}\mid x_t)\).
+- **Training/inference perspective:** the model conditions on the *entire* corrupted sequence \(x_t\) at once (not a left-to-right prefix).  
+  During inference, you typically run **\(T\)** denoising steps regardless of sequence length—so you don’t need “100 steps for 100 tokens.”  
+  But a single diffusion step is **not automatically cheaper** than a single AR step; the speed story depends on how small you can make \(T\) and how efficient each step is.
 
 ---
 
 ## What’s next (Part 2)
-Two practical notes to keep for later posts:
-- generation speed depends heavily on **number of steps \(T\)** and the transition design
-- diffusion updates many positions per step, but it still needs **multiple steps**, so the speed win vs AR is not automatic
+Two practical notes to carry forward:
+- Generation speed depends heavily on **the number of steps \(T\)** and the **transition/sampling design**.
+- Diffusion updates many positions per step, but it still needs **multiple steps**, so a speed win over AR is **not guaranteed**.
+
+Part 1 covered the motivation and basic formulation. Naturally, that raises:
   
 We saw the motivation of Diffusion LM and its formulation in Part 1. This would naturally make us ask
 
-**Q. We hear that Diffusion LM is fast and efficient. Why is this? How is the model in terms of scaling perspective?**
-
-
+**Q. What are the remaining challenges and the key recent advances?**  
 **Q. What are some practical and strong Diffusion LM Applications?**
-
-
 
 In the next post(s), I want to connect method → practice:
 
 - **Scaling & systems:** what changes vs KV-cache-heavy AR decoding?
 - **Speed / parallelism:** where diffusion helps, where it still bottlenecks
 - **Biology angle:** why this is attractive applications?
+
+
+Key references
+- [Diffusion-LM Improves Controllable Text Generation](https://arxiv.org/abs/2205.14217)
+- [Structured Denoising Diffusion Models in Discrete State-Spaces](https://arxiv.org/abs/2107.03006)
+- [Simple and Effective Masked Diffusion Language Models](https://s-sahoo.com/mdlm/)
