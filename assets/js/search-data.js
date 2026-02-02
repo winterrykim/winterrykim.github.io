@@ -48,16 +48,16 @@ ninja.data = [{
         
           title: "Diffusion Language Models Deep Dive (Part 1: Method)",
         
-        description: "Diffusion LM Set Up",
+        description: "This post explains general development of diffusion language models (DLMs), including Discrete Diffusion, and Simple and Effective Masked Diffusion Language Models.",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2026/dlm-post-part1/";
           
         },
-      },{id: "post-minimum-math-review-for-diffusion-lm",
+      },{id: "post-minimum-math-review-for-diffusion-language-models",
         
-          title: "Minimum Math Review for Diffusion LM",
+          title: "Minimum Math Review for Diffusion Language Models",
         
         description: "Diffusion Objective, Variational Inference, and KL",
         section: "Posts",
