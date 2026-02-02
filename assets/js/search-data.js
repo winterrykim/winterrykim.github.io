@@ -44,9 +44,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-diffusion-lm-part-1-method",
+        },{id: "post-diffusion-language-models-deep-dive-part-1-method",
         
-          title: "Diffusion LM (Part 1: Method)",
+          title: "Diffusion Language Models Deep Dive (Part 1: Method)",
         
         description: "Diffusion LM Set Up",
         section: "Posts",
