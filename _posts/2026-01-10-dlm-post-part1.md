@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Diffusion LM (Part 1: Method)"
+title: "Diffusion Language Models Deep Dive (Part 1: Method)"
 date: 2026-01-10
 description: "Diffusion LM Set Up"
 tags: [ml, notes]
@@ -107,10 +107,8 @@ Before diving into the next sections, some take-aways to keep in mind:
 3. **`[MASK]` as an Absorbing State** In text, noise is often "masking." We treat `[MASK]` as an **absorbing state**: once a token is masked, it stays masked until the reverse process "recovers" it. This makes the corruption process native to how we handle language.
 
 
-**Q. We hear that Diffusion LM is fast and efficient. Why is this? How is the model in terms of scaling perspective?**
-
 ## V. The Rise: Simple and Effective Masked Diffusion Language Models
-This is where it the DLM theory is now starting to meet industry-grade performance. 
+This is where DLM theory starts to meet industry-grade performance.
 The MDLM project page also notes that the approach is used in: ByteDance Seed Diffusion, Nvidia's Genmol.
 
 https://s-sahoo.com/mdlm/
@@ -138,7 +136,7 @@ https://s-sahoo.com/mdlm/
   - **Discrete diffusion**: diffuse directly in token space via a categorical Markov chain (no continuous→discrete projection at the end).
 - A common, stable parameterization is: predict an \(x_0\)-like distribution from \(x_t\), then combine it with the forward chain/posterior to construct the reverse transition \(p_\theta(x_{t-1}\mid x_t)\).
 - **Training/inference perspective:** the model conditions on the *entire* corrupted sequence \(x_t\) at once (not a left-to-right prefix).  
-  During inference, you typically run **\(T\)** denoising steps regardless of sequence length—so you don’t need “100 steps for 100 tokens.”  
+  During inference, you typically run a fixed **\(T\)** denoising steps regardless of sequence length—so you don’t need “100 steps for 100 tokens.”  
   But a single diffusion step is **not automatically cheaper** than a single AR step; the speed story depends on how small you can make \(T\) and how efficient each step is.
 
 ---
