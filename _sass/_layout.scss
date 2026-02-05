@@ -44,7 +44,89 @@ body.sticky-bottom-footer {
  * Publications
  ******************************************************************************/
 
-// TODO: redefine publications layout.
+/* --- Publications: venue column vs. venue badge --- */
+
+/* 1) The LEFT COLUMN container (must stay transparent) */
+.publications .abbr,
+.bibliography .abbr {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* 2) The ACTUAL small badge element inside the column
+   (al-folio usually renders it as an <abbr> tag or .badge) */
+.publications .abbr abbr,
+.publications .abbr .badge,
+.bibliography .abbr abbr,
+.bibliography .abbr .badge {
+  display: inline-flex !important;
+  align-items: center;
+
+  background: var(--global-theme-color, #7b2cbf) !important;
+  color: #fff !important;
+
+  font-weight: 700;
+  font-size: 0.85rem;
+
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+
+  /* make long labels fit nicely */
+  max-width: 220px;          /* bump to 260/300 if you want */
+  white-space: normal;       /* allow wrap */
+  word-break: break-word;    /* prevent overflow */
+  line-height: 1.15;
+
+  /* makes multi-line pill look good */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Ensure nested text inside the badge stays white */
+.publications .abbr abbr *,
+.publications .abbr .badge *,
+.bibliography .abbr abbr *,
+.bibliography .abbr .badge * {
+  color: #fff !important;
+}
+
+
+/* Publications: make PDF/HTML links look like bordered buttons */
+.publications .links a,
+.bibliography .links a {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #111;      /* black border */
+  border-radius: 4px;
+  background: transparent;
+  color: #111;
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+
+/* Remove numbering from publications list */
+.publications ol.bibliography,
+.bibliography ol.bibliography,
+ol.bibliography {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.publications ol.bibliography > li,
+.bibliography ol.bibliography > li,
+ol.bibliography > li {
+  counter-increment: none !important;
+}
+
+.publications ol.bibliography > li::marker,
+.bibliography ol.bibliography > li::marker,
+ol.bibliography > li::marker {
+  content: "" !important;
+}
+
 
 /*****************************************************************************
 * Projects
