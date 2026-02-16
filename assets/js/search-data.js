@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-diffusion-language-models-deep-dive-part-1-method",
+        },{id: "post-explainable-ai-xai-and-model-interpretability-shap-integrated-gradients-and-sparse-autoencoders",
+        
+          title: "Explainable AI (XAI) and Model Interpretability (SHAP, Integrated Gradients, and Sparse Autoencoders)",
+        
+        description: "A future-me-friendly toolbox of interpretability methods: feature attribution (Shapley/SHAP, Integrated Gradients), perturbation tests, and representation-level methods like Sparse Autoencoders.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/interp-post/";
+          
+        },
+      },{id: "post-diffusion-language-models-deep-dive-part-1-method",
         
           title: "Diffusion Language Models Deep Dive (Part 1: Method)",
         
