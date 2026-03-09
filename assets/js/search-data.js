@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-explainable-ai-xai-and-model-interpretability-shap-integrated-gradients-and-sparse-autoencoders",
+        },{id: "post-from-mle-to-neyman-pearson-to-reward-models",
+        
+          title: "From MLE to Neyman-Pearson to Reward Models",
+        
+        description: "A broad roadmap of statistical inference, inspired by Data 145, and a short bridge to modern reward-based AI.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/from-mle-to-neyman-pearson-to-reward-models/";
+          
+        },
+      },{id: "post-explainable-ai-xai-and-model-interpretability-shap-integrated-gradients-and-sparse-autoencoders",
         
           title: "Explainable AI (XAI) and Model Interpretability (SHAP, Integrated Gradients, and Sparse Autoencoders)",
         
