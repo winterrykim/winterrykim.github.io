@@ -356,9 +356,9 @@ $$
 
 The intuition is geometric:
 
-- if $\left|\frac{dy}{dx}\right|$ is large, then a small interval in $x$ gets stretched into a wider interval in $y$
+- if the local slope of the transformation is large, then a small interval in $x$ gets stretched into a wider interval in $y$
 - the same probability mass is spread over more space, so the density in $y$ gets smaller
-- if $\left|\frac{dy}{dx}\right|$ is small, the transformation compresses space and the density gets larger
+- if the local slope is small, the transformation compresses space and the density gets larger
 
 This is not the delta method itself, but it is the same derivative-based intuition. In the exact density formula, the derivative rescales density under a transformation. In the delta method, the derivative rescales the local fluctuation of an estimator:
 
@@ -1191,13 +1191,16 @@ If the prior is strong and the sample size is not large, the prior can materiall
 ### Four ways priors arise in the lecture
 
 1. **Subjective Bayes**
+
    - prior as personal degree of belief
 
 2. **Objective Bayes**
+
    - flat priors
    - Jeffreys prior
 
 3. **Convenience priors**
+
    - often conjugate priors chosen for tractability
 
 4. **Hierarchical Bayes**
@@ -1380,21 +1383,39 @@ The lecture's caution is that this is an approximation justified when $n$ and $B
 
 ### Three confidence interval methods in the lecture
 
-For a concrete 95% example, suppose:
+For a concrete 95% template, let:
 
-- the original estimate is $\hat\theta = 1.55$
-- the bootstrap standard error is $\widehat{se} = 0.15$
-- the 2.5th percentile of the bootstrap estimates is $1.20$
-- the 97.5th percentile of the bootstrap estimates is $1.80$
+- $\hat\theta$ be the original estimate
+- $\widehat{se}_{boot}$ be the bootstrap standard error
 
-Then $\alpha = 0.05$, so $\alpha/2 = 0.025$, which is why the interval uses the 2.5th and 97.5th percentiles.
+Write the bootstrap estimate quantiles as
+
+$$
+q^{\ast}_{0.025}, \; q^{\ast}_{0.975},
+$$
+
+where these are the 2.5th and 97.5th percentiles of the bootstrap estimates $\hat\theta^{\ast}$.
+
+Write the bootstrap error as
+
+$$
+\varepsilon^{\ast} = \hat\theta^{\ast} - \hat\theta,
+$$
+
+and write the bootstrap error quantiles as
+
+$$
+\varepsilon^{\ast}_{0.025}, \; \varepsilon^{\ast}_{0.975}.
+$$
+
+That is the same information you would otherwise write abstractly with $\alpha = 0.05$ and $\alpha/2 = 0.025$, but the 95% notation is often easier to read quickly.
 
 #### 1. Normal interval
 
 Estimate the bootstrap standard error and use
 
 $$
-T \pm z_{\alpha/2}\widehat{se}_T.
+\hat\theta \pm z_{0.975}\widehat{se}_{boot}.
 $$
 
 This is the most familiar-looking interval.
@@ -1417,12 +1438,10 @@ Cons:
 
 So the lecture does not say "never use it," but it does say the justification depends on approximate normality and centering.
 
-In the example above, the normal interval is
+For a 95% interval, this is the familiar
 
 $$
-1.55 \pm 1.96(0.15)
-\approx
-(1.26, 1.84).
+\hat\theta \pm 1.96\,\widehat{se}_{boot}.
 $$
 
 #### 2. Percentile interval
@@ -1430,15 +1449,17 @@ $$
 Take the lower and upper quantiles of the bootstrap distribution of the estimator itself. If
 
 $$
-\hat\theta^{\ast}_{\alpha/2}
+\hat\theta^{\ast}_{0.025}
 \qquad \text{and} \qquad
-\hat\theta^{\ast}_{1-\alpha/2}
+\hat\theta^{\ast}_{0.975}
 $$
 
 are the bootstrap quantiles, the interval is
 
 $$
-(\hat\theta^{\ast}_{\alpha/2},\hat\theta^{\ast}_{1-\alpha/2}).
+(\hat\theta^{\ast}_{0.025},\hat\theta^{\ast}_{0.975})
+=
+(q^{\ast}_{0.025},q^{\ast}_{0.975}).
 $$
 
 The lecture says this works well when the distribution of the estimator is roughly symmetric and centered at the parameter. If it is also roughly normal, this essentially matches the normal interval.
@@ -1453,13 +1474,11 @@ Cons from the lecture:
 - can behave badly if the estimator is biased
 - the theoretical justification is shaky unless the estimator is roughly unbiased and roughly normal
 
-In the example above, the percentile interval is just
+So for a 95% interval, the percentile method is just:
 
 $$
-(1.20, 1.80),
+(q^{\ast}_{0.025},q^{\ast}_{0.975}).
 $$
-
-because those are the 2.5th and 97.5th percentiles of the bootstrap distribution of $\hat\theta^{\ast}$.
 
 #### 3. Basic / empirical bootstrap interval
 
@@ -1473,18 +1492,18 @@ rather than the distribution of $\hat\theta$ directly.
 
 The logic is:
 
-if $\delta_{\alpha/2}$ and $\delta_{1-\alpha/2}$ are quantiles of the error distribution, then
+if $\delta_{0.025}$ and $\delta_{0.975}$ are quantiles of the error distribution, then
 
 $$
 1-\alpha
 =
-P(\delta_{\alpha/2}<\hat\theta-\theta<\delta_{1-\alpha/2}),
+P(\delta_{0.025}<\hat\theta-\theta<\delta_{0.975}),
 $$
 
 so the confidence interval becomes
 
 $$
-(\hat\theta-\delta_{1-\alpha/2},\hat\theta-\delta_{\alpha/2}).
+(\hat\theta-\delta_{0.975},\hat\theta-\delta_{0.025}).
 $$
 
 Of course I do not know the true error $\delta$, so the bootstrap replaces it with
@@ -1496,15 +1515,15 @@ $$
 If
 
 $$
-\delta^{\ast}_{\alpha/2}
+\delta^{\ast}_{0.025}
 \qquad \text{and} \qquad
-\delta^{\ast}_{1-\alpha/2}
+\delta^{\ast}_{0.975}
 $$
 
 are the bootstrap quantiles, then the empirical/basic interval is
 
 $$
-(\hat\theta-\delta^{\ast}_{1-\alpha/2},\hat\theta-\delta^{\ast}_{\alpha/2}).
+(\hat\theta-\delta^{\ast}_{0.975},\hat\theta-\delta^{\ast}_{0.025}).
 $$
 
 Equivalently, because
@@ -1516,7 +1535,9 @@ $$
 the endpoints can be written as
 
 $$
-(2\hat\theta-\hat\theta^{\ast}_{1-\alpha/2},\;2\hat\theta-\hat\theta^{\ast}_{\alpha/2}).
+(2\hat\theta-\hat\theta^{\ast}_{0.975},\;2\hat\theta-\hat\theta^{\ast}_{0.025})
+=
+(\hat\theta-\varepsilon^{\ast}_{0.975},\;\hat\theta-\varepsilon^{\ast}_{0.025}).
 $$
 
 The main conceptual point:
@@ -1524,17 +1545,7 @@ The main conceptual point:
 - percentile interval works directly with bootstrap estimates
 - basic bootstrap recenters around the original estimate and has better bias behavior
 
-In the same example, the basic interval is
-
-$$
-(2\hat\theta-\hat\theta^{\ast}_{0.975},\;2\hat\theta-\hat\theta^{\ast}_{0.025})
-=
-(2(1.55)-1.80,\;2(1.55)-1.20)
-=
-(1.30, 1.90).
-$$
-
-So this interval is shifted relative to the percentile interval because it is recentered around the original estimate.
+So the basic interval is the recentered version of the percentile interval, written either with bootstrap estimate quantiles or with bootstrap error quantiles.
 
 Why the lecture likes this method more:
 
@@ -1957,20 +1968,58 @@ So the course ends the first half by unifying goodness-of-fit ideas with general
 
 If I had to compress the whole story into one compact page of formulas and claims, this is what I would keep.
 
+### Key conceptual distinctions
+
+These are the points that are easiest to blur together when reading the broader story, but they are exactly the distinctions that make the subject hang together.
+
+- **Regular versus nonregular MLE behavior**:
+  the standard asymptotic normality theorem is a regular-model theorem. In nonregular problems, such as the German tank setup where the support depends on the parameter, the MLE can converge at rate $n$ rather than $\sqrt{n}$ and can have a nonnormal limit.
+
+- **Finite-sample efficiency versus asymptotic efficiency**:
+  Cramer-Rao is a finite-sample bound for unbiased estimators, while MLE efficiency is usually an asymptotic statement. Those are not the same claim.
+
+- **Bayes estimators depend on the loss**:
+  posterior mean is Bayes under squared error, posterior median under absolute loss, and posterior mode under $0$-$1$ loss.
+
+- **ETI versus HPDI**:
+  not every credible interval is the same. Equal-tail intervals and highest-posterior-density intervals coincide in symmetric cases, but not in general.
+
+- **Pseudo-true parameter under misspecification**:
+  when the model is wrong, the MLE does not converge to the truth. It converges to the KL-closest approximation inside the model family.
+
+- **Why sandwich variance appears**:
+  under misspecification, curvature and score variability no longer match the way they do under correct specification, so the usual standard-error formula has to be corrected.
+
+- **The three KS settings**:
+  one-sample KS with fully specified continuous null is distribution-free; one-sample KS with estimated parameters is not; two-sample KS compares two empirical CDFs directly.
+
+- **MLR is the bridge from NP to UMP**:
+  Neyman-Pearson gives the best test for each fixed simple alternative. Monotone likelihood ratio is what makes the same threshold statistic work for an entire one-sided alternative.
+
+- **The Cauchy example is a warning sign**:
+  "reject for large sample mean" is not a universal testing rule. Heavy-tailed models can break the clean normal-family intuition.
+
+- **P-values under a continuous null**:
+  under a continuous null hypothesis, a valid p-value is Uniform$(0,1)$. That is why rejecting when $p \le \alpha$ gives a level-$\alpha$ test.
+
 ### Core formulas
 
-$$
-\hat\lambda_{MLE} = \frac{1}{\bar X_n}
-$$
+#### Asymptotics and delta method
 
 $$
-\mathbb{P}(X \le 7) = 1 - e^{-7\lambda}
+\sqrt{n}(\bar X_n - \mu) \xrightarrow{d} N(0,\sigma^2)
 $$
 
 $$
 \sqrt{n}(Y_n - \theta) \xrightarrow{d} N(0,\sigma^2)
 \Rightarrow
 \sqrt{n}(g(Y_n)-g(\theta)) \xrightarrow{d} N(0,(g'(\theta))^2\sigma^2)
+$$
+
+#### Likelihood, score, information, and MLE
+
+$$
+\ell_n(\theta) = \sum_{i=1}^n \log f_\theta(X_i)
 $$
 
 $$
@@ -2003,6 +2052,66 @@ $$
 \operatorname{MSE} = \operatorname{Var} + \text{Bias}^2
 $$
 
+#### High-yield model formulas
+
+Bernoulli:
+
+$$
+\hat p_{MLE} = \bar X_n,
+\qquad
+\operatorname{Var}(\bar X_n)=\frac{p(1-p)}{n}
+$$
+
+$$
+\operatorname{logit}(p)=\log\frac{p}{1-p},
+\qquad
+\frac{d}{dp}\operatorname{logit}(p)=\frac{1}{p(1-p)}
+$$
+
+$$
+\operatorname{Var}(\operatorname{logit}(\hat p)) \approx \frac{1}{n\,p(1-p)}
+$$
+
+Poisson:
+
+$$
+\hat\lambda_{MLE} = \bar X_n,
+\qquad
+I(\lambda)=\frac{1}{\lambda}
+$$
+
+Exponential with rate $\lambda$:
+
+$$
+\hat\lambda_{MLE} = \frac{1}{\bar X_n},
+\qquad
+I(\lambda)=\frac{1}{\lambda^2},
+\qquad
+\operatorname{Var}(\hat\lambda_{MLE}) \approx \frac{\lambda^2}{n}
+$$
+
+$$
+\mathbb{P}(X \le 7) = 1 - e^{-7\lambda}
+$$
+
+Exponential with mean $\mu$:
+
+$$
+\hat\mu_{MLE} = \bar X_n,
+\qquad
+I(\mu)=\frac{1}{\mu^2},
+\qquad
+\operatorname{Var}(\hat\mu_{MLE}) \approx \frac{\mu^2}{n}
+$$
+
+Pareto with known lower cutoff $x_m$:
+
+$$
+\hat\alpha_{MLE} = \frac{n}{\sum_{i=1}^n \log(X_i/x_m)}
+$$
+
+#### Bayes and decision theory
+
 $$
 \pi(\theta \mid x) \propto f_\theta(x)\pi(\theta)
 $$
@@ -2011,6 +2120,52 @@ $$
 \pi_J(\theta) \propto \sqrt{I(\theta)}
 $$
 
+Under common losses:
+
+- squared error $\Rightarrow$ Bayes estimator is posterior mean
+- absolute loss $\Rightarrow$ Bayes estimator is posterior median
+- $0$-$1$ loss $\Rightarrow$ Bayes estimator is posterior mode
+
+Conjugate update patterns worth remembering:
+
+$$
+p \sim \mathrm{Beta}(\alpha,\beta),
+\quad
+X \mid p \sim \mathrm{Binomial}(n,p)
+\quad \Rightarrow \quad
+p \mid X=x \sim \mathrm{Beta}(x+\alpha,\; n-x+\beta)
+$$
+
+So in the Beta-Binomial model, $\alpha$ behaves like prior successes and $\beta$ behaves like prior failures. The posterior literally updates by adding observed counts: successes become $x+\alpha$ and failures become $n-x+\beta$.
+
+The prior and posterior means are
+
+$$
+\mathbb{E}[p] = \frac{\alpha}{\alpha+\beta},
+\qquad
+\mathbb{E}[p \mid X=x] = \frac{x+\alpha}{n+\alpha+\beta}.
+$$
+
+So the posterior mean is a weighted average of the sample proportion and the prior mean:
+
+$$
+\mathbb{E}[p \mid X=x]
+=
+\frac{n}{n+\alpha+\beta}\frac{x}{n}
++
+\frac{\alpha+\beta}{n+\alpha+\beta}\frac{\alpha}{\alpha+\beta}.
+$$
+
+$$
+\lambda \sim \mathrm{Gamma}(\alpha,\beta),
+\quad
+X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Exp}(\lambda)
+\quad \Rightarrow \quad
+\lambda \mid X \sim \mathrm{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right)
+$$
+
+#### Misspecification, bootstrap, and KS
+
 $$
 D_{KL}(g \,\|\, f_\theta)
 =
@@ -2018,28 +2173,82 @@ D_{KL}(g \,\|\, f_\theta)
 $$
 
 $$
+\theta^* = \arg\min_\theta D_{KL}(g \,\|\, f_\theta)
+$$
+
+$$
+F_n(x)=\frac{1}{n}\sum_{i=1}^n I(X_i \le x)
+$$
+
+$$
 D_n = \sup_x |F_n(x)-F(x)|
 $$
 
 $$
+D_{n,m} = \sup_x |F_n(x)-G_m(x)|
+$$
+
+Bootstrap interval templates:
+
+- 95% percentile interval uses the bootstrap estimate quantiles:
+
+  $$
+  (q^{\ast}_{0.025}, q^{\ast}_{0.975})
+  $$
+
+- 95% basic / pivotal interval uses the bootstrap error quantiles:
+
+  $$
+  (\hat\theta-\varepsilon^{\ast}_{0.975}, \hat\theta-\varepsilon^{\ast}_{0.025})
+  =
+  (2\hat\theta-q^{\ast}_{0.975}, 2\hat\theta-q^{\ast}_{0.025})
+  $$
+
+- 95% normal: $\hat\theta \pm 1.96\,\widehat{se}_{boot}$
+
+#### Hypothesis testing
+
+$$
 \operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)}
+$$
+
+Under a continuous null:
+
+$$
+p \sim \mathrm{Uniform}(0,1)
+$$
+
+and the rejection rule is
+
+$$
+\text{reject } H_0 \text{ when } p \le \alpha.
 $$
 
 ### Distribution relationships worth remembering
 
 These are the kinds of structural facts that make derivations feel less random.
 
+- Exponential is Gamma with shape 1:
+  in the rate parameterization,
+
+  $$
+  \mathrm{Exp}(\lambda) = \mathrm{Gamma}(1,\lambda).
+  $$
+
 - Bernoulli to Binomial:
   if $X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Bernoulli}(p)$, then
+
   $$
   \sum_{i=1}^n X_i \sim \mathrm{Binomial}(n,p).
   $$
 
 - Exponential to Gamma:
   if $X_1,\dots,X_k \overset{iid}{\sim} \mathrm{Exponential}(\lambda)$, then
+
   $$
   \sum_{i=1}^k X_i \sim \mathrm{Gamma}(k,\lambda)
   $$
+
   in the rate parameterization. So Gamma is the waiting-time distribution for several Poisson-process arrivals, while Exponential is the waiting time for the first arrival.
 
 - Gamma plus Gamma stays Gamma:
@@ -2047,6 +2256,7 @@ These are the kinds of structural facts that make derivations feel less random.
 
 - Poisson plus Poisson stays Poisson:
   if $X \sim \mathrm{Poisson}(\lambda_1)$ and $Y \sim \mathrm{Poisson}(\lambda_2)$ are independent, then
+
   $$
   X+Y \sim \mathrm{Poisson}(\lambda_1+\lambda_2).
   $$
@@ -2056,29 +2266,32 @@ These are the kinds of structural facts that make derivations feel less random.
 
 - Chi-square is a special Gamma:
   if $Z_1,\dots,Z_k \overset{iid}{\sim} N(0,1)$, then
+
   $$
   \sum_{i=1}^k Z_i^2 \sim \chi_k^2,
   $$
+
   and $\chi_k^2$ is the same as a Gamma distribution with shape $k/2$.
 
-- Beta is not a sum in the same sense, but it has two useful constructions:
-  if $U \sim \mathrm{Gamma}(\alpha,\lambda)$ and $V \sim \mathrm{Gamma}(\beta,\lambda)$ are independent, then
+- Probability integral transform:
+  if $X$ has a continuous CDF $F$, then
+
   $$
-  \frac{U}{U+V} \sim \mathrm{Beta}(\alpha,\beta).
-  $$
-  Also, the $k$th order statistic of a Uniform$(0,1)$ sample has a Beta distribution:
-  $$
-  U_{(k)} \sim \mathrm{Beta}(k,n+1-k).
+  U = F(X) \sim \mathrm{Uniform}(0,1).
   $$
 
-- Negative binomial as repeated geometric waiting:
-  depending on parameterization, a negative binomial can be viewed as the sum of independent geometric waiting times.
+  This is the key CDF relationship behind two important course ideas:
+
+  - in Lecture 11, it explains why the fully specified continuous-null KS test is distribution-free
+  - in the continuous-null p-value discussion, it explains why a correctly calibrated p-value is Uniform$(0,1)$
 
 The quick mental map I want is:
 
 - Bernoulli $\to$ Binomial by summing indicators
+- Beta prior + Binomial data $\to$ Beta posterior by updating counts
 - Exponential $\to$ Gamma by summing waiting times
-- Gamma $\to$ Beta by taking a ratio
+- Gamma prior + Exponential data $\to$ Gamma posterior by updating event count and total exposure
+- null CDF $\to$ Uniform$(0,1)$ by the probability integral transform
 - Normal $\to$ Chi-square by squaring and summing standard normals
 
 ### Core conceptual statements
