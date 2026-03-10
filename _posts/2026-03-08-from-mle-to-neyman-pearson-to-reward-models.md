@@ -177,6 +177,116 @@ The lecture reviews:
 - Slutsky's theorem
 - delta method
 
+### Useful facts worth keeping nearby
+
+Lecture 2 also gives a short list of facts that are easy to forget but extremely useful later.
+
+#### 1. Convergence in distribution does **not** imply convergence in probability in general
+
+This is the main cautionary point.
+
+It is possible to have
+
+$$
+X_n \xrightarrow{d} X
+$$
+
+without having
+
+$$
+X_n \xrightarrow{p} X.
+$$
+
+The lecture's standard-normal example makes this vivid: a sequence can have the right limiting **distribution** without becoming close to the limit random variable on the same sample space.
+
+There is one especially useful special case:
+
+> if the limit is a constant $c$, then $X_n \xrightarrow{d} c$ is equivalent to $X_n \xrightarrow{p} c$.
+
+That fact gets used repeatedly.
+
+#### 2. Continuous mapping theorem
+
+If $g:\mathbb{R}\to\mathbb{R}$ is continuous, then
+
+$$
+X_n \xrightarrow{d} X
+\quad \Rightarrow \quad
+g(X_n) \xrightarrow{d} g(X).
+$$
+
+And the same statement is true with probability convergence:
+
+$$
+X_n \xrightarrow{p} X
+\quad \Rightarrow \quad
+g(X_n) \xrightarrow{p} g(X).
+$$
+
+This is one of the reasons the delta method works so cleanly: continuity lets us transfer convergence through transformations.
+
+#### 3. Sums
+
+If
+
+$$
+X_n \xrightarrow{p} X
+\qquad \text{and} \qquad
+Y_n \xrightarrow{p} Y,
+$$
+
+then
+
+$$
+X_n + Y_n \xrightarrow{p} X + Y.
+$$
+
+The lecture also stresses a subtle warning here: the analogous statement is **not** true if you replace convergence in probability with convergence in distribution.
+
+#### 4. Slutsky's theorem
+
+The practical version to remember is:
+
+if
+
+$$
+X_n \xrightarrow{d} X
+\qquad \text{and} \qquad
+Y_n \xrightarrow{p} c,
+$$
+
+then
+
+$$
+X_n Y_n \xrightarrow{d} cX.
+$$
+
+This is the tool that lets us combine a random term with a deterministic or asymptotically deterministic term.
+
+### A subtle point about discrete limits
+
+The lecture also makes an important definition-level point that is easy to skip:
+
+> convergence in distribution is defined using convergence of CDFs at the **continuity points of the limit CDF**.
+
+That extra phrase matters when the limit distribution has jumps.
+
+The example in the notes is:
+
+$$
+X_n =
+\begin{cases}
+1/n & \text{with probability } 1 - 1/n, \\
+1   & \text{with probability } 1/n.
+\end{cases}
+$$
+
+Intuitively, $X_n$ should converge in distribution to the constant $0$, because with high probability it is very close to $0$.
+
+But the CDFs do **not** converge at $x=0$, because the limit CDF has a jump there. So the right definition does not require convergence at discontinuity points of the limit CDF; it only requires convergence at continuity points.
+
+This is a small technical detail, but it is the reason convergence in distribution works for both continuous and discrete limits without forcing an unnecessarily strict definition.
+
 ### The delta method
 
 The version to remember is:
@@ -217,12 +327,58 @@ $$
 
 So asymptotically, $g(Y_n)$ behaves like a constant plus a scaled version of $Y_n$.
 
+### A useful comparison: change of variables
+
+There is a closely related idea from density transformations that is worth keeping in mind.
+
+If
+
+$$
+Y = g(X)
+$$
+
+and $g$ is one-to-one and differentiable, then the transformed density is
+
+$$
+f_Y(y)
+=
+\frac{f_X(x)}{|g'(x)|}
+\quad \text{at } x=g^{-1}(y),
+$$
+
+or equivalently
+
+$$
+f_Y(y)
+=
+f_X(x)\left|\frac{dx}{dy}\right|.
+$$
+
+The intuition is geometric:
+
+- if $\left|\frac{dy}{dx}\right|$ is large, then a small interval in $x$ gets stretched into a wider interval in $y$
+- the same probability mass is spread over more space, so the density in $y$ gets smaller
+- if $\left|\frac{dy}{dx}\right|$ is small, the transformation compresses space and the density gets larger
+
+This is not the delta method itself, but it is the same derivative-based intuition. In the exact density formula, the derivative rescales density under a transformation. In the delta method, the derivative rescales the local fluctuation of an estimator:
+
+$$
+\operatorname{sd}(g(Y_n)) \approx |g'(\theta)| \operatorname{sd}(Y_n).
+$$
+
+So both ideas are saying: when I transform a random quantity, the derivative tells me how uncertainty gets stretched or compressed nearby.
+
 ### Key takeaways from Lecture 2
 
 - the difference between convergence in distribution and convergence in probability
+- why $X_n \xrightarrow{d} X$ does not imply $X_n \xrightarrow{p} X$ in general
+- why convergence to a constant is a special case where distribution and probability convergence line up
 - what continuous mapping and Slutsky let me do
+- how sums behave under convergence in probability
+- why the general definition of convergence in distribution uses continuity points of the limit CDF
 - the exact statement of the delta method
 - how to use the delta method to move from $\hat\theta$ to $g(\hat\theta)$
+- how derivatives rescale uncertainty, both in change-of-variables formulas and in the delta method
 
 ---
 
@@ -316,6 +472,68 @@ $$
 
 This gives the heuristic for MLE consistency.
 
+### Why the truth maximizes the expected log-likelihood
+
+Lecture 3 makes that second bullet precise by defining
+
+$$
+M(\theta) = \mathbb{E}_{\theta_0}[\log f_\theta(X)].
+$$
+
+The key claim is that
+
+$$
+M(\theta) \le M(\theta_0)
+$$
+
+for every $\theta$, with equality only when the model at $\theta$ is the same as the true model.
+
+The proof is a clean Jensen argument. Write
+
+$$
+M(\theta) - M(\theta_0)
+=
+\mathbb{E}_{\theta_0}\left[
+\log\frac{f_\theta(X)}{f_{\theta_0}(X)}
+\right].
+$$
+
+Since $\log$ is concave, Jensen gives
+
+$$
+\mathbb{E}_{\theta_0}\left[
+\log\frac{f_\theta(X)}{f_{\theta_0}(X)}
+\right]
+\le
+\log
+\mathbb{E}_{\theta_0}\left[
+\frac{f_\theta(X)}{f_{\theta_0}(X)}
+\right].
+$$
+
+But that expectation is
+
+$$
+\mathbb{E}_{\theta_0}\left[
+\frac{f_\theta(X)}{f_{\theta_0}(X)}
+\right]
+=
+\int \frac{f_\theta(x)}{f_{\theta_0}(x)} f_{\theta_0}(x)\,dx
+=
+\int f_\theta(x)\,dx
+= 1.
+$$
+
+So
+
+$$
+M(\theta) - M(\theta_0) \le \log 1 = 0.
+$$
+
+This is one of the most useful ideas in the course: on average, the truth fits best inside the model class.
+
+There is one caveat from the lecture worth remembering: this is still only a heuristic for consistency, because the law of large numbers gives pointwise convergence of $\ell_n(\theta)/n$ to $M(\theta)$, while proving consistency of the maximizer requires stronger uniform control.
+
 ### Score function
 
 The score is the derivative of the log-likelihood:
@@ -353,12 +571,28 @@ Interpretation:
 - large information means the likelihood is sharply curved around its maximum
 - sharp curvature means the parameter is estimated more precisely
 
+The last form,
+
+$$
+I(\theta) = -\mathbb{E}_\theta[\ell_1''(\theta;X)],
+$$
+
+is easiest to remember if I think in terms of curvature. Near a maximum, a log-likelihood curve bends downward, so its second derivative is typically negative. Taking a minus sign turns that downward curvature into a positive measure of how sharp the peak is.
+
+So the intuition is:
+
+- if $\ell_1''(\theta;X)$ is very negative on average, the log-likelihood is steeply curved and the parameter is easier to pin down
+- if $\ell_1''(\theta;X)$ is close to zero on average, the log-likelihood is flatter and many nearby parameter values look similar
+
+That is why the negative expected second derivative shows up as "information": it measures how strongly the data distinguishes nearby parameter values.
+
 ### Key takeaways from Lecture 3
 
 - what a statistical model is
 - parametric vs. nonparametric
 - what plug-in estimation is
 - why MLE consistency comes from expected log-likelihood
+- how Jensen's inequality shows that $M(\theta)$ is maximized at the truth
 - score function and why its mean is zero
 - Fisher information and its three equivalent forms
 
@@ -509,6 +743,24 @@ $$
 \operatorname{MSE} = \operatorname{Var} + \text{Bias}^2.
 $$
 
+More explicitly, if
+
+$$
+\mu = \mathbb{E}_\theta[T],
+$$
+
+then
+
+$$
+\mathbb{E}_\theta[(T-\theta)^2]
+=
+\mathbb{E}_\theta[(T-\mu)^2]
++
+(\mu-\theta)^2.
+$$
+
+The cross term disappears because $\mathbb{E}_\theta[T-\mu]=0$. This is the basic reason a biased estimator can still win under MSE: a small increase in bias can be worth it if the variance drops enough.
+
 ### The coin flip example
 
 For $X \sim \text{Binomial}(n,p)$:
@@ -557,12 +809,30 @@ So it is inadmissible.
 
 ### Admissibility
 
-An estimator is inadmissible if another estimator has:
+Lecture 6 then sharpens the comparison language.
 
-- no larger risk everywhere
-- strictly smaller risk somewhere
+An estimator $T_1$ is **inadmissible** if there exists another estimator $T_2$ such that
 
-The bootstrap point estimator is inadmissible because the MLE dominates it.
+$$
+R(\theta;T_2) \le R(\theta;T_1)
+\qquad \text{for all } \theta \in \Theta,
+$$
+
+and
+
+$$
+R(\theta;T_2) < R(\theta;T_1)
+\qquad \text{for at least one } \theta.
+$$
+
+In that case, $T_2$ **dominates** $T_1$. An estimator that is not inadmissible is called **admissible**.
+
+For the four estimators in this lecture:
+
+- the bootstrap estimator is inadmissible, because the MLE has the same bias and strictly smaller variance, so its MSE is lower everywhere
+- the MLE, Laplace +1/+1, and Laplace +2/+2 are all admissible within this comparison, because their risk curves cross and none dominates the others everywhere
+
+This is an important conceptual point: admissibility is only a **minimal** requirement. It tells me when an estimator is definitely unacceptable, but it does not by itself tell me which admissible estimator I should prefer.
 
 ### How do we choose among admissible estimators?
 
@@ -580,7 +850,25 @@ For the broader story of the course, the **average-risk / Bayes** direction is t
 
 ### Bayes estimator appears naturally
 
-If I put a prior on $p$, then minimizing posterior expected squared error gives
+This is where the lecture makes a subtle but important shift in what is random.
+
+In the ordinary bias-variance decomposition, $\theta$ is fixed and the randomness comes from the estimator $T(X)$ through the sample.
+
+In the Bayes step, I condition on the observed data $X$. Once I do that, $T(X)$ is just a number, while $p$ becomes the random quantity because I am averaging over the **posterior distribution** of $p \mid X$.
+
+So for a fixed observed dataset,
+
+$$
+\mathbb{E}[(T(X)-p)^2 \mid X]
+=
+\operatorname{Var}(p \mid X)
++
+(\mathbb{E}[p \mid X] - T(X))^2.
+$$
+
+This is the same algebra as bias-variance, but with the roles changed: now the target $p$ is the random variable and the estimator value $T(X)$ is fixed.
+
+The first term does not depend on $T$, so the posterior expected squared error is minimized when
 
 $$
 T^*(X) = \mathbb{E}[p \mid X].
@@ -588,7 +876,15 @@ $$
 
 This is the Bayes estimator under squared error loss.
 
-So Bayesian estimation does not just appear philosophically in Lecture 7. It is already motivated in Lecture 6 as an optimization answer to a decision problem.
+In the uniform-prior case, this gives
+
+$$
+T^*(X) = \frac{X+1}{n+2},
+$$
+
+which is exactly Laplace +1/+1. With a Beta$(2,2)$ prior, the same logic gives Laplace +2/+2.
+
+So Bayesian estimation does not just appear philosophically in Lecture 7. It already appears in Lecture 6 as the optimizer of an average-risk decision problem.
 
 ### Key takeaways from Lecture 6
 
@@ -596,7 +892,7 @@ So Bayesian estimation does not just appear philosophically in Lecture 7. It is 
 - why unbiased is not the same as best under MSE
 - why shrinkage can beat the MLE in some regions
 - why the bootstrap point estimator is worse
-- admissibility as a minimal requirement
+- admissibility, dominance, and which estimators are admissible in the coin-flip example
 - Bayes estimator under squared error is posterior mean
 
 ### What I leave in the background from Lecture 6
@@ -638,7 +934,9 @@ These are worth remembering because they show the same pattern over and over:
 3. posterior stays in the same family
 4. posterior mean becomes a weighted average of prior information and data
 
-For example, in the Beta-Binomial setup,
+#### Beta-Binomial
+
+Setup:
 
 $$
 p \sim \text{Beta}(\alpha,\beta),
@@ -646,11 +944,103 @@ p \sim \text{Beta}(\alpha,\beta),
 X \mid p \sim \text{Binomial}(n,p),
 $$
 
-and the posterior is
+Posterior:
 
 $$
 p \mid X \sim \text{Beta}(X+\alpha, n-X+\beta).
 $$
+
+#### Gamma-Exponential
+
+Setup:
+
+$$
+X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Exp}(\lambda),
+\qquad
+\lambda \sim \mathrm{Gamma}(\alpha,\beta),
+$$
+
+where I am using the shape-rate parameterization, the prior density is
+
+$$
+\pi(\lambda) \propto \lambda^{\alpha-1}e^{-\beta\lambda}.
+$$
+
+Likelihood:
+
+$$
+f_\lambda(x_1,\dots,x_n)
+=
+\lambda^n e^{-\lambda \sum_{i=1}^n x_i}.
+$$
+
+Posterior:
+
+$$
+\pi(\lambda \mid x)
+\propto
+f_\lambda(x)\pi(\lambda)
+\propto
+\lambda^{n+\alpha-1}e^{-(\beta+\sum x_i)\lambda},
+$$
+
+which is a Gamma density again:
+
+$$
+\lambda \mid X_1,\dots,X_n
+\sim
+\mathrm{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right).
+$$
+
+So Gamma is conjugate to the Exponential likelihood, just as Beta is conjugate to the Binomial likelihood.
+
+#### Normal-Normal
+
+Setup:
+
+$$
+X_1,\dots,X_n \overset{iid}{\sim} N(\theta,\sigma^2),
+\qquad
+\theta \sim N(\mu_0,\tau_0^2),
+$$
+
+with $\sigma^2$ known.
+
+Likelihood:
+
+$$
+f_\theta(x_1,\dots,x_n)
+\propto_\theta
+\exp\left(-\frac{n(\bar X-\theta)^2}{2\sigma^2}\right).
+$$
+
+So the data enter only through $\bar X$.
+
+Posterior:
+
+$$
+\theta \mid X_1,\dots,X_n \sim N(\mu_1,\tau_1^2),
+$$
+
+where the cleanest form is in terms of precision:
+
+$$
+\frac{1}{\tau_1^2}
+=
+\frac{n}{\sigma^2}+\frac{1}{\tau_0^2}.
+$$
+
+And the posterior mean is
+
+$$
+\mu_1
+=
+\frac{n/\sigma^2}{n/\sigma^2+1/\tau_0^2}\bar X
++
+\frac{1/\tau_0^2}{n/\sigma^2+1/\tau_0^2}\mu_0.
+$$
+
+So the Normal prior is conjugate to the Normal likelihood, and the posterior mean is again a weighted average of the MLE $\bar X$ and the prior mean $\mu_0$.
 
 ### Posterior mean as weighted average
 
@@ -662,6 +1052,87 @@ The posterior mean combines:
 - what the data say
 
 This formalizes the shrinkage intuition from Lecture 6.
+
+#### Beta-Binomial mean
+
+For Beta-Binomial, this can be written explicitly as
+
+$$
+\mathbb{E}[p \mid X]
+=
+\frac{X+\alpha}{n+\alpha+\beta}
+=
+w \, \hat p_{MLE} + (1-w)\frac{\alpha}{\alpha+\beta},
+$$
+
+where
+
+$$
+w=\frac{n}{n+\alpha+\beta}.
+$$
+
+So the posterior mean is a weighted average of the MLE and the prior mean, with $\alpha+\beta$ playing the role of a prior sample size.
+
+#### Gamma-Exponential mean
+
+For Gamma-Exponential, the posterior mean is
+
+$$
+\mathbb{E}[\lambda \mid X]
+=
+\frac{n+\alpha}{\beta+\sum_{i=1}^n X_i}
+=
+\frac{n+\alpha}{\beta+n\bar X}.
+$$
+
+Since the MLE is
+
+$$
+\hat\lambda_{MLE}=\frac{1}{\bar X},
+$$
+
+I can rewrite the posterior mean as
+
+$$
+\mathbb{E}[\lambda \mid X]
+=
+w\,\hat\lambda_{MLE} + (1-w)\frac{\alpha}{\beta},
+$$
+
+with
+
+$$
+w=\frac{n\bar X}{\beta+n\bar X}.
+$$
+
+So again the posterior mean sits between the MLE and the prior mean.
+
+#### Normal-Normal mean
+
+For Normal-Normal, the posterior mean is
+
+$$
+\mu_1
+=
+w\,\bar X + (1-w)\mu_0,
+$$
+
+where
+
+$$
+w=\frac{n/\sigma^2}{n/\sigma^2+1/\tau_0^2}.
+$$
+
+So the weight goes toward the data when the sample is large or the noise variance $\sigma^2$ is small, and it goes toward the prior when the prior variance $\tau_0^2$ is small.
+
+This is the part I would remember:
+
+- Beta-Binomial: posterior mean is between $\hat p$ and the prior mean for $p$
+- Gamma-Exponential: posterior mean is between $\hat\lambda$ and the prior mean $\alpha/\beta$
+- Normal-Normal: posterior mean is between $\bar X$ and the prior mean $\mu_0$
+- in all three cases, as $n$ grows, the weight on the MLE goes to $1$
+
+For the exponential model there is also a nice pseudodata interpretation: $\alpha$ behaves like a prior number of events and $\beta$ behaves like prior total exposure time, so the prior mean rate is $\alpha/\beta$.
 
 ### "The likelihood is all that matters"
 
@@ -826,24 +1297,97 @@ I do not need the exact formula here, but I do want to remember:
 
 Lecture 10 returns to the bootstrap, but now in the correct role: **estimating uncertainty**, not improving a point estimator.
 
+### Why bootstrap shows up here
+
+Earlier lectures often had clean formulas for the MLE, the Fisher information, and the approximate variance.
+
+Lecture 10 asks what to do when that breaks:
+
+- the MLE may not have a closed form
+- the Fisher information may be hard to calculate
+- the statistic $T=T(X_1,\dots,X_n)$ may be complicated even if the model itself is simple
+
+The bootstrap is the workaround: approximate the sampling distribution of $T$ by resampling, then use that approximation for standard errors and confidence intervals.
+
 ### Parametric bootstrap
 
 Use this when I trust a parametric family.
 
-Typical pattern:
+Suppose
+
+$$
+X_1,\dots,X_n \overset{iid}{\sim} f_\theta
+$$
+
+and I want to estimate $\theta$, but finding the standard error of $\hat\theta$ analytically is hard.
+
+The lecture's parametric-bootstrap recipe is:
 
 1. fit the model and get $\hat\theta$
-2. simulate new samples from $f_{\hat\theta}$
-3. recompute the statistic each time
-4. use the bootstrap distribution to estimate standard error or a confidence interval
+2. for each of $B$ repetitions, simulate
+
+   $$
+   X_1^{\ast},\dots,X_n^{\ast} \overset{iid}{\sim} f_{\hat\theta}
+   $$
+
+3. compute the bootstrap estimate $\hat\theta^{\ast}$ from that simulated sample
+4. estimate the standard error of $\hat\theta$ by the empirical standard deviation of the $B$ bootstrap values $\hat\theta^{\ast}$
+
+Why this is useful:
+
+- it keeps the parametric structure of the model
+- it helps when analytic variance calculations are hard
+- it is natural when my whole analysis already depends on the fitted model
+
+The tradeoff is built into the setup: this method is only as good as the parametric model I am willing to simulate from.
+
+### A unifying point about confidence intervals
+
+Once I have a collection of bootstrap replicates, the same confidence-interval constructions can be used in either setting:
+
+- parametric bootstrap: the replicates come from the fitted model $f_{\hat\theta}$
+- nonparametric bootstrap: the replicates come from the empirical distribution $F_n$
+
+So the normal, percentile, and basic/bootstrap intervals below are not tied to only one version of the bootstrap. The main difference is where the bootstrap samples come from.
 
 ### Nonparametric bootstrap
 
 Use this when I do **not** want to assume a parametric family.
 
-Then I treat the empirical cdf $F_n$ as a stand-in for the population distribution and resample from it.
+Here the underlying cdf is just some unknown $F$, and I replace it by the empirical cdf
+
+$$
+F_n(x)=\frac{1}{n}\sum_{i=1}^n I(X_i\le x).
+$$
+
+Then I treat $F_n$ as a stand-in for the population distribution and resample from it.
+
+The lecture's procedure is:
+
+1. start with i.i.d. data $X_1,\dots,X_n$
+2. resample $X_1^{\ast},\dots,X_n^{\ast}$ i.i.d. from $F_n$
+3. compute $T(X_1^{\ast},\dots,X_n^{\ast})$
+4. repeat this $B$ times
+5. use the empirical distribution of those $B$ bootstrap statistics as an approximation to the sampling distribution of $T$
+
+Why this is useful:
+
+- it avoids committing to a parametric family
+- it is often practical when $T$ is too complicated for analytic variance calculations
+- it turns the sample itself into a data-driven approximation of the population
+
+The lecture's caution is that this is an approximation justified when $n$ and $B$ are large. So it is powerful, but not magic.
 
 ### Three confidence interval methods in the lecture
+
+For a concrete 95% example, suppose:
+
+- the original estimate is $\hat\theta = 1.55$
+- the bootstrap standard error is $\widehat{se} = 0.15$
+- the 2.5th percentile of the bootstrap estimates is $1.20$
+- the 97.5th percentile of the bootstrap estimates is $1.80$
+
+Then $\alpha = 0.05$, so $\alpha/2 = 0.025$, which is why the interval uses the 2.5th and 97.5th percentiles.
 
 #### 1. Normal interval
 
@@ -853,20 +1397,69 @@ $$
 T \pm z_{\alpha/2}\widehat{se}_T.
 $$
 
-Good when the estimator is approximately normal and roughly centered at the parameter.
+This is the most familiar-looking interval.
+
+Best case:
+
+- the estimator is approximately normal
+- the estimator is roughly centered at the parameter
+
+Pros:
+
+- simple
+- easy to explain
+- close to the usual asymptotic normal interval from MLE theory
+
+Cons:
+
+- if the bootstrap distribution is skewed, this can be misleading
+- if the estimator is not centered well, the coverage can be poor
+
+So the lecture does not say "never use it," but it does say the justification depends on approximate normality and centering.
+
+In the example above, the normal interval is
+
+$$
+1.55 \pm 1.96(0.15)
+\approx
+(1.26, 1.84).
+$$
 
 #### 2. Percentile interval
 
-Take the lower and upper quantiles of the bootstrap distribution of the estimator itself.
+Take the lower and upper quantiles of the bootstrap distribution of the estimator itself. If
 
-Good:
+$$
+\hat\theta^{\ast}_{\alpha/2}
+\qquad \text{and} \qquad
+\hat\theta^{\ast}_{1-\alpha/2}
+$$
+
+are the bootstrap quantiles, the interval is
+
+$$
+(\hat\theta^{\ast}_{\alpha/2},\hat\theta^{\ast}_{1-\alpha/2}).
+$$
+
+The lecture says this works well when the distribution of the estimator is roughly symmetric and centered at the parameter. If it is also roughly normal, this essentially matches the normal interval.
+
+Pros from the lecture:
 
 - simple
-- easy to implement
+- equal-tail intervals transform nicely under any monotone function of the parameter
 
-Weakness:
+Cons from the lecture:
 
 - can behave badly if the estimator is biased
+- the theoretical justification is shaky unless the estimator is roughly unbiased and roughly normal
+
+In the example above, the percentile interval is just
+
+$$
+(1.20, 1.80),
+$$
+
+because those are the 2.5th and 97.5th percentiles of the bootstrap distribution of $\hat\theta^{\ast}$.
 
 #### 3. Basic / empirical bootstrap interval
 
@@ -878,10 +1471,83 @@ $$
 
 rather than the distribution of $\hat\theta$ directly.
 
+The logic is:
+
+if $\delta_{\alpha/2}$ and $\delta_{1-\alpha/2}$ are quantiles of the error distribution, then
+
+$$
+1-\alpha
+=
+P(\delta_{\alpha/2}<\hat\theta-\theta<\delta_{1-\alpha/2}),
+$$
+
+so the confidence interval becomes
+
+$$
+(\hat\theta-\delta_{1-\alpha/2},\hat\theta-\delta_{\alpha/2}).
+$$
+
+Of course I do not know the true error $\delta$, so the bootstrap replaces it with
+
+$$
+\delta^{\ast} = \hat\theta^{\ast}-\hat\theta.
+$$
+
+If
+
+$$
+\delta^{\ast}_{\alpha/2}
+\qquad \text{and} \qquad
+\delta^{\ast}_{1-\alpha/2}
+$$
+
+are the bootstrap quantiles, then the empirical/basic interval is
+
+$$
+(\hat\theta-\delta^{\ast}_{1-\alpha/2},\hat\theta-\delta^{\ast}_{\alpha/2}).
+$$
+
+Equivalently, because
+
+$$
+\delta^{\ast}=\hat\theta^{\ast}-\hat\theta,
+$$
+
+the endpoints can be written as
+
+$$
+(2\hat\theta-\hat\theta^{\ast}_{1-\alpha/2},\;2\hat\theta-\hat\theta^{\ast}_{\alpha/2}).
+$$
+
 The main conceptual point:
 
 - percentile interval works directly with bootstrap estimates
 - basic bootstrap recenters around the original estimate and has better bias behavior
+
+In the same example, the basic interval is
+
+$$
+(2\hat\theta-\hat\theta^{\ast}_{0.975},\;2\hat\theta-\hat\theta^{\ast}_{0.025})
+=
+(2(1.55)-1.80,\;2(1.55)-1.20)
+=
+(1.30, 1.90).
+$$
+
+So this interval is shifted relative to the percentile interval because it is recentered around the original estimate.
+
+Why the lecture likes this method more:
+
+- it actually uses the original estimate $\hat\theta$
+- it has stronger theoretical justification than the percentile method
+- it can reduce the bias problem, because the difference $\hat\theta^{\ast}-\hat\theta$ cancels a shared bias term
+
+The lecture's intuition is: if $\hat\theta$ tends to overestimate $\theta$ by some amount $b$, then $\hat\theta^{\ast}$ tends to overestimate $\hat\theta$ by roughly the same amount, so subtracting $\hat\theta$ from $\hat\theta^{\ast}$ helps remove that second layer of bias.
+
+One more useful comparison from the notes:
+
+- if the bootstrap distribution of $\hat\theta^{\ast}$ is roughly symmetric about $\hat\theta$, the percentile and basic intervals are roughly the same
+- if that distribution is also roughly normal and centered, then all three methods are roughly the same
 
 ### The main lesson
 
@@ -889,6 +1555,14 @@ Lecture 10 complements Lecture 6 perfectly:
 
 - Lecture 6: bootstrap averaging does **not** improve point estimation
 - Lecture 10: bootstrap is very useful for approximating **sampling distributions, standard errors, and confidence intervals**
+
+### What I would remember in practice
+
+- parametric bootstrap: use when the model is trusted, but formulas are hard
+- nonparametric bootstrap: use when I want to avoid a parametric model and let the empirical distribution stand in for the population
+- normal interval: simplest, but depends most strongly on approximate normality and centering
+- percentile interval: simple and transformation-friendly, but can amplify bias
+- basic bootstrap interval: more careful about bias and usually the safest of the three bootstrap intervals discussed here
 
 ### Key takeaways from Lecture 10
 
@@ -1059,6 +1733,85 @@ For one-sided alternatives in families with **monotone likelihood ratio (MLR)**,
 That means one test beats all competitors at every parameter value in the alternative.
 
 This is the clean case where optimality extends beyond simple-vs-simple.
+
+More precisely, a family has MLR in a statistic $T(X)$ if for every $\theta_1 < \theta_2$,
+
+$$
+\frac{f_{\theta_2}(x)}{f_{\theta_1}(x)}
+$$
+
+is nondecreasing in $T(x)$.
+
+The intuition is:
+
+- larger values of $T(X)$ are stronger evidence for larger values of $\theta$
+- as $\theta$ increases, the whole model shifts in a way that pushes $T(X)$ upward
+
+### Why MLR gives a UMP test
+
+This is the logical bridge I want to remember.
+
+Fix some $\theta_1 > \theta_0$. By the Neyman-Pearson lemma, the most powerful level-$\alpha$ test for
+
+$$
+H_0:\theta=\theta_0
+\qquad \text{vs} \qquad
+H_1:\theta=\theta_1
+$$
+
+rejects for large
+
+$$
+\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}.
+$$
+
+If the family has MLR in $T(X)$, then this likelihood ratio is increasing in $T(X)$. So the NP-optimal test rejects for large $T(X)$.
+
+The crucial point is that the rejection region
+
+$$
+\{T(X)\ge c\}
+$$
+
+does not depend on which particular $\theta_1 > \theta_0$ I chose; it only depends on the direction "larger than $\theta_0$." So the same test is NP-optimal against every simple alternative $\theta_1 > \theta_0$ at once. That is exactly why it is UMP for
+
+$$
+H_0:\theta\le \theta_0
+\qquad \text{vs} \qquad
+H_1:\theta>\theta_0.
+$$
+
+There is one extra step for the composite null. The lecture explains that in an MLR family, the power of the test "reject for large $T(X)$" is increasing in $\theta$. So the largest Type I error inside the null happens at the boundary $\theta=\theta_0$. If I choose $c$ so the test has level $\alpha$ at $\theta_0$, then it automatically has level at most $\alpha$ for every $\theta\le\theta_0$.
+
+### The $\bar X$ example
+
+For
+
+$$
+X_1,\dots,X_n \overset{iid}{\sim} N(\mu,\sigma^2)
+$$
+
+with known $\sigma^2$, the lecture says the family has MLR in $\bar X$.
+
+So when testing
+
+$$
+H_0:\mu\le \mu_0
+\qquad \text{vs} \qquad
+H_1:\mu>\mu_0,
+$$
+
+the UMP test rejects for large $\bar X$.
+
+Why? For any fixed $\mu_1>\mu_0$, the likelihood ratio simplifies to something increasing in $\bar X$, so NP says the best test against that $\mu_1$ rejects for large $\bar X$. Since this is true for every $\mu_1>\mu_0$, the same rejection rule works uniformly over the whole one-sided alternative.
+
+This is the clean mental picture:
+
+- Poisson family: MLR in $X$, so reject for large $X$
+- normal mean with known variance: MLR in $\bar X$, so reject for large $\bar X$
+- more generally: one-parameter exponential families tend to have MLR in their sufficient statistic
+
+So when you were remembering "LR is increasing on $\bar X$ or something," that is exactly the right idea. The increase in LR as a function of $\bar X$ is what turns the NP lemma for each fixed alternative into a single UMP test for the whole one-sided family of alternatives.
 
 #### Two-sided alternatives
 
@@ -1271,6 +2024,62 @@ $$
 $$
 \operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)}
 $$
+
+### Distribution relationships worth remembering
+
+These are the kinds of structural facts that make derivations feel less random.
+
+- Bernoulli to Binomial:
+  if $X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Bernoulli}(p)$, then
+  $$
+  \sum_{i=1}^n X_i \sim \mathrm{Binomial}(n,p).
+  $$
+
+- Exponential to Gamma:
+  if $X_1,\dots,X_k \overset{iid}{\sim} \mathrm{Exponential}(\lambda)$, then
+  $$
+  \sum_{i=1}^k X_i \sim \mathrm{Gamma}(k,\lambda)
+  $$
+  in the rate parameterization. So Gamma is the waiting-time distribution for several Poisson-process arrivals, while Exponential is the waiting time for the first arrival.
+
+- Gamma plus Gamma stays Gamma:
+  if independent gamma variables have the same rate parameter, their sum is again gamma, with shape parameters adding.
+
+- Poisson plus Poisson stays Poisson:
+  if $X \sim \mathrm{Poisson}(\lambda_1)$ and $Y \sim \mathrm{Poisson}(\lambda_2)$ are independent, then
+  $$
+  X+Y \sim \mathrm{Poisson}(\lambda_1+\lambda_2).
+  $$
+
+- Normal plus Normal stays Normal:
+  sums and averages of independent normal random variables are still normal. This is why the normal model is so algebraically convenient.
+
+- Chi-square is a special Gamma:
+  if $Z_1,\dots,Z_k \overset{iid}{\sim} N(0,1)$, then
+  $$
+  \sum_{i=1}^k Z_i^2 \sim \chi_k^2,
+  $$
+  and $\chi_k^2$ is the same as a Gamma distribution with shape $k/2$.
+
+- Beta is not a sum in the same sense, but it has two useful constructions:
+  if $U \sim \mathrm{Gamma}(\alpha,\lambda)$ and $V \sim \mathrm{Gamma}(\beta,\lambda)$ are independent, then
+  $$
+  \frac{U}{U+V} \sim \mathrm{Beta}(\alpha,\beta).
+  $$
+  Also, the $k$th order statistic of a Uniform$(0,1)$ sample has a Beta distribution:
+  $$
+  U_{(k)} \sim \mathrm{Beta}(k,n+1-k).
+  $$
+
+- Negative binomial as repeated geometric waiting:
+  depending on parameterization, a negative binomial can be viewed as the sum of independent geometric waiting times.
+
+The quick mental map I want is:
+
+- Bernoulli $\to$ Binomial by summing indicators
+- Exponential $\to$ Gamma by summing waiting times
+- Gamma $\to$ Beta by taking a ratio
+- Normal $\to$ Chi-square by squaring and summing standard normals
 
 ### Core conceptual statements
 
