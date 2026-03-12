@@ -455,6 +455,18 @@ $$
 \ell_n(\theta;X) = \sum_{i=1}^n \log f_\theta(X_i).
 $$
 
+For one observation, I will write
+
+$$
+\ell_1(\theta;X) = \log f_\theta(X).
+$$
+
+So for i.i.d. data,
+
+$$
+\ell_n(\theta;X_1,\dots,X_n) = \sum_{i=1}^n \ell_1(\theta;X_i).
+$$
+
 The MLE is the $\theta$ that maximizes this.
 
 ### Consistency of the MLE
@@ -563,6 +575,25 @@ I(\theta)
 =
 -\mathbb{E}_\theta[\ell_1''(\theta;X)].
 $$
+
+This is the one-sample Fisher information.
+
+For $n$ i.i.d. observations, the full-sample information is
+
+$$
+I_n(\theta)
+=
+\operatorname{Var}_\theta(\ell_n'(\theta))
+=
+-\mathbb{E}_\theta[\ell_n''(\theta)]
+=
+nI(\theta).
+$$
+
+So here:
+
+- $I(\theta)$ is the information from one observation
+- $I_n(\theta)=nI(\theta)$ is the information from the whole sample
 
 This identity is central.
 
@@ -701,6 +732,8 @@ This part is easy to overstate.
 - The Cramer-Rao bound is a statement about **unbiased** estimators.
 - The MLE is **asymptotically efficient** under regularity.
 - That does **not** mean every finite-sample MLE is literally unbiased and best in every possible sense.
+- An MLE can be biased in finite samples.
+- An MLE is not automatically admissible; admissibility is always relative to a specified loss, and it depends on whether some other estimator dominates it.
 
 Lecture 6 exists precisely because this stronger statement is false.
 
@@ -919,6 +952,13 @@ $$
 \text{posterior} \propto \text{likelihood} \times \text{prior}.
 $$
 
+A distinction worth keeping straight:
+
+- MLE maximizes the likelihood; in smooth interior problems, a common way to find it is to differentiate the log-likelihood and set the derivative equal to zero
+- MAP maximizes the posterior; in smooth interior problems, a common way to find it is to differentiate the log-posterior and set the derivative equal to zero
+
+So the mechanics look similar, but MAP includes the prior term while MLE does not.
+
 ### Conjugate families
 
 The lecture focuses on three standard families:
@@ -949,6 +989,22 @@ Posterior:
 $$
 p \mid X \sim \text{Beta}(X+\alpha, n-X+\beta).
 $$
+
+If I want the posterior mode, then for a Beta$(a,b)$ distribution with $a>1$ and $b>1$,
+
+$$
+\operatorname{mode}=\frac{a-1}{a+b-2}.
+$$
+
+So in the Beta-Binomial posterior,
+
+$$
+\hat p_{MAP}
+=
+\frac{X+\alpha-1}{n+\alpha+\beta-2},
+$$
+
+provided $X+\alpha>1$ and $n-X+\beta>1$.
 
 #### Gamma-Exponential
 
@@ -1052,6 +1108,8 @@ The posterior mean combines:
 - what the data say
 
 This formalizes the shrinkage intuition from Lecture 6.
+
+Bayes under squared error does not imply unbiasedness.
 
 #### Beta-Binomial mean
 
@@ -1733,6 +1791,28 @@ The lesson is:
 
 So the "best test" depends on how much structure I am willing to assume.
 
+### A handy likelihood-ratio simplification trick
+
+When I only care about the rejection region, I usually do not need the raw likelihood ratio in its original form. A faster route is:
+
+- take logs, because $\log$ is strictly increasing
+- simplify the log-likelihood ratio by dropping additive terms that do not depend on the data
+- if useful, exponentiate again, because $\exp$ is also strictly increasing
+
+So "reject for large LR" is equivalent to "reject for large log LR," and more generally equivalent to rejecting for any strictly increasing transformation of the LR.
+
+This is especially handy in one-parameter exponential families. If the likelihood ratio has the form
+
+$$
+\operatorname{LR}(x)
+=
+C(\theta_0,\theta_1)\exp\{a(\theta_0,\theta_1)T(x)\},
+$$
+
+then for fixed $\theta_1>\theta_0$, deciding whether LR is large is the same as deciding whether $T(x)$ is large whenever $a(\theta_0,\theta_1)>0$.
+
+That is often the quickest way to see why the optimal rejection rule becomes a threshold rule in a sufficient statistic.
+
 ### Lecture 13: beyond simple vs. simple
 
 Lecture 13 generalizes the picture.
@@ -1978,6 +2058,9 @@ These are the points that are easiest to blur together when reading the broader 
 - **Finite-sample efficiency versus asymptotic efficiency**:
   Cramer-Rao is a finite-sample bound for unbiased estimators, while MLE efficiency is usually an asymptotic statement. Those are not the same claim.
 
+- **MLE does not mean unbiased or admissible**:
+  an MLE can be biased in finite samples, and it is not guaranteed to be admissible. Admissibility is a separate decision-theoretic question defined relative to a chosen loss.
+
 - **Bayes estimators depend on the loss**:
   posterior mean is Bayes under squared error, posterior median under absolute loss, and posterior mode under $0$-$1$ loss.
 
@@ -2016,7 +2099,33 @@ $$
 \sqrt{n}(g(Y_n)-g(\theta)) \xrightarrow{d} N(0,(g'(\theta))^2\sigma^2)
 $$
 
+Useful reminders:
+
+- When a proof or derivation has one part converging in distribution and another part converging in probability to a constant, that is a Slutsky setup. Group them that way before simplifying.
+- A common pattern is
+
+  $$
+  \frac{\sqrt{n}(\bar X_n-\mu)}{\hat\sigma}
+  =
+  \left(\frac{\sqrt{n}(\bar X_n-\mu)}{\sigma}\right)
+  \left(\frac{\sigma}{\hat\sigma}\right),
+  $$
+
+  where the first factor has a limiting distribution and the second factor converges to $1$. Slutsky then combines them.
+
+- In the delta method, the derivative is evaluated at the original target parameter. If $g(\lambda)=1/\lambda$, then
+
+  $$
+  g'(\lambda)=-\frac{1}{\lambda^2},
+  $$
+
+  and the asymptotic variance uses this derivative evaluated at the true $\lambda$.
+
 #### Likelihood, score, information, and MLE
+
+$$
+\ell_1(\theta;X)=\log f_\theta(X)
+$$
 
 $$
 \ell_n(\theta) = \sum_{i=1}^n \log f_\theta(X_i)
@@ -2024,6 +2133,12 @@ $$
 
 $$
 S_n(\theta) = \ell_n'(\theta)
+$$
+
+$$
+S_n(\theta)=\sum_{i=1}^n S_1(\theta;X_i)
+\qquad
+\text{where } S_1(\theta;X)=\ell_1'(\theta;X)
 $$
 
 $$
@@ -2037,6 +2152,16 @@ I(\theta)
 $$
 
 $$
+I_n(\theta)=nI(\theta)
+\qquad
+\text{for i.i.d. data}
+$$
+
+$$
+S_n'(\theta)=\sum_{i=1}^n S_1'(\theta;X_i)
+$$
+
+$$
 \sqrt{n}(\hat\theta_{MLE}-\theta_0)
 \xrightarrow{d}
 N\left(0,\frac{1}{I(\theta_0)}\right)
@@ -2047,6 +2172,19 @@ $$
 \quad
 \text{for unbiased } T
 $$
+
+Useful reminders:
+
+- For i.i.d. data, the $n$-sample log-likelihood, score, and observed curvature are all sums of their one-sample versions. That is why it is often easiest to compute the one-observation form first and then sum over $i$.
+- If an unbiased estimator reaches the Cramer-Rao bound
+
+  $$
+  \operatorname{Var}(T)=\frac{1}{nI(\theta)},
+  $$
+
+  then it is efficient. This is the standard way to show an estimator has the best possible variance among unbiased estimators.
+
+- Separate that from the asymptotic statement: MLE is typically asymptotically efficient, not automatically finite-sample efficient.
 
 $$
 \operatorname{MSE} = \operatorname{Var} + \text{Bias}^2
@@ -2126,6 +2264,13 @@ Under common losses:
 - absolute loss $\Rightarrow$ Bayes estimator is posterior median
 - $0$-$1$ loss $\Rightarrow$ Bayes estimator is posterior mode
 
+Bayes optimality $\ne$ unbiasedness.
+
+Estimator rules worth distinguishing:
+
+- MLE: maximize the likelihood; in smooth interior problems, differentiate the log-likelihood
+- MAP: maximize the posterior; in smooth interior problems, differentiate the log-posterior
+
 Conjugate update patterns worth remembering:
 
 $$
@@ -2145,6 +2290,22 @@ $$
 \qquad
 \mathbb{E}[p \mid X=x] = \frac{x+\alpha}{n+\alpha+\beta}.
 $$
+
+For Beta$(a,b)$ with $a>1$ and $b>1$, the mode is
+
+$$
+\frac{a-1}{a+b-2}.
+$$
+
+So the Beta-Binomial posterior mode, hence the MAP estimator, is
+
+$$
+\hat p_{MAP}
+=
+\frac{x+\alpha-1}{n+\alpha+\beta-2},
+$$
+
+when $x+\alpha>1$ and $n-x+\beta>1$.
 
 So the posterior mean is a weighted average of the sample proportion and the prior mean:
 
@@ -2250,6 +2411,62 @@ These are the kinds of structural facts that make derivations feel less random.
   $$
 
   in the rate parameterization. So Gamma is the waiting-time distribution for several Poisson-process arrivals, while Exponential is the waiting time for the first arrival.
+
+  A scaling rule that is useful right away is: if
+
+  $$
+  Y \sim \mathrm{Gamma}(\alpha,\beta),
+  $$
+
+  then for any $c>0$,
+
+  $$
+  cY \sim \mathrm{Gamma}\left(\alpha,\frac{\beta}{c}\right)
+  $$
+
+  in the rate parameterization.
+
+  So if
+
+  $$
+  S_n=\sum_{i=1}^n X_i \sim \mathrm{Gamma}(n,\lambda),
+  $$
+
+  then
+
+  $$
+  \bar X_n=\frac{S_n}{n}\sim \mathrm{Gamma}(n,n\lambda).
+  $$
+
+  This is a quick way to track the variance:
+
+  $$
+  \operatorname{Var}(S_n)=\frac{n}{\lambda^2},
+  \qquad
+  \operatorname{Var}(\bar X_n)=\frac{1}{n^2}\operatorname{Var}(S_n)=\frac{1}{n\lambda^2}.
+  $$
+
+  A notation reminder that helps in these computations: once I know the distribution of the variable I care about, I should integrate against the density of that variable and use a dummy symbol on the right-hand side. In general, if $Y$ has density $f_Y$, then
+
+  $$
+  \mathbb{E}[h(Y)] = \int h(y)f_Y(y)\,dy.
+  $$
+
+  So if I want
+
+  $$
+  \mathbb{E}\left[\frac{1}{\bar X_n}\right],
+  $$
+
+  and I know the density of $\bar X_n$, then I write
+
+  $$
+  \mathbb{E}\left[\frac{1}{\bar X_n}\right]
+  =
+  \int_0^\infty \frac{1}{x} f_{\bar X_n}(x)\,dx.
+  $$
+
+  The point is that $x$ is just the integration variable. Inside the integral, I plug the dummy value $x$ into the function, so it becomes $1/x$, not $1/\bar X_n$.
 
 - Gamma plus Gamma stays Gamma:
   if independent gamma variables have the same rate parameter, their sum is again gamma, with shape parameters adding.
