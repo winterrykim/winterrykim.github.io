@@ -1712,6 +1712,12 @@ $$
 
 tests whether the two samples come from the same continuous distribution.
 
+Unlike the one-sample case, there is no fixed null CDF sitting on the right-hand side. Both $F_n$ and $G_m$ are random empirical CDFs, so the convenient one-sample rewrite to Uniform$(0,1)$ versus $u$ is not the main formula to remember here. For two-sample KS, the clean object is the original
+
+$$
+\sup_x |F_n(x) - G_m(x)|.
+$$
+
 ### Key takeaways from Lecture 11
 
 - definition of the empirical CDF
