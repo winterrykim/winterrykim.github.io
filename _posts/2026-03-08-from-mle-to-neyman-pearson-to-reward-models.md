@@ -8,6 +8,338 @@ categories: [technical-blogs]
 featured: false
 show_on_homepage: false
 math: true
+_styles: |
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(43, 108, 176, 0.12), transparent 34%),
+      radial-gradient(circle at top right, rgba(26, 54, 93, 0.08), transparent 26%),
+      linear-gradient(180deg, #f6f4ef 0%, #eef4fb 48%, #f8fbff 100%);
+    color: #243142;
+  }
+
+  #navbar.navbar,
+  footer.fixed-bottom {
+    background: rgba(247, 244, 238, 0.92);
+    backdrop-filter: blur(14px);
+  }
+
+  #navbar.navbar {
+    border-bottom: 1px solid rgba(26, 54, 93, 0.12);
+    box-shadow: 0 10px 30px rgba(26, 54, 93, 0.06);
+  }
+
+  #navbar .navbar-brand,
+  #navbar .nav-link,
+  #navbar .dropdown-item,
+  #light-toggle,
+  #search-toggle {
+    color: #21344d !important;
+  }
+
+  #navbar .navbar-nav .nav-item.active > .nav-link,
+  #navbar .navbar-nav .nav-item .nav-link:hover,
+  #navbar .dropdown-item:hover,
+  #light-toggle:hover,
+  #search-toggle:hover {
+    color: #2b6cb0 !important;
+  }
+
+  .container[role='main'] {
+    width: min(1120px, calc(100vw - 2rem));
+    max-width: none;
+    margin-top: 3.25rem !important;
+    margin-bottom: 4rem;
+  }
+
+  .post {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto 3.5rem;
+    padding: clamp(2.25rem, 4vw, 4rem);
+    border: 1px solid rgba(34, 68, 115, 0.11);
+    border-radius: 30px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 252, 255, 0.98) 100%);
+    box-shadow:
+      0 28px 80px rgba(26, 54, 93, 0.12),
+      0 10px 24px rgba(26, 54, 93, 0.08);
+  }
+
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, #1a365d 0%, #2b6cb0 52%, #7aa7d8 100%);
+  }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid rgba(43, 108, 176, 0.16);
+  }
+
+  .post-title,
+  .post h1,
+  .post h2,
+  .post h3,
+  .post h4 {
+    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
+    letter-spacing: -0.02em;
+    color: #18314f;
+  }
+
+  .post-title {
+    max-width: 18ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.35rem, 4.8vw, 4rem);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  #markdown-content {
+    max-width: 104ch;
+  }
+
+  .post-meta,
+  .post-tags,
+  .post-tags a {
+    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+    color: #5f7187 !important;
+    font-size: 0.84rem;
+    letter-spacing: 0.01em;
+  }
+
+  .post-meta {
+    margin-bottom: 0.85rem !important;
+    text-transform: uppercase;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0 !important;
+  }
+
+  .post-tags a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.42rem 0.8rem;
+    border: 1px solid rgba(43, 108, 176, 0.16);
+    border-radius: 999px;
+    background: rgba(235, 244, 255, 0.72);
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .post-tags a:hover {
+    transform: translateY(-1px);
+    background: rgba(219, 234, 254, 0.9);
+    border-color: rgba(43, 108, 176, 0.28);
+    text-decoration: none;
+  }
+
+  .post-content,
+  .post-content p,
+  .post-content li {
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: #2b3648;
+    font-size: 1.08rem;
+    line-height: 1.86;
+  }
+
+  #markdown-content > p:first-of-type {
+    font-size: 1.24rem;
+    line-height: 1.9;
+    color: #21344d;
+  }
+
+  .post-content p,
+  .post-content ul,
+  .post-content ol,
+  .post-content blockquote,
+  .post-content pre,
+  .post-content .highlight {
+    margin-bottom: 1.35rem;
+  }
+
+  .post h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(43, 108, 176, 0.15);
+    font-size: clamp(1.7rem, 2vw, 2.05rem);
+  }
+
+  .post h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.7rem;
+    font-size: 1.34rem;
+    color: #2b5c94;
+  }
+
+  .post h4 {
+    margin-top: 1.6rem;
+    margin-bottom: 0.45rem;
+    font-size: 1.08rem;
+    color: #4a617d;
+  }
+
+  .post a:not(.post-tags a) {
+    color: #2b6cb0;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .post a:not(.post-tags a):hover {
+    color: #1f4d80;
+  }
+
+  .post strong {
+    color: #163559;
+  }
+
+  .post hr {
+    height: 1px;
+    margin: 2.5rem 0;
+    border: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(43, 108, 176, 0.24) 20%, rgba(43, 108, 176, 0.24) 80%, transparent 100%);
+  }
+
+  .post ul,
+  .post ol {
+    padding-left: 1.3rem;
+  }
+
+  .post li {
+    padding-left: 0.2rem;
+    margin-bottom: 0.28rem;
+  }
+
+  .post ul li::marker {
+    color: #2b6cb0;
+  }
+
+  .post ol li::marker {
+    color: #1a365d;
+    font-weight: 600;
+  }
+
+  .post blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1.1rem 1.35rem;
+    border-left: 4px solid #2b6cb0;
+    border-radius: 0 18px 18px 0;
+    background: linear-gradient(180deg, rgba(235, 244, 255, 0.9) 0%, rgba(247, 250, 252, 0.96) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .post blockquote p {
+    color: #274261;
+    font-size: 1.08rem;
+  }
+
+  .post code {
+    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+    color: #1f4d80;
+    background: rgba(43, 108, 176, 0.09);
+    border-radius: 0.35rem;
+    padding: 0.15rem 0.38rem;
+  }
+
+  .post pre,
+  .post .highlight {
+    overflow-x: auto;
+    border: 1px solid rgba(26, 54, 93, 0.1);
+    border-radius: 20px;
+    background: #f7fafc;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .post pre code,
+  .post .highlight code {
+    background: transparent;
+    padding: 0;
+  }
+
+  .post table {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: collapse;
+    border: 1px solid rgba(26, 54, 93, 0.12);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .post table th,
+  .post table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+  }
+
+  .post table th {
+    color: #1a365d;
+    background: rgba(235, 244, 255, 0.88);
+  }
+
+  .post mjx-container[jax='CHTML'][display='true'] {
+    margin: 1.6rem 0 !important;
+    padding: 0.2rem 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  footer.fixed-bottom {
+    border-top: 1px solid rgba(26, 54, 93, 0.08);
+  }
+
+  footer.fixed-bottom .container,
+  footer.fixed-bottom a {
+    color: #4f6176;
+  }
+
+  @media (max-width: 768px) {
+    .container[role='main'] {
+      width: auto;
+      margin-top: 2.2rem !important;
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
+    }
+
+    .post {
+      padding: 1.35rem 1rem 2rem;
+      border-radius: 24px;
+    }
+
+    .post-title {
+      max-width: none;
+      font-size: 2.3rem;
+    }
+
+    .post-content,
+    .post-content p,
+    .post-content li,
+    #markdown-content > p:first-of-type {
+      font-size: 1.02rem;
+      line-height: 1.78;
+    }
+
+    .post-tags {
+      gap: 0.45rem;
+    }
+  }
 ---
 
 This post is an attempt to explain the arc of a mathematical statistics course in a way that still feels useful **outside** the course itself.

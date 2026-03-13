@@ -7,6 +7,272 @@ tags: [ml, notes]
 categories: [technical-blogs]
 featured: true
 math: true
+_styles: |
+  html[data-theme='light'] body {
+    background:
+      linear-gradient(180deg, #ffffff 0%, #fcfbff 100%);
+  }
+
+  .container[role='main'] {
+    width: min(1160px, calc(100vw - 2rem));
+    max-width: none;
+    margin-top: 3rem !important;
+    margin-bottom: 4rem;
+  }
+
+  .post {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto 3rem;
+    padding: clamp(2rem, 3vw, 3.5rem);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 28px;
+    background: var(--global-card-bg-color);
+    box-shadow: 0 20px 56px rgba(15, 23, 42, 0.07);
+  }
+
+  .post::before {
+    content: '';
+    position: absolute;
+    top: 1.15rem;
+    left: clamp(1.5rem, 3vw, 2.5rem);
+    width: 88px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--global-theme-color);
+  }
+
+  .post-header {
+    max-width: 108ch;
+    margin: 0 auto 2.3rem;
+    padding-top: 1rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .post-title,
+  .post h1,
+  .post h2,
+  .post h3,
+  .post h4,
+  .post h5 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    color: var(--global-text-color);
+    letter-spacing: -0.02em;
+  }
+
+  .post-title {
+    max-width: 22ch;
+    margin-bottom: 0.9rem;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  .post-meta,
+  .post-tags,
+  .post-tags a {
+    font-family: 'Roboto', sans-serif;
+    color: var(--global-text-color-light) !important;
+    font-size: 0.92rem;
+  }
+
+  .post-meta {
+    margin-bottom: 0.7rem !important;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-top: 0.55rem;
+    padding-bottom: 0 !important;
+  }
+
+  .post-tags a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.42rem 0.85rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    background: var(--global-code-bg-color);
+    text-decoration: none;
+  }
+
+  .post-tags a:hover {
+    border-color: var(--global-theme-color);
+    text-decoration: none;
+  }
+
+  #markdown-content {
+    max-width: 108ch;
+    margin: 0 auto;
+  }
+
+  .post-content,
+  .post-content p,
+  .post-content li {
+    font-family: 'Roboto', sans-serif;
+    color: var(--global-text-color);
+    font-size: 1.05rem;
+    line-height: 1.82;
+  }
+
+  #markdown-content > p:first-of-type {
+    font-size: 1.18rem;
+    line-height: 1.88;
+  }
+
+  .post-content p,
+  .post-content ul,
+  .post-content ol,
+  .post-content blockquote,
+  .post-content pre,
+  .post-content .highlight {
+    margin-bottom: 1.3rem;
+  }
+
+  .post h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--global-divider-color);
+    font-size: clamp(1.65rem, 2vw, 2rem);
+  }
+
+  .post h2::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin-top: 0.6rem;
+    border-radius: 999px;
+    background: var(--global-theme-color);
+  }
+
+  .post h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.26rem;
+    color: var(--global-theme-color);
+  }
+
+  .post h4,
+  .post h5 {
+    margin-top: 1.45rem;
+    margin-bottom: 0.45rem;
+    font-size: 1.02rem;
+  }
+
+  .post a:not(.post-tags a) {
+    color: var(--global-theme-color);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+  }
+
+  .post strong {
+    color: var(--global-text-color);
+  }
+
+  .post hr {
+    height: 1px;
+    margin: 2.4rem 0;
+    border: 0;
+    background: var(--global-divider-color);
+  }
+
+  .post ul,
+  .post ol {
+    padding-left: 1.3rem;
+  }
+
+  .post li {
+    margin-bottom: 0.3rem;
+  }
+
+  .post ul li::marker,
+  .post ol li::marker {
+    color: var(--global-theme-color);
+  }
+
+  .post blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--global-theme-color);
+    border-radius: 0 18px 18px 0;
+    background: var(--global-code-bg-color);
+  }
+
+  .post blockquote p {
+    font-size: 1.08rem;
+  }
+
+  .post code {
+    border-radius: 0.35rem;
+    padding: 0.15rem 0.38rem;
+  }
+
+  .post pre,
+  .post .highlight {
+    overflow-x: auto;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 18px;
+  }
+
+  .post pre code,
+  .post .highlight code {
+    padding: 0;
+  }
+
+  .post mjx-container[jax='CHTML'][display='true'] {
+    margin: 1.6rem 0 !important;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(181, 9, 172, 0.03) 0%, rgba(181, 9, 172, 0.015) 100%);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .post h4 + p,
+  .post h4 + ul,
+  .post h4 + ol {
+    margin-top: 0.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .container[role='main'] {
+      width: auto;
+      margin-top: 2.2rem !important;
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
+    }
+
+    .post {
+      padding: 1.45rem 1rem 2rem;
+      border-radius: 22px;
+    }
+
+    .post-title {
+      max-width: none;
+      font-size: 2.1rem;
+    }
+
+    #markdown-content > p:first-of-type,
+    .post-content,
+    .post-content p,
+    .post-content li {
+      font-size: 1.01rem;
+      line-height: 1.76;
+    }
+
+    .post mjx-container[jax='CHTML'][display='true'] {
+      padding: 0.7rem 0.75rem;
+    }
+  }
 ---
 
 This is my “future-me friendly” math review notes required to understand Diffusion Language Model.
