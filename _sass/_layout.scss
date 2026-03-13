@@ -72,9 +72,9 @@ body.sticky-bottom-footer {
   border-radius: 999px !important;
 
   /* make long labels fit nicely */
-  max-width: 220px;          /* bump to 260/300 if you want */
-  white-space: normal;       /* allow wrap */
-  word-break: break-word;    /* prevent overflow */
+  max-width: 220px; /* bump to 260/300 if you want */
+  white-space: normal; /* allow wrap */
+  word-break: break-word; /* prevent overflow */
   line-height: 1.15;
 
   /* makes multi-line pill look good */
@@ -90,13 +90,12 @@ body.sticky-bottom-footer {
   color: #fff !important;
 }
 
-
 /* Publications: make PDF/HTML links look like bordered buttons */
 .publications .links a,
 .bibliography .links a {
   display: inline-block;
   padding: 6px 14px;
-  border: 1px solid #111;      /* black border */
+  border: 1px solid #111; /* black border */
   border-radius: 4px;
   background: transparent;
   color: #111;
@@ -105,7 +104,6 @@ body.sticky-bottom-footer {
   text-transform: uppercase;
   margin-right: 10px;
 }
-
 
 /* Remove numbering from publications list */
 .publications ol.bibliography,
@@ -126,7 +124,6 @@ ol.bibliography > li {
 ol.bibliography > li::marker {
   content: "" !important;
 }
-
 
 /*****************************************************************************
 * Projects

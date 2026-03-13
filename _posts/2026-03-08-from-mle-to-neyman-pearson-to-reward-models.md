@@ -6,7 +6,7 @@ description: "A broad roadmap of statistical inference, inspired by Data 145, an
 tags: [statistics, ml, notes]
 categories: [technical-blogs]
 featured: false
-show_on_homepage: false
+show_on_homepage: true
 math: true
 _styles: |
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
