@@ -2139,17 +2139,30 @@ When I only care about the rejection region, I usually do not need the raw likel
 
 So "reject for large LR" is equivalent to "reject for large log LR," and more generally equivalent to rejecting for any strictly increasing transformation of the LR.
 
-This is especially handy in one-parameter exponential families. If the likelihood ratio has the form
+In the one-parameter exponential-family case from class,
 
 $$
-\operatorname{LR}(x)
+f_\theta(x)=h(x)\exp\{\eta(\theta)T(x)-A(\theta)\},
+$$
+
+and for an i.i.d. sample $X_1,\dots,X_n$, the simple-vs.-simple likelihood ratio satisfies
+
+$$
+\log \operatorname{LR}(X)
 =
-C(\theta_0,\theta_1)\exp\{a(\theta_0,\theta_1)T(x)\},
+\bigl(\eta(\theta_1)-\eta(\theta_0)\bigr)\sum_{i=1}^n T(X_i)
+-n\bigl(A(\theta_1)-A(\theta_0)\bigr).
 $$
 
-then for fixed $\theta_1>\theta_0$, deciding whether LR is large is the same as deciding whether $T(x)$ is large whenever $a(\theta_0,\theta_1)>0$.
+So for fixed $\theta_0,\theta_1$, the log-LR is linear in $\sum_{i=1}^n T(X_i)$, which means the LR itself is a strictly monotone function of that same statistic. Therefore the Neyman-Pearson test rejects for large values of
 
-That is often the quickest way to see why the optimal rejection rule becomes a threshold rule in a sufficient statistic.
+$$
+\sum_{i=1}^n T(X_i)
+$$
+
+when $\eta(\theta_1)>\eta(\theta_0)$, and for small values when $\eta(\theta_1)<\eta(\theta_0)$.
+
+That is the cleanest shortcut for seeing why the optimal rejection rule becomes a threshold rule in the class statistic $\sum_{i=1}^n T(X_i)$ rather than in an ad hoc summary.
 
 ### Lecture 13: beyond simple vs. simple
 
@@ -2233,6 +2246,45 @@ $$
 the UMP test rejects for large $\bar X$.
 
 Why? For any fixed $\mu_1>\mu_0$, the likelihood ratio simplifies to something increasing in $\bar X$, so NP says the best test against that $\mu_1$ rejects for large $\bar X$. Since this is true for every $\mu_1>\mu_0$, the same rejection rule works uniformly over the whole one-sided alternative.
+
+If I want the cutoff itself, I set
+
+$$
+P_{\mu_0}(\bar X>c)=\alpha.
+$$
+
+Under $H_0$, $Z=\frac{\bar X-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)$, so
+
+$$
+P\!\left(Z>\frac{c-\mu_0}{\sigma/\sqrt{n}}\right)=\alpha
+\iff
+\frac{c-\mu_0}{\sigma/\sqrt{n}}=\Phi^{-1}(1-\alpha).
+$$
+
+Hence
+
+$$
+c=\mu_0+\frac{\sigma}{\sqrt{n}}\Phi^{-1}(1-\alpha).
+$$
+
+More generally, when $n$ is large and the null distribution of the test statistic is approximately normal, I can get the cutoff the same way: approximate
+
+$$
+T_n \approx N(m_0,v_0)
+\qquad \text{under } H_0,
+$$
+
+then solve $P_{H_0}(T_n>c)\approx \alpha$ or $P_{H_0}(T_n<c)\approx \alpha$. For a right-tail test this gives
+
+$$
+c \approx m_0+\sqrt{v_0}\,\Phi^{-1}(1-\alpha),
+$$
+
+and for a left-tail test,
+
+$$
+c \approx m_0+\sqrt{v_0}\,\Phi^{-1}(\alpha).
+$$
 
 This is the clean mental picture:
 
