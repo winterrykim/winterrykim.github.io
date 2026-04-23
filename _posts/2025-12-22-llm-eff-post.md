@@ -3,7 +3,7 @@ layout: post
 title: "Transformer, Scaling, and Efficiency"
 date: 2025-12-22 18:00:00 -0800
 description: "Summary Notes on Catching Up"
-tags: [ml, notes]
+tags: [ml, notes, systems-infrastructure]
 categories: [technical-blogs]
 featured: true
 ---

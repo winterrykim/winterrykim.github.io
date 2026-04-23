@@ -3,7 +3,7 @@ layout: post
 title: "Minimum Math Review for Diffusion Language Models"
 date: 2026-01-02
 description: "Diffusion Objective, Variational Inference, and KL"
-tags: [ml, notes]
+tags: [ml, notes, statistics-inference]
 categories: [technical-blogs]
 featured: true
 math: true

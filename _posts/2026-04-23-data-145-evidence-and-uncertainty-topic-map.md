@@ -3,7 +3,7 @@ layout: post
 title: "Data 145: Evidence and Uncertainty - Topic Map"
 date: 2026-04-23
 description: "A compact topic map for my Data 145 notes, with a Phase 1 synthesis and Phase 2 study references."
-tags: [statistics, data145, notes]
+tags: [statistics, data145, notes, statistics-inference]
 categories: [technical-blogs]
 featured: false
 show_on_homepage: true

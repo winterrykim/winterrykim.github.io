@@ -15,6 +15,14 @@ pagination:
   trail:
     before: 1 # The number of links before the current page
     after: 3 # The number of links after the current page
+# Renders the curated reading paths from _data/topic_paths.yml.
+topic_paths:
+  enabled: true
+
+# Topic paths are the primary curated entry point, so the old pinned-card
+# section is disabled to avoid duplicating the homepage/blog hierarchy.
+featured_posts:
+  enabled: false
 ---
 
 <div class="post">
@@ -32,6 +40,10 @@ pagination:
     <h3>{{ site.blog_description }}</h3>
   </div>
   {% endif %}
+
+{% if page.topic_paths and page.topic_paths.enabled %}
+  {% include topic_paths.liquid %}
+{% endif %}
 
 {% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
 
@@ -60,8 +72,14 @@ pagination:
   </div>
   {% endif %}
 
+{% assign show_featured_posts = true %}
+{% if page.featured_posts %}
+  {% if page.featured_posts.enabled == false %}
+    {% assign show_featured_posts = false %}
+  {% endif %}
+{% endif %}
 {% assign featured_posts = site.posts | where: "featured", "true" %}
-{% if featured_posts.size > 0 %}
+{% if show_featured_posts and featured_posts.size > 0 %}
 <br>
 
 <div class="container featured-posts">

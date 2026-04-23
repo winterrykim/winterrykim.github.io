@@ -3,7 +3,7 @@ layout: post
 title: "Diffusion Language Models Deep Dive (Part 1: Method)"
 date: 2026-01-10
 description: "This post explains general development of diffusion language models (DLMs), including Discrete Diffusion, and Simple and Effective Masked Diffusion Language Models."
-tags: [ml, notes]
+tags: [ml, notes, modeling-generative]
 categories: [technical-blogs]
 featured: true
 math: true

@@ -3,7 +3,7 @@ layout: post
 title: "More on Parallelism"
 date: 2026-01-01
 description: "More on Sharding and Parallelism"
-tags: [ml, notes]
+tags: [ml, notes, systems-infrastructure]
 categories: [technical-blogs]
 featured: true
 math: true

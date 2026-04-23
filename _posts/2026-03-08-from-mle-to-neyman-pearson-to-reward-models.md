@@ -3,7 +3,7 @@ layout: post
 title: "Statistical Inference Notes: From MLE to Neyman-Pearson to Reward Models"
 date: 2026-03-08
 description: "My Data 145 Phase 1 notes: a broad roadmap of statistical inference, plus a short bridge to modern reward-based AI."
-tags: [statistics, ml, notes]
+tags: [statistics, ml, notes, statistics-inference]
 categories: [technical-blogs]
 featured: false
 show_on_homepage: true

@@ -3,7 +3,7 @@ layout: post
 title: "Explainable AI (XAI) and Model Interpretability (SHAP, Integrated Gradients, and Sparse Autoencoders)"
 date: 2026-02-15
 description: "A future-me-friendly toolbox of interpretability methods: feature attribution (Shapley/SHAP, Integrated Gradients), perturbation tests, and representation-level methods like Sparse Autoencoders."
-tags: [ml, notes]
+tags: [ml, notes, interpretability]
 categories: [technical-blogs]
 featured: true
 math: true

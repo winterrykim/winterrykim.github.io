@@ -15,8 +15,12 @@ selected_papers: false
 announcements:
   enabled: false
 
-latest_posts:
+# Renders the curated reading paths from _data/topic_paths.yml.
+topic_paths:
   enabled: true
+
+latest_posts:
+  enabled: false
 ---
 
 Hi! I'm Terry (Taehan) Kim, an incoming Ph.D. student in EECS at MIT. During my undergraduate studies at UC Berkeley, I broadly explored AI4Science, including AI drug discovery, biological structure prediction, and interpretability.

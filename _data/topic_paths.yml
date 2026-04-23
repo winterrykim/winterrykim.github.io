@@ -1,0 +1,38 @@
+# Topic paths shown on the homepage and blog index.
+#
+# To add a normal blog post to one of these paths, add the matching topic tag
+# to the post's front matter. Example:
+#
+# tags: [ml, notes, systems-infrastructure]
+#
+# Manual items are only for pages that are not normal posts, such as redirects
+# or older archives.
+#
+# Supported fields:
+# - title: required, visible path name.
+# - scope: optional small qualifier, e.g. "Theory" or "Domain".
+# - topic_tags: optional list of post tags that auto-populate this path.
+# - topic_categories: optional list of post categories that auto-populate this path.
+# - manual_items: optional list of non-post links.
+- title: "Statistics & Inference"
+  scope: "Theory"
+  topic_tags: [statistics-inference]
+
+- title: "Modeling"
+  topic_tags: [modeling-generative]
+
+- title: "Systems & Infrastructure"
+  topic_tags: [systems-infrastructure]
+
+- title: "Interpretability & Understanding"
+  topic_tags: [interpretability]
+
+- title: "AI for Science"
+  scope: "Domain"
+  topic_tags: [ai-for-science]
+  manual_items:
+    - title: "Old Blog Notes: AI Drug Discovery"
+      url: "https://tinyurl.com/3mctvcap"
+
+- title: "Agents & Scientific Workflows"
+  topic_tags: [agents-workflows]

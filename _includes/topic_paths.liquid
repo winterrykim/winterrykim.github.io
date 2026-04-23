@@ -1,0 +1,201 @@
+{% comment %}
+  Renders the curated reading paths defined in _data/topic_paths.yml.
+  Keep this include data-driven so future posts can be added without touching layout code.
+{% endcomment %}
+{% assign topic_paths = site.data.topic_paths %}
+{% if topic_paths and topic_paths.size > 0 %}
+  <style>
+    .topic-paths {
+      margin: 2rem 0 2.4rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--global-divider-color);
+    }
+
+    .topic-paths-header {
+      margin-bottom: 0.9rem;
+    }
+
+    .topic-paths h2 {
+      margin: 0 0 0.1rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .topic-paths-subtitle {
+      margin: 0;
+      color: var(--global-text-color-light);
+      font-size: 0.95rem;
+    }
+
+    .topic-paths-list {
+      overflow: hidden;
+      border: 1px solid var(--global-divider-color);
+      border-radius: 0.65rem;
+      background: var(--global-card-bg-color);
+    }
+
+    .topic-path {
+      display: grid;
+      grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 1.4fr);
+      min-width: 0;
+      border-bottom: 1px solid var(--global-divider-color);
+    }
+
+    .topic-path:last-child {
+      border-bottom: 0;
+    }
+
+    .topic-path > div {
+      min-width: 0;
+      padding: 0.95rem 1rem;
+    }
+
+    .topic-path-heading {
+      border-right: 1px solid var(--global-divider-color);
+      background: var(--global-code-bg-color);
+    }
+
+    .topic-path h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .topic-path-scope {
+      display: block;
+      margin-top: 0.12rem;
+      color: var(--global-text-color-light);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    .topic-path-links {
+      display: grid;
+      gap: 0.35rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .topic-path-links a {
+      font-size: 0.92rem;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .topic-path-empty {
+      color: var(--global-text-color-light);
+      font-size: 0.88rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .topic-path {
+        display: block;
+      }
+
+      .topic-path-heading {
+        border-right: 0;
+        border-bottom: 1px solid var(--global-divider-color);
+      }
+
+      .topic-path-links {
+        margin-top: 0;
+      }
+    }
+  </style>
+
+  <section class="topic-paths" aria-labelledby="topic-paths-title">
+    <div class="topic-paths-header">
+      <h2 id="topic-paths-title">My blogs</h2>
+      <p class="topic-paths-subtitle">Explore by topic</p>
+    </div>
+
+    <div class="topic-paths-list">
+      {% for path in topic_paths %}
+        <article class="topic-path">
+          <div class="topic-path-heading">
+            <h3>
+              {{ path.title }}
+              {% if path.scope %}
+                <span class="topic-path-scope">({{ path.scope }})</span>
+              {% endif %}
+            </h3>
+          </div>
+
+          <div>
+            {% assign path_item_count = 0 %}
+
+            {% for post in site.posts %}
+              {% assign include_post = false %}
+
+              {% for topic_tag in path.topic_tags %}
+                {% if post.tags contains topic_tag %}
+                  {% assign include_post = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% for topic_category in path.topic_categories %}
+                {% if post.categories contains topic_category %}
+                  {% assign include_post = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% if include_post %}
+                {% assign path_item_count = path_item_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+
+            {% if path.manual_items and path.manual_items.size > 0 %}
+              {% assign path_item_count = path_item_count | plus: path.manual_items.size %}
+            {% endif %}
+
+            {% if path_item_count > 0 %}
+              <ul class="topic-path-links">
+                {% for post in site.posts %}
+                  {% assign include_post = false %}
+
+                  {% for topic_tag in path.topic_tags %}
+                    {% if post.tags contains topic_tag %}
+                      {% assign include_post = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% for topic_category in path.topic_categories %}
+                    {% if post.categories contains topic_category %}
+                      {% assign include_post = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if include_post %}
+                    <li>
+                      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+
+                {% for item in path.manual_items %}
+                  <li>
+                    {% if item.url contains '://' %}
+                      <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+                    {% else %}
+                      <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <span class="topic-path-empty">Notes coming later.</span>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

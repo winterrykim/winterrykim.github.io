@@ -40,6 +40,11 @@ layout: default
 
     <div class="clearfix">{{ content }}</div>
 
+    <!-- Topic paths -->
+    {% if page.topic_paths and page.topic_paths.enabled %}
+      {% include topic_paths.liquid %}
+    {% endif %}
+
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
       <h2>
