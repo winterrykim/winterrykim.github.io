@@ -105,6 +105,26 @@ body.sticky-bottom-footer {
   margin-right: 10px;
 }
 
+.publication-profile-link {
+  color: var(--global-text-color-light);
+  font-size: 0.9rem;
+  margin-top: -0.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.publications .author .author-self,
+.bibliography .author .author-self {
+  font-weight: 700;
+}
+
+.publications .contribution-note,
+.bibliography .contribution-note {
+  color: var(--global-text-color-light);
+  font-size: 0.8rem;
+  margin-top: 0.15rem;
+}
+
 /* Remove numbering from publications list */
 .publications ol.bibliography,
 .bibliography ol.bibliography,

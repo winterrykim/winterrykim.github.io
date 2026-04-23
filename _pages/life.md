@@ -2,13 +2,13 @@
 layout: page
 permalink: /big_life_moments/
 title: Life
-description: List of my efforts to figure out my meaning of life.
+description: Personal notes on formative moments and how I found my way into AI4Science.
 nav: true
 nav_order: 3
 ---
 I believe everyone experiences pivotal moments that shape the course of their life. I wanted to record some of mine on this page. More reflections are also written in my AI4Science blog.
 
-### Phase of Confusion and Existential Crisis (~High School)
+### Searching for Direction (~High School)
 
 Since my school days, I’ve been fascinated by startups and technology, which led me to connect with a variety of professionals in the field. I was going through an existential crisis and wanted to find an answer—or at least a hint. I felt that just studying textbook theories for a few more years wouldn’t resolve this, so I actively sought advice from people in industry.
 

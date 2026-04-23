@@ -7,6 +7,7 @@ description: Edit the `_data/repositories.yml` and change the `github_users` and
 #Terry Edit 0601
 nav: false
 nav_order: 4
+published: false
 ---
 
 {% if site.data.repositories.github_users %}
