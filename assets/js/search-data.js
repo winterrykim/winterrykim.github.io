@@ -25,7 +25,7 @@ ninja.data = [{
           },
         },{id: "nav-life",
           title: "Life",
-          description: "List of my efforts to figure out my meaning of life.",
+          description: "Personal notes on formative moments and how I found my way into AI4Science.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/big_life_moments/";
@@ -39,7 +39,7 @@ ninja.data = [{
           },
         },{id: "nav-teaching",
           title: "Teaching",
-          description: "Teaching experience at UC Berkeley.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/teaching/";
