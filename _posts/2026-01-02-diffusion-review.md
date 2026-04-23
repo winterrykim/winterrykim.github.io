@@ -326,7 +326,7 @@ $$
 
 #### 2) The Original Training Objective (VLB)
 
-Below is the variational lower bound objective. I’ll call it $\mathcal{L}_{\mathrm{vlb}}$.
+Below is the DDPM variational-bound loss (the negative ELBO / variational upper bound on $-\log p_\theta(x_0)$). I’ll call it $\mathcal{L}_{\mathrm{vlb}}$.
 
 $$
 \mathcal{L}_{\mathrm{vlb}}
@@ -340,6 +340,8 @@ $$
 \underbrace{-\log p_\theta(x_0\mid x_1)}_{L_0}
 \Big].
 $$
+
+Direction sanity check: the KL terms are $D_{KL}(q\,\|\,p_\theta)$, so inside the log-ratio the numerator is the true forward-process posterior and the denominator is the learned reverse model.
 
 #### Quick clarification (easy to mix up)
 
@@ -433,6 +435,8 @@ q(x_{t-1}\mid x_t,x_0)
 q(x_t\mid x_{t-1})\;\frac{q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
 $$
 
+The denominator is $q(x_t\mid x_0)$ because it is the Bayes normalizer $P(B\mid C)$. When we complete the square as a function of $x_{t-1}$, this denominator is constant with respect to $x_{t-1}$, so it only affects normalization.
+
 #### Summing exponents & completing the square (why it stays Gaussian)
 
 All three terms are Gaussians, and Gaussians have the form:
@@ -441,7 +445,7 @@ $$
 \mathcal{N}(z;\mu,\sigma^2)\propto \exp\left(-\frac{(z-\mu)^2}{2\sigma^2}\right).
 $$
 
-So multiplying/dividing Gaussians adds/subtracts quadratic exponents. Writing the exponent in terms of $x_{t-1}$ yields (up to constants):
+So multiplying/dividing Gaussians adds/subtracts quadratic exponents. Equivalently, the quadratic inside the negative exponent is (up to constants):
 
 $$
 \frac{(x_t-\sqrt{\alpha_t}x_{t-1})^2}{\beta_t}
@@ -450,6 +454,8 @@ $$
 -
 \frac{(x_t-\sqrt{\bar{\alpha}_t}x_0)^2}{1-\bar{\alpha}_t}.
 $$
+
+The last term does not contain $x_{t-1}$, so it can be ignored for the square-completion step; it is shown only to keep the Bayes ratio visible.
 
 Completing the square gives a Gaussian posterior:
 
@@ -514,6 +520,8 @@ D_{KL}
 \frac{1}{2\tilde{\beta}_t}\left\|\tilde{\mu}_t(x_t,x_0)-\mu_\theta(x_t,t)\right\|^2.
 $$
 
+With equal covariance, the mean-difference part looks symmetric. The direction still matters conceptually: this term came from $D_{KL}(q\,\|\,p_\theta)$ in the variational-bound loss, and the direction would matter if the covariance terms were not fixed to match.
+
 So (up to a known time-dependent weight), we replace:
 
 $$
@@ -529,6 +537,8 @@ L_{\text{simple}}(x_0)
 \mathbb{E}_{q(x_t\mid x_0)}
 \Big[\left\|\mu_\theta(x_t,t)-\tilde{\mu}_t(x_t,x_0)\right\|^2\Big].
 $$
+
+Strictly, the KL denoising terms above run over $t=2,\dots,T$; the commonly used simplified DDPM objective is written over $t=1,\dots,T$ after folding the reconstruction endpoint into the same noise-prediction training form.
 
 #### 4B) Substitute $x_0$ using the jump formula
 
@@ -792,7 +802,7 @@ We don’t observe the “true” latent $x$. The expectation means we:
 
 #### E) KL intuition (coin story): KL as per-sample log-likelihood gap
 
-Think of KL as: how much worse it is (in average log-likelihood per sample) to explain data from a “true” distribution $P$ using an alternative distribution $Q$.
+Think of KL as: how much worse it is (in average log-likelihood per sample) to explain data from a “true” distribution $P$ using an alternative distribution $Q$. A common equivalent view writes the same gap as $-\mathbb{E}_{P}[\log(Q/P)]$; below I use the positive $D_{\mathrm{KL}}(P\|Q)$ form.
 
 Let $P$ and $Q$ be two biased coins:
 
