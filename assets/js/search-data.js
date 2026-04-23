@@ -16,13 +16,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "nav-ai4science-blog",
-          title: "AI4Science Blog",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/sci_blog/";
-          },
         },{id: "nav-life",
           title: "Life",
           description: "Personal notes on formative moments and how I found my way into AI4Science.",

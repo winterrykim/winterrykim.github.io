@@ -359,16 +359,15 @@
     </p>
 
     <div class="intuition">
-      The whole lecture sequence is a machine:
-      $$\text{normal vector}\longrightarrow\text{orthogonal projections}\longrightarrow
-      \text{signal/noise ratio}\longrightarrow z,\chi^2,t,\text{ or }F.$$
+      The whole lecture sequence is a machine: $$\text{normal vector}\longrightarrow\text{orthogonal projections}\longrightarrow \text{signal/noise
+      ratio}\longrightarrow z,\chi^2,t,\text{ or }F.$$
     </div>
 
     <div class="formula-box">
       <strong>How to read this page:</strong><br />
-      first learn what $\chi^2$, t, and F are as mathematical objects; then see why the canonical model produces exactly those objects; then learn
-      the general model-space rotation $Z=Q^TY$; then use the geometric pictures as the memory hook; finally translate one-sample t, two-sample t,
-      ANOVA, and regression into the same canonical language.
+      first learn what $\chi^2$, t, and F are as mathematical objects; then see why the canonical model produces exactly those objects; then learn the
+      general model-space rotation $Z=Q^TY$; then use the geometric pictures as the memory hook; finally translate one-sample t, two-sample t, ANOVA,
+      and regression into the same canonical language.
     </div>
 
     <p>
@@ -413,68 +412,55 @@
     </table>
 
     <div class="keyresult">
-      The memory version is:
-      $$\chi^2=\text{squared Gaussian length},\qquad
-      t=\frac{\text{signal}}{\text{estimated noise}},\qquad
-      F=\frac{\text{signal sum of squares per signal df}}{\text{residual sum of squares per residual df}}.$$
-      This is exactly what linear-model tests will produce.
+      The memory version is: $$\chi^2=\text{squared Gaussian length},\qquad t=\frac{\text{signal}}{\text{estimated noise}},\qquad F=\frac{\text{signal
+      sum of squares per signal df}}{\text{residual sum of squares per residual df}}.$$ This is exactly what linear-model tests will produce.
     </div>
 
     <div class="keyresult">
-      If $T\sim t_d$, then
-      $$T^2\sim F_{1,d}.$$
-      This is immediate because $Z^2\sim \chi^2_1$, so
-      $$T^2=\frac{Z^2/1}{V/d}.$$
-      A two-sided t-test is therefore the same rejection rule as the corresponding one-degree-of-freedom F-test.
+      If $T\sim t_d$, then $$T^2\sim F_{1,d}.$$ This is immediate because $Z^2\sim \chi^2_1$, so $$T^2=\frac{Z^2/1}{V/d}.$$ A two-sided t-test is
+      therefore the same rejection rule as the corresponding one-degree-of-freedom F-test.
     </div>
 
     <div class="intuition">
-      The unknown $\sigma$ disappears in t and F ratios. If $\tilde Z=\sigma Z$ and $\tilde V=\sigma^2V$, then
-      $$\frac{\tilde Z}{\sqrt{\tilde V/d}}=\frac{\sigma Z}{\sqrt{\sigma^2V/d}}=\frac{Z}{\sqrt{V/d}}.$$
-      This cancellation is why t and F statistics are pivotal when the variance is unknown.
+      The unknown $\sigma$ disappears in t and F ratios. If $\tilde Z=\sigma Z$ and $\tilde V=\sigma^2V$, then $$\frac{\tilde Z}{\sqrt{\tilde
+      V/d}}=\frac{\sigma Z}{\sqrt{\sigma^2V/d}}=\frac{Z}{\sqrt{V/d}}.$$ This cancellation is why t and F statistics are pivotal when the variance is
+      unknown.
     </div>
 
     <h3>1.2 What the degrees of freedom $d$ means</h3>
 
     <p>
-      If $V\sim\chi^2_d$, then by definition
-      $$V=U_1^2+\cdots+U_d^2$$
-      for $d$ independent standard normal variables. So $d$ is not a decorative adjustment: it is the number of independent Gaussian directions being
-      squared.
+      If $V\sim\chi^2_d$, then by definition $$V=U_1^2+\cdots+U_d^2$$ for $d$ independent standard normal variables. So $d$ is not a decorative
+      adjustment: it is the number of independent Gaussian directions being squared.
     </p>
 
-    <div class="formula-box">
-      $$E[V]=d\qquad\Longrightarrow\qquad E[V/d]=1.$$
-    </div>
+    <div class="formula-box">$$E[V]=d\qquad\Longrightarrow\qquad E[V/d]=1.$$</div>
 
     <div class="intuition">
-      Dimension of a Gaussian subspace = degrees of freedom of the chi-squared built from that subspace. Dividing by $d$ turns total squared
-      variation into average squared variation per direction.
+      Dimension of a Gaussian subspace = degrees of freedom of the chi-squared built from that subspace. Dividing by $d$ turns total squared variation
+      into average squared variation per direction.
     </div>
 
     <h3>1.3 The normal fact that makes everything work</h3>
 
     <div class="theorem">
-      If $Z\sim N_n(0,\sigma^2I_n)$ and $Q$ is orthogonal, meaning $Q^TQ=I_n$, then
-      $$QZ\sim N_n(0,\sigma^2I_n).$$
-      The spherical normal distribution is unchanged by rotations and reflections.
+      If $Z\sim N_n(0,\sigma^2I_n)$ and $Q$ is orthogonal, meaning $Q^TQ=I_n$, then $$QZ\sim N_n(0,\sigma^2I_n).$$ The spherical normal distribution
+      is unchanged by rotations and reflections.
     </div>
 
     <div class="proof">
-      Use the affine transformation formula for multivariate normals. If $Y=QZ$, then
-      $$Y\sim N_n(Q0,\;Q(\sigma^2I_n)Q^T)=N_n(0,\sigma^2QQ^T)=N_n(0,\sigma^2I_n).$$
-      The covariance stays spherical because $Q$ is orthogonal.
+      Use the affine transformation formula for multivariate normals. If $Y=QZ$, then $$Y\sim
+      N_n(Q0,\;Q(\sigma^2I_n)Q^T)=N_n(0,\sigma^2QQ^T)=N_n(0,\sigma^2I_n).$$ The covariance stays spherical because $Q$ is orthogonal.
     </div>
 
     <div class="keyresult">
-      If $V_1$ and $V_2$ are orthogonal subspaces of dimensions $d_1$ and $d_2$, and $Z\sim N_n(0,\sigma^2I_n)$, then
-      $$\|P_{V_1}Z\|^2\sim \sigma^2\chi^2_{d_1},\qquad \|P_{V_2}Z\|^2\sim \sigma^2\chi^2_{d_2},$$
-      and these squared projection lengths are independent.
+      If $V_1$ and $V_2$ are orthogonal subspaces of dimensions $d_1$ and $d_2$, and $Z\sim N_n(0,\sigma^2I_n)$, then $$\|P_{V_1}Z\|^2\sim
+      \sigma^2\chi^2_{d_1},\qquad \|P_{V_2}Z\|^2\sim \sigma^2\chi^2_{d_2},$$ and these squared projection lengths are independent.
     </div>
 
     <div class="intuition">
-      Choose an orthonormal basis adapted to the subspaces. After rotating into that basis, the coordinates are still independent
-      $N(0,\sigma^2)$ variables. Projection lengths are just sums of squares of disjoint coordinate blocks.
+      Choose an orthonormal basis adapted to the subspaces. After rotating into that basis, the coordinates are still independent $N(0,\sigma^2)$
+      variables. Projection lengths are just sums of squares of disjoint coordinate blocks.
     </div>
 
     <div class="warning">
@@ -533,15 +519,8 @@
 
     <p>
       The canonical model is the clean coordinate system we wish every testing problem already came in. The observed vector is split into three
-      orthogonal blocks:
-      $$Z=\begin{bmatrix}Z_0\\Z_1\\Z_r\end{bmatrix}
-      \sim
-      N_n\!\left(
-      \begin{bmatrix}\mu_0\\\mu_1\\0\end{bmatrix},
-      \sigma^2I_n
-      \right),\qquad d_0+d_1+d_r=n.$$
-      We test
-      $$H_0:\mu_1=0\qquad\text{vs}\qquad H_1:\mu_1\neq0.$$
+      orthogonal blocks: $$Z=\begin{bmatrix}Z_0\\Z_1\\Z_r\end{bmatrix} \sim N_n\!\left( \begin{bmatrix}\mu_0\\\mu_1\\0\end{bmatrix}, \sigma^2I_n
+      \right),\qquad d_0+d_1+d_r=n.$$ We test $$H_0:\mu_1=0\qquad\text{vs}\qquad H_1:\mu_1\neq0.$$
     </p>
 
     <table>
@@ -574,42 +553,28 @@
     </div>
 
     <div class="keyresult">
-      The whole test is now a comparison:
-      $$\text{How large is the signal block }Z_1\text{ compared with the noise scale?}$$
-      Everything else is just deciding whether the noise scale is known and whether the signal is a signed coordinate or a multidimensional length.
+      The whole test is now a comparison: $$\text{How large is the signal block }Z_1\text{ compared with the noise scale?}$$ Everything else is just
+      deciding whether the noise scale is known and whether the signal is a signed coordinate or a multidimensional length.
     </div>
 
     <h3>2.2 Why $Z_r$ estimates variance</h3>
 
     <p>
-      Since the residual block has known mean 0,
-      $$Z_r\sim N_{d_r}(0,\sigma^2I_{d_r}).$$
-      Written by coordinates, this means
-      $$Z_{r,1},\ldots,Z_{r,d_r}\overset{iid}{\sim}N(0,\sigma^2).$$
-      Dividing each coordinate by $\sigma$ standardizes it:
+      Since the residual block has known mean 0, $$Z_r\sim N_{d_r}(0,\sigma^2I_{d_r}).$$ Written by coordinates, this means
+      $$Z_{r,1},\ldots,Z_{r,d_r}\overset{iid}{\sim}N(0,\sigma^2).$$ Dividing each coordinate by $\sigma$ standardizes it:
       $$\frac{Z_{r,1}}{\sigma},\ldots,\frac{Z_{r,d_r}}{\sigma}\overset{iid}{\sim}N(0,1).$$
     </p>
 
     <div class="proof">
-      Now expand the squared length:
-      $$\|Z_r\|^2=Z_{r,1}^2+\cdots+Z_{r,d_r}^2.$$
-      Dividing by $\sigma^2$ can be pushed inside the sum:
-      $$\frac{\|Z_r\|^2}{\sigma^2}
-      =
-      \frac{Z_{r,1}^2+\cdots+Z_{r,d_r}^2}{\sigma^2}
-      =
-      \left(\frac{Z_{r,1}}{\sigma}\right)^2+\cdots+
-      \left(\frac{Z_{r,d_r}}{\sigma}\right)^2
-      =
-      \sum_{j=1}^{d_r}\left(\frac{Z_{r,j}}{\sigma}\right)^2.$$
-      Since this is a sum of $d_r$ squared standard normals,
-      $$\frac{\|Z_r\|^2}{\sigma^2}\sim\chi^2_{d_r}.$$
+      Now expand the squared length: $$\|Z_r\|^2=Z_{r,1}^2+\cdots+Z_{r,d_r}^2.$$ Dividing by $\sigma^2$ can be pushed inside the sum:
+      $$\frac{\|Z_r\|^2}{\sigma^2} = \frac{Z_{r,1}^2+\cdots+Z_{r,d_r}^2}{\sigma^2} = \left(\frac{Z_{r,1}}{\sigma}\right)^2+\cdots+
+      \left(\frac{Z_{r,d_r}}{\sigma}\right)^2 = \sum_{j=1}^{d_r}\left(\frac{Z_{r,j}}{\sigma}\right)^2.$$ Since this is a sum of $d_r$ squared standard
+      normals, $$\frac{\|Z_r\|^2}{\sigma^2}\sim\chi^2_{d_r}.$$
     </div>
 
     <div class="keyresult">
-      Taking expectation gives $E[\|Z_r\|^2]=d_r\sigma^2$, so
-      $$\hat\sigma^2=\frac{\|Z_r\|^2}{d_r}.$$
-      This is "average squared residual length per residual direction."
+      Taking expectation gives $E[\|Z_r\|^2]=d_r\sigma^2$, so $$\hat\sigma^2=\frac{\|Z_r\|^2}{d_r}.$$ This is "average squared residual length per
+      residual direction."
     </div>
 
     <div class="warning">
@@ -619,9 +584,7 @@
 
     <h3>2.3 The two questions to ask before any test</h3>
 
-    <p>
-      Once the canonical blocks are understood, the rest of the test is determined by two questions.
-    </p>
+    <p>Once the canonical blocks are understood, the rest of the test is determined by two questions.</p>
 
     <table>
       <tr>
@@ -646,9 +609,7 @@
       $Z_r$ supplies noise if needed, and the dimension of $Z_1$ decides whether we keep a signed coordinate or use a squared norm.
     </div>
 
-    <div class="keyresult">
-      The two questions give the four canonical tests:
-    </div>
+    <div class="keyresult">The two questions give the four canonical tests:</div>
 
     <table>
       <tr>
@@ -683,11 +644,9 @@
     <h3>3.1 From general coordinates to canonical coordinates</h3>
 
     <div class="definition">
-      In a general linear model, observe
-      $$Y\sim N_n(\theta,\sigma^2I_n),$$
-      where the mean vector lies in a model subspace $\mathcal H\subseteq\mathbb R^n$. Test nested subspaces
-      $$H_0:\theta\in\mathcal H_0\qquad \text{vs.}\qquad H_1:\theta\in\mathcal H\setminus\mathcal H_0,$$
-      with $\mathcal H_0\subseteq\mathcal H$.
+      In a general linear model, observe $$Y\sim N_n(\theta,\sigma^2I_n),$$ where the mean vector lies in a model subspace $\mathcal H\subseteq\mathbb
+      R^n$. Test nested subspaces $$H_0:\theta\in\mathcal H_0\qquad \text{vs.}\qquad H_1:\theta\in\mathcal H\setminus\mathcal H_0,$$ with $\mathcal
+      H_0\subseteq\mathcal H$.
     </div>
 
     <div class="intuition">
@@ -697,7 +656,12 @@
     </div>
 
     <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="Model space diagram with Rn, H, H0, and tested signal region">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 720 330"
+        role="img"
+        aria-label="Model space diagram with Rn, H, H0, and tested signal region"
+      >
         <defs>
           <style>
             .space-box {
@@ -753,7 +717,8 @@
 
         <rect class="space-box" x="64" y="58" width="520" height="220" rx="6"></rect>
         <text class="space-label" x="596" y="270">
-          <tspan>R</tspan><tspan baseline-shift="super" font-size="12">n</tspan>
+          <tspan>R</tspan>
+          <tspan baseline-shift="super" font-size="12">n</tspan>
         </text>
 
         <ellipse class="model-ellipse" cx="330" cy="170" rx="210" ry="88"></ellipse>
@@ -761,12 +726,14 @@
         <path class="signal-region" d="M304 107 C350 132 350 207 304 233"></path>
 
         <text class="space-label" x="186" y="172">
-          <tspan>H</tspan><tspan baseline-shift="sub" font-size="12">0</tspan>
+          <tspan>H</tspan>
+          <tspan baseline-shift="sub" font-size="12">0</tspan>
         </text>
         <text class="space-small" x="154" y="195">null means</text>
         <text class="space-label" x="383" y="164">H</text>
         <text class="space-small" x="356" y="187">
-          <tspan>H \ H</tspan><tspan baseline-shift="sub" font-size="10">0</tspan>
+          <tspan>H \ H</tspan>
+          <tspan baseline-shift="sub" font-size="10">0</tspan>
         </text>
         <text class="space-small" x="356" y="209">alternative region</text>
 
@@ -776,34 +743,50 @@
         <circle cx="540" cy="232" r="4" fill="#1a365d"></circle>
 
         <rect class="space-panel" x="66" y="16" width="588" height="34" rx="8"></rect>
-        <text class="space-tiny" x="86" y="38">
-          H: full model
-        </text>
+        <text class="space-tiny" x="86" y="38">H: full model</text>
         <text class="space-tiny" x="214" y="38">
-          H<tspan baseline-shift="sub" font-size="9">0</tspan>: null / nuisance
+          H
+          <tspan baseline-shift="sub" font-size="9">0</tspan>
+          : null / nuisance
         </text>
         <text class="space-tiny" x="380" y="38">
-          H \ H<tspan baseline-shift="sub" font-size="9">0</tspan>: alternative
+          H \ H
+          <tspan baseline-shift="sub" font-size="9">0</tspan>
+          : alternative
         </text>
         <text class="space-tiny" x="526" y="38">
-          H<tspan baseline-shift="super" font-size="9">&#8869;</tspan>: residual
+          H
+          <tspan baseline-shift="super" font-size="9">&#8869;</tspan>
+          : residual
         </text>
 
         <rect class="space-panel" x="116" y="288" width="488" height="30" rx="8"></rect>
         <text class="space-tiny" x="136" y="307">
-          Rotate with Q = [Q<tspan baseline-shift="sub" font-size="9">0</tspan> | Q<tspan baseline-shift="sub" font-size="9">1</tspan> | Q<tspan baseline-shift="sub" font-size="9">r</tspan>] to get [Z<tspan baseline-shift="sub" font-size="9">0</tspan> | Z<tspan baseline-shift="sub" font-size="9">1</tspan> | Z<tspan baseline-shift="sub" font-size="9">r</tspan>].
+          Rotate with Q = [Q
+          <tspan baseline-shift="sub" font-size="9">0</tspan>
+          | Q
+          <tspan baseline-shift="sub" font-size="9">1</tspan>
+          | Q
+          <tspan baseline-shift="sub" font-size="9">r</tspan>
+          ] to get [Z
+          <tspan baseline-shift="sub" font-size="9">0</tspan>
+          | Z
+          <tspan baseline-shift="sub" font-size="9">1</tspan>
+          | Z
+          <tspan baseline-shift="sub" font-size="9">r</tspan>
+          ].
         </text>
       </svg>
     </div>
     <div class="formula-box">
       <strong>Model-space dictionary:</strong><br />
-      $\mathcal H$: full model space; $\mathcal H_0$: null/nuisance space; $\mathcal H\setminus\mathcal H_0$: alternative region;
-      $\mathcal H\cap\mathcal H_0^\perp$: orthogonal tested signal space; $\mathcal H^\perp$: residual/noise space.
+      $\mathcal H$: full model space; $\mathcal H_0$: null/nuisance space; $\mathcal H\setminus\mathcal H_0$: alternative region; $\mathcal
+      H\cap\mathcal H_0^\perp$: orthogonal tested signal space; $\mathcal H^\perp$: residual/noise space.
     </div>
 
     <div class="keyresult">
-      Dimensions determine the canonical blocks:
-      $$d_0=\dim(\mathcal H_0),\qquad d_1=\dim(\mathcal H)-\dim(\mathcal H_0),\qquad d_r=n-\dim(\mathcal H).$$
+      Dimensions determine the canonical blocks: $$d_0=\dim(\mathcal H_0),\qquad d_1=\dim(\mathcal H)-\dim(\mathcal H_0),\qquad d_r=n-\dim(\mathcal
+      H).$$
     </div>
 
     <h3>3.2 The rotation recipe</h3>
@@ -815,39 +798,19 @@
         <li>$Q_1$: basis for $\mathcal H\cap\mathcal H_0^\perp$.</li>
         <li>$Q_r$: basis for $\mathcal H^\perp$.</li>
       </ul>
-      Stack them:
-      $$Q=[Q_0\mid Q_1\mid Q_r].$$
-      Then $Q$ is orthogonal and $Z=Q^TY$ is in canonical coordinates.
+      Stack them: $$Q=[Q_0\mid Q_1\mid Q_r].$$ Then $Q$ is orthogonal and $Z=Q^TY$ is in canonical coordinates.
     </div>
 
     <div class="proof">
-      The rotated mean is
-      $$E[Z]=E[Q^TY]=Q^T\theta
-      =
-      \begin{bmatrix}
-      Q_0^T\theta\\
-      Q_1^T\theta\\
-      Q_r^T\theta
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      \mu_0\\
-      \mu_1\\
-      0
-      \end{bmatrix}.$$
-      The residual block is 0 in mean because every allowed model mean $\theta\in\mathcal H$ is perpendicular to $\mathcal H^\perp$. The tested block
-      decides the hypothesis:
-      $$H_0:\theta\in\mathcal H_0\Longleftrightarrow \mu_1=Q_1^T\theta=0,\qquad
+      The rotated mean is $$E[Z]=E[Q^TY]=Q^T\theta = \begin{bmatrix} Q_0^T\theta\\ Q_1^T\theta\\ Q_r^T\theta \end{bmatrix} = \begin{bmatrix} \mu_0\\
+      \mu_1\\ 0 \end{bmatrix}.$$ The residual block is 0 in mean because every allowed model mean $\theta\in\mathcal H$ is perpendicular to $\mathcal
+      H^\perp$. The tested block decides the hypothesis: $$H_0:\theta\in\mathcal H_0\Longleftrightarrow \mu_1=Q_1^T\theta=0,\qquad
       H_1:\theta\in\mathcal H\setminus\mathcal H_0\Longleftrightarrow \mu_1\neq0.$$
     </div>
 
     <div class="keyresult">
-      Because $Q$ is orthogonal,
-      $$Z=Q^TY\sim N_n\!\left(
-      \begin{bmatrix}\mu_0\\\mu_1\\0\end{bmatrix},
-      \sigma^2I_n
-      \right).$$
-      That is exactly the canonical block model from Section 2: nuisance, signal, residual.
+      Because $Q$ is orthogonal, $$Z=Q^TY\sim N_n\!\left( \begin{bmatrix}\mu_0\\\mu_1\\0\end{bmatrix}, \sigma^2I_n \right).$$ That is exactly the
+      canonical block model from Section 2: nuisance, signal, residual.
     </div>
 
     <div class="intuition">
@@ -876,26 +839,22 @@
     </p>
 
     <div class="definition">
-      Observe
-      $$Z\sim N_2\!\left(\begin{bmatrix}\mu_1\\0\end{bmatrix},\sigma^2I_2\right),$$
-      and test
-      $$H_0:\mu_1=0 \qquad \text{vs} \qquad H_1:\mu_1\neq 0.$$
-      The coordinate $Z_1$ is the tested signal direction. The coordinate $Z_2$ is pure residual noise with mean 0 under both hypotheses.
+      Observe $$Z\sim N_2\!\left(\begin{bmatrix}\mu_1\\0\end{bmatrix},\sigma^2I_2\right),$$ and test $$H_0:\mu_1=0 \qquad \text{vs} \qquad
+      H_1:\mu_1\neq 0.$$ The coordinate $Z_1$ is the tested signal direction. The coordinate $Z_2$ is pure residual noise with mean 0 under both
+      hypotheses.
     </div>
 
     <div class="intuition">
       An observed point is evidence against $H_0$ when it points too strongly in the $Z_1$ direction relative to the residual direction. In the
-      unknown-variance case, that comparison is angular:
-      $$\tan(\theta)=\frac{Z_2}{Z_1},\qquad \frac{Z_1}{Z_2}=\cot(\theta),\qquad
-      \frac{Z_1^2}{Z_2^2}=\cot^2(\theta).$$
-      This tiny two-dimensional picture is the seed of the whole four-test table.
+      unknown-variance case, that comparison is angular: $$\tan(\theta)=\frac{Z_2}{Z_1},\qquad \frac{Z_1}{Z_2}=\cot(\theta),\qquad
+      \frac{Z_1^2}{Z_2^2}=\cot^2(\theta).$$ This tiny two-dimensional picture is the seed of the whole four-test table.
     </div>
 
     <h3>4.2 Angle reading: ratios become cotangents</h3>
 
     <p>
-      The diagram below is the visual version of the algebra above. The observed point has two coordinates: its horizontal signal projection $Z_1$
-      and its vertical residual projection $Z_2$. Comparing $Z_1^2/Z_2^2$ is the same as comparing the squared cotangent of the point's angle from the
+      The diagram below is the visual version of the algebra above. The observed point has two coordinates: its horizontal signal projection $Z_1$ and
+      its vertical residual projection $Z_2$. Comparing $Z_1^2/Z_2^2$ is the same as comparing the squared cotangent of the point's angle from the
       signal axis.
     </p>
 
@@ -905,7 +864,12 @@
     </div>
 
     <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Canonical Z1 Z2 testing geometry with null and alternative circles">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 720 420"
+        role="img"
+        aria-label="Canonical Z1 Z2 testing geometry with null and alternative circles"
+      >
         <defs>
           <marker id="arrow-z" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L9,3 z" fill="#1a365d"></path>
@@ -971,15 +935,34 @@
 
         <line class="axis-z" x1="55" y1="230" x2="670" y2="230"></line>
         <line class="axis-z" x1="255" y1="365" x2="255" y2="55"></line>
-        <text class="label-z" x="675" y="225">Z<tspan baseline-shift="sub" font-size="12">1</tspan></text>
-        <text class="label-z" x="265" y="55">Z<tspan baseline-shift="sub" font-size="12">2</tspan></text>
+        <text class="label-z" x="675" y="225">
+          Z
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+        </text>
+        <text class="label-z" x="265" y="55">
+          Z
+          <tspan baseline-shift="sub" font-size="12">2</tspan>
+        </text>
 
         <circle class="null-z" cx="255" cy="230" r="56"></circle>
         <circle class="alt-z" cx="510" cy="230" r="56"></circle>
-        <text class="label-z" x="220" y="163">H<tspan baseline-shift="sub" font-size="12">0</tspan></text>
-        <text class="small-z" x="202" y="185">&#956;<tspan baseline-shift="sub" font-size="10">1</tspan> = 0</text>
-        <text class="label-z" x="494" y="138">H<tspan baseline-shift="sub" font-size="12">1</tspan></text>
-        <text class="small-z" x="456" y="160">shift along Z<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+        <text class="label-z" x="220" y="163">
+          H
+          <tspan baseline-shift="sub" font-size="12">0</tspan>
+        </text>
+        <text class="small-z" x="202" y="185">
+          &#956;
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          = 0
+        </text>
+        <text class="label-z" x="494" y="138">
+          H
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+        </text>
+        <text class="small-z" x="456" y="160">
+          shift along Z
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+        </text>
 
         <line class="shift-z" x1="330" y1="188" x2="438" y2="188"></line>
         <text class="small-z" x="346" y="174">compare the ratio</text>
@@ -990,8 +973,14 @@
 
         <line class="proj-z" x1="520" y1="198" x2="520" y2="230"></line>
         <line class="proj-z" x1="255" y1="198" x2="520" y2="198"></line>
-        <text class="small-z" x="383" y="252">Z<tspan baseline-shift="sub" font-size="10">1</tspan></text>
-        <text class="small-z" x="530" y="218">Z<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+        <text class="small-z" x="383" y="252">
+          Z
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+        </text>
+        <text class="small-z" x="530" y="218">
+          Z
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+        </text>
 
         <path d="M315 230 A60 60 0 0 0 314 223" fill="none" stroke="#dd6b20" stroke-width="2"></path>
         <text class="label-z" x="321" y="224">&#952;</text>
@@ -999,28 +988,36 @@
         <rect class="panel-z" x="368" y="296" width="318" height="92" rx="10"></rect>
         <text class="label-z" x="380" y="318">&#952; = angle from signal axis</text>
         <text class="label-z" x="380" y="348">
-          <tspan>Z</tspan><tspan baseline-shift="sub" font-size="12">1</tspan><tspan> / Z</tspan><tspan baseline-shift="sub" font-size="12">2</tspan><tspan> = cot(&#952;)</tspan>
+          <tspan>Z</tspan>
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+          <tspan>/ Z</tspan>
+          <tspan baseline-shift="sub" font-size="12">2</tspan>
+          <tspan>= cot(&#952;)</tspan>
         </text>
         <text class="small-z" x="380" y="374">
-          <tspan>T</tspan><tspan baseline-shift="super" font-size="10">2</tspan>
-          <tspan> = Z</tspan><tspan baseline-shift="sub" font-size="10">1</tspan><tspan baseline-shift="super" font-size="10">2</tspan>
-          <tspan> / Z</tspan><tspan baseline-shift="sub" font-size="10">2</tspan><tspan baseline-shift="super" font-size="10">2</tspan>
-          <tspan> = cot</tspan><tspan baseline-shift="super" font-size="10">2</tspan><tspan>(&#952;)</tspan>
+          <tspan>T</tspan>
+          <tspan baseline-shift="super" font-size="10">2</tspan>
+          <tspan>= Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          <tspan baseline-shift="super" font-size="10">2</tspan>
+          <tspan>/ Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+          <tspan baseline-shift="super" font-size="10">2</tspan>
+          <tspan>= cot</tspan>
+          <tspan baseline-shift="super" font-size="10">2</tspan>
+          <tspan>(&#952;)</tspan>
         </text>
       </svg>
     </div>
     <p class="diagram-caption">
-      In the canonical $Z_1,Z_2$ coordinates, the observed point determines an angle $\theta$ from the signal axis. Since
-      $\tan(\theta)=Z_2/Z_1$, the ratio $Z_1/Z_2=\cot(\theta)=1/\tan(\theta)$. Squaring gives the $F_{1,1}$ form
-      $Z_1^2/Z_2^2=\cot^2(\theta)$.
+      In the canonical $Z_1,Z_2$ coordinates, the observed point determines an angle $\theta$ from the signal axis. Since $\tan(\theta)=Z_2/Z_1$, the
+      ratio $Z_1/Z_2=\cot(\theta)=1/\tan(\theta)$. Squaring gives the $F_{1,1}$ form $Z_1^2/Z_2^2=\cot^2(\theta)$.
     </p>
 
     <div class="keyresult">
-      A useful way to remember the unknown-variance test:
-      $$\frac{Z_1}{Z_2}=\cot(\theta),\qquad \frac{Z_1^2}{Z_2^2}=\cot^2(\theta).$$
-      The classical t statistic uses $Z_1/|Z_2|$ for the denominator scale, but the squared test is the same:
-      $$T^2=\frac{Z_1^2}{Z_2^2}.$$
-      Large $|T|$ means the observed vector is more horizontal than expected under the rotationally symmetric null.
+      A useful way to remember the unknown-variance test: $$\frac{Z_1}{Z_2}=\cot(\theta),\qquad \frac{Z_1^2}{Z_2^2}=\cot^2(\theta).$$ The classical t
+      statistic uses $Z_1/|Z_2|$ for the denominator scale, but the squared test is the same: $$T^2=\frac{Z_1^2}{Z_2^2}.$$ Large $|T|$ means the
+      observed vector is more horizontal than expected under the rotationally symmetric null.
     </div>
 
     <h3>4.3 The $n=2$ one-sample t-test is a rotation</h3>
@@ -1036,32 +1033,29 @@
     </div>
 
     <div class="definition">
-      Use
-      $$Q=\frac{1}{\sqrt2}\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix},\qquad
-      Z=Q^TX=\begin{bmatrix}(X_1+X_2)/\sqrt2\\(X_2-X_1)/\sqrt2\end{bmatrix}.$$
-      Then
-      $$Z\sim N_2\!\left(\begin{bmatrix}\sqrt2\,\mu\\0\end{bmatrix},\sigma^2I_2\right).$$
+      Use $$Q=\frac{1}{\sqrt2}\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix},\qquad
+      Z=Q^TX=\begin{bmatrix}(X_1+X_2)/\sqrt2\\(X_2-X_1)/\sqrt2\end{bmatrix}.$$ Then $$Z\sim
+      N_2\!\left(\begin{bmatrix}\sqrt2\,\mu\\0\end{bmatrix},\sigma^2I_2\right).$$
     </div>
 
     <div class="keyresult">
-      Equivalently, the rotated axes are the orthonormal basis vectors
-      $$q_1=\frac{1}{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix},\qquad
-      q_2=\frac{1}{\sqrt2}\begin{bmatrix}-1\\1\end{bmatrix}.$$
-      The new coordinates are projections:
-      $$Z_1=q_1^TX,\qquad Z_2=q_2^TX.$$
-      So $Z_1$ is "how far $X$ points along the 45-degree signal line," and $Z_2$ is "how far $X$ points along the perpendicular residual line."
+      Equivalently, the rotated axes are the orthonormal basis vectors $$q_1=\frac{1}{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix},\qquad
+      q_2=\frac{1}{\sqrt2}\begin{bmatrix}-1\\1\end{bmatrix}.$$ The new coordinates are projections: $$Z_1=q_1^TX,\qquad Z_2=q_2^TX.$$ So $Z_1$ is "how
+      far $X$ points along the 45-degree signal line," and $Z_2$ is "how far $X$ points along the perpendicular residual line."
     </div>
 
     <div class="keyresult">
-      The rotated signal coordinate is
-      $$Z_1=\frac{X_1+X_2}{\sqrt2}=\sqrt2\,\bar X,$$
-      and the residual coordinate is
-      $$Z_2=\frac{X_2-X_1}{\sqrt2}.$$
+      The rotated signal coordinate is $$Z_1=\frac{X_1+X_2}{\sqrt2}=\sqrt2\,\bar X,$$ and the residual coordinate is $$Z_2=\frac{X_2-X_1}{\sqrt2}.$$
       So the one-sample t-test with $n=2$ is exactly the $n=2$ canonical model in disguised coordinates.
     </div>
 
     <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-label="Rotation from original X coordinates to canonical Z coordinates">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 720 430"
+        role="img"
+        aria-label="Rotation from original X coordinates to canonical Z coordinates"
+      >
         <defs>
           <marker id="arrow-x" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L9,3 z" fill="#4a5568"></path>
@@ -1138,8 +1132,14 @@
 
         <line class="axis-x" x1="70" y1="220" x2="660" y2="220"></line>
         <line class="axis-x" x1="360" y1="370" x2="360" y2="45"></line>
-        <text class="small-x" x="665" y="215">X<tspan baseline-shift="sub" font-size="10">1</tspan></text>
-        <text class="small-x" x="370" y="48">X<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+        <text class="small-x" x="665" y="215">
+          X
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+        </text>
+        <text class="small-x" x="370" y="48">
+          X
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+        </text>
 
         <line class="basis-x" x1="120" y1="360" x2="600" y2="80"></line>
         <line class="basis-x" x1="120" y1="80" x2="600" y2="360"></line>
@@ -1149,22 +1149,59 @@
         <line class="resid-x" x1="360" y1="220" x2="120" y2="80"></line>
 
         <rect class="panel-x" x="526" y="18" width="164" height="50" rx="8"></rect>
-        <text class="label-x" x="538" y="37">q<tspan baseline-shift="sub" font-size="12">1</tspan> signal</text>
+        <text class="label-x" x="538" y="37">
+          q
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+          signal
+        </text>
         <text class="small-x" x="538" y="58">
-          <tspan>Z</tspan><tspan baseline-shift="sub" font-size="10">1</tspan><tspan> = q</tspan><tspan baseline-shift="sub" font-size="10">1</tspan><tspan baseline-shift="super" font-size="10">T</tspan><tspan> X</tspan>
+          <tspan>Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          <tspan>= q</tspan>
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          <tspan baseline-shift="super" font-size="10">T</tspan>
+          <tspan>X</tspan>
         </text>
 
         <rect class="panel-x" x="30" y="18" width="166" height="50" rx="8"></rect>
-        <text class="label-x" x="42" y="37">q<tspan baseline-shift="sub" font-size="12">2</tspan> residual</text>
-        <text class="small-x" x="42" y="58">
-          <tspan>Z</tspan><tspan baseline-shift="sub" font-size="10">2</tspan><tspan> = q</tspan><tspan baseline-shift="sub" font-size="10">2</tspan><tspan baseline-shift="super" font-size="10">T</tspan><tspan> X</tspan>
+        <text class="label-x" x="42" y="37">
+          q
+          <tspan baseline-shift="sub" font-size="12">2</tspan>
+          residual
         </text>
-        <text class="small-x" x="392" y="104">line X<tspan baseline-shift="sub" font-size="10">1</tspan> = X<tspan baseline-shift="sub" font-size="10">2</tspan></text>
-        <text class="small-x" x="142" y="132">line X<tspan baseline-shift="sub" font-size="10">1</tspan> = -X<tspan baseline-shift="sub" font-size="10">2</tspan></text>
-        <text class="label-x" x="323" y="154">H<tspan baseline-shift="sub" font-size="12">0</tspan></text>
+        <text class="small-x" x="42" y="58">
+          <tspan>Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+          <tspan>= q</tspan>
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+          <tspan baseline-shift="super" font-size="10">T</tspan>
+          <tspan>X</tspan>
+        </text>
+        <text class="small-x" x="392" y="104">
+          line X
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          = X
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+        </text>
+        <text class="small-x" x="142" y="132">
+          line X
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          = -X
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+        </text>
+        <text class="label-x" x="323" y="154">
+          H
+          <tspan baseline-shift="sub" font-size="12">0</tspan>
+        </text>
         <text class="small-x" x="303" y="176">&#956; = 0</text>
-        <text class="label-x" x="612" y="145">H<tspan baseline-shift="sub" font-size="12">1</tspan></text>
-        <text class="small-x" x="584" y="168">shift along q<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+        <text class="label-x" x="612" y="145">
+          H
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+        </text>
+        <text class="small-x" x="584" y="168">
+          shift along q
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+        </text>
 
         <line class="vec-x" x1="360" y1="220" x2="515" y2="135"></line>
         <circle class="obs-x" cx="515" cy="135" r="7"></circle>
@@ -1176,51 +1213,57 @@
         <text class="small-x" x="432" y="274">45&#176; rotation</text>
 
         <rect class="panel-x" x="72" y="282" width="258" height="102" rx="10"></rect>
-        <text class="label-x" x="84" y="302">Original axes: X<tspan baseline-shift="sub" font-size="12">1</tspan>, X<tspan baseline-shift="sub" font-size="12">2</tspan></text>
+        <text class="label-x" x="84" y="302">
+          Original axes: X
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+          , X
+          <tspan baseline-shift="sub" font-size="12">2</tspan>
+        </text>
         <text class="small-x" x="84" y="324">data point stays fixed</text>
         <text class="small-x" x="84" y="346">
-          <tspan>q</tspan><tspan baseline-shift="sub" font-size="10">1</tspan><tspan> = (1/&#8730;2)(1, 1)</tspan>
+          <tspan>q</tspan>
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          <tspan>= (1/&#8730;2)(1, 1)</tspan>
         </text>
         <text class="small-x" x="84" y="368">
-          <tspan>q</tspan><tspan baseline-shift="sub" font-size="10">2</tspan><tspan> = (1/&#8730;2)(-1, 1)</tspan>
+          <tspan>q</tspan>
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+          <tspan>= (1/&#8730;2)(-1, 1)</tspan>
         </text>
 
         <rect class="panel-x" x="418" y="310" width="258" height="58" rx="10"></rect>
-        <text class="label-x" x="430" y="330">Canonical axes: Z<tspan baseline-shift="sub" font-size="12">1</tspan>, Z<tspan baseline-shift="sub" font-size="12">2</tspan></text>
+        <text class="label-x" x="430" y="330">
+          Canonical axes: Z
+          <tspan baseline-shift="sub" font-size="12">1</tspan>
+          , Z
+          <tspan baseline-shift="sub" font-size="12">2</tspan>
+        </text>
         <text class="small-x" x="430" y="352">
-          <tspan>Z</tspan><tspan baseline-shift="sub" font-size="10">1</tspan><tspan>, Z</tspan><tspan baseline-shift="sub" font-size="10">2</tspan><tspan> are projections</tspan>
+          <tspan>Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">1</tspan>
+          <tspan>, Z</tspan>
+          <tspan baseline-shift="sub" font-size="10">2</tspan>
+          <tspan>are projections</tspan>
         </text>
       </svg>
     </div>
     <p class="diagram-caption">
       The transformation $Z=Q^TX$ rotates the coordinate system so the diagonal mean direction becomes the $Z_1$ signal axis. The observed point is
-      the same point in the plane; only the axes change. In the new axes, $Z_1=(X_1+X_2)/\sqrt2$ is the signal projection and
-      $Z_2=(X_2-X_1)/\sqrt2$ is the residual projection. This is the rotated version of the previous canonical picture.
+      the same point in the plane; only the axes change. In the new axes, $Z_1=(X_1+X_2)/\sqrt2$ is the signal projection and $Z_2=(X_2-X_1)/\sqrt2$
+      is the residual projection. This is the rotated version of the previous canonical picture.
     </p>
 
     <div class="intuition">
-      In your handwritten picture, this is the relationship
-      $$\frac{\sqrt2\,\bar X}{S}=\cot\!\bigl(\angle(X,\text{45-degree signal line})\bigr).$$
-      The point $X$ is compared to the diagonal signal line in the original coordinates; after rotation, that same comparison becomes the ratio
+      In your handwritten picture, this is the relationship $$\frac{\sqrt2\,\bar X}{S}=\cot\!\bigl(\angle(X,\text{45-degree signal line})\bigr).$$ The
+      point $X$ is compared to the diagonal signal line in the original coordinates; after rotation, that same comparison becomes the ratio
       $Z_1/|Z_2|$ in canonical coordinates.
     </div>
 
     <div class="proof">
-      The classical statistic is
-      $$T_{\text{classical}}=\frac{\sqrt2\,\bar X}{S}.$$
-      The sample standard deviation still comes from subtracting the sample mean. For $n=2$,
-      $$\bar X=\frac{X_1+X_2}{2},$$
-      so
-      $$X_1-\bar X=\frac{X_1-X_2}{2},\qquad
-      X_2-\bar X=\frac{X_2-X_1}{2}.$$
-      Therefore
-      $$S^2=(X_1-\bar X)^2+(X_2-\bar X)^2
-      =\frac{(X_1-X_2)^2}{4}+\frac{(X_2-X_1)^2}{4}
-      =\frac{(X_1-X_2)^2}{2},$$
-      so
-      $$S=\frac{|X_1-X_2|}{\sqrt2}.$$
-      Since $Z_1=(X_1+X_2)/\sqrt2$ and $|Z_2|=|X_2-X_1|/\sqrt2$,
-      $$T_{\text{classical}}=\frac{(X_1+X_2)/\sqrt2}{|X_1-X_2|/\sqrt2}=\frac{Z_1}{|Z_2|}.$$
+      The classical statistic is $$T_{\text{classical}}=\frac{\sqrt2\,\bar X}{S}.$$ The sample standard deviation still comes from subtracting the
+      sample mean. For $n=2$, $$\bar X=\frac{X_1+X_2}{2},$$ so $$X_1-\bar X=\frac{X_1-X_2}{2},\qquad X_2-\bar X=\frac{X_2-X_1}{2}.$$ Therefore
+      $$S^2=(X_1-\bar X)^2+(X_2-\bar X)^2 =\frac{(X_1-X_2)^2}{4}+\frac{(X_2-X_1)^2}{4} =\frac{(X_1-X_2)^2}{2},$$ so $$S=\frac{|X_1-X_2|}{\sqrt2}.$$
+      Since $Z_1=(X_1+X_2)/\sqrt2$ and $|Z_2|=|X_2-X_1|/\sqrt2$, $$T_{\text{classical}}=\frac{(X_1+X_2)/\sqrt2}{|X_1-X_2|/\sqrt2}=\frac{Z_1}{|Z_2|}.$$
     </div>
 
     <div class="intuition">
@@ -1231,38 +1274,26 @@
     <h3>4.4 General $n$ one-sample t-test</h3>
 
     <div class="definition">
-      Let
-      $$X_1,\ldots,X_n\overset{iid}{\sim}N(\mu,\sigma^2),\qquad X\sim N_n(\mu\mathbf1,\sigma^2I_n).$$
-      The signal subspace is the line spanned by $\mathbf1=(1,\ldots,1)^T$.
+      Let $$X_1,\ldots,X_n\overset{iid}{\sim}N(\mu,\sigma^2),\qquad X\sim N_n(\mu\mathbf1,\sigma^2I_n).$$ The signal subspace is the line spanned by
+      $\mathbf1=(1,\ldots,1)^T$.
     </div>
 
     <div class="keyresult">
-      Let
-      $$q_1=\frac{\mathbf1}{\sqrt n},\qquad Z_1=q_1^TX=\sqrt n\,\bar X.$$
-      Extend $q_1$ to an orthonormal basis $Q=[q_1\mid Q_r]$ and define $Z_r=Q_r^TX$. Then
-      $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim
-      N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
+      Let $$q_1=\frac{\mathbf1}{\sqrt n},\qquad Z_1=q_1^TX=\sqrt n\,\bar X.$$ Extend $q_1$ to an orthonormal basis $Q=[q_1\mid Q_r]$ and define
+      $Z_r=Q_r^TX$. Then $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
     </div>
 
     <div class="proof">
       Why does the residual block have mean 0? Start from $E[X]=\mu\mathbf1$. Since every column of $Q_r$ is perpendicular to $\mathbf1$,
-      $$Q_r^T\mathbf1=0.$$
-      Therefore
-      $$E[Z_r]=E[Q_r^TX]=Q_r^TE[X]=Q_r^T(\mu\mathbf1)=\mu Q_r^T\mathbf1=0.$$
-      The signal coordinate keeps the mean because $q_1$ points exactly along $\mathbf1$:
-      $$E[Z_1]=E[q_1^TX]=q_1^T(\mu\mathbf1)=\sqrt n\,\mu.$$
-      Finally, because $Q$ is orthogonal,
-      $$\operatorname{Var}(Q^TX)=Q^T(\sigma^2I_n)Q=\sigma^2I_n.$$
-      This is the proof of the canonical rotated form
-      $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim
-      N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
+      $$Q_r^T\mathbf1=0.$$ Therefore $$E[Z_r]=E[Q_r^TX]=Q_r^TE[X]=Q_r^T(\mu\mathbf1)=\mu Q_r^T\mathbf1=0.$$ The signal coordinate keeps the mean
+      because $q_1$ points exactly along $\mathbf1$: $$E[Z_1]=E[q_1^TX]=q_1^T(\mu\mathbf1)=\sqrt n\,\mu.$$ Finally, because $Q$ is orthogonal,
+      $$\operatorname{Var}(Q^TX)=Q^T(\sigma^2I_n)Q=\sigma^2I_n.$$ This is the proof of the canonical rotated form
+      $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
     </div>
 
     <div class="proof">
-      Now use the rotated coordinates to recognize the usual sample variance. Orthogonal decomposition gives
-      $$\|X\|^2=Z_1^2+\|Z_r\|^2.$$
-      Since $Z_1=\sqrt n\,\bar X$,
-      $$\|Z_r\|^2=\sum_{i=1}^nX_i^2-n\bar X^2=\sum_{i=1}^n(X_i-\bar X)^2=(n-1)S^2.$$
+      Now use the rotated coordinates to recognize the usual sample variance. Orthogonal decomposition gives $$\|X\|^2=Z_1^2+\|Z_r\|^2.$$ Since
+      $Z_1=\sqrt n\,\bar X$, $$\|Z_r\|^2=\sum_{i=1}^nX_i^2-n\bar X^2=\sum_{i=1}^n(X_i-\bar X)^2=(n-1)S^2.$$
     </div>
 
     <div class="intuition">
@@ -1276,11 +1307,8 @@
     </div>
 
     <div class="keyresult">
-      Under $H_0:\mu=0$,
-      $$\frac{Z_1}{\sigma}=\frac{\sqrt n\,\bar X}{\sigma}\sim N(0,1),$$
-      and
-      $$\frac{\|Z_r\|^2}{\sigma^2}=\frac{(n-1)S^2}{\sigma^2}\sim \chi^2_{n-1},$$
-      independently. Therefore
+      Under $H_0:\mu=0$, $$\frac{Z_1}{\sigma}=\frac{\sqrt n\,\bar X}{\sigma}\sim N(0,1),$$ and
+      $$\frac{\|Z_r\|^2}{\sigma^2}=\frac{(n-1)S^2}{\sigma^2}\sim \chi^2_{n-1},$$ independently. Therefore
       $$T=\frac{Z_1}{\sqrt{\|Z_r\|^2/(n-1)}}=\frac{\sqrt n\,\bar X}{S}\sim t_{n-1}.$$
     </div>
 
@@ -1313,17 +1341,14 @@
     <h3>5.1 Confidence intervals by inversion</h3>
 
     <p>
-      Lecture 14's test-confidence interval duality returns here. For the common one-dimensional unknown-variance case, testing
-      $H_0:\mu_1=\mu_1^0$ uses
-      $$\frac{Z_1-\mu_1^0}{\hat\sigma}\sim t_{d_r}.$$
-      The non-rejected values form the interval
-      $$\mu_1\in Z_1\pm \hat\sigma\,t_{d_r,1-\alpha/2}.$$
+      Lecture 14's test-confidence interval duality returns here. For the common one-dimensional unknown-variance case, testing $H_0:\mu_1=\mu_1^0$
+      uses $$\frac{Z_1-\mu_1^0}{\hat\sigma}\sim t_{d_r}.$$ The non-rejected values form the interval $$\mu_1\in Z_1\pm
+      \hat\sigma\,t_{d_r,1-\alpha/2}.$$
     </p>
 
     <div class="keyresult">
-      Known variance gives the corresponding normal interval:
-      $$\mu_1\in Z_1\pm \sigma z_{\alpha/2}.$$
-      Unknown variance replaces $\sigma$ by $\hat\sigma$ and replaces the normal cutoff by the t cutoff.
+      Known variance gives the corresponding normal interval: $$\mu_1\in Z_1\pm \sigma z_{\alpha/2}.$$ Unknown variance replaces $\sigma$ by
+      $\hat\sigma$ and replaces the normal cutoff by the t cutoff.
     </div>
 
     <hr />
@@ -1340,19 +1365,13 @@
     <h3>6.1 Equal-variance two-sample t-test</h3>
 
     <div class="definition">
-      Group 1 has $X_1,\ldots,X_m\overset{iid}{\sim}N(\mu,\sigma^2)$ and group 2 has
-      $Y_1,\ldots,Y_n\overset{iid}{\sim}N(\nu,\sigma^2)$. Let $N=m+n$ and stack the observations into
-      $$W=(X_1,\ldots,X_m,Y_1,\ldots,Y_n)^T.$$
-      Test $H_0:\mu=\nu$.
+      Group 1 has $X_1,\ldots,X_m\overset{iid}{\sim}N(\mu,\sigma^2)$ and group 2 has $Y_1,\ldots,Y_n\overset{iid}{\sim}N(\nu,\sigma^2)$. Let $N=m+n$
+      and stack the observations into $$W=(X_1,\ldots,X_m,Y_1,\ldots,Y_n)^T.$$ Test $H_0:\mu=\nu$.
     </div>
 
     <div class="keyresult">
-      The full model space is
-      $$\mathcal H=\Span(a,b),$$
-      where $a$ is 1 on group 1 and 0 on group 2, while $b$ is 0 on group 1 and 1 on group 2. The null space is
-      $$\mathcal H_0=\Span(\mathbf1_N).$$
-      Therefore
-      $$d_0=1,\qquad d_1=1,\qquad d_r=N-2.$$
+      The full model space is $$\mathcal H=\Span(a,b),$$ where $a$ is 1 on group 1 and 0 on group 2, while $b$ is 0 on group 1 and 1 on group 2. The
+      null space is $$\mathcal H_0=\Span(\mathbf1_N).$$ Therefore $$d_0=1,\qquad d_1=1,\qquad d_r=N-2.$$
     </div>
 
     <div class="formula-box">
@@ -1366,42 +1385,28 @@
 
     <p>
       The signal direction is the contrast between group means. Define
-      $$c=\left(\underbrace{\frac1m,\ldots,\frac1m}_{m},\underbrace{-\frac1n,\ldots,-\frac1n}_{n}\right)^T.$$
-      Then
-      $$c^TW=\bar X-\bar Y,\qquad \|c\|^2=\frac1m+\frac1n.$$
-      The unit signal vector is
-      $$q_1=\frac{c}{\sqrt{1/m+1/n}}.$$
+      $$c=\left(\underbrace{\frac1m,\ldots,\frac1m}_{m},\underbrace{-\frac1n,\ldots,-\frac1n}_{n}\right)^T.$$ Then $$c^TW=\bar X-\bar Y,\qquad
+      \|c\|^2=\frac1m+\frac1n.$$ The unit signal vector is $$q_1=\frac{c}{\sqrt{1/m+1/n}}.$$
     </p>
 
-    <div class="keyresult">
-      The signal coordinate is
-      $$Z_1=q_1^TW=\frac{\bar X-\bar Y}{\sqrt{1/m+1/n}}.$$
-      Under $H_0$, $Z_1\sim N(0,\sigma^2)$.
-    </div>
+    <div class="keyresult">The signal coordinate is $$Z_1=q_1^TW=\frac{\bar X-\bar Y}{\sqrt{1/m+1/n}}.$$ Under $H_0$, $Z_1\sim N(0,\sigma^2)$.</div>
 
     <h4>Residual direction and pooled variance</h4>
 
     <div class="proof">
-      The residual projection has squared length
-      $$\|Z_r\|^2=\sum_{i=1}^m(X_i-\bar X)^2+\sum_{j=1}^n(Y_j-\bar Y)^2.$$
-      Hence
-      $$\|Z_r\|^2=(m-1)S_X^2+(n-1)S_Y^2,$$
-      with $d_r=N-2$.
+      The residual projection has squared length $$\|Z_r\|^2=\sum_{i=1}^m(X_i-\bar X)^2+\sum_{j=1}^n(Y_j-\bar Y)^2.$$ Hence
+      $$\|Z_r\|^2=(m-1)S_X^2+(n-1)S_Y^2,$$ with $d_r=N-2$.
     </div>
 
-    <div class="definition">
-      The pooled variance estimate is
-      $$S_p^2=\frac{(m-1)S_X^2+(n-1)S_Y^2}{N-2}.$$
+    <div class="definition">The pooled variance estimate is $$S_p^2=\frac{(m-1)S_X^2+(n-1)S_Y^2}{N-2}.$$</div>
+
+    <div class="keyresult">
+      The canonical $d_1=1$, unknown-variance test becomes the classical pooled two-sample t-test: $$T=\frac{Z_1}{S_p}=\frac{\bar X-\bar
+      Y}{S_p\sqrt{1/m+1/n}}\sim t_{N-2}\quad\text{under }H_0.$$
     </div>
 
     <div class="keyresult">
-      The canonical $d_1=1$, unknown-variance test becomes the classical pooled two-sample t-test:
-      $$T=\frac{Z_1}{S_p}=\frac{\bar X-\bar Y}{S_p\sqrt{1/m+1/n}}\sim t_{N-2}\quad\text{under }H_0.$$
-    </div>
-
-    <div class="keyresult">
-      The corresponding confidence interval for $\mu-\nu$ is
-      $$(\bar X-\bar Y)\pm t_{N-2,1-\alpha/2}\,S_p\sqrt{\frac1m+\frac1n}.$$
+      The corresponding confidence interval for $\mu-\nu$ is $$(\bar X-\bar Y)\pm t_{N-2,1-\alpha/2}\,S_p\sqrt{\frac1m+\frac1n}.$$
     </div>
 
     <div class="warning">
@@ -1412,22 +1417,19 @@
     <h3>6.2 Where one-way ANOVA fits</h3>
 
     <div class="definition">
-      One-way ANOVA compares $k$ group means under a common normal variance assumption. If the group sizes are $n_1,\ldots,n_k$ and
-      $N=\sum_{g=1}^k n_g$, write the observations as $Y_{gi}$ for group $g$ and observation $i$. The full model space is spanned by the $k$ group
-      indicator vectors.
+      One-way ANOVA compares $k$ group means under a common normal variance assumption. If the group sizes are $n_1,\ldots,n_k$ and $N=\sum_{g=1}^k
+      n_g$, write the observations as $Y_{gi}$ for group $g$ and observation $i$. The full model space is spanned by the $k$ group indicator vectors.
     </div>
 
     <div class="keyresult">
-      For the one-way ANOVA null that all group means are equal:
-      $$\mathcal H_0=\Span(\mathbf1_N),\qquad \dim(\mathcal H_0)=1,$$
-      while the full model has dimension $k$. Therefore
-      $$d_0=1,\qquad d_1=k-1,\qquad d_r=N-k.$$
+      For the one-way ANOVA null that all group means are equal: $$\mathcal H_0=\Span(\mathbf1_N),\qquad \dim(\mathcal H_0)=1,$$ while the full model
+      has dimension $k$. Therefore $$d_0=1,\qquad d_1=k-1,\qquad d_r=N-k.$$
     </div>
 
     <div class="formula-box">
       <strong>Identify the blocks:</strong><br />
-      the grand-mean line is nuisance, the $k-1$ independent group contrasts are signal, and the within-group deviations are residual noise. Since
-      the signal is multidimensional and $\sigma^2$ is unknown, choose the F row.
+      the grand-mean line is nuisance, the $k-1$ independent group contrasts are signal, and the within-group deviations are residual noise. Since the
+      signal is multidimensional and $\sigma^2$ is unknown, choose the F row.
     </div>
 
     <div class="intuition">
@@ -1436,51 +1438,40 @@
     </div>
 
     <div class="proof">
-      The null model fits one shared grand mean:
-      $$\RSS_0=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2.$$
-      This leftover error contains both the group-mean mismatch and the within-group noise. The full model fits a separate mean for each group:
-      $$\RSS=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$
-      This is only within-group noise. Therefore
-      $$\RSS_0-\RSS=\sum_{g=1}^k n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2,$$
-      which is the between-group signal.
+      The null model fits one shared grand mean: $$\RSS_0=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2.$$ This leftover error contains
+      both the group-mean mismatch and the within-group noise. The full model fits a separate mean for each group:
+      $$\RSS=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ This is only within-group noise. Therefore $$\RSS_0-\RSS=\sum_{g=1}^k n_g(\bar
+      Y_{g\cdot}-\bar Y_{\cdot\cdot})^2,$$ which is the between-group signal.
     </div>
 
     <div class="keyresult">
-      This is exactly the canonical decomposition:
-      $$\RSS_0=\|Z_1\|^2+\|Z_r\|^2,\qquad \RSS=\|Z_r\|^2,\qquad \RSS_0-\RSS=\|Z_1\|^2.$$
-      So ANOVA compares the between-group signal length to the within-group residual-noise length.
+      This is exactly the canonical decomposition: $$\RSS_0=\|Z_1\|^2+\|Z_r\|^2,\qquad \RSS=\|Z_r\|^2,\qquad \RSS_0-\RSS=\|Z_1\|^2.$$ So ANOVA
+      compares the between-group signal length to the within-group residual-noise length.
     </div>
 
     <div class="formula-box">
       <strong>Plain-language F ratio:</strong><br />
-      $$F=
-      \frac{\text{between-group variation per signal dimension}}
-      {\text{within-group variation per residual dimension}}.$$
-      Under $H_0$, both pieces estimate the same noise variance $\sigma^2$, so the ratio should be near 1. A large value means the group means are
-      farther apart than the within-group noise would suggest.
+      $$F= \frac{\text{between-group variation per signal dimension}} {\text{within-group variation per residual dimension}}.$$ Under $H_0$, both
+      pieces estimate the same noise variance $\sigma^2$, so the ratio should be near 1. A large value means the group means are farther apart than
+      the within-group noise would suggest.
     </div>
 
     <div class="keyresult">
       If $\RSS_0$ is the total sum of squares around the grand mean and $\RSS$ is the within-group residual sum of squares, then
-      $$F=\frac{(\RSS_0-\RSS)/(k-1)}{\RSS/(N-k)}\sim F_{k-1,N-k}\quad\text{under }H_0.$$
-      This is one-way ANOVA written in the same nested-subspace language as regression.
+      $$F=\frac{(\RSS_0-\RSS)/(k-1)}{\RSS/(N-k)}\sim F_{k-1,N-k}\quad\text{under }H_0.$$ This is one-way ANOVA written in the same nested-subspace
+      language as regression.
     </div>
 
     <h3>6.3 Linear regression as projection</h3>
 
     <div class="definition">
-      In regression,
-      $$Y_i=x_i^T\beta+\epsilon_i,\qquad \epsilon_i\overset{iid}{\sim}N(0,\sigma^2),$$
-      or in matrix form
-      $$Y\sim N_n(X\beta,\sigma^2I_n).$$
-      Assume the design matrix $X$ has full column rank $d$.
+      In regression, $$Y_i=x_i^T\beta+\epsilon_i,\qquad \epsilon_i\overset{iid}{\sim}N(0,\sigma^2),$$ or in matrix form $$Y\sim
+      N_n(X\beta,\sigma^2I_n).$$ Assume the design matrix $X$ has full column rank $d$.
     </div>
 
     <div class="keyresult">
-      The model space is
-      $$\mathcal H=\Col(X),\qquad \dim(\mathcal H)=d.$$
-      The fitted values are the orthogonal projection of $Y$ onto this column space:
-      $$\hat Y=X\hat\beta=P_{\mathcal H}Y,\qquad P_{\mathcal H}=X(X^TX)^{-1}X^T.$$
+      The model space is $$\mathcal H=\Col(X),\qquad \dim(\mathcal H)=d.$$ The fitted values are the orthogonal projection of $Y$ onto this column
+      space: $$\hat Y=X\hat\beta=P_{\mathcal H}Y,\qquad P_{\mathcal H}=X(X^TX)^{-1}X^T.$$
     </div>
 
     <div class="intuition">
@@ -1490,22 +1481,15 @@
     </div>
 
     <div class="definition">
-      The residual vector is
-      $$r=Y-\hat Y=(I-P_{\mathcal H})Y=P_{\mathcal H^\perp}Y,$$
-      and
-      $$\RSS=\|r\|^2=\|P_{\mathcal H^\perp}Y\|^2.$$
-      Since $\dim(\mathcal H^\perp)=n-d$,
-      $$\frac{\RSS}{\sigma^2}\sim \chi^2_{n-d},\qquad \hat\sigma^2=\frac{\RSS}{n-d}.$$
+      The residual vector is $$r=Y-\hat Y=(I-P_{\mathcal H})Y=P_{\mathcal H^\perp}Y,$$ and $$\RSS=\|r\|^2=\|P_{\mathcal H^\perp}Y\|^2.$$ Since
+      $\dim(\mathcal H^\perp)=n-d$, $$\frac{\RSS}{\sigma^2}\sim \chi^2_{n-d},\qquad \hat\sigma^2=\frac{\RSS}{n-d}.$$
     </div>
 
     <h3>6.4 Regression F-test for a subset of coefficients</h3>
 
     <p>
-      Partition the design as $X=[X_0\mid X_1]$, where $X_0$ contains predictors kept under the null and $X_1$ contains predictors being tested.
-      The null hypothesis is
-      $$H_0:\beta_1=0,$$
-      so
-      $$\mathcal H_0=\Col(X_0),\qquad \mathcal H=\Col(X).$$
+      Partition the design as $X=[X_0\mid X_1]$, where $X_0$ contains predictors kept under the null and $X_1$ contains predictors being tested. The
+      null hypothesis is $$H_0:\beta_1=0,$$ so $$\mathcal H_0=\Col(X_0),\qquad \mathcal H=\Col(X).$$
     </p>
 
     <div class="formula-box">
@@ -1515,10 +1499,8 @@
     </div>
 
     <div class="keyresult">
-      Let
-      $$d_0=\rank(X_0),\qquad d_1=d-d_0,\qquad d_r=n-d.$$
-      Let $\RSS_0$ be the residual sum of squares for the null model and $\RSS$ for the full model. Since $\mathcal H_0\subseteq\mathcal H$,
-      $$\RSS_0\geq \RSS.$$
+      Let $$d_0=\rank(X_0),\qquad d_1=d-d_0,\qquad d_r=n-d.$$ Let $\RSS_0$ be the residual sum of squares for the null model and $\RSS$ for the full
+      model. Since $\mathcal H_0\subseteq\mathcal H$, $$\RSS_0\geq \RSS.$$
     </div>
 
     <div class="intuition">
@@ -1527,24 +1509,20 @@
     </div>
 
     <div class="keyresult">
-      Same canonical bridge:
-      $$\RSS_0=\|Z_1\|^2+\|Z_r\|^2,\qquad \RSS=\|Z_r\|^2,\qquad \RSS_0-\RSS=\|Z_1\|^2.$$
-      The null model cannot explain the tested predictor directions, so that signal is counted as leftover error in $\RSS_0$. The full model can
-      explain those directions, so only residual noise remains in $\RSS$.
+      Same canonical bridge: $$\RSS_0=\|Z_1\|^2+\|Z_r\|^2,\qquad \RSS=\|Z_r\|^2,\qquad \RSS_0-\RSS=\|Z_1\|^2.$$ The null model cannot explain the
+      tested predictor directions, so that signal is counted as leftover error in $\RSS_0$. The full model can explain those directions, so only
+      residual noise remains in $\RSS$.
     </div>
 
     <div class="formula-box">
       <strong>Plain-language regression F ratio:</strong><br />
-      $$F=
-      \frac{\text{variation explained by tested predictors per tested direction}}
-      {\text{remaining residual variation per residual direction}}.$$
+      $$F= \frac{\text{variation explained by tested predictors per tested direction}} {\text{remaining residual variation per residual direction}}.$$
       This is the same signal-over-noise comparison as ANOVA, just with predictor directions instead of group-mean directions.
     </div>
 
     <div class="keyresult">
-      The regression F-statistic is
-      $$F=\frac{(\RSS_0-\RSS)/d_1}{\RSS/d_r}\sim F_{d_1,d_r}\quad\text{under }H_0.$$
-      Reject for large values. This asks whether the tested predictors improve fit more than would be expected from noise alone.
+      The regression F-statistic is $$F=\frac{(\RSS_0-\RSS)/d_1}{\RSS/d_r}\sim F_{d_1,d_r}\quad\text{under }H_0.$$ Reject for large values. This asks
+      whether the tested predictors improve fit more than would be expected from noise alone.
     </div>
 
     <h3>6.5 Individual coefficient t-test and confidence interval</h3>
@@ -1560,9 +1538,7 @@
     </div>
 
     <div class="keyresult">
-      The estimated standard error is
-      $$\widehat{\mathrm{SE}}(\hat\beta_j)=\hat\sigma\sqrt{[(X^TX)^{-1}]_{jj}}.$$
-      The confidence interval is
+      The estimated standard error is $$\widehat{\mathrm{SE}}(\hat\beta_j)=\hat\sigma\sqrt{[(X^TX)^{-1}]_{jj}}.$$ The confidence interval is
       $$\hat\beta_j\pm t_{n-d,1-\alpha/2}\,\widehat{\mathrm{SE}}(\hat\beta_j).$$
     </div>
 
@@ -1819,8 +1795,8 @@
 
     <div class="warning">
       <strong>10.</strong> Confusing the alternative region with the orthogonal signal subspace.<br />
-      $\mathcal H\setminus\mathcal H_0$ describes which means are allowed under the alternative. The coordinate block $Z_1$ comes from the
-      orthogonal signal space $\mathcal H\cap\mathcal H_0^\perp$, after the nuisance part has been accounted for.
+      $\mathcal H\setminus\mathcal H_0$ describes which means are allowed under the alternative. The coordinate block $Z_1$ comes from the orthogonal
+      signal space $\mathcal H\cap\mathcal H_0^\perp$, after the nuisance part has been accounted for.
     </div>
 
     <hr />

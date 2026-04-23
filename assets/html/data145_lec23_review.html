@@ -316,9 +316,9 @@
     </div>
 
     <p>
-      Once the coordinates are chosen well, the classical families line up:
-      $\chi^2$ is a squared Gaussian length, $t$ is one signal coordinate divided by estimated noise, and $F$ is one variance estimate divided by
-      another. The whole lecture is a geometric unification of tests you already know.
+      Once the coordinates are chosen well, the classical families line up: $\chi^2$ is a squared Gaussian length, $t$ is one signal coordinate
+      divided by estimated noise, and $F$ is one variance estimate divided by another. The whole lecture is a geometric unification of tests you
+      already know.
     </p>
 
     <hr />
@@ -328,64 +328,53 @@
     <h3>23.1 Why \(\chi^2\), \(t\), and \(F\) show up together</h3>
 
     <div class="definition">
-      If $Z_1, \ldots, Z_d \stackrel{iid}{\sim} N(0,1)$, then
-      $$V = \sum_{j=1}^d Z_j^2 \sim \chi^2_d.$$
-      This is the total squared length of a standard Gaussian vector in $d$ dimensions.
+      If $Z_1, \ldots, Z_d \stackrel{iid}{\sim} N(0,1)$, then $$V = \sum_{j=1}^d Z_j^2 \sim \chi^2_d.$$ This is the total squared length of a standard
+      Gaussian vector in $d$ dimensions.
     </div>
 
     <div class="definition">
-      If $Z \sim N(0,1)$ and $V \sim \chi^2_d$ are independent, then
-      $$T = \frac{Z}{\sqrt{V/d}} \sim t_d.$$
-      Here the numerator is a standardized signal coordinate and $V/d$ is an average squared noise level per degree of freedom.
+      If $Z \sim N(0,1)$ and $V \sim \chi^2_d$ are independent, then $$T = \frac{Z}{\sqrt{V/d}} \sim t_d.$$ Here the numerator is a standardized
+      signal coordinate and $V/d$ is an average squared noise level per degree of freedom.
     </div>
 
     <div class="definition">
-      If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are independent, then
-      $$F = \frac{V_1/d_1}{V_2/d_2} \sim F_{d_1,d_2}.$$
-      So $F$ compares two variance estimates built from orthogonal Gaussian pieces.
+      If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are independent, then $$F = \frac{V_1/d_1}{V_2/d_2} \sim F_{d_1,d_2}.$$ So $F$ compares
+      two variance estimates built from orthogonal Gaussian pieces.
     </div>
 
     <div class="keyresult">
-      Shortest conceptual summary:
-      $$\chi^2 = \text{squared Gaussian length}, \qquad t = \frac{\text{signal}}{\text{estimated noise}}, \qquad
-      F = \frac{\text{variance estimate}}{\text{variance estimate}}.$$
+      Shortest conceptual summary: $$\chi^2 = \text{squared Gaussian length}, \qquad t = \frac{\text{signal}}{\text{estimated noise}}, \qquad F =
+      \frac{\text{variance estimate}}{\text{variance estimate}}.$$
     </div>
 
     <h3>23.2 What the degrees of freedom \(d\) means</h3>
 
     <p>
-      If $V \sim \chi^2_d$, then by definition
-      $$V = U_1^2 + \cdots + U_d^2$$
-      for $d$ independent $N(0,1)$ variables. So the number $d$ is not an arbitrary adjustment: it is the number of independent Gaussian directions
-      being squared.
+      If $V \sim \chi^2_d$, then by definition $$V = U_1^2 + \cdots + U_d^2$$ for $d$ independent $N(0,1)$ variables. So the number $d$ is not an
+      arbitrary adjustment: it is the number of independent Gaussian directions being squared.
     </p>
 
-    <div class="formula-box">
-      $$\E[V] = d \qquad \Longrightarrow \qquad \E[V/d] = 1.$$
-    </div>
+    <div class="formula-box">$$\E[V] = d \qquad \Longrightarrow \qquad \E[V/d] = 1.$$</div>
 
     <div class="intuition">
-      Dimension of a Gaussian subspace = degrees of freedom of the chi-squared built from that subspace. Dividing by $d$ turns total squared
-      variation into average squared variation per direction.
+      Dimension of a Gaussian subspace = degrees of freedom of the chi-squared built from that subspace. Dividing by $d$ turns total squared variation
+      into average squared variation per direction.
     </div>
 
     <h3>23.3 Rotational invariance and projection lengths</h3>
 
     <div class="definition">
-      <strong>Affine transformation formula.</strong> If $Z \sim N_n(\mu,\Sigma)$ and $Y = AZ + b$, then
-      $$Y \sim N(A\mu + b,\; A \Sigma A^T).$$
+      <strong>Affine transformation formula.</strong> If $Z \sim N_n(\mu,\Sigma)$ and $Y = AZ + b$, then $$Y \sim N(A\mu + b,\; A \Sigma A^T).$$
     </div>
 
     <p>
-      Apply this when $\mu = 0$, $\Sigma = \sigma^2 I_n$, $b = 0$, and $A = Q$ is orthogonal. Then
-      $$QZ \sim N_n(0,\sigma^2 QQ^T) = N_n(0,\sigma^2 I_n),$$
-      so the distribution is unchanged by rotation or reflection.
+      Apply this when $\mu = 0$, $\Sigma = \sigma^2 I_n$, $b = 0$, and $A = Q$ is orthogonal. Then $$QZ \sim N_n(0,\sigma^2 QQ^T) = N_n(0,\sigma^2
+      I_n),$$ so the distribution is unchanged by rotation or reflection.
     </p>
 
     <div class="theorem">
-      If $Z \sim N_n(0,\sigma^2 I_n)$ and $V_1, V_2$ are orthogonal subspaces with dimensions $d_1$ and $d_2$, then
-      $$\|P_{V_1}Z\|^2 \sim \sigma^2 \chi^2_{d_1}, \qquad \|P_{V_2}Z\|^2 \sim \sigma^2 \chi^2_{d_2},$$
-      and these two squared projection lengths are independent.
+      If $Z \sim N_n(0,\sigma^2 I_n)$ and $V_1, V_2$ are orthogonal subspaces with dimensions $d_1$ and $d_2$, then $$\|P_{V_1}Z\|^2 \sim \sigma^2
+      \chi^2_{d_1}, \qquad \|P_{V_2}Z\|^2 \sim \sigma^2 \chi^2_{d_2},$$ and these two squared projection lengths are independent.
     </div>
 
     <div class="proof">
@@ -405,46 +394,41 @@
     <h3>23.4 Setup</h3>
 
     <p>
-      Start with the simplest canonical model:
-      $$Z \sim N_2 \left(\binom{\mu_1}{0},\sigma^2 I_2 \right), \qquad H_0:\mu_1=0 \text{ vs } H_1:\mu_1 \neq 0.$$
-      Only $Z_1$ contains signal. The second coordinate $Z_2$ has mean $0$ under both hypotheses, so it is pure residual noise.
+      Start with the simplest canonical model: $$Z \sim N_2 \left(\binom{\mu_1}{0},\sigma^2 I_2 \right), \qquad H_0:\mu_1=0 \text{ vs } H_1:\mu_1 \neq
+      0.$$ Only $Z_1$ contains signal. The second coordinate $Z_2$ has mean $0$ under both hypotheses, so it is pure residual noise.
     </p>
 
     <div class="intuition">
-      Under $H_1$, the mean shifts to the right. The vertical coordinate $Z_2$ does not change in distribution, but the observation still becomes
-      more aligned with the horizontal signal axis because $Z_1$ tends to be larger relative to $Z_2$.
+      Under $H_1$, the mean shifts to the right. The vertical coordinate $Z_2$ does not change in distribution, but the observation still becomes more
+      aligned with the horizontal signal axis because $Z_1$ tends to be larger relative to $Z_2$.
     </div>
 
     <h3>23.5 Known \(\sigma^2\): \(z\)-test and \(\chi^2_1\)-test</h3>
 
     <p>
-      If $\sigma^2$ is known, the natural standardized statistic is
-      $$\frac{Z_1}{\sigma} \sim N(0,1) \qquad \text{under } H_0.$$
-      A two-sided test rejects for large $|Z_1|/\sigma$.
+      If $\sigma^2$ is known, the natural standardized statistic is $$\frac{Z_1}{\sigma} \sim N(0,1) \qquad \text{under } H_0.$$ A two-sided test
+      rejects for large $|Z_1|/\sigma$.
     </p>
 
     <div class="keyresult">
-      Squaring gives
-      $$\left(\frac{Z_1}{\sigma}\right)^2 \sim \chi^2_1.$$
-      So the two-sided $z$-test and the $\chi^2_1$-test are exactly the same rejection rule written two ways.
+      Squaring gives $$\left(\frac{Z_1}{\sigma}\right)^2 \sim \chi^2_1.$$ So the two-sided $z$-test and the $\chi^2_1$-test are exactly the same
+      rejection rule written two ways.
     </div>
 
     <p>
-      One-sided alternatives are different: the signed $z$-statistic remembers whether the shift is left or right, while the squared
-      $\chi^2_1$ statistic is inherently two-sided.
+      One-sided alternatives are different: the signed $z$-statistic remembers whether the shift is left or right, while the squared $\chi^2_1$
+      statistic is inherently two-sided.
     </p>
 
     <h3>23.6 Unknown \(\sigma^2\): \(t_1\)-test and \(F_{1,1}\)-test</h3>
 
     <p>
-      If $\sigma^2$ is unknown, we cannot use $Z_1/\sigma$. But under both $H_0$ and $H_1$,
-      $$Z_2 \sim N(0,\sigma^2),$$
-      so the residual coordinate provides a variance estimate.
+      If $\sigma^2$ is unknown, we cannot use $Z_1/\sigma$. But under both $H_0$ and $H_1$, $$Z_2 \sim N(0,\sigma^2),$$ so the residual coordinate
+      provides a variance estimate.
     </p>
 
     <div class="formula-box">
-      $$T = \frac{Z_1}{|Z_2|} = \frac{Z_1/\sigma}{\sqrt{(Z_2^2/\sigma^2)/1}} \sim t_1,$$
-      $$T^2 = \frac{Z_1^2}{Z_2^2} \sim F_{1,1}.$$
+      $$T = \frac{Z_1}{|Z_2|} = \frac{Z_1/\sigma}{\sqrt{(Z_2^2/\sigma^2)/1}} \sim t_1,$$ $$T^2 = \frac{Z_1^2}{Z_2^2} \sim F_{1,1}.$$
     </div>
 
     <div class="intuition">
@@ -455,10 +439,8 @@
     <h3>23.7 Geometric meaning: why \(\cot \theta\) appears</h3>
 
     <p>
-      Let $\theta$ be the angle between the observed vector $Z$ and the $Z_1$-axis. Then
-      $$Z_1 = \|Z\| \cos \theta, \qquad Z_2 = \|Z\| \sin \theta,$$
-      so
-      $$\frac{Z_1}{Z_2} = \cot \theta.$$
+      Let $\theta$ be the angle between the observed vector $Z$ and the $Z_1$-axis. Then $$Z_1 = \|Z\| \cos \theta, \qquad Z_2 = \|Z\| \sin \theta,$$
+      so $$\frac{Z_1}{Z_2} = \cot \theta.$$
     </p>
 
     <div class="intuition">
@@ -478,25 +460,13 @@
     <h3>23.8 The \(n=2\) rotation</h3>
 
     <p>
-      Now take the familiar one-sample model with two observations:
-      $$X_1, X_2 \stackrel{iid}{\sim} N(\mu,\sigma^2).$$
-      The mean vector is $\mu(1,1)^T$, so the signal direction is the line $X_1 = X_2$.
+      Now take the familiar one-sample model with two observations: $$X_1, X_2 \stackrel{iid}{\sim} N(\mu,\sigma^2).$$ The mean vector is
+      $\mu(1,1)^T$, so the signal direction is the line $X_1 = X_2$.
     </p>
 
     <div class="definition">
-      Use the orthogonal matrix
-      $$Q = \frac{1}{\sqrt 2}
-      \begin{pmatrix}
-      1 & -1 \\
-      1 & 1
-      \end{pmatrix}, \qquad
-      Z = Q^T X =
-      \begin{pmatrix}
-      (X_1 + X_2)/\sqrt 2 \\
-      (X_2 - X_1)/\sqrt 2
-      \end{pmatrix}.$$
-      Then
-      $$Z \sim N_2 \left( \binom{\sqrt 2\,\mu}{0}, \sigma^2 I_2 \right).$$
+      Use the orthogonal matrix $$Q = \frac{1}{\sqrt 2} \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}, \qquad Z = Q^T X = \begin{pmatrix} (X_1 +
+      X_2)/\sqrt 2 \\ (X_2 - X_1)/\sqrt 2 \end{pmatrix}.$$ Then $$Z \sim N_2 \left( \binom{\sqrt 2\,\mu}{0}, \sigma^2 I_2 \right).$$
     </div>
 
     <div class="intuition">
@@ -505,19 +475,16 @@
     </div>
 
     <p>
-      So the usual one-sample test is literally the canonical model in a rotated coordinate system:
-      $$Z_1 = \frac{X_1 + X_2}{\sqrt 2}, \qquad Z_2 = \frac{X_2 - X_1}{\sqrt 2}.$$
+      So the usual one-sample test is literally the canonical model in a rotated coordinate system: $$Z_1 = \frac{X_1 + X_2}{\sqrt 2}, \qquad Z_2 =
+      \frac{X_2 - X_1}{\sqrt 2}.$$
     </p>
 
     <h3>23.9 Back-translation to the classical statistic</h3>
 
     <p>
-      In the rotated basis, the lecture-23 statistic is
-      $$\frac{Z_1}{|Z_2|} = \frac{X_1 + X_2}{|X_1 - X_2|}.$$
-      But for $n=2$, the sample mean and sample standard deviation satisfy
-      $$\bar X = \frac{X_1 + X_2}{2}, \qquad S = \frac{|X_1 - X_2|}{\sqrt 2},$$
-      so
-      $$\frac{Z_1}{|Z_2|} = \frac{\sqrt 2\,\bar X}{S}.$$
+      In the rotated basis, the lecture-23 statistic is $$\frac{Z_1}{|Z_2|} = \frac{X_1 + X_2}{|X_1 - X_2|}.$$ But for $n=2$, the sample mean and
+      sample standard deviation satisfy $$\bar X = \frac{X_1 + X_2}{2}, \qquad S = \frac{|X_1 - X_2|}{\sqrt 2},$$ so $$\frac{Z_1}{|Z_2|} = \frac{\sqrt
+      2\,\bar X}{S}.$$
     </p>
 
     <div class="keyresult">
@@ -532,45 +499,34 @@
     <h3>23.10 Signal direction and residual subspace</h3>
 
     <p>
-      For $X_1,\ldots,X_n \stackrel{iid}{\sim} N(\mu,\sigma^2)$, write
-      $$X = (X_1,\ldots,X_n)^T \sim N_n(\mu \mathbf{1}, \sigma^2 I_n),$$
-      where $\mathbf{1}=(1,\ldots,1)^T$.
+      For $X_1,\ldots,X_n \stackrel{iid}{\sim} N(\mu,\sigma^2)$, write $$X = (X_1,\ldots,X_n)^T \sim N_n(\mu \mathbf{1}, \sigma^2 I_n),$$ where
+      $\mathbf{1}=(1,\ldots,1)^T$.
     </p>
 
     <div class="formula-box">
-      $$\bar X = \frac{1}{n}\sum_{i=1}^n X_i, \qquad
-      S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X)^2, \qquad S = \sqrt{S^2}.$$
+      $$\bar X = \frac{1}{n}\sum_{i=1}^n X_i, \qquad S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X)^2, \qquad S = \sqrt{S^2}.$$
     </div>
 
     <p>
       Let $\mathbf q_1 = \mathbf 1/\sqrt n$ and choose $Q_r$ whose columns form an orthonormal basis for the orthogonal complement of
-      $\operatorname{span}(\mathbf 1)$. Then
-      $$Q = [\mathbf q_1 \mid Q_r]$$
-      is orthogonal, and the rotated coordinates are
-      $$Z_1 = \mathbf q_1^T X = \sqrt n\,\bar X, \qquad Z_r = Q_r^T X \in \mathbb R^{n-1}.$$
+      $\operatorname{span}(\mathbf 1)$. Then $$Q = [\mathbf q_1 \mid Q_r]$$ is orthogonal, and the rotated coordinates are $$Z_1 = \mathbf q_1^T X =
+      \sqrt n\,\bar X, \qquad Z_r = Q_r^T X \in \mathbb R^{n-1}.$$
     </p>
 
     <div class="theorem">
-      In this basis,
-      $$\binom{Z_1}{Z_r} \sim N_n \left( \binom{\sqrt n\,\mu}{0}, \sigma^2 I_n \right).$$
-      So the signal lives in one coordinate and the residual part lives in an $(n-1)$-dimensional orthogonal subspace.
+      In this basis, $$\binom{Z_1}{Z_r} \sim N_n \left( \binom{\sqrt n\,\mu}{0}, \sigma^2 I_n \right).$$ So the signal lives in one coordinate and the
+      residual part lives in an $(n-1)$-dimensional orthogonal subspace.
     </div>
 
     <h3>23.11 Why \((n-1)S^2/\sigma^2 \sim \chi^2_{n-1}\)</h3>
 
     <p>
-      Orthogonal decomposition gives
-      $$\|X\|^2 = Z_1^2 + \|Z_r\|^2,$$
-      and rearranging shows
-      $$\|Z_r\|^2 = \sum_{i=1}^n (X_i - \bar X)^2 = (n-1)S^2.$$
+      Orthogonal decomposition gives $$\|X\|^2 = Z_1^2 + \|Z_r\|^2,$$ and rearranging shows $$\|Z_r\|^2 = \sum_{i=1}^n (X_i - \bar X)^2 = (n-1)S^2.$$
     </p>
 
     <div class="theorem">
-      Since $Z_r \sim N_{n-1}(0,\sigma^2 I_{n-1})$,
-      $$\frac{\|Z_r\|^2}{\sigma^2} \sim \chi^2_{n-1}.$$
-      Equivalently,
-      $$\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}.$$
-      Also, $Z_1$ and $Z_r$ are independent, so $\bar X$ and $S^2$ are independent.
+      Since $Z_r \sim N_{n-1}(0,\sigma^2 I_{n-1})$, $$\frac{\|Z_r\|^2}{\sigma^2} \sim \chi^2_{n-1}.$$ Equivalently, $$\frac{(n-1)S^2}{\sigma^2} \sim
+      \chi^2_{n-1}.$$ Also, $Z_1$ and $Z_r$ are independent, so $\bar X$ and $S^2$ are independent.
     </div>
 
     <div class="intuition">
@@ -585,29 +541,24 @@
     <h3>23.12 The classical \(t\) and \(F\) forms</h3>
 
     <p>
-      If the null hypothesis is $H_0:\mu=\mu_0$, the same geometry applies after centering the data by $\mu_0$. Under $H_0$,
-      $$\frac{\sqrt n\,(\bar X - \mu_0)}{\sigma} \sim N(0,1).$$
-      Replacing $\sigma$ by the residual estimate $S$ gives the usual statistic.
+      If the null hypothesis is $H_0:\mu=\mu_0$, the same geometry applies after centering the data by $\mu_0$. Under $H_0$, $$\frac{\sqrt n\,(\bar X
+      - \mu_0)}{\sigma} \sim N(0,1).$$ Replacing $\sigma$ by the residual estimate $S$ gives the usual statistic.
     </p>
 
     <div class="formula-box">
-      $$T = \frac{\sqrt n\,(\bar X - \mu_0)}{S}
-      = \frac{Z_1/\sigma}{\sqrt{(\|Z_r\|^2/\sigma^2)/(n-1)}} \sim t_{n-1},$$
-      $$T^2 \sim F_{1,n-1}.$$
+      $$T = \frac{\sqrt n\,(\bar X - \mu_0)}{S} = \frac{Z_1/\sigma}{\sqrt{(\|Z_r\|^2/\sigma^2)/(n-1)}} \sim t_{n-1},$$ $$T^2 \sim F_{1,n-1}.$$
     </div>
 
     <div class="keyresult">
-      The denominator is
-      $$\frac{\|Z_r\|^2}{n-1},$$
-      which is average squared residual variation per residual direction. This is exactly the abstract $V/d$ term in the definition of the
-      $t$-distribution.
+      The denominator is $$\frac{\|Z_r\|^2}{n-1},$$ which is average squared residual variation per residual direction. This is exactly the abstract
+      $V/d$ term in the definition of the $t$-distribution.
     </div>
 
     <h3>23.13 Nuisance directions preview</h3>
 
     <p>
-      A direction whose mean is unrestricted under both $H_0$ and $H_1$ is neither tested signal nor usable residual noise. It carries no
-      information about the null-versus-alternative comparison, so the canonical linear model simply drops it.
+      A direction whose mean is unrestricted under both $H_0$ and $H_1$ is neither tested signal nor usable residual noise. It carries no information
+      about the null-versus-alternative comparison, so the canonical linear model simply drops it.
     </p>
 
     <hr />
@@ -684,23 +635,16 @@
     <h3>Lecture 23 core formulas</h3>
 
     <div class="formula-box">
-      $$\chi^2_d = \sum_{j=1}^d U_j^2, \qquad
-      t_d = \frac{Z}{\sqrt{V/d}}, \qquad
-      F_{d_1,d_2} = \frac{V_1/d_1}{V_2/d_2}, \qquad
-      t_d^2 \sim F_{1,d}.$$
+      $$\chi^2_d = \sum_{j=1}^d U_j^2, \qquad t_d = \frac{Z}{\sqrt{V/d}}, \qquad F_{d_1,d_2} = \frac{V_1/d_1}{V_2/d_2}, \qquad t_d^2 \sim F_{1,d}.$$
     </div>
 
     <div class="formula-box">
-      $$Z \sim N_n(0,\sigma^2 I_n), \quad V \subseteq \mathbb R^n,\ \dim(V)=d
-      \quad \Longrightarrow \quad
-      \|P_V Z\|^2 \sim \sigma^2 \chi^2_d.$$
+      $$Z \sim N_n(0,\sigma^2 I_n), \quad V \subseteq \mathbb R^n,\ \dim(V)=d \quad \Longrightarrow \quad \|P_V Z\|^2 \sim \sigma^2 \chi^2_d.$$
     </div>
 
     <div class="formula-box">
-      $$Z_1 = \sqrt n\,\bar X, \qquad
-      \|Z_r\|^2 = (n-1)S^2, \qquad
-      \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}, \qquad
-      \frac{\sqrt n\,(\bar X-\mu_0)}{S} \sim t_{n-1} \text{ under } H_0.$$
+      $$Z_1 = \sqrt n\,\bar X, \qquad \|Z_r\|^2 = (n-1)S^2, \qquad \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}, \qquad \frac{\sqrt n\,(\bar
+      X-\mu_0)}{S} \sim t_{n-1} \text{ under } H_0.$$
     </div>
 
     <h3>What to remember conceptually</h3>
@@ -716,9 +660,8 @@
     </div>
 
     <p>
-      Signal/noise is the right story to keep in mind, but the exact mathematics is:
-      numerator = Gaussian projection in the tested direction, denominator = square root of an independent chi-squared-per-degree-of-freedom term
-      built from the residual projection.
+      Signal/noise is the right story to keep in mind, but the exact mathematics is: numerator = Gaussian projection in the tested direction,
+      denominator = square root of an independent chi-squared-per-degree-of-freedom term built from the residual projection.
     </p>
 
     <p class="small">
@@ -732,11 +675,24 @@
 
     <ul>
       <li>Thinking an orthogonal transformation leaves the mean unchanged. It preserves the covariance shape but rotates the mean vector too.</li>
-      <li>Thinking the alternative must change the residual coordinate $Z_2$. It does not; the evidence comes from $Z_1$ becoming large relative to $Z_2$.</li>
-      <li>Thinking the statistic measures the difference between signal and noise. It measures a ratio: signal magnitude divided by estimated noise scale.</li>
-      <li>Thinking a chi-squared appears just because a variable is centered at 0. The real reason is a sum of squares of independent standardized Gaussian residual coordinates.</li>
-      <li>Thinking the $d$ in $\chi^2_d$ or $V/d$ is arbitrary. It is the dimension of the relevant residual subspace, i.e. the degrees of freedom.</li>
-      <li>Forgetting that the squared $z$-test and $\chi^2_1$-test are the same two-sided test, and that squaring destroys one-sided sign information.</li>
+      <li>
+        Thinking the alternative must change the residual coordinate $Z_2$. It does not; the evidence comes from $Z_1$ becoming large relative to
+        $Z_2$.
+      </li>
+      <li>
+        Thinking the statistic measures the difference between signal and noise. It measures a ratio: signal magnitude divided by estimated noise
+        scale.
+      </li>
+      <li>
+        Thinking a chi-squared appears just because a variable is centered at 0. The real reason is a sum of squares of independent standardized
+        Gaussian residual coordinates.
+      </li>
+      <li>
+        Thinking the $d$ in $\chi^2_d$ or $V/d$ is arbitrary. It is the dimension of the relevant residual subspace, i.e. the degrees of freedom.
+      </li>
+      <li>
+        Forgetting that the squared $z$-test and $\chi^2_1$-test are the same two-sided test, and that squaring destroys one-sided sign information.
+      </li>
     </ul>
   </body>
 </html>

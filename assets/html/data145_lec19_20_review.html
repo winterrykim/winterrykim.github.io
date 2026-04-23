@@ -317,9 +317,9 @@
     </div>
 
     <p>
-      This is the natural sequel to Lecture 18. Once the class has many testing procedures available, the next real-world obstacle is that modern
-      data analysis rarely stops after one test. Variable selection, genomics, A/B testing platforms, and simultaneous confidence statements all force
-      us to think at the level of a <em>family</em> of inferences.
+      This is the natural sequel to Lecture 18. Once the class has many testing procedures available, the next real-world obstacle is that modern data
+      analysis rarely stops after one test. Variable selection, genomics, A/B testing platforms, and simultaneous confidence statements all force us
+      to think at the level of a <em>family</em> of inferences.
     </p>
 
     <p>
@@ -337,8 +337,8 @@
 
     <div class="example">
       Singh et al. measured expression for $6{,}033$ genes in healthy controls and prostate cancer patients. Testing each gene separately at
-      $\alpha=0.05$ produced 478 significant genes. But if all $6{,}033$ nulls were true, we would still expect about
-      $6{,}033 \cdot 0.05 \approx 302$ false positives just from noise.
+      $\alpha=0.05$ produced 478 significant genes. But if all $6{,}033$ nulls were true, we would still expect about $6{,}033 \cdot 0.05 \approx 302$
+      false positives just from noise.
     </div>
 
     <p>
@@ -358,9 +358,8 @@
     </div>
 
     <div class="keyresult">
-      If all $m$ nulls are true and each test is run at level $\alpha$, then under independence:
-      $$P(\text{at least one rejection}) = 1-(1-\alpha)^m.$$
-      For $m=6{,}033$ and $\alpha=0.05$, this is essentially 1.
+      If all $m$ nulls are true and each test is run at level $\alpha$, then under independence: $$P(\text{at least one rejection}) =
+      1-(1-\alpha)^m.$$ For $m=6{,}033$ and $\alpha=0.05$, this is essentially 1.
     </div>
 
     <div class="intuition">
@@ -371,9 +370,8 @@
     <h3>19.3 Familywise error rate (FWER)</h3>
 
     <div class="definition">
-      The <strong>familywise error rate</strong> is the probability of making <em>any</em> false rejection:
-      $$\FWER_\theta = P_\theta(\mathcal{R}\cap\mathcal{H}_0 \neq \emptyset).$$
-      We want procedures with $\sup_\theta \FWER_\theta \leq \alpha$.
+      The <strong>familywise error rate</strong> is the probability of making <em>any</em> false rejection: $$\FWER_\theta =
+      P_\theta(\mathcal{R}\cap\mathcal{H}_0 \neq \emptyset).$$ We want procedures with $\sup_\theta \FWER_\theta \leq \alpha$.
     </div>
 
     <p>
@@ -384,42 +382,36 @@
     <h3>19.4 Bonferroni and where $\alpha/m$ comes from</h3>
 
     <div class="theorem">
-      <strong>Bonferroni correction.</strong> Reject $H_{0i}$ only if $p_i \leq \alpha/m$. Then
-      $$\sup_\theta \FWER_\theta \leq \alpha.$$
+      <strong>Bonferroni correction.</strong> Reject $H_{0i}$ only if $p_i \leq \alpha/m$. Then $$\sup_\theta \FWER_\theta \leq \alpha.$$
     </div>
 
     <div class="proof">
-      This is exactly the union-bound argument from discussion:
-      $$P(\text{any false rejection}) = P\!\left(\bigcup_{i\in\mathcal{H}_0}\{\text{reject }H_{0i}\}\right)
-      \leq \sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}).$$
-      Under Bonferroni, each true null is tested at level $\alpha/m$, so
-      $$\sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}) \leq m_0 \frac{\alpha}{m} \leq \alpha.$$
-      That is the whole reason the denominator is $m$: it is the price paid to make the sum of all possible false-rejection probabilities stay below
-      $\alpha$.
+      This is exactly the union-bound argument from discussion: $$P(\text{any false rejection}) = P\!\left(\bigcup_{i\in\mathcal{H}_0}\{\text{reject
+      }H_{0i}\}\right) \leq \sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}).$$ Under Bonferroni, each true null is tested at level $\alpha/m$, so
+      $$\sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}) \leq m_0 \frac{\alpha}{m} \leq \alpha.$$ That is the whole reason the denominator is $m$: it
+      is the price paid to make the sum of all possible false-rejection probabilities stay below $\alpha$.
     </div>
 
     <div class="warning">
-      We divide by <strong>the total number of tests</strong> $m$, not the number of true nulls $m_0$, because $m_0$ is unknown. If we knew $m_0$,
-      we could use $\alpha/m_0$, but in practice we do not.
+      We divide by <strong>the total number of tests</strong> $m$, not the number of true nulls $m_0$, because $m_0$ is unknown. If we knew $m_0$, we
+      could use $\alpha/m_0$, but in practice we do not.
     </div>
 
     <div class="example">
-      In the prostate study, Bonferroni uses the threshold
-      $$\frac{0.05}{6033} \approx 8.3\times 10^{-6}.$$
-      The 478 marginal discoveries collapse to just 3 Bonferroni discoveries. So Bonferroni is valid and simple, but often extremely harsh.
+      In the prostate study, Bonferroni uses the threshold $$\frac{0.05}{6033} \approx 8.3\times 10^{-6}.$$ The 478 marginal discoveries collapse to
+      just 3 Bonferroni discoveries. So Bonferroni is valid and simple, but often extremely harsh.
     </div>
 
     <h3>19.5 Sidak: what independence buys you</h3>
 
     <div class="definition">
-      If the $p$-values are independent, the <strong>Sidak correction</strong> uses
-      $$\tilde\alpha_m = 1-(1-\alpha)^{1/m}$$
-      and rejects when $p_i \leq \tilde\alpha_m$.
+      If the $p$-values are independent, the <strong>Sidak correction</strong> uses $$\tilde\alpha_m = 1-(1-\alpha)^{1/m}$$ and rejects when $p_i \leq
+      \tilde\alpha_m$.
     </div>
 
     <div class="intuition">
-      Sidak is derived by asking for the probability of <em>no</em> false rejections to be at least $1-\alpha$ and multiplying independent terms.
-      But for small per-test thresholds, Sidak and Bonferroni are numerically very close. Independence helps a little, not dramatically.
+      Sidak is derived by asking for the probability of <em>no</em> false rejections to be at least $1-\alpha$ and multiplying independent terms. But
+      for small per-test thresholds, Sidak and Bonferroni are numerically very close. Independence helps a little, not dramatically.
     </div>
 
     <h3>19.6 Scheffe's method and infinitely many related tests</h3>
@@ -430,53 +422,46 @@
     </p>
 
     <div class="definition">
-      Suppose $X \sim N_d(\mu, I_d)$ and we want to test
-      $$H_{0,\lambda}: \lambda^T \mu = 0$$
-      simultaneously for every unit vector $\lambda$.
+      Suppose $X \sim N_d(\mu, I_d)$ and we want to test $$H_{0,\lambda}: \lambda^T \mu = 0$$ simultaneously for every unit vector $\lambda$.
     </div>
 
     <p class="small">
-      Why unit vectors? Because scaling $\lambda$ does not change the underlying null statement: if $c \neq 0$, then
-      $(c\lambda)^T\mu = 0$ is the same hypothesis as $\lambda^T\mu=0$. Normalizing $\lambda$ just removes a meaningless scale choice.
+      Why unit vectors? Because scaling $\lambda$ does not change the underlying null statement: if $c \neq 0$, then $(c\lambda)^T\mu = 0$ is the same
+      hypothesis as $\lambda^T\mu=0$. Normalizing $\lambda$ just removes a meaningless scale choice.
     </p>
 
     <div class="keyresult">
-      <strong>Scheffe's method.</strong> Reject $H_{0,\lambda}$ when
-      $$|\lambda^T X|^2 \geq \chi^2_{d,\alpha}.$$
-      This controls FWER at level $\alpha$ over all such contrasts.
+      <strong>Scheffe's method.</strong> Reject $H_{0,\lambda}$ when $$|\lambda^T X|^2 \geq \chi^2_{d,\alpha}.$$ This controls FWER at level $\alpha$
+      over all such contrasts.
     </div>
 
     <div class="intuition">
       Write $Z=X-\mu \sim N_d(0,I_d)$. If $H_{0,\lambda}$ is true, then $\lambda^T X = \lambda^T Z$. The worst possible contrast over all unit vectors
-      is bounded by $\|Z\|^2$, and $\|Z\|^2 \sim \chi^2_d$. One random confidence ball in $\mu$-space controls an infinite family of contrast tests
-      at once.
+      is bounded by $\|Z\|^2$, and $\|Z\|^2 \sim \chi^2_d$. One random confidence ball in $\mu$-space controls an infinite family of contrast tests at
+      once.
     </div>
 
     <h3>19.7 Deduction principle and simultaneous confidence intervals</h3>
 
     <div class="theorem">
-      If $C(X)$ is any joint $(1-\alpha)$ confidence region for $\theta$, then any conclusion deduced under the assumption
-      $\theta \in C(X)$ is automatically FWER-controlled at level $\alpha$.
+      If $C(X)$ is any joint $(1-\alpha)$ confidence region for $\theta$, then any conclusion deduced under the assumption $\theta \in C(X)$ is
+      automatically FWER-controlled at level $\alpha$.
     </div>
 
     <div class="definition">
-      Intervals $C_1(X),\ldots,C_m(X)$ are <strong>simultaneous $(1-\alpha)$ confidence intervals</strong> for
-      $g_1(\theta),\ldots,g_m(\theta)$ if
+      Intervals $C_1(X),\ldots,C_m(X)$ are <strong>simultaneous $(1-\alpha)$ confidence intervals</strong> for $g_1(\theta),\ldots,g_m(\theta)$ if
       $$P_\theta\bigl(g_i(\theta)\in C_i(X)\text{ for all }i\bigr)\geq 1-\alpha.$$
     </div>
 
     <div class="proof">
-      Bonferroni also gives simultaneous intervals. If each individual interval has marginal coverage $1-\alpha/m$, then
-      $$P(\text{any interval misses}) \leq \sum_{i=1}^m \alpha/m = \alpha.$$
-      So marginal $1-\alpha/m$ intervals become simultaneous $1-\alpha$ intervals.
+      Bonferroni also gives simultaneous intervals. If each individual interval has marginal coverage $1-\alpha/m$, then $$P(\text{any interval
+      misses}) \leq \sum_{i=1}^m \alpha/m = \alpha.$$ So marginal $1-\alpha/m$ intervals become simultaneous $1-\alpha$ intervals.
     </div>
 
     <p>
-      In correlated Gaussian settings, a deduced confidence region can beat Bonferroni. For example, if
-      $X \sim N_d(\theta,\Sigma)$ and $t_\alpha$ is the upper-$\alpha$ quantile of $\|X-\theta\|_\infty$, then
-      $$[X_i-t_\alpha,\; X_i+t_\alpha]$$
-      gives exact simultaneous intervals for all coordinates. Strong positive correlation can make $t_\alpha$ noticeably smaller than the Bonferroni
-      width.
+      In correlated Gaussian settings, a deduced confidence region can beat Bonferroni. For example, if $X \sim N_d(\theta,\Sigma)$ and $t_\alpha$ is
+      the upper-$\alpha$ quantile of $\|X-\theta\|_\infty$, then $$[X_i-t_\alpha,\; X_i+t_\alpha]$$ gives exact simultaneous intervals for all
+      coordinates. Strong positive correlation can make $t_\alpha$ noticeably smaller than the Bonferroni width.
     </p>
 
     <hr />
@@ -547,16 +532,13 @@
         <li>$R = |\mathcal{R}|$: total number of discoveries,</li>
         <li>$V = |\mathcal{R}\cap\mathcal{H}_0|$: number of false discoveries.</li>
       </ul>
-      Then the <strong>false discovery proportion</strong> is
-      $$\FDP = \frac{V}{R \vee 1},$$
-      where $R\vee 1 = \max(R,1)$ so that $\FDP=0$ when $R=0$.
-      The <strong>false discovery rate</strong> is
-      $$\FDR = E\!\left[\frac{V}{R\vee 1}\right] = E[\FDP].$$
+      Then the <strong>false discovery proportion</strong> is $$\FDP = \frac{V}{R \vee 1},$$ where $R\vee 1 = \max(R,1)$ so that $\FDP=0$ when $R=0$.
+      The <strong>false discovery rate</strong> is $$\FDR = E\!\left[\frac{V}{R\vee 1}\right] = E[\FDP].$$
     </div>
 
     <div class="intuition">
-      FWER asks: "did we make at least one false discovery?" FDR asks: "what fraction of our discoveries are false, on average?" They answer
-      different scientific questions.
+      FWER asks: "did we make at least one false discovery?" FDR asks: "what fraction of our discoveries are false, on average?" They answer different
+      scientific questions.
     </div>
 
     <h3>20.3 Why FDR is weaker than FWER</h3>
@@ -567,16 +549,11 @@
         <li>If $V=0$, then $\FDP=0$.</li>
         <li>If $V&gt;0$, then $0 &lt; \FDP = V/(R\vee 1) \leq 1 = \mathbf{1}\{V&gt;0\}$.</li>
       </ul>
-      So in every outcome,
-      $$\FDP \leq \mathbf{1}\{V&gt;0\}.$$
-      Taking expectations gives
-      $$\FDR = E[\FDP] \leq E[\mathbf{1}\{V&gt;0\}] = P(V&gt;0) = \FWER.$$
-      Therefore every FWER-controlling procedure automatically controls FDR, but the reverse is not true.
+      So in every outcome, $$\FDP \leq \mathbf{1}\{V&gt;0\}.$$ Taking expectations gives $$\FDR = E[\FDP] \leq E[\mathbf{1}\{V&gt;0\}] = P(V&gt;0) =
+      \FWER.$$ Therefore every FWER-controlling procedure automatically controls FDR, but the reverse is not true.
     </div>
 
-    <div class="warning">
-      This is why Bonferroni is usually much more conservative than BH. Bonferroni is solving a strictly harder problem.
-    </div>
+    <div class="warning">This is why Bonferroni is usually much more conservative than BH. Bonferroni is solving a strictly harder problem.</div>
 
     <h3>20.4 The Benjamini-Hochberg (BH) procedure</h3>
 
@@ -590,9 +567,8 @@
     </div>
 
     <div class="keyresult">
-      BH is a <strong>step-up</strong> rule. Bonferroni uses one horizontal cutoff $\alpha/m$. BH uses the rising line
-      $$y=\frac{\alpha}{m}k,$$
-      so it becomes more permissive when many small $p$-values are present.
+      BH is a <strong>step-up</strong> rule. Bonferroni uses one horizontal cutoff $\alpha/m$. BH uses the rising line $$y=\frac{\alpha}{m}k,$$ so it
+      becomes more permissive when many small $p$-values are present.
     </div>
 
     <div class="example">
@@ -604,19 +580,14 @@
 
     <p>
       Suppose we reject all hypotheses with $p_i \leq t$. Let $R_t$ be the number of such rejections and $V_t$ the number of false ones. If null
-      $p$-values are uniform, then
-      $$E[V_t] = m_0 t \leq mt.$$
-      This suggests the conservative estimator
-      $$\widehat{\FDP}_t = \frac{mt}{R_t \vee 1}.$$
+      $p$-values are uniform, then $$E[V_t] = m_0 t \leq mt.$$ This suggests the conservative estimator $$\widehat{\FDP}_t = \frac{mt}{R_t \vee 1}.$$
     </p>
 
     <div class="intuition">
       BH chooses the largest threshold $t$ for which the estimated false-discovery proportion stays below $\alpha$. At a candidate threshold
-      $t=p_{(k)}$, we have $R_t=k$, so the condition
-      $$\widehat{\FDP}_t \leq \alpha$$
-      becomes
-      $$\frac{mp_{(k)}}{k} \leq \alpha \quad\Longleftrightarrow\quad p_{(k)} \leq \frac{\alpha k}{m}.$$
-      So the BH rule is exactly the "control estimated FDP" idea written in ordered-$p$-value form.
+      $t=p_{(k)}$, we have $R_t=k$, so the condition $$\widehat{\FDP}_t \leq \alpha$$ becomes $$\frac{mp_{(k)}}{k} \leq \alpha
+      \quad\Longleftrightarrow\quad p_{(k)} \leq \frac{\alpha k}{m}.$$ So the BH rule is exactly the "control estimated FDP" idea written in
+      ordered-$p$-value form.
     </div>
 
     <p class="small">
@@ -627,21 +598,21 @@
 
     <h3>20.6 Proof sketch for FDR control</h3>
 
-    <div class="theorem">
-      Under independence and null uniformity, BH controls
-      $$\FDR \leq \alpha \frac{m_0}{m} \leq \alpha.$$
-    </div>
+    <div class="theorem">Under independence and null uniformity, BH controls $$\FDR \leq \alpha \frac{m_0}{m} \leq \alpha.$$</div>
 
     <div class="proof">
       The course proof has four moves:
       <ol style="margin-top: 0.5rem">
         <li>Write $V=\sum_{i\in\mathcal{H}_0} V_i$, where $V_i=\mathbf{1}\{H_{0i}\text{ rejected}\}$.</li>
         <li>Show $\FDR = \sum_{i\in\mathcal{H}_0} E[V_i/(R\vee 1)]$.</li>
-        <li>For a fixed true null $i$, replace $p_i$ by $0$ and call the resulting BH rejection count $R^0$. On the event that $i$ is rejected,
-          the total number of BH rejections does not change, so $R=R^0$ there.</li>
-        <li>Condition on the other $p$-values. Since $R^0$ depends only on $p_{-i}$ and $p_i\sim \text{Unif}(0,1)$ independently,
-          $$E\!\left[\frac{V_i}{R\vee 1}\right] \leq \frac{\alpha}{m}.$$
-          Summing over the $m_0$ true nulls gives the result.</li>
+        <li>
+          For a fixed true null $i$, replace $p_i$ by $0$ and call the resulting BH rejection count $R^0$. On the event that $i$ is rejected, the
+          total number of BH rejections does not change, so $R=R^0$ there.
+        </li>
+        <li>
+          Condition on the other $p$-values. Since $R^0$ depends only on $p_{-i}$ and $p_i\sim \text{Unif}(0,1)$ independently,
+          $$E\!\left[\frac{V_i}{R\vee 1}\right] \leq \frac{\alpha}{m}.$$ Summing over the $m_0$ true nulls gives the result.
+        </li>
       </ol>
     </div>
 

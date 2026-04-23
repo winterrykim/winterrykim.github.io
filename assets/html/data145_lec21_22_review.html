@@ -306,8 +306,8 @@
     <!-- ============================================================ -->
 
     <p>
-      Lecture 20 focused on controlling errors when many decisions are made at once. Lecture 21 shifts from decision procedures to random
-      fluctuations themselves: how likely is a statistic to wander far from its target?
+      Lecture 20 focused on controlling errors when many decisions are made at once. Lecture 21 shifts from decision procedures to random fluctuations
+      themselves: how likely is a statistic to wander far from its target?
     </p>
 
     <div class="intuition">
@@ -352,19 +352,16 @@
     <h3>21.2 Markov and Chebyshev: the basic polynomial bounds</h3>
 
     <div class="definition">
-      <strong>Markov's inequality.</strong> If $X \geq 0$ and $E[X]=\mu$, then for $t&gt;0$,
-      $$P(X \geq t) \leq \frac{\mu}{t}.$$
+      <strong>Markov's inequality.</strong> If $X \geq 0$ and $E[X]=\mu$, then for $t&gt;0$, $$P(X \geq t) \leq \frac{\mu}{t}.$$
     </div>
 
     <div class="proof">
-      The proof idea is the same one from earlier probability:
-      $$\mathbf{1}\{X \geq t\} \leq \frac{X}{t}.$$
-      Taking expectations gives the result immediately.
+      The proof idea is the same one from earlier probability: $$\mathbf{1}\{X \geq t\} \leq \frac{X}{t}.$$ Taking expectations gives the result
+      immediately.
     </div>
 
     <div class="definition">
-      <strong>Chebyshev's inequality.</strong> If $X$ has mean $\mu$ and variance $\sigma^2$, then
-      $$P(|X-\mu| \geq t) \leq \frac{\sigma^2}{t^2}.$$
+      <strong>Chebyshev's inequality.</strong> If $X$ has mean $\mu$ and variance $\sigma^2$, then $$P(|X-\mu| \geq t) \leq \frac{\sigma^2}{t^2}.$$
       This follows by applying Markov to $(X-\mu)^2$.
     </div>
 
@@ -374,28 +371,21 @@
     </div>
 
     <p>
-      For a single right tail, Chebyshev still gives
-      $$P(X-\mu \geq t) \leq \frac{\sigma^2}{t^2}.$$
-      If the distribution is symmetric about $\mu$, the one-sided bound improves to
-      $$P(X-\mu \geq t) \leq \frac{\sigma^2}{2t^2}.$$
+      For a single right tail, Chebyshev still gives $$P(X-\mu \geq t) \leq \frac{\sigma^2}{t^2}.$$ If the distribution is symmetric about $\mu$, the
+      one-sided bound improves to $$P(X-\mu \geq t) \leq \frac{\sigma^2}{2t^2}.$$
     </p>
 
     <div class="example">
-      For a standard normal $Z$, symmetry plus $\Var(Z)=1$ gives
-      $$P(Z &gt; z) \leq \frac{1}{2z^2}, \qquad z&gt;0.$$
-      This is valid but not especially sharp for far-out tails.
+      For a standard normal $Z$, symmetry plus $\Var(Z)=1$ gives $$P(Z &gt; z) \leq \frac{1}{2z^2}, \qquad z&gt;0.$$ This is valid but not especially
+      sharp for far-out tails.
     </div>
 
     <h3>21.3 Chernoff bound: exponential tails from MGFs</h3>
 
     <div class="definition">
-      The <strong>moment generating function</strong> of $X$ is
-      $$M_X(s)=E(e^{sX}).$$
-      Since
-      $$e^{sX}=1+\frac{sX}{1!}+\frac{s^2X^2}{2!}+\frac{s^3X^3}{3!}+\cdots,$$
-      taking expectations gives
-      $$M_X(s)=1+sE[X]+\frac{s^2}{2!}E[X^2]+\frac{s^3}{3!}E[X^3]+\cdots.$$
-      So the mgf packages all the moments $E[X^k]$ into one function.
+      The <strong>moment generating function</strong> of $X$ is $$M_X(s)=E(e^{sX}).$$ Since
+      $$e^{sX}=1+\frac{sX}{1!}+\frac{s^2X^2}{2!}+\frac{s^3X^3}{3!}+\cdots,$$ taking expectations gives
+      $$M_X(s)=1+sE[X]+\frac{s^2}{2!}E[X^2]+\frac{s^3}{3!}E[X^3]+\cdots.$$ So the mgf packages all the moments $E[X^k]$ into one function.
     </div>
 
     <div class="intuition">
@@ -404,14 +394,13 @@
     </div>
 
     <div class="definition">
-      If the moment generating function $M_X(s)=E(e^{sX})$ is finite for some $s&gt;0$, then for any $t$ and any $s&gt;0$,
-      $$P(X \geq t) = P(e^{sX} \geq e^{st}) \leq M_X(s)e^{-st}.$$
+      If the moment generating function $M_X(s)=E(e^{sX})$ is finite for some $s&gt;0$, then for any $t$ and any $s&gt;0$, $$P(X \geq t) = P(e^{sX}
+      \geq e^{st}) \leq M_X(s)e^{-st}.$$
     </div>
 
     <div class="keyresult">
-      Optimizing over $s&gt;0$ gives the <strong>Chernoff bound</strong>:
-      $$P(X \geq t) \leq \inf_{s&gt;0} M_X(s)e^{-st}.$$
-      This often yields exponentially decaying tails.
+      Optimizing over $s&gt;0$ gives the <strong>Chernoff bound</strong>: $$P(X \geq t) \leq \inf_{s&gt;0} M_X(s)e^{-st}.$$ This often yields
+      exponentially decaying tails.
     </div>
 
     <div class="intuition">
@@ -420,89 +409,72 @@
     </div>
 
     <div class="example">
-      For a standard normal $Z$,
-      $$M_Z(s)=E(e^{sZ})=\int_{-\infty}^{\infty} e^{sz}\frac{1}{\sqrt{2\pi}}e^{-z^2/2}\,dz = e^{s^2/2}.$$
-      The usual derivation completes the square in the exponent:
-      $$sz-\frac{z^2}{2} = -\frac{1}{2}(z-s)^2+\frac{s^2}{2}.$$
-      So the integral becomes $e^{s^2/2}$ times the integral of a normal density centered at $s$, and that integral is 1.
+      For a standard normal $Z$, $$M_Z(s)=E(e^{sZ})=\int_{-\infty}^{\infty} e^{sz}\frac{1}{\sqrt{2\pi}}e^{-z^2/2}\,dz = e^{s^2/2}.$$ The usual
+      derivation completes the square in the exponent: $$sz-\frac{z^2}{2} = -\frac{1}{2}(z-s)^2+\frac{s^2}{2}.$$ So the integral becomes $e^{s^2/2}$
+      times the integral of a normal density centered at $s$, and that integral is 1.
     </div>
 
     <div class="example">
-      For a standard normal $Z$, optimizing the Chernoff bound gives
-      $$P(Z &gt; z) \leq e^{-z^2/2}, \qquad z&gt;0.$$
-      This is dramatically smaller than the Chebyshev bound in the tails.
+      For a standard normal $Z$, optimizing the Chernoff bound gives $$P(Z &gt; z) \leq e^{-z^2/2}, \qquad z&gt;0.$$ This is dramatically smaller than
+      the Chebyshev bound in the tails.
     </div>
 
     <h3>21.4 Sample means, CLT, and why exponential bounds are useful</h3>
 
     <p>
-      Let $X_1,\ldots,X_n$ be i.i.d. with mean $\mu$ and variance $\sigma^2$, and let $\bar X$ be the sample mean. The CLT says
-      $$\frac{\bar X-\mu}{\sigma/\sqrt{n}} \approx N(0,1)$$
-      for large $n$, so
-      $$P(|\bar X-\mu| &gt; \epsilon) \approx 2P\!\left(Z &gt; \frac{\sqrt{n}\epsilon}{\sigma}\right).$$
+      Let $X_1,\ldots,X_n$ be i.i.d. with mean $\mu$ and variance $\sigma^2$, and let $\bar X$ be the sample mean. The CLT says $$\frac{\bar
+      X-\mu}{\sigma/\sqrt{n}} \approx N(0,1)$$ for large $n$, so $$P(|\bar X-\mu| &gt; \epsilon) \approx 2P\!\left(Z &gt;
+      \frac{\sqrt{n}\epsilon}{\sigma}\right).$$
     </p>
 
     <div class="keyresult">
       Bounding the normal tail gives:
       <ul style="margin-top: 0.5rem">
         <li>Chebyshev: $$P(|\bar X-\mu| &gt; \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}$$</li>
-        <li>Chernoff-style normal tail bound:
-          $$P(|\bar X-\mu| &gt; \epsilon) \lesssim 2\exp\!\left(-\frac{n\epsilon^2}{2\sigma^2}\right)$$</li>
+        <li>Chernoff-style normal tail bound: $$P(|\bar X-\mu| &gt; \epsilon) \lesssim 2\exp\!\left(-\frac{n\epsilon^2}{2\sigma^2}\right)$$</li>
       </ul>
     </div>
 
     <div class="example">
-      If $X_i \sim \text{Bernoulli}(1/2)$ i.i.d., then
-      $$P(|\bar X-1/2| &gt; \epsilon)$$
-      is bounded by
-      $$\frac{1}{4n\epsilon^2} \quad \text{(Chebyshev)} \qquad \text{and} \qquad 2e^{-2n\epsilon^2} \quad \text{(Chernoff/Hoeffding form).}$$
-      The exponential bound is far more useful for sample-size planning.
+      If $X_i \sim \text{Bernoulli}(1/2)$ i.i.d., then $$P(|\bar X-1/2| &gt; \epsilon)$$ is bounded by $$\frac{1}{4n\epsilon^2} \quad
+      \text{(Chebyshev)} \qquad \text{and} \qquad 2e^{-2n\epsilon^2} \quad \text{(Chernoff/Hoeffding form).}$$ The exponential bound is far more
+      useful for sample-size planning.
     </div>
 
     <h3>21.5 Mills inequality: a sharper normal-tail bound</h3>
 
     <div class="definition">
-      For standard normal $Z$ with density
-      $$\phi(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2},$$
-      the one-sided normal-density bound is
-      $$P(Z &gt; z) \leq \frac{1}{z}\phi(z), \qquad z&gt;0.$$
+      For standard normal $Z$ with density $$\phi(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2},$$ the one-sided normal-density bound is $$P(Z &gt; z) \leq
+      \frac{1}{z}\phi(z), \qquad z&gt;0.$$
     </div>
 
     <div class="proof">
-      Graphically, this is another indicator comparison. For fixed $z&gt;0$, the tail indicator is
-      $$\mathbf{1}\{x \geq z\}=
-      \begin{cases}
-      0, &amp; x&lt;z \\
-      1, &amp; x\geq z
-      \end{cases}$$
-      and on $[z,\infty)$ we have $\mathbf{1}\{x\ge z\}\le x/z$.
-      So the function $x/z$ sits above the indicator on the right tail.
+      Graphically, this is another indicator comparison. For fixed $z&gt;0$, the tail indicator is $$\mathbf{1}\{x \geq z\}= \begin{cases} 0, &amp;
+      x&lt;z \\ 1, &amp; x\geq z \end{cases}$$ and on $[z,\infty)$ we have $\mathbf{1}\{x\ge z\}\le x/z$. So the function $x/z$ sits above the
+      indicator on the right tail.
     </div>
 
     <div class="proof">
-      The lecture proof compares the indicator of the tail to $x/z$ on $[z,\infty)$:
-      $$P(Z&gt;z)=\int_z^\infty \phi(x)\,dx \leq \int_z^\infty \frac{x}{z}\phi(x)\,dx = \frac{1}{z}\phi(z).$$
-      So again the pattern is: upper-bound an indicator by a friendlier function and integrate.
+      The lecture proof compares the indicator of the tail to $x/z$ on $[z,\infty)$: $$P(Z&gt;z)=\int_z^\infty \phi(x)\,dx \leq \int_z^\infty
+      \frac{x}{z}\phi(x)\,dx = \frac{1}{z}\phi(z).$$ So again the pattern is: upper-bound an indicator by a friendlier function and integrate.
     </div>
 
     <div class="keyresult">
-      By symmetry, the two-sided form is
-      $$P(|Z| &gt; z) \leq 2\frac{1}{z}\phi(z)=\sqrt{\frac{2}{\pi}}\frac{1}{z}e^{-z^2/2}.$$
-      This is often called <strong>Mills inequality</strong> in the course notes.
+      By symmetry, the two-sided form is $$P(|Z| &gt; z) \leq 2\frac{1}{z}\phi(z)=\sqrt{\frac{2}{\pi}}\frac{1}{z}e^{-z^2/2}.$$ This is often called
+      <strong>Mills inequality</strong> in the course notes.
     </div>
 
     <div class="intuition">
-      Compared with Chernoff's $e^{-z^2/2}$, Mills adds the helpful factor $1/(z\sqrt{2\pi})$. So for normal tails it is a sharper analytic bound
-      with almost no extra work.
+      Compared with Chernoff's $e^{-z^2/2}$, Mills adds the helpful factor $1/(z\sqrt{2\pi})$. So for normal tails it is a sharper analytic bound with
+      almost no extra work.
     </div>
 
     <h3>21.6 Hoeffding's inequality: independent, bounded, not necessarily i.i.d.</h3>
 
     <div class="definition">
-      If $X_i \in [a_i,b_i]$ are independent and $S_n=\sum_{i=1}^n X_i$, then for $t&gt;0$,
-      $$P(S_n-E[S_n]\geq t) \leq \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
-      The same bound holds for the left tail, hence
-      $$P(|S_n-E[S_n]| \geq t) \leq 2\exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+      If $X_i \in [a_i,b_i]$ are independent and $S_n=\sum_{i=1}^n X_i$, then for $t&gt;0$, $$P(S_n-E[S_n]\geq t) \leq
+      \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$ The same bound holds for the left tail, hence $$P(|S_n-E[S_n]| \geq t) \leq
+      2\exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
     </div>
 
     <div class="warning">
@@ -511,16 +483,13 @@
     </div>
 
     <p>
-      For the sample average,
-      $$P(|\bar X-E\bar X| \geq t) \leq 2\exp\!\left(\frac{-2n^2 t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
-      If every $X_i\in[0,1]$, this simplifies to
-      $$P(|\bar X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$
+      For the sample average, $$P(|\bar X-E\bar X| \geq t) \leq 2\exp\!\left(\frac{-2n^2 t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$ If every
+      $X_i\in[0,1]$, this simplifies to $$P(|\bar X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$
     </p>
 
     <div class="example">
-      This is worth stating explicitly: when $a_i=0$ and $b_i=1$ for all $i$, each range length is $b_i-a_i=1$, so Hoeffding reduces to
-      $$P(|\bar X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$
-      That is the same formula as the Chernoff-style bound for Bernoulli sample means on $[0,1]$.
+      This is worth stating explicitly: when $a_i=0$ and $b_i=1$ for all $i$, each range length is $b_i-a_i=1$, so Hoeffding reduces to $$P(|\bar
+      X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$ That is the same formula as the Chernoff-style bound for Bernoulli sample means on $[0,1]$.
     </div>
 
     <div class="example">
@@ -531,23 +500,16 @@
     <h3>21.7 Application: empirical risk in binary classification</h3>
 
     <p>
-      For a classifier $f$, define the $0$-$1$ loss
-      $$\ell(f(X_i),Y_i)=\mathbf{1}\{f(X_i)\neq Y_i\},$$
-      the empirical risk
-      $$\hat R(f)=\frac{1}{n}\sum_{i=1}^n \ell(f(X_i),Y_i),$$
-      and its expectation $R(f)=E[\hat R(f)]$.
+      For a classifier $f$, define the $0$-$1$ loss $$\ell(f(X_i),Y_i)=\mathbf{1}\{f(X_i)\neq Y_i\},$$ the empirical risk $$\hat
+      R(f)=\frac{1}{n}\sum_{i=1}^n \ell(f(X_i),Y_i),$$ and its expectation $R(f)=E[\hat R(f)]$.
     </p>
 
-    <div class="keyresult">
-      Because each loss lies in $[0,1]$, Hoeffding gives
-      $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq 2e^{-2n\epsilon^2}.$$
-    </div>
+    <div class="keyresult">Because each loss lies in $[0,1]$, Hoeffding gives $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq 2e^{-2n\epsilon^2}.$$</div>
 
     <div class="formula-box">
       <strong>Sample-size consequence:</strong><br />
-      To guarantee $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq \delta,$$
-      it is enough to choose
-      $$n \geq \frac{1}{2\epsilon^2}\log\!\left(\frac{2}{\delta}\right).$$
+      To guarantee $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq \delta,$$ it is enough to choose $$n \geq
+      \frac{1}{2\epsilon^2}\log\!\left(\frac{2}{\delta}\right).$$
     </div>
 
     <hr />
@@ -557,8 +519,8 @@
     <!-- ============================================================ -->
 
     <p>
-      Lecture 22 starts by proving the concentration result that Lecture 21 stated, then abruptly pivots to multivariable change of variable. At
-      first glance those topics look unrelated.
+      Lecture 22 starts by proving the concentration result that Lecture 21 stated, then abruptly pivots to multivariable change of variable. At first
+      glance those topics look unrelated.
     </p>
 
     <div class="intuition">
@@ -582,20 +544,12 @@
     <h3>22.1 Proof of Hoeffding's inequality</h3>
 
     <div class="proof">
-      Let $S_n=\sum_{i=1}^n X_i$ with independent $X_i\in[a_i,b_i]$. For any $s&gt;0$,
-      $$P(S_n-E[S_n]\geq t) = P\!\left(e^{s(S_n-E[S_n])}\geq e^{st}\right)
-      \leq e^{-st}E\!\left[e^{s(S_n-E[S_n])}\right].$$
-      Independence factors the expectation:
-      $$e^{-st}\prod_{i=1}^n E[e^{s(X_i-E[X_i])}].$$
-      Apply Hoeffding's lemma to each factor:
-      $$E[e^{s(X_i-E[X_i])}] \leq e^{s^2(b_i-a_i)^2/8}.$$
-      If $c=\sum_{i=1}^n (b_i-a_i)^2$, the bound becomes
-      $$e^{-st+s^2c/8}.$$
-      Minimize the exponent by differentiating:
-      $$-t+\frac{sc}{4}=0 \quad \Longrightarrow \quad s^*=\frac{4t}{c}.$$
-      Plugging in gives
-      $$P(S_n-E[S_n]\geq t) \leq \exp\!\left(\frac{-2t^2}{c}\right)
-      = \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+      Let $S_n=\sum_{i=1}^n X_i$ with independent $X_i\in[a_i,b_i]$. For any $s&gt;0$, $$P(S_n-E[S_n]\geq t) = P\!\left(e^{s(S_n-E[S_n])}\geq
+      e^{st}\right) \leq e^{-st}E\!\left[e^{s(S_n-E[S_n])}\right].$$ Independence factors the expectation: $$e^{-st}\prod_{i=1}^n
+      E[e^{s(X_i-E[X_i])}].$$ Apply Hoeffding's lemma to each factor: $$E[e^{s(X_i-E[X_i])}] \leq e^{s^2(b_i-a_i)^2/8}.$$ If $c=\sum_{i=1}^n
+      (b_i-a_i)^2$, the bound becomes $$e^{-st+s^2c/8}.$$ Minimize the exponent by differentiating: $$-t+\frac{sc}{4}=0 \quad \Longrightarrow \quad
+      s^*=\frac{4t}{c}.$$ Plugging in gives $$P(S_n-E[S_n]\geq t) \leq \exp\!\left(\frac{-2t^2}{c}\right) = \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n
+      (b_i-a_i)^2}\right).$$
     </div>
 
     <div class="intuition">
@@ -606,16 +560,17 @@
     <h3>22.2 Hoeffding's lemma: what makes the proof work</h3>
 
     <div class="definition">
-      <strong>Hoeffding's lemma.</strong> If $X\in[a,b]$ and $E[X]=0$, then for $s&gt;0$,
-      $$E[e^{sX}] \leq e^{s^2(b-a)^2/8}.$$
+      <strong>Hoeffding's lemma.</strong> If $X\in[a,b]$ and $E[X]=0$, then for $s&gt;0$, $$E[e^{sX}] \leq e^{s^2(b-a)^2/8}.$$
     </div>
 
     <div class="proof">
       The optional proof in lecture has two main ingredients:
       <ol style="margin-top: 0.5rem">
         <li>Use convexity of $x\mapsto e^{sx}$ to bound $e^{sX}$ by the chord joining the endpoints $a$ and $b$.</li>
-        <li>Take logs and use a second-order Taylor expansion, with a uniform bound on the second derivative, to show the log of the bound is at most
-          $w^2/8$ where $w=s(b-a)$.</li>
+        <li>
+          Take logs and use a second-order Taylor expansion, with a uniform bound on the second derivative, to show the log of the bound is at most
+          $w^2/8$ where $w=s(b-a)$.
+        </li>
       </ol>
       The conclusion is the sub-Gaussian-style mgf bound above.
     </div>
@@ -623,81 +578,51 @@
     <h3>22.3 Change of variable for joint densities</h3>
 
     <p>
-      Now let $(X,Y)$ have joint density $f_{X,Y}$ and define
-      $$(U,V)=g(X,Y)=(g_1(X,Y),g_2(X,Y)).$$
-      Assume $g$ is smooth and invertible, with inverse
+      Now let $(X,Y)$ have joint density $f_{X,Y}$ and define $$(U,V)=g(X,Y)=(g_1(X,Y),g_2(X,Y)).$$ Assume $g$ is smooth and invertible, with inverse
       $$(X,Y)=h(U,V)=(h_1(U,V),h_2(U,V)).$$
     </p>
 
     <div class="definition">
-      Let
-      $$J=\begin{bmatrix}
-      \partial g_1/\partial x &amp; \partial g_1/\partial y \\
-      \partial g_2/\partial x &amp; \partial g_2/\partial y
-      \end{bmatrix},
-      \qquad
-      K=\begin{bmatrix}
-      \partial h_1/\partial u &amp; \partial h_1/\partial v \\
-      \partial h_2/\partial u &amp; \partial h_2/\partial v
-      \end{bmatrix}.$$
-      Then $K=J^{-1}$ and
-      $$|\det J|=\frac{1}{|\det K|}.$$
+      Let $$J=\begin{bmatrix} \partial g_1/\partial x &amp; \partial g_1/\partial y \\ \partial g_2/\partial x &amp; \partial g_2/\partial y
+      \end{bmatrix}, \qquad K=\begin{bmatrix} \partial h_1/\partial u &amp; \partial h_1/\partial v \\ \partial h_2/\partial u &amp; \partial
+      h_2/\partial v \end{bmatrix}.$$ Then $K=J^{-1}$ and $$|\det J|=\frac{1}{|\det K|}.$$
     </div>
 
     <div class="keyresult">
-      The joint density of $(U,V)$ is
-      $$f_{U,V}(u,v)=\frac{f_{X,Y}(x,y)}{|\det J|}\quad \text{at }(x,y)=h(u,v),$$
-      or equivalently
+      The joint density of $(U,V)$ is $$f_{U,V}(u,v)=\frac{f_{X,Y}(x,y)}{|\det J|}\quad \text{at }(x,y)=h(u,v),$$ or equivalently
       $$f_{U,V}(u,v)=f_{X,Y}(h_1(u,v),h_2(u,v))\,|\det K|.$$
     </div>
 
     <div class="intuition">
       This is exactly the multivariable version of the one-variable change-of-variable formula. If $U=g(X)$ and $X=h(U)=g^{-1}(U)$, then
-      $$\frac{du}{dx}=g'(x), \qquad \frac{dx}{du}=h'(u)=\frac{1}{du/dx}.$$
-      So in one dimension we can write
-      $$f_U(u)=\frac{f_X(x)}{|du/dx|}\quad \text{at }x=h(u),$$
-      or equivalently
-      $$f_U(u)=f_X(h(u))\,|dx/du|.$$
-      One version has the derivative in the denominator, the other has the inverse derivative in the numerator. The Jacobian formulas above are the
-      same two viewpoints, just in matrix form.
+      $$\frac{du}{dx}=g'(x), \qquad \frac{dx}{du}=h'(u)=\frac{1}{du/dx}.$$ So in one dimension we can write $$f_U(u)=\frac{f_X(x)}{|du/dx|}\quad
+      \text{at }x=h(u),$$ or equivalently $$f_U(u)=f_X(h(u))\,|dx/du|.$$ One version has the derivative in the denominator, the other has the inverse
+      derivative in the numerator. The Jacobian formulas above are the same two viewpoints, just in matrix form.
     </div>
 
-    <div class="warning">
-      The absolute value on the determinant matters. A Jacobian can be negative, but densities cannot.
-    </div>
+    <div class="warning">The absolute value on the determinant matters. A Jacobian can be negative, but densities cannot.</div>
 
     <h3>22.4 Example: density of a sum via Jacobian machinery</h3>
 
     <p>
-      Set
-      $$U=X, \qquad V=X+Y.$$
-      Then the inverse map is
-      $$x=u, \qquad y=v-u.$$
-      The Jacobian determinant is 1, so
-      $$f_{U,V}(u,v)=f_{X,Y}(u,v-u).$$
+      Set $$U=X, \qquad V=X+Y.$$ Then the inverse map is $$x=u, \qquad y=v-u.$$ The Jacobian determinant is 1, so $$f_{U,V}(u,v)=f_{X,Y}(u,v-u).$$
     </p>
 
     <div class="keyresult">
-      Marginalizing over $U$ recovers the standard convolution formula:
-      $$f_V(v)=\int_{-\infty}^{\infty} f_{X,Y}(u,v-u)\,du.$$
-      Since $V=X+Y$, this is exactly the density formula for a sum.
+      Marginalizing over $U$ recovers the standard convolution formula: $$f_V(v)=\int_{-\infty}^{\infty} f_{X,Y}(u,v-u)\,du.$$ Since $V=X+Y$, this is
+      exactly the density formula for a sum.
     </div>
 
     <h3>22.5 Example: sum and difference of i.i.d. standard normals</h3>
 
     <p>
-      If $X,Y$ are i.i.d. $N(0,1)$ and
-      $$U=X+Y, \qquad V=X-Y,$$
-      then the inverse transformation is
-      $$x=\frac{u+v}{2}, \qquad y=\frac{u-v}{2},$$
-      and $|\det J|=2$.
+      If $X,Y$ are i.i.d. $N(0,1)$ and $$U=X+Y, \qquad V=X-Y,$$ then the inverse transformation is $$x=\frac{u+v}{2}, \qquad y=\frac{u-v}{2},$$ and
+      $|\det J|=2$.
     </p>
 
     <div class="example">
-      Plugging into the joint normal density gives
-      $$f_{U,V}(u,v)=\frac{1}{4\pi}\exp\!\left(-\frac{u^2}{4}\right)\exp\!\left(-\frac{v^2}{4}\right).$$
-      The density factors, so $U$ and $V$ are independent. Each has mean 0 and variance 2, hence
-      $$U,V \overset{\text{ind}}{\sim} N(0,2).$$
+      Plugging into the joint normal density gives $$f_{U,V}(u,v)=\frac{1}{4\pi}\exp\!\left(-\frac{u^2}{4}\right)\exp\!\left(-\frac{v^2}{4}\right).$$
+      The density factors, so $U$ and $V$ are independent. Each has mean 0 and variance 2, hence $$U,V \overset{\text{ind}}{\sim} N(0,2).$$
     </div>
 
     <div class="intuition">
@@ -708,24 +633,14 @@
     <h3>22.6 Example: beta-gamma algebra</h3>
 
     <p>
-      Let $X\sim \Gamma(r,\lambda)$ and $Y\sim \Gamma(s,\lambda)$ independently. Define
-      $$U=X+Y, \qquad V=\frac{X}{X+Y}.$$
-      The inverse map is
-      $$x=uv, \qquad y=u(1-v).$$
+      Let $X\sim \Gamma(r,\lambda)$ and $Y\sim \Gamma(s,\lambda)$ independently. Define $$U=X+Y, \qquad V=\frac{X}{X+Y}.$$ The inverse map is $$x=uv,
+      \qquad y=u(1-v).$$
     </p>
 
-    <div class="definition">
-      Using the inverse Jacobian matrix,
-      $$K=\begin{bmatrix}
-      v &amp; u \\
-      1-v &amp; -u
-      \end{bmatrix},
-      \qquad |\det K|=u.$$
-    </div>
+    <div class="definition">Using the inverse Jacobian matrix, $$K=\begin{bmatrix} v &amp; u \\ 1-v &amp; -u \end{bmatrix}, \qquad |\det K|=u.$$</div>
 
     <div class="keyresult">
-      After substitution, the transformed density factors into a gamma density in $u$ and a beta density in $v$:
-      $$f_{U,V}(u,v)=f_U(u)f_V(v).$$
+      After substitution, the transformed density factors into a gamma density in $u$ and a beta density in $v$: $$f_{U,V}(u,v)=f_U(u)f_V(v).$$
       Therefore
       <ul style="margin-top: 0.5rem">
         <li>$U \sim \Gamma(r+s,\lambda)$,</li>
