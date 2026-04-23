@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "From MLE to Neyman-Pearson to Reward Models"
+title: "Statistical Inference Notes: From MLE to Neyman-Pearson to Reward Models"
 date: 2026-03-08
-description: "A broad roadmap of statistical inference, inspired by Data 145, and a short bridge to modern reward-based AI."
+description: "My Data 145 Phase 1 notes: a broad roadmap of statistical inference, plus a short bridge to modern reward-based AI."
 tags: [statistics, ml, notes]
 categories: [technical-blogs]
 featured: false
@@ -301,6 +301,73 @@ _styles: |
     overflow-y: hidden;
   }
 
+  .course-map {
+    margin: 2rem 0 2.4rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(26, 54, 93, 0.14);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 12px 34px rgba(26, 54, 93, 0.08);
+  }
+
+  .course-map h2 {
+    margin-top: 0;
+    margin-bottom: 0.35rem;
+    padding-bottom: 0;
+    border-bottom: 0;
+    font-size: clamp(1.45rem, 2vw, 1.8rem);
+  }
+
+  .course-map p {
+    margin-bottom: 1rem;
+    color: #4f6176;
+    font-size: 1rem;
+  }
+
+  .course-map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.7rem;
+  }
+
+  .course-map-card {
+    display: block;
+    min-height: 5.3rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid rgba(43, 108, 176, 0.16);
+    border-radius: 16px;
+    background: #f8fbff;
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .course-map-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(43, 108, 176, 0.35);
+    box-shadow: 0 12px 24px rgba(26, 54, 93, 0.09);
+    text-decoration: none;
+  }
+
+  .course-map-card strong {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: #18314f;
+    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .course-map-card span {
+    display: block;
+    color: #5f7187;
+    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
   footer.fixed-bottom {
     border-top: 1px solid rgba(26, 54, 93, 0.08);
   }
@@ -339,6 +406,11 @@ _styles: |
     .post-tags {
       gap: 0.45rem;
     }
+
+    .course-map {
+      padding: 1rem;
+      border-radius: 18px;
+    }
   }
 ---
 
@@ -349,6 +421,82 @@ It is inspired by the first half of Data 145, but I am rewriting it for a broade
 The goal is not to reproduce every proof or every computational detail from lecture. The goal is to keep the **main flow**, the **core formulas**, and the **conceptual turns** that make the subject hang together.
 
 At the end, I also add a short bridge to **reward-based post-training in modern AI**, because some of the same ideas reappear there in a different vocabulary: KL penalties, proxy objectives, and exploitation of imperfect rewards.
+
+<div class="course-map">
+  <h2>Table of Contents</h2>
+  <p>This post is long, so I would read it as a map: start with the course arc, then jump to the lecture block you need.</p>
+
+  <div class="course-map-grid">
+    <a class="course-map-card" href="#1-the-big-picture-of-the-course">
+      <strong>1. Big Picture</strong>
+      <span>the course arc</span>
+    </a>
+    <a class="course-map-card" href="#2-what-i-am-intentionally-leaving-in-the-background">
+      <strong>2. What I Leave Out</strong>
+      <span>scope and boundaries</span>
+    </a>
+    <a class="course-map-card" href="#3-lecture-1-the-motivating-story">
+      <strong>3. Lecture 1</strong>
+      <span>motivation and MLE</span>
+    </a>
+    <a class="course-map-card" href="#4-lecture-2-convergence-and-the-delta-method">
+      <strong>4. Lecture 2</strong>
+      <span>convergence and delta method</span>
+    </a>
+    <a class="course-map-card" href="#5-lecture-3-models-estimators-likelihood">
+      <strong>5. Lecture 3</strong>
+      <span>models, estimators, likelihood</span>
+    </a>
+    <a class="course-map-card" href="#6-lectures-4-and-5-asymptotic-normality-and-efficiency-of-the-mle">
+      <strong>6. Lectures 4-5</strong>
+      <span>MLE normality and efficiency</span>
+    </a>
+    <a class="course-map-card" href="#7-lecture-6-decision-theory-shrinkage-admissibility">
+      <strong>7. Lecture 6</strong>
+      <span>decision theory and shrinkage</span>
+    </a>
+    <a class="course-map-card" href="#8-lecture-7-bayesian-inference-proper">
+      <strong>8. Lecture 7</strong>
+      <span>Bayesian inference</span>
+    </a>
+    <a class="course-map-card" href="#9-lecture-8-where-priors-come-from">
+      <strong>9. Lecture 8</strong>
+      <span>priors and subjectivity</span>
+    </a>
+    <a class="course-map-card" href="#10-lecture-9-what-if-the-model-is-wrong">
+      <strong>10. Lecture 9</strong>
+      <span>misspecification and KL</span>
+    </a>
+    <a class="course-map-card" href="#11-lecture-10-bootstrap-for-uncertainty">
+      <strong>11. Lecture 10</strong>
+      <span>bootstrap uncertainty</span>
+    </a>
+    <a class="course-map-card" href="#12-lecture-11-empirical-cdf-and-ks-tests">
+      <strong>12. Lecture 11</strong>
+      <span>empirical CDF and KS tests</span>
+    </a>
+    <a class="course-map-card" href="#13-lectures-12-and-13-hypothesis-testing-and-neyman-pearson">
+      <strong>13. Lectures 12-13</strong>
+      <span>hypothesis testing and NP</span>
+    </a>
+    <a class="course-map-card" href="#14-the-most-important-connections-between-lectures">
+      <strong>14. Connections</strong>
+      <span>how the lectures link</span>
+    </a>
+    <a class="course-map-card" href="#15-a-compact-checklist-of-formulas-and-ideas">
+      <strong>15. Checklist</strong>
+      <span>formulas and ideas</span>
+    </a>
+    <a class="course-map-card" href="#16-final-summary">
+      <strong>16. Final Summary</strong>
+      <span>one-page memory</span>
+    </a>
+    <a class="course-map-card" href="#17-a-short-bridge-to-reward-models">
+      <strong>17. Reward Models</strong>
+      <span>modern AI bridge</span>
+    </a>
+  </div>
+</div>
 
 ---
 

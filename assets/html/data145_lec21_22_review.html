@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide - Lectures 21-22</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            SD: "\\operatorname{SD}",
+            phi: "\\varphi",
+            Phi: "\\Phi",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: #2f855a;
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: #2f855a;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: #e53e3e;
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: #e53e3e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: #dd6b20;
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: #dd6b20;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide - Lectures 21 through 22 - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#bridge2021">Bridge: From Error Rates to Tail Probabilities</a></li>
+        <li><a href="#lec21">Lecture 21: Concentration Inequalities</a></li>
+        <li><a href="#bridge2122">Bridge: From Hoeffding to Jacobians</a></li>
+        <li><a href="#lec22">Lecture 22: Multivariable Methods</a></li>
+        <li><a href="#comparison">Big Comparison Map</a></li>
+        <li><a href="#summary">Master Summary and Formula Sheet</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="bridge2021">Bridge: From Error Rates to Tail Probabilities</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      Lecture 20 focused on controlling errors when many decisions are made at once. Lecture 21 shifts from decision procedures to random
+      fluctuations themselves: how likely is a statistic to wander far from its target?
+    </p>
+
+    <div class="intuition">
+      The new question is not "how many false discoveries might we make?" but
+      <strong>"how concentrated is a random quantity around the value we care about?"</strong>
+      In machine learning language: how far can an empirical quantity drift from its population target?
+    </div>
+
+    <p>
+      This makes concentration inequalities a natural bridge to later material. Regression, empirical risk, and generalization bounds all depend on
+      controlling the tails of sums and averages, even when exact tail probabilities are hard or impossible to compute.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec21">Lecture 21: Concentration Inequalities</h2>
+    <!-- ============================================================ -->
+
+    <h3>21.1 Why tail bounds matter</h3>
+
+    <p>
+      Suppose a statistic based on data converges to a target as sample size grows: an empirical risk to its expected loss, a sample mean to its
+      population mean, or a regression quantity to its limiting parameter. Usually we do not need exact tail probabilities. We need guarantees that
+      the bad tail is smaller than some tolerance.
+    </p>
+
+    <div class="definition">
+      A <strong>concentration inequality</strong> is an upper bound on tail probability. If the bound is small, we know most of the probability mass
+      lies close to the target value.
+    </div>
+
+    <div class="keyresult">
+      Tail bounds answer practical questions such as:
+      <ul style="margin-top: 0.5rem">
+        <li>Is the error probability below $10^{-6}$?</li>
+        <li>How large must $n$ be to make the error probability smaller than a target $\delta$?</li>
+        <li>How fast does the statistic concentrate as $n$ grows?</li>
+      </ul>
+    </div>
+
+    <h3>21.2 Markov and Chebyshev: the basic polynomial bounds</h3>
+
+    <div class="definition">
+      <strong>Markov's inequality.</strong> If $X \geq 0$ and $E[X]=\mu$, then for $t&gt;0$,
+      $$P(X \geq t) \leq \frac{\mu}{t}.$$
+    </div>
+
+    <div class="proof">
+      The proof idea is the same one from earlier probability:
+      $$\mathbf{1}\{X \geq t\} \leq \frac{X}{t}.$$
+      Taking expectations gives the result immediately.
+    </div>
+
+    <div class="definition">
+      <strong>Chebyshev's inequality.</strong> If $X$ has mean $\mu$ and variance $\sigma^2$, then
+      $$P(|X-\mu| \geq t) \leq \frac{\sigma^2}{t^2}.$$
+      This follows by applying Markov to $(X-\mu)^2$.
+    </div>
+
+    <div class="intuition">
+      Markov uses only a first moment and gives a $1/t$ tail. Chebyshev uses a second moment and improves that to $1/t^2$. These are broad, robust,
+      and often crude.
+    </div>
+
+    <p>
+      For a single right tail, Chebyshev still gives
+      $$P(X-\mu \geq t) \leq \frac{\sigma^2}{t^2}.$$
+      If the distribution is symmetric about $\mu$, the one-sided bound improves to
+      $$P(X-\mu \geq t) \leq \frac{\sigma^2}{2t^2}.$$
+    </p>
+
+    <div class="example">
+      For a standard normal $Z$, symmetry plus $\Var(Z)=1$ gives
+      $$P(Z &gt; z) \leq \frac{1}{2z^2}, \qquad z&gt;0.$$
+      This is valid but not especially sharp for far-out tails.
+    </div>
+
+    <h3>21.3 Chernoff bound: exponential tails from MGFs</h3>
+
+    <div class="definition">
+      The <strong>moment generating function</strong> of $X$ is
+      $$M_X(s)=E(e^{sX}).$$
+      Since
+      $$e^{sX}=1+\frac{sX}{1!}+\frac{s^2X^2}{2!}+\frac{s^3X^3}{3!}+\cdots,$$
+      taking expectations gives
+      $$M_X(s)=1+sE[X]+\frac{s^2}{2!}E[X^2]+\frac{s^3}{3!}E[X^3]+\cdots.$$
+      So the mgf packages all the moments $E[X^k]$ into one function.
+    </div>
+
+    <div class="intuition">
+      Here $s$ is just a fixed tuning parameter that <em>we choose</em>. The random input is still $X$. Some books use $t$ instead of $s$; it plays
+      the same role. Chernoff's method works by picking a convenient value of this parameter and then optimizing over it.
+    </div>
+
+    <div class="definition">
+      If the moment generating function $M_X(s)=E(e^{sX})$ is finite for some $s&gt;0$, then for any $t$ and any $s&gt;0$,
+      $$P(X \geq t) = P(e^{sX} \geq e^{st}) \leq M_X(s)e^{-st}.$$
+    </div>
+
+    <div class="keyresult">
+      Optimizing over $s&gt;0$ gives the <strong>Chernoff bound</strong>:
+      $$P(X \geq t) \leq \inf_{s&gt;0} M_X(s)e^{-st}.$$
+      This often yields exponentially decaying tails.
+    </div>
+
+    <div class="intuition">
+      Chernoff is still just Markov's inequality, but applied to the exponential transform $e^{sX}$. The entire trick is to choose a transform that
+      turns a hard tail event into something whose expectation is easy to manage.
+    </div>
+
+    <div class="example">
+      For a standard normal $Z$,
+      $$M_Z(s)=E(e^{sZ})=\int_{-\infty}^{\infty} e^{sz}\frac{1}{\sqrt{2\pi}}e^{-z^2/2}\,dz = e^{s^2/2}.$$
+      The usual derivation completes the square in the exponent:
+      $$sz-\frac{z^2}{2} = -\frac{1}{2}(z-s)^2+\frac{s^2}{2}.$$
+      So the integral becomes $e^{s^2/2}$ times the integral of a normal density centered at $s$, and that integral is 1.
+    </div>
+
+    <div class="example">
+      For a standard normal $Z$, optimizing the Chernoff bound gives
+      $$P(Z &gt; z) \leq e^{-z^2/2}, \qquad z&gt;0.$$
+      This is dramatically smaller than the Chebyshev bound in the tails.
+    </div>
+
+    <h3>21.4 Sample means, CLT, and why exponential bounds are useful</h3>
+
+    <p>
+      Let $X_1,\ldots,X_n$ be i.i.d. with mean $\mu$ and variance $\sigma^2$, and let $\bar X$ be the sample mean. The CLT says
+      $$\frac{\bar X-\mu}{\sigma/\sqrt{n}} \approx N(0,1)$$
+      for large $n$, so
+      $$P(|\bar X-\mu| &gt; \epsilon) \approx 2P\!\left(Z &gt; \frac{\sqrt{n}\epsilon}{\sigma}\right).$$
+    </p>
+
+    <div class="keyresult">
+      Bounding the normal tail gives:
+      <ul style="margin-top: 0.5rem">
+        <li>Chebyshev: $$P(|\bar X-\mu| &gt; \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}$$</li>
+        <li>Chernoff-style normal tail bound:
+          $$P(|\bar X-\mu| &gt; \epsilon) \lesssim 2\exp\!\left(-\frac{n\epsilon^2}{2\sigma^2}\right)$$</li>
+      </ul>
+    </div>
+
+    <div class="example">
+      If $X_i \sim \text{Bernoulli}(1/2)$ i.i.d., then
+      $$P(|\bar X-1/2| &gt; \epsilon)$$
+      is bounded by
+      $$\frac{1}{4n\epsilon^2} \quad \text{(Chebyshev)} \qquad \text{and} \qquad 2e^{-2n\epsilon^2} \quad \text{(Chernoff/Hoeffding form).}$$
+      The exponential bound is far more useful for sample-size planning.
+    </div>
+
+    <h3>21.5 Mills inequality: a sharper normal-tail bound</h3>
+
+    <div class="definition">
+      For standard normal $Z$ with density
+      $$\phi(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2},$$
+      the one-sided normal-density bound is
+      $$P(Z &gt; z) \leq \frac{1}{z}\phi(z), \qquad z&gt;0.$$
+    </div>
+
+    <div class="proof">
+      Graphically, this is another indicator comparison. For fixed $z&gt;0$, the tail indicator is
+      $$\mathbf{1}\{x \geq z\}=
+      \begin{cases}
+      0, &amp; x&lt;z \\
+      1, &amp; x\geq z
+      \end{cases}$$
+      and on $[z,\infty)$ we have $\mathbf{1}\{x\ge z\}\le x/z$.
+      So the function $x/z$ sits above the indicator on the right tail.
+    </div>
+
+    <div class="proof">
+      The lecture proof compares the indicator of the tail to $x/z$ on $[z,\infty)$:
+      $$P(Z&gt;z)=\int_z^\infty \phi(x)\,dx \leq \int_z^\infty \frac{x}{z}\phi(x)\,dx = \frac{1}{z}\phi(z).$$
+      So again the pattern is: upper-bound an indicator by a friendlier function and integrate.
+    </div>
+
+    <div class="keyresult">
+      By symmetry, the two-sided form is
+      $$P(|Z| &gt; z) \leq 2\frac{1}{z}\phi(z)=\sqrt{\frac{2}{\pi}}\frac{1}{z}e^{-z^2/2}.$$
+      This is often called <strong>Mills inequality</strong> in the course notes.
+    </div>
+
+    <div class="intuition">
+      Compared with Chernoff's $e^{-z^2/2}$, Mills adds the helpful factor $1/(z\sqrt{2\pi})$. So for normal tails it is a sharper analytic bound
+      with almost no extra work.
+    </div>
+
+    <h3>21.6 Hoeffding's inequality: independent, bounded, not necessarily i.i.d.</h3>
+
+    <div class="definition">
+      If $X_i \in [a_i,b_i]$ are independent and $S_n=\sum_{i=1}^n X_i$, then for $t&gt;0$,
+      $$P(S_n-E[S_n]\geq t) \leq \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+      The same bound holds for the left tail, hence
+      $$P(|S_n-E[S_n]| \geq t) \leq 2\exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+    </div>
+
+    <div class="warning">
+      Hoeffding assumes <strong>independence and bounded support</strong>, but it does <strong>not</strong> assume the variables are identically
+      distributed.
+    </div>
+
+    <p>
+      For the sample average,
+      $$P(|\bar X-E\bar X| \geq t) \leq 2\exp\!\left(\frac{-2n^2 t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+      If every $X_i\in[0,1]$, this simplifies to
+      $$P(|\bar X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$
+    </p>
+
+    <div class="example">
+      This is worth stating explicitly: when $a_i=0$ and $b_i=1$ for all $i$, each range length is $b_i-a_i=1$, so Hoeffding reduces to
+      $$P(|\bar X-E\bar X| \geq t) \leq 2e^{-2nt^2}.$$
+      That is the same formula as the Chernoff-style bound for Bernoulli sample means on $[0,1]$.
+    </div>
+
+    <div class="example">
+      This is exactly the same concentration rate we saw for i.i.d. Bernoulli$(1/2)$ sample means. The lecture's puzzle explains why that should not
+      feel accidental: among all distributions on $[0,1]$, the unique one with largest variance is Bernoulli$(1/2)$.
+    </div>
+
+    <h3>21.7 Application: empirical risk in binary classification</h3>
+
+    <p>
+      For a classifier $f$, define the $0$-$1$ loss
+      $$\ell(f(X_i),Y_i)=\mathbf{1}\{f(X_i)\neq Y_i\},$$
+      the empirical risk
+      $$\hat R(f)=\frac{1}{n}\sum_{i=1}^n \ell(f(X_i),Y_i),$$
+      and its expectation $R(f)=E[\hat R(f)]$.
+    </p>
+
+    <div class="keyresult">
+      Because each loss lies in $[0,1]$, Hoeffding gives
+      $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq 2e^{-2n\epsilon^2}.$$
+    </div>
+
+    <div class="formula-box">
+      <strong>Sample-size consequence:</strong><br />
+      To guarantee $$P(|\hat R(f)-R(f)| \geq \epsilon) \leq \delta,$$
+      it is enough to choose
+      $$n \geq \frac{1}{2\epsilon^2}\log\!\left(\frac{2}{\delta}\right).$$
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="bridge2122">Bridge: From Hoeffding to Jacobians</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      Lecture 22 starts by proving the concentration result that Lecture 21 stated, then abruptly pivots to multivariable change of variable. At
+      first glance those topics look unrelated.
+    </p>
+
+    <div class="intuition">
+      The real connection is methodological. Both parts of Lecture 22 introduce reusable tools:
+      <strong>an exponential-moment machine for tail bounds</strong> and
+      <strong>a Jacobian machine for transformed densities.</strong>
+      Each tool becomes a standard move later in statistics and machine learning.
+    </div>
+
+    <p>
+      The first tool finishes the concentration story. The second tool prepares the ground for deriving the $t$ and $F$ distributions that appear in
+      multiple regression.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec22">Lecture 22: Multivariable Methods</h2>
+    <!-- ============================================================ -->
+
+    <h3>22.1 Proof of Hoeffding's inequality</h3>
+
+    <div class="proof">
+      Let $S_n=\sum_{i=1}^n X_i$ with independent $X_i\in[a_i,b_i]$. For any $s&gt;0$,
+      $$P(S_n-E[S_n]\geq t) = P\!\left(e^{s(S_n-E[S_n])}\geq e^{st}\right)
+      \leq e^{-st}E\!\left[e^{s(S_n-E[S_n])}\right].$$
+      Independence factors the expectation:
+      $$e^{-st}\prod_{i=1}^n E[e^{s(X_i-E[X_i])}].$$
+      Apply Hoeffding's lemma to each factor:
+      $$E[e^{s(X_i-E[X_i])}] \leq e^{s^2(b_i-a_i)^2/8}.$$
+      If $c=\sum_{i=1}^n (b_i-a_i)^2$, the bound becomes
+      $$e^{-st+s^2c/8}.$$
+      Minimize the exponent by differentiating:
+      $$-t+\frac{sc}{4}=0 \quad \Longrightarrow \quad s^*=\frac{4t}{c}.$$
+      Plugging in gives
+      $$P(S_n-E[S_n]\geq t) \leq \exp\!\left(\frac{-2t^2}{c}\right)
+      = \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right).$$
+    </div>
+
+    <div class="intuition">
+      Hoeffding is really Chernoff plus one special lemma for bounded random variables. Once the mgf of the centered variable is controlled, the rest
+      is just calculus.
+    </div>
+
+    <h3>22.2 Hoeffding's lemma: what makes the proof work</h3>
+
+    <div class="definition">
+      <strong>Hoeffding's lemma.</strong> If $X\in[a,b]$ and $E[X]=0$, then for $s&gt;0$,
+      $$E[e^{sX}] \leq e^{s^2(b-a)^2/8}.$$
+    </div>
+
+    <div class="proof">
+      The optional proof in lecture has two main ingredients:
+      <ol style="margin-top: 0.5rem">
+        <li>Use convexity of $x\mapsto e^{sx}$ to bound $e^{sX}$ by the chord joining the endpoints $a$ and $b$.</li>
+        <li>Take logs and use a second-order Taylor expansion, with a uniform bound on the second derivative, to show the log of the bound is at most
+          $w^2/8$ where $w=s(b-a)$.</li>
+      </ol>
+      The conclusion is the sub-Gaussian-style mgf bound above.
+    </div>
+
+    <h3>22.3 Change of variable for joint densities</h3>
+
+    <p>
+      Now let $(X,Y)$ have joint density $f_{X,Y}$ and define
+      $$(U,V)=g(X,Y)=(g_1(X,Y),g_2(X,Y)).$$
+      Assume $g$ is smooth and invertible, with inverse
+      $$(X,Y)=h(U,V)=(h_1(U,V),h_2(U,V)).$$
+    </p>
+
+    <div class="definition">
+      Let
+      $$J=\begin{bmatrix}
+      \partial g_1/\partial x &amp; \partial g_1/\partial y \\
+      \partial g_2/\partial x &amp; \partial g_2/\partial y
+      \end{bmatrix},
+      \qquad
+      K=\begin{bmatrix}
+      \partial h_1/\partial u &amp; \partial h_1/\partial v \\
+      \partial h_2/\partial u &amp; \partial h_2/\partial v
+      \end{bmatrix}.$$
+      Then $K=J^{-1}$ and
+      $$|\det J|=\frac{1}{|\det K|}.$$
+    </div>
+
+    <div class="keyresult">
+      The joint density of $(U,V)$ is
+      $$f_{U,V}(u,v)=\frac{f_{X,Y}(x,y)}{|\det J|}\quad \text{at }(x,y)=h(u,v),$$
+      or equivalently
+      $$f_{U,V}(u,v)=f_{X,Y}(h_1(u,v),h_2(u,v))\,|\det K|.$$
+    </div>
+
+    <div class="intuition">
+      This is exactly the multivariable version of the one-variable change-of-variable formula. If $U=g(X)$ and $X=h(U)=g^{-1}(U)$, then
+      $$\frac{du}{dx}=g'(x), \qquad \frac{dx}{du}=h'(u)=\frac{1}{du/dx}.$$
+      So in one dimension we can write
+      $$f_U(u)=\frac{f_X(x)}{|du/dx|}\quad \text{at }x=h(u),$$
+      or equivalently
+      $$f_U(u)=f_X(h(u))\,|dx/du|.$$
+      One version has the derivative in the denominator, the other has the inverse derivative in the numerator. The Jacobian formulas above are the
+      same two viewpoints, just in matrix form.
+    </div>
+
+    <div class="warning">
+      The absolute value on the determinant matters. A Jacobian can be negative, but densities cannot.
+    </div>
+
+    <h3>22.4 Example: density of a sum via Jacobian machinery</h3>
+
+    <p>
+      Set
+      $$U=X, \qquad V=X+Y.$$
+      Then the inverse map is
+      $$x=u, \qquad y=v-u.$$
+      The Jacobian determinant is 1, so
+      $$f_{U,V}(u,v)=f_{X,Y}(u,v-u).$$
+    </p>
+
+    <div class="keyresult">
+      Marginalizing over $U$ recovers the standard convolution formula:
+      $$f_V(v)=\int_{-\infty}^{\infty} f_{X,Y}(u,v-u)\,du.$$
+      Since $V=X+Y$, this is exactly the density formula for a sum.
+    </div>
+
+    <h3>22.5 Example: sum and difference of i.i.d. standard normals</h3>
+
+    <p>
+      If $X,Y$ are i.i.d. $N(0,1)$ and
+      $$U=X+Y, \qquad V=X-Y,$$
+      then the inverse transformation is
+      $$x=\frac{u+v}{2}, \qquad y=\frac{u-v}{2},$$
+      and $|\det J|=2$.
+    </p>
+
+    <div class="example">
+      Plugging into the joint normal density gives
+      $$f_{U,V}(u,v)=\frac{1}{4\pi}\exp\!\left(-\frac{u^2}{4}\right)\exp\!\left(-\frac{v^2}{4}\right).$$
+      The density factors, so $U$ and $V$ are independent. Each has mean 0 and variance 2, hence
+      $$U,V \overset{\text{ind}}{\sim} N(0,2).$$
+    </div>
+
+    <div class="intuition">
+      This is a clean illustration of what factorization buys us: once the transformed joint density splits into a product of a function of $u$ and a
+      function of $v$, independence is immediate.
+    </div>
+
+    <h3>22.6 Example: beta-gamma algebra</h3>
+
+    <p>
+      Let $X\sim \Gamma(r,\lambda)$ and $Y\sim \Gamma(s,\lambda)$ independently. Define
+      $$U=X+Y, \qquad V=\frac{X}{X+Y}.$$
+      The inverse map is
+      $$x=uv, \qquad y=u(1-v).$$
+    </p>
+
+    <div class="definition">
+      Using the inverse Jacobian matrix,
+      $$K=\begin{bmatrix}
+      v &amp; u \\
+      1-v &amp; -u
+      \end{bmatrix},
+      \qquad |\det K|=u.$$
+    </div>
+
+    <div class="keyresult">
+      After substitution, the transformed density factors into a gamma density in $u$ and a beta density in $v$:
+      $$f_{U,V}(u,v)=f_U(u)f_V(v).$$
+      Therefore
+      <ul style="margin-top: 0.5rem">
+        <li>$U \sim \Gamma(r+s,\lambda)$,</li>
+        <li>$V \sim \text{Beta}(r,s)$,</li>
+        <li>$U$ and $V$ are independent.</li>
+      </ul>
+    </div>
+
+    <p>
+      This is the beta-gamma algebra result. It extends the familiar fact that sums of independent gamma variables with common rate stay gamma, and it
+      adds the beautiful independence of the sum and the ratio.
+    </p>
+
+    <h3>22.7 Why this matters for next week</h3>
+
+    <div class="formula-box">
+      <strong>Forward connection:</strong><br />
+      Beta-gamma algebra and one-dimensional change of variable lead to the $t$ and $F$ distributions. Those distributions are the calibration engine
+      for inference in multiple regression.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="comparison">Big Comparison Map</h2>
+    <!-- ============================================================ -->
+
+    <table>
+      <tr>
+        <th>Tool</th>
+        <th>Main assumptions</th>
+        <th>Typical output</th>
+        <th>What it is good for</th>
+      </tr>
+      <tr>
+        <td>Markov</td>
+        <td>$X\geq 0$, mean known</td>
+        <td>$P(X\geq t)\leq E[X]/t$</td>
+        <td>Very general first-pass tail bound</td>
+      </tr>
+      <tr>
+        <td>Chebyshev</td>
+        <td>Finite variance</td>
+        <td>$P(|X-\mu|\geq t)\leq \sigma^2/t^2$</td>
+        <td>Distribution-free concentration from second moments</td>
+      </tr>
+      <tr>
+        <td>Chernoff</td>
+        <td>MGF finite near the origin</td>
+        <td>$P(X\geq t)\leq \inf_{s&gt;0} M_X(s)e^{-st}$</td>
+        <td>Exponential tail bounds</td>
+      </tr>
+      <tr>
+        <td>Mills inequality</td>
+        <td>Normal tails</td>
+        <td>$P(Z&gt;z)\leq \phi(z)/z$</td>
+        <td>Sharper analytic bound for normal tails</td>
+      </tr>
+      <tr>
+        <td>Hoeffding</td>
+        <td>Independent bounded variables</td>
+        <td>Exponential bound using ranges $(b_i-a_i)$</td>
+        <td>Sample sums, averages, empirical risk</td>
+      </tr>
+      <tr>
+        <td>Jacobian change of variable</td>
+        <td>Smooth invertible transformation</td>
+        <td>New density after transformation</td>
+        <td>Derive densities of sums, ratios, and reparameterizations</td>
+      </tr>
+      <tr>
+        <td>Beta-gamma algebra</td>
+        <td>Independent gammas with common rate</td>
+        <td>Independent gamma sum and beta ratio</td>
+        <td>Build $t$ and $F$ distributions for regression inference</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Two-lecture big picture:</strong><br />
+      Lecture 21 tells you how to control random fluctuation. Lecture 22 tells you how to rewrite complicated random objects into forms whose
+      distributions you can recognize.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="summary">Master Summary and Formula Sheet</h2>
+    <!-- ============================================================ -->
+
+    <h3>Lecture 21 core formulas</h3>
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Comment</th>
+      </tr>
+      <tr>
+        <td>Markov</td>
+        <td>$P(X\geq t)\leq E[X]/t$</td>
+        <td>Requires $X\geq 0$</td>
+      </tr>
+      <tr>
+        <td>Chebyshev</td>
+        <td>$P(|X-\mu|\geq t)\leq \sigma^2/t^2$</td>
+        <td>Distribution-free second-moment bound</td>
+      </tr>
+      <tr>
+        <td>Chernoff</td>
+        <td>$P(X\geq t)\leq \inf_{s&gt;0} M_X(s)e^{-st}$</td>
+        <td>Usually exponential tails</td>
+      </tr>
+      <tr>
+        <td>Standard normal mgf</td>
+        <td>$M_Z(s)=e^{s^2/2}$</td>
+        <td>Comes from completing the square in the Gaussian integral</td>
+      </tr>
+      <tr>
+        <td>Normal density / Mills</td>
+        <td>$P(Z&gt;z)\leq \phi(z)/z$, $P(|Z|&gt;z)\leq 2\phi(z)/z$</td>
+        <td>Normal-specific improvement</td>
+      </tr>
+      <tr>
+        <td>Hoeffding for sums</td>
+        <td>$P(|S_n-E[S_n]|\geq t)\leq 2\exp\!\left(-2t^2/\sum_i(b_i-a_i)^2\right)$</td>
+        <td>Independent bounded variables</td>
+      </tr>
+      <tr>
+        <td>Hoeffding for averages in $[0,1]$</td>
+        <td>$P(|\bar X-E\bar X|\geq t)\leq 2e^{-2nt^2}$</td>
+        <td>Especially useful for empirical risk</td>
+      </tr>
+    </table>
+
+    <h3>Lecture 22 core formulas</h3>
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Comment</th>
+      </tr>
+      <tr>
+        <td>Hoeffding's lemma</td>
+        <td>$E[e^{sX}] \leq e^{s^2(b-a)^2/8}$</td>
+        <td>For mean-zero $X\in[a,b]$</td>
+      </tr>
+      <tr>
+        <td>Joint density transform</td>
+        <td>$f_{U,V}(u,v)=f_{X,Y}(h(u,v))\,|\det K|$</td>
+        <td>Equivalent to dividing by $|\det J|$</td>
+      </tr>
+      <tr>
+        <td>Density of a sum</td>
+        <td>$f_{X+Y}(v)=\int f_{X,Y}(u,v-u)\,du$</td>
+        <td>Convolution from Jacobian method</td>
+      </tr>
+      <tr>
+        <td>Normal sum/difference</td>
+        <td>$X+Y$ and $X-Y$ are independent $N(0,2)$</td>
+        <td>When $X,Y$ are i.i.d. $N(0,1)$</td>
+      </tr>
+      <tr>
+        <td>Beta-gamma algebra</td>
+        <td>$X+Y\sim \Gamma(r+s,\lambda)$, $X/(X+Y)\sim \text{Beta}(r,s)$</td>
+        <td>And they are independent</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Fast memory aid:</strong><br />
+      Bounded independent variables lead to Hoeffding. Smooth invertible transformations lead to Jacobians. Independent gammas lead to beta-gamma
+      algebra.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mistakes">Common Mistakes</h2>
+    <!-- ============================================================ -->
+
+    <div class="warning">
+      <strong>1.</strong> Forgetting to scale the variance of the sample mean.<br />
+      If $\Var(X_i)=\sigma^2$, then $\Var(\bar X)=\sigma^2/n$, not $\sigma^2$.
+    </div>
+
+    <div class="warning">
+      <strong>2.</strong> Thinking Hoeffding requires i.i.d. data.<br />
+      It only needs independence and bounded ranges.
+    </div>
+
+    <div class="warning">
+      <strong>3.</strong> Treating Chernoff or Hoeffding bounds as exact tail probabilities.<br />
+      They are upper bounds, often useful precisely because exact probabilities are hard.
+    </div>
+
+    <div class="warning">
+      <strong>4.</strong> Dropping the absolute value on the Jacobian determinant.<br />
+      Orientation can flip, but densities must stay nonnegative.
+    </div>
+
+    <div class="warning">
+      <strong>5.</strong> Forgetting to track support after a transformation.<br />
+      For example, in beta-gamma algebra we need $u&gt;0$ and $0&lt;v&lt;1$.
+    </div>
+
+    <hr />
+    <p style="text-align: center; color: var(--subtle); font-size: 0.9rem; margin-top: 2rem">
+      Data 145 Study Guide - Lectures 21-22 - Standalone Review Version
+    </p>
+  </body>
+</html>
