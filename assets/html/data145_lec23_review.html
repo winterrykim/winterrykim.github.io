@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide - Lecture 23</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            SD: "\\operatorname{SD}",
+            phi: "\\varphi",
+            Phi: "\\Phi",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: #2f855a;
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: #2f855a;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: #e53e3e;
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: #e53e3e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: #dd6b20;
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: #dd6b20;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide - Lecture 23 - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#bridge2223">Bridge: From Jacobians to Gaussian Geometry</a></li>
+        <li><a href="#probability">Lecture 23: Probability Review and Rotational Invariance</a></li>
+        <li><a href="#canonical">Canonical Linear Model: The \(n=2\) Prototype</a></li>
+        <li><a href="#rotation">The One-Sample \(t\)-Test Is Canonical in Disguise</a></li>
+        <li><a href="#general">General One-Sample \(t\)-Test and Residual Geometry</a></li>
+        <li><a href="#comparison">Big Comparison Map</a></li>
+        <li><a href="#summary">Master Summary and Formula Sheet</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+      </ol>
+    </div>
+
+    <h2 id="bridge2223">Bridge: From Jacobians to Gaussian Geometry</h2>
+
+    <p>
+      Lecture 22 emphasized affine transformations, Jacobians, and the fact that multivariate normals behave cleanly under linear maps. Lecture 23
+      takes that machinery and turns it into statistics: instead of changing variables to compute a density, we change coordinates to separate
+      <strong>signal directions</strong> from <strong>residual directions</strong>.
+    </p>
+
+    <div class="intuition">
+      The point is not that the data themselves change. We are looking at the same Gaussian cloud from a basis that makes the testing problem easy to
+      read off.
+    </div>
+
+    <p>
+      Once the coordinates are chosen well, the classical families line up:
+      $\chi^2$ is a squared Gaussian length, $t$ is one signal coordinate divided by estimated noise, and $F$ is one variance estimate divided by
+      another. The whole lecture is a geometric unification of tests you already know.
+    </p>
+
+    <hr />
+
+    <h2 id="probability">Lecture 23: Probability Review and Rotational Invariance</h2>
+
+    <h3>23.1 Why \(\chi^2\), \(t\), and \(F\) show up together</h3>
+
+    <div class="definition">
+      If $Z_1, \ldots, Z_d \stackrel{iid}{\sim} N(0,1)$, then
+      $$V = \sum_{j=1}^d Z_j^2 \sim \chi^2_d.$$
+      This is the total squared length of a standard Gaussian vector in $d$ dimensions.
+    </div>
+
+    <div class="definition">
+      If $Z \sim N(0,1)$ and $V \sim \chi^2_d$ are independent, then
+      $$T = \frac{Z}{\sqrt{V/d}} \sim t_d.$$
+      Here the numerator is a standardized signal coordinate and $V/d$ is an average squared noise level per degree of freedom.
+    </div>
+
+    <div class="definition">
+      If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are independent, then
+      $$F = \frac{V_1/d_1}{V_2/d_2} \sim F_{d_1,d_2}.$$
+      So $F$ compares two variance estimates built from orthogonal Gaussian pieces.
+    </div>
+
+    <div class="keyresult">
+      Shortest conceptual summary:
+      $$\chi^2 = \text{squared Gaussian length}, \qquad t = \frac{\text{signal}}{\text{estimated noise}}, \qquad
+      F = \frac{\text{variance estimate}}{\text{variance estimate}}.$$
+    </div>
+
+    <h3>23.2 What the degrees of freedom \(d\) means</h3>
+
+    <p>
+      If $V \sim \chi^2_d$, then by definition
+      $$V = U_1^2 + \cdots + U_d^2$$
+      for $d$ independent $N(0,1)$ variables. So the number $d$ is not an arbitrary adjustment: it is the number of independent Gaussian directions
+      being squared.
+    </p>
+
+    <div class="formula-box">
+      $$\E[V] = d \qquad \Longrightarrow \qquad \E[V/d] = 1.$$
+    </div>
+
+    <div class="intuition">
+      Dimension of a Gaussian subspace = degrees of freedom of the chi-squared built from that subspace. Dividing by $d$ turns total squared
+      variation into average squared variation per direction.
+    </div>
+
+    <h3>23.3 Rotational invariance and projection lengths</h3>
+
+    <div class="definition">
+      <strong>Affine transformation formula.</strong> If $Z \sim N_n(\mu,\Sigma)$ and $Y = AZ + b$, then
+      $$Y \sim N(A\mu + b,\; A \Sigma A^T).$$
+    </div>
+
+    <p>
+      Apply this when $\mu = 0$, $\Sigma = \sigma^2 I_n$, $b = 0$, and $A = Q$ is orthogonal. Then
+      $$QZ \sim N_n(0,\sigma^2 QQ^T) = N_n(0,\sigma^2 I_n),$$
+      so the distribution is unchanged by rotation or reflection.
+    </p>
+
+    <div class="theorem">
+      If $Z \sim N_n(0,\sigma^2 I_n)$ and $V_1, V_2$ are orthogonal subspaces with dimensions $d_1$ and $d_2$, then
+      $$\|P_{V_1}Z\|^2 \sim \sigma^2 \chi^2_{d_1}, \qquad \|P_{V_2}Z\|^2 \sim \sigma^2 \chi^2_{d_2},$$
+      and these two squared projection lengths are independent.
+    </div>
+
+    <div class="proof">
+      Choose an orthonormal basis adapted to $V_1$, $V_2$, and the remaining orthogonal complement. In that rotated basis, the coordinates are iid
+      $N(0,\sigma^2)$, and the projections are just sums of squares of disjoint coordinate blocks.
+    </div>
+
+    <div class="warning">
+      The chi-squared does <strong>not</strong> appear just because something is centered at 0. It appears because we take a sum of squares of
+      standardized Gaussian coordinates.
+    </div>
+
+    <hr />
+
+    <h2 id="canonical">Canonical Linear Model: The \(n=2\) Prototype</h2>
+
+    <h3>23.4 Setup</h3>
+
+    <p>
+      Start with the simplest canonical model:
+      $$Z \sim N_2 \left(\binom{\mu_1}{0},\sigma^2 I_2 \right), \qquad H_0:\mu_1=0 \text{ vs } H_1:\mu_1 \neq 0.$$
+      Only $Z_1$ contains signal. The second coordinate $Z_2$ has mean $0$ under both hypotheses, so it is pure residual noise.
+    </p>
+
+    <div class="intuition">
+      Under $H_1$, the mean shifts to the right. The vertical coordinate $Z_2$ does not change in distribution, but the observation still becomes
+      more aligned with the horizontal signal axis because $Z_1$ tends to be larger relative to $Z_2$.
+    </div>
+
+    <h3>23.5 Known \(\sigma^2\): \(z\)-test and \(\chi^2_1\)-test</h3>
+
+    <p>
+      If $\sigma^2$ is known, the natural standardized statistic is
+      $$\frac{Z_1}{\sigma} \sim N(0,1) \qquad \text{under } H_0.$$
+      A two-sided test rejects for large $|Z_1|/\sigma$.
+    </p>
+
+    <div class="keyresult">
+      Squaring gives
+      $$\left(\frac{Z_1}{\sigma}\right)^2 \sim \chi^2_1.$$
+      So the two-sided $z$-test and the $\chi^2_1$-test are exactly the same rejection rule written two ways.
+    </div>
+
+    <p>
+      One-sided alternatives are different: the signed $z$-statistic remembers whether the shift is left or right, while the squared
+      $\chi^2_1$ statistic is inherently two-sided.
+    </p>
+
+    <h3>23.6 Unknown \(\sigma^2\): \(t_1\)-test and \(F_{1,1}\)-test</h3>
+
+    <p>
+      If $\sigma^2$ is unknown, we cannot use $Z_1/\sigma$. But under both $H_0$ and $H_1$,
+      $$Z_2 \sim N(0,\sigma^2),$$
+      so the residual coordinate provides a variance estimate.
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{Z_1}{|Z_2|} = \frac{Z_1/\sigma}{\sqrt{(Z_2^2/\sigma^2)/1}} \sim t_1,$$
+      $$T^2 = \frac{Z_1^2}{Z_2^2} \sim F_{1,1}.$$
+    </div>
+
+    <div class="intuition">
+      Signal/noise is the right intuition, but mathematically the denominator is an estimated variance scale built from a chi-squared residual term.
+      It is not “difference between $Z_1$ and $Z_2$”; it is the relative dominance of signal over residual magnitude.
+    </div>
+
+    <h3>23.7 Geometric meaning: why \(\cot \theta\) appears</h3>
+
+    <p>
+      Let $\theta$ be the angle between the observed vector $Z$ and the $Z_1$-axis. Then
+      $$Z_1 = \|Z\| \cos \theta, \qquad Z_2 = \|Z\| \sin \theta,$$
+      so
+      $$\frac{Z_1}{Z_2} = \cot \theta.$$
+    </p>
+
+    <div class="intuition">
+      The statistic $|Z_1|/|Z_2| = |\cot \theta|$ measures alignment with the signal axis. Small angle means the point hugs the horizontal axis, so
+      signal dominates residual noise.
+    </div>
+
+    <div class="example">
+      Compare $(1,2)$ and $(4,2)$. The vertical coordinate is the same, but the second point is more aligned with the signal axis because the
+      horizontal coordinate is larger. That is exactly how the alternative changes the geometry.
+    </div>
+
+    <hr />
+
+    <h2 id="rotation">The One-Sample \(t\)-Test Is Canonical in Disguise</h2>
+
+    <h3>23.8 The \(n=2\) rotation</h3>
+
+    <p>
+      Now take the familiar one-sample model with two observations:
+      $$X_1, X_2 \stackrel{iid}{\sim} N(\mu,\sigma^2).$$
+      The mean vector is $\mu(1,1)^T$, so the signal direction is the line $X_1 = X_2$.
+    </p>
+
+    <div class="definition">
+      Use the orthogonal matrix
+      $$Q = \frac{1}{\sqrt 2}
+      \begin{pmatrix}
+      1 & -1 \\
+      1 & 1
+      \end{pmatrix}, \qquad
+      Z = Q^T X =
+      \begin{pmatrix}
+      (X_1 + X_2)/\sqrt 2 \\
+      (X_2 - X_1)/\sqrt 2
+      \end{pmatrix}.$$
+      Then
+      $$Z \sim N_2 \left( \binom{\sqrt 2\,\mu}{0}, \sigma^2 I_2 \right).$$
+    </div>
+
+    <div class="intuition">
+      Orthogonal transformations preserve the spherical noise covariance, but they also rotate the mean vector. We choose $Q$ so the mean lands
+      entirely in the first coordinate and the second coordinate becomes pure residual noise.
+    </div>
+
+    <p>
+      So the usual one-sample test is literally the canonical model in a rotated coordinate system:
+      $$Z_1 = \frac{X_1 + X_2}{\sqrt 2}, \qquad Z_2 = \frac{X_2 - X_1}{\sqrt 2}.$$
+    </p>
+
+    <h3>23.9 Back-translation to the classical statistic</h3>
+
+    <p>
+      In the rotated basis, the lecture-23 statistic is
+      $$\frac{Z_1}{|Z_2|} = \frac{X_1 + X_2}{|X_1 - X_2|}.$$
+      But for $n=2$, the sample mean and sample standard deviation satisfy
+      $$\bar X = \frac{X_1 + X_2}{2}, \qquad S = \frac{|X_1 - X_2|}{\sqrt 2},$$
+      so
+      $$\frac{Z_1}{|Z_2|} = \frac{\sqrt 2\,\bar X}{S}.$$
+    </p>
+
+    <div class="keyresult">
+      The classical one-sample $t$-statistic is the ratio of the projection onto the signal direction $(1,1)$ to the normalized projection onto the
+      orthogonal residual direction $(-1,1)$.
+    </div>
+
+    <hr />
+
+    <h2 id="general">General One-Sample \(t\)-Test and Residual Geometry</h2>
+
+    <h3>23.10 Signal direction and residual subspace</h3>
+
+    <p>
+      For $X_1,\ldots,X_n \stackrel{iid}{\sim} N(\mu,\sigma^2)$, write
+      $$X = (X_1,\ldots,X_n)^T \sim N_n(\mu \mathbf{1}, \sigma^2 I_n),$$
+      where $\mathbf{1}=(1,\ldots,1)^T$.
+    </p>
+
+    <div class="formula-box">
+      $$\bar X = \frac{1}{n}\sum_{i=1}^n X_i, \qquad
+      S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X)^2, \qquad S = \sqrt{S^2}.$$
+    </div>
+
+    <p>
+      Let $\mathbf q_1 = \mathbf 1/\sqrt n$ and choose $Q_r$ whose columns form an orthonormal basis for the orthogonal complement of
+      $\operatorname{span}(\mathbf 1)$. Then
+      $$Q = [\mathbf q_1 \mid Q_r]$$
+      is orthogonal, and the rotated coordinates are
+      $$Z_1 = \mathbf q_1^T X = \sqrt n\,\bar X, \qquad Z_r = Q_r^T X \in \mathbb R^{n-1}.$$
+    </p>
+
+    <div class="theorem">
+      In this basis,
+      $$\binom{Z_1}{Z_r} \sim N_n \left( \binom{\sqrt n\,\mu}{0}, \sigma^2 I_n \right).$$
+      So the signal lives in one coordinate and the residual part lives in an $(n-1)$-dimensional orthogonal subspace.
+    </div>
+
+    <h3>23.11 Why \((n-1)S^2/\sigma^2 \sim \chi^2_{n-1}\)</h3>
+
+    <p>
+      Orthogonal decomposition gives
+      $$\|X\|^2 = Z_1^2 + \|Z_r\|^2,$$
+      and rearranging shows
+      $$\|Z_r\|^2 = \sum_{i=1}^n (X_i - \bar X)^2 = (n-1)S^2.$$
+    </p>
+
+    <div class="theorem">
+      Since $Z_r \sim N_{n-1}(0,\sigma^2 I_{n-1})$,
+      $$\frac{\|Z_r\|^2}{\sigma^2} \sim \chi^2_{n-1}.$$
+      Equivalently,
+      $$\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}.$$
+      Also, $Z_1$ and $Z_r$ are independent, so $\bar X$ and $S^2$ are independent.
+    </div>
+
+    <div class="intuition">
+      Subtracting the mean is what makes these coordinates residuals. The chi-squared comes from the squared length of the residual vector after
+      rotating into an orthonormal residual basis, not from centering alone.
+    </div>
+
+    <div class="intuition">
+      The number $n-1$ is the residual dimension: after fitting one mean direction, only $n-1$ independent noise directions remain.
+    </div>
+
+    <h3>23.12 The classical \(t\) and \(F\) forms</h3>
+
+    <p>
+      If the null hypothesis is $H_0:\mu=\mu_0$, the same geometry applies after centering the data by $\mu_0$. Under $H_0$,
+      $$\frac{\sqrt n\,(\bar X - \mu_0)}{\sigma} \sim N(0,1).$$
+      Replacing $\sigma$ by the residual estimate $S$ gives the usual statistic.
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\sqrt n\,(\bar X - \mu_0)}{S}
+      = \frac{Z_1/\sigma}{\sqrt{(\|Z_r\|^2/\sigma^2)/(n-1)}} \sim t_{n-1},$$
+      $$T^2 \sim F_{1,n-1}.$$
+    </div>
+
+    <div class="keyresult">
+      The denominator is
+      $$\frac{\|Z_r\|^2}{n-1},$$
+      which is average squared residual variation per residual direction. This is exactly the abstract $V/d$ term in the definition of the
+      $t$-distribution.
+    </div>
+
+    <h3>23.13 Nuisance directions preview</h3>
+
+    <p>
+      A direction whose mean is unrestricted under both $H_0$ and $H_1$ is neither tested signal nor usable residual noise. It carries no
+      information about the null-versus-alternative comparison, so the canonical linear model simply drops it.
+    </p>
+
+    <hr />
+
+    <h2 id="comparison">Big Comparison Map</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Distribution / Test</th>
+          <th>Formal definition</th>
+          <th>Geometric meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>\(\chi^2_d\)</strong></td>
+          <td>$V = \sum_{j=1}^d U_j^2$ with $U_j \stackrel{iid}{\sim} N(0,1)$</td>
+          <td>Squared length of a Gaussian projection onto a $d$-dimensional subspace</td>
+        </tr>
+        <tr>
+          <td><strong>\(z\)</strong></td>
+          <td>$Z_1/\sigma$ when the variance is known</td>
+          <td>One standardized signal coordinate</td>
+        </tr>
+        <tr>
+          <td><strong>\(t_d\)</strong></td>
+          <td>$Z/\sqrt{V/d}$ with $Z \perp\!\!\!\perp V$</td>
+          <td>One signal direction divided by average residual noise per residual direction</td>
+        </tr>
+        <tr>
+          <td><strong>\(F_{d_1,d_2}\)</strong></td>
+          <td>$(V_1/d_1)/(V_2/d_2)$ with independent chi-squared pieces</td>
+          <td>Ratio of two projection-based variance estimates</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Signal piece</th>
+          <th>Residual piece</th>
+          <th>Statistic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Canonical model, known \(\sigma^2\)</td>
+          <td>$Z_1$ or $\|Z_1\|^2$</td>
+          <td>Known $\sigma^2$</td>
+          <td>$z$ or $\chi^2_1$</td>
+        </tr>
+        <tr>
+          <td>Canonical model, unknown \(\sigma^2\)</td>
+          <td>$Z_1$</td>
+          <td>$Z_2^2$ or, in general, $\|Z_r\|^2$</td>
+          <td>$t$ or $F$</td>
+        </tr>
+        <tr>
+          <td>One-sample \(t\)-test</td>
+          <td>Projection onto $\operatorname{span}(\mathbf 1)$</td>
+          <td>Projection onto $\mathbf 1^\perp$</td>
+          <td>$\sqrt n\,(\bar X-\mu_0)/S$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h2 id="summary">Master Summary and Formula Sheet</h2>
+
+    <h3>Lecture 23 core formulas</h3>
+
+    <div class="formula-box">
+      $$\chi^2_d = \sum_{j=1}^d U_j^2, \qquad
+      t_d = \frac{Z}{\sqrt{V/d}}, \qquad
+      F_{d_1,d_2} = \frac{V_1/d_1}{V_2/d_2}, \qquad
+      t_d^2 \sim F_{1,d}.$$
+    </div>
+
+    <div class="formula-box">
+      $$Z \sim N_n(0,\sigma^2 I_n), \quad V \subseteq \mathbb R^n,\ \dim(V)=d
+      \quad \Longrightarrow \quad
+      \|P_V Z\|^2 \sim \sigma^2 \chi^2_d.$$
+    </div>
+
+    <div class="formula-box">
+      $$Z_1 = \sqrt n\,\bar X, \qquad
+      \|Z_r\|^2 = (n-1)S^2, \qquad
+      \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}, \qquad
+      \frac{\sqrt n\,(\bar X-\mu_0)}{S} \sim t_{n-1} \text{ under } H_0.$$
+    </div>
+
+    <h3>What to remember conceptually</h3>
+
+    <div class="keyresult">
+      Every test in this lecture is a ratio of projection magnitudes onto orthogonal subspaces. The only moving parts are:
+      <ul style="margin-top: 0.5rem">
+        <li>Which subspace contains the signal?</li>
+        <li>Which orthogonal subspace contains pure residual noise?</li>
+        <li>How many dimensions does each subspace have?</li>
+        <li>Is the variance known or estimated from the residual piece?</li>
+      </ul>
+    </div>
+
+    <p>
+      Signal/noise is the right story to keep in mind, but the exact mathematics is:
+      numerator = Gaussian projection in the tested direction, denominator = square root of an independent chi-squared-per-degree-of-freedom term
+      built from the residual projection.
+    </p>
+
+    <p class="small">
+      Next step: the full canonical linear model, where the tested signal block can have dimension greater than 1 and nuisance directions can be
+      present.
+    </p>
+
+    <hr />
+
+    <h2 id="mistakes">Common Mistakes</h2>
+
+    <ul>
+      <li>Thinking an orthogonal transformation leaves the mean unchanged. It preserves the covariance shape but rotates the mean vector too.</li>
+      <li>Thinking the alternative must change the residual coordinate $Z_2$. It does not; the evidence comes from $Z_1$ becoming large relative to $Z_2$.</li>
+      <li>Thinking the statistic measures the difference between signal and noise. It measures a ratio: signal magnitude divided by estimated noise scale.</li>
+      <li>Thinking a chi-squared appears just because a variable is centered at 0. The real reason is a sum of squares of independent standardized Gaussian residual coordinates.</li>
+      <li>Thinking the $d$ in $\chi^2_d$ or $V/d$ is arbitrary. It is the dimension of the relevant residual subspace, i.e. the degrees of freedom.</li>
+      <li>Forgetting that the squared $z$-test and $\chi^2_1$-test are the same two-sided test, and that squaring destroys one-sided sign information.</li>
+    </ul>
+  </body>
+</html>

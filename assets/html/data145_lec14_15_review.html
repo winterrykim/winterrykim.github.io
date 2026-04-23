@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide — Lectures 14–15</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            SD: "\\operatorname{SD}",
+            argmax: "\\operatorname{arg\\,max}",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: #2f855a;
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: #2f855a;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: #e53e3e;
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: #e53e3e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: #dd6b20;
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: #dd6b20;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide — Lectures 14 through 15 &middot; Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#bridge1314">Bridge: Lecture 13 to Lecture 14</a></li>
+        <li><a href="#lec14">Lecture 14: p-values, Confidence Regions, and Test-CI Duality</a></li>
+        <li><a href="#bridge1415">Bridge: Lecture 14 to Lecture 15</a></li>
+        <li><a href="#lec15">Lecture 15: Asymptotic Tests (Wald, Score, GLRT)</a></li>
+        <li><a href="#transitionmap">Big Transition Map</a></li>
+        <li><a href="#summary">Master Summary &amp; Formula Sheet</a></li>
+        <li><a href="#mistakes">Common Mistakes to Avoid</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="bridge1314">Bridge: Lecture 13 to Lecture 14</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      By the end of Lecture 13, the course already has the full testing language: null/alternative, Type I and II error, level, power, NP lemma, and
+      MLR/UMP logic. That part of the course solves an optimization problem: among all tests with controlled Type I error, which rejection rule is
+      strongest against the alternative?
+    </p>
+
+    <div class="intuition">
+      Lecture 13 solves: <strong>"what rejection region is best?"</strong><br />
+      Lecture 14 asks the next natural question: <strong>"once we have a test, how should we summarize the evidence in one dataset?"</strong>
+    </div>
+
+    <p>
+      In practice, a binary reject/do-not-reject answer is too thin. We usually want two richer outputs:
+      <strong>a scalar evidence summary</strong> telling us how extreme the data are under the null, and
+      <strong>a set-valued uncertainty summary</strong> telling us which parameter values still look plausible.
+    </p>
+
+    <p>
+      This is why Lecture 14 does not replace hypothesis testing; it asks what testing output should look like after the rejection rule has already
+      been designed. P-values and confidence regions are the reporting layer built on top of the Lecture 12-13 testing framework.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec14">Lecture 14: p-values, Confidence Regions, and Test-CI Duality</h2>
+    <!-- ============================================================ -->
+
+    <h3>14.1 p-values formalized</h3>
+
+    <div class="definition">
+      If a test rejects for large values of a statistic $T(X)$, then for a simple null: $$p(x) = P_{H_0}(T(X) \ge T(x)).$$ For a composite null $H_0:
+      \theta \in \Theta_0$: $$p(x) = \sup_{\theta\in\Theta_0} P_\theta(T(X) \ge T(x)).$$
+    </div>
+
+    <div class="keyresult">
+      For all valid p-values under the null: $$P_\theta\bigl(p(X)\le\alpha\bigr) \le \alpha, \qquad \theta\in\Theta_0.$$ So rejecting when
+      $p\le\alpha$ always gives a valid level-$\alpha$ test.
+    </div>
+
+    <div class="warning">
+      A p-value is <strong>not</strong> $P(H_0\mid\text{data})$.<br />
+      It is a tail probability of data extremeness <em>assuming</em> $H_0$ is true.
+    </div>
+
+    <div class="intuition">
+      A p-value is not an intrinsic property of the dataset alone. It depends on the chosen test statistic $T(X)$, because $T$ determines what it
+      means for data to be "more extreme" than what was observed.
+    </div>
+
+    <h3>14.2 Why p-values and confidence intervals can disagree with intuition</h3>
+
+    <div class="example">
+      Two binomial scenarios from class:
+      <table>
+        <tr>
+          <th>Scenario</th>
+          <th>n</th>
+          <th>Heads</th>
+          <th>$\hat p$</th>
+          <th>Two-sided p-value for $H_0:p=0.5$</th>
+          <th>95% CI (normal approx)</th>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>50</td>
+          <td>29</td>
+          <td>0.58</td>
+          <td>0.3222</td>
+          <td>[0.443, 0.717]</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>5000</td>
+          <td>2600</td>
+          <td>0.52</td>
+          <td>0.0049</td>
+          <td>[0.506, 0.534]</td>
+        </tr>
+      </table>
+      Scenario A has a larger observed departure from 0.5 but weak evidence because the sample is small. Scenario B has a tiny departure but strong
+      evidence because precision is high.
+    </div>
+
+    <h3>14.3 Confidence regions</h3>
+
+    <div class="definition">
+      A $(1-\alpha)$ confidence region for $g(\theta)$ is a random set $C(X)$ such that $$P_\theta\bigl(C(X)\ni g(\theta)\bigr) \ge 1-\alpha \quad
+      \text{for all }\theta.$$
+    </div>
+
+    <div class="intuition">
+      The random object is the interval/region $C(X)$; the true parameter value is fixed. So the 95% statement is about the procedure over repeated
+      samples, not a posterior probability for one realized interval.
+    </div>
+
+    <h3>14.4 Test-CI duality (the central structural idea)</h3>
+
+    <div class="theorem">
+      If $\phi(X;a)$ is a level-$\alpha$ test of $H_0:g(\theta)=a$, then $$C(X)=\{a:\phi(X;a)<1\}$$ is a valid $(1-\alpha)$ confidence region.
+    </div>
+
+    <div class="theorem">
+      Conversely, if $C(X)$ is a valid $(1-\alpha)$ confidence region, then $$\phi(x;a)=\mathbf 1\{a\notin C(x)\}$$ is a valid level-$\alpha$ test.
+    </div>
+
+    <div class="keyresult">A confidence interval is exactly the set of null values that the data do <em>not</em> reject at level $\alpha$.</div>
+
+    <h3>14.5 What to carry forward</h3>
+    <p>
+      Lecture 14 is mostly <em>structural</em>, not yet constructive. It explains how p-values, tests, and confidence sets are supposed to fit
+      together, but it does not yet tell us which test family to use in a parametric model.
+    </p>
+
+    <p>
+      So the next question is practical: with likelihoods, scores, Fisher information, and MLE asymptotics already available from Lectures 3-5, what
+      concrete tests should we actually build and invert?
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="bridge1415">Bridge: Lecture 14 to Lecture 15</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      Lecture 14 gives a recipe: for each candidate null value, test it at level $\alpha$, then collect the values not rejected. That recipe is only
+      useful once we know how to manufacture a good test for every possible null value.
+    </p>
+
+    <div class="intuition">
+      Lecture 14 says: confidence regions come from inverting tests.<br />
+      Lecture 15 says: in parametric models, the local shape of the log-likelihood gives three canonical asymptotic tests to invert.
+    </div>
+
+    <p>
+      This bridge directly reuses Lectures 3-5: log-likelihood, score, Fisher information, and MLE asymptotics. The same local quadratic approximation
+      that explained why the MLE is asymptotically normal will now explain why Wald, Score, and GLRT are all valid and closely related.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec15">Lecture 15: Asymptotic Tests (Wald, Score, GLRT)</h2>
+    <!-- ============================================================ -->
+
+    <h3>15.1 Setup recap from earlier lectures</h3>
+
+    <div class="formula-box">
+      For i.i.d. $X_1,\ldots,X_n\sim f_\theta$: $$\ell_n(\theta)=\sum_{i=1}^n\log f_\theta(X_i),\quad S_n(\theta)=\ell_n'(\theta),\quad
+      I(\theta)=\Var_\theta(\ell_1'(\theta;X_i)).$$ $$\sqrt n(\hat\theta_n-\theta_0)\xrightarrow{d}N\!\left(0,\frac{1}{I(\theta_0)}\right),\qquad
+      \frac{S_n(\theta_0)}{\sqrt{nI(\theta_0)}}\xrightarrow{d}N(0,1).$$
+    </div>
+
+    <div class="intuition">
+      Near $\hat\theta_n$, the log-likelihood is approximately quadratic. Wald, Score, and GLRT are three ways to measure different geometric aspects
+      of this same local shape.
+    </div>
+
+    <p>
+      This is the key reuse of earlier material. In Lectures 4-5, the quadratic approximation around the truth produced the asymptotic distribution of
+      the MLE. In Lecture 15, that same parabola is read in three different ways: how far the null is from the peak, how steep the likelihood is at
+      the null, and how much log-likelihood is lost by forcing the null to hold.
+    </p>
+
+    <h3>15.2 Wald test</h3>
+
+    <div class="definition">
+      $$W=\frac{\hat\theta_n-\theta_0}{\widehat{\mathrm{SE}}(\hat\theta_n)}.$$ Reject for large $|W|$ in two-sided testing.
+    </div>
+
+    <p>Standard error choices discussed in class:</p>
+    <ul style="padding-left: 1.2rem; margin-bottom: 0.9rem">
+      <li>Plug-in information at $\hat\theta_n$</li>
+      <li>Observed information from curvature $-\ell_n''(\hat\theta_n)$</li>
+      <li>Sandwich/robust SE (score-variance based, robust to misspecification)</li>
+    </ul>
+
+    <div class="warning">Wald is convenient but can be sensitive to parameterization and can yield poor finite-sample behavior near boundaries.</div>
+
+    <h3>15.3 Score test</h3>
+
+    <div class="definition">$$Z=\frac{\ell_n'(\theta_0)}{\sqrt{nI(\theta_0)}}.$$ Reject for large $|Z|$ (two-sided).</div>
+
+    <div class="keyresult">
+      Score test advantages:
+      <ul style="padding-left: 1.2rem; margin-top: 0.4rem">
+        <li>Does not require computing the MLE</li>
+        <li>Evaluates directly at the null</li>
+        <li>Invariant to smooth reparameterization</li>
+      </ul>
+    </div>
+
+    <h3>15.4 Generalized likelihood ratio test (GLRT)</h3>
+
+    <div class="definition">
+      $$\Lambda_n = 2\bigl[\ell_n(\hat\theta_n)-\ell_n(\theta_0)\bigr].$$ Under regularity in the one-parameter setting: $$\Lambda_n \xrightarrow{d}
+      \chi^2_1.$$
+    </div>
+
+    <div class="intuition">
+      GLRT measures vertical drop from the maximum log-likelihood to the null value. It needs the MLE but does not explicitly require Fisher
+      information in the statistic.
+    </div>
+
+    <h3>15.5 Poisson running example ($n=30$, $\bar X=3.07$)</h3>
+
+    <div class="example">
+      For $X_i\sim\text{Pois}(\lambda)$, class comparisons give:
+      <table>
+        <tr>
+          <th>Method</th>
+          <th>95% interval for $\lambda$</th>
+          <th>Comment</th>
+        </tr>
+        <tr>
+          <td>Wald</td>
+          <td>[2.443, 3.697]</td>
+          <td>Symmetric around $\bar X$</td>
+        </tr>
+        <tr>
+          <td>Score</td>
+          <td>[2.504, 3.764]</td>
+          <td>Respects positivity naturally</td>
+        </tr>
+        <tr>
+          <td>GLRT</td>
+          <td>[2.485, 3.740]</td>
+          <td>Likelihood-based inversion</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>15.6 Unifying equivalence statement</h3>
+
+    <div class="keyresult">
+      Locally under $H_0$: $$W^2 \approx Z^2 \approx 2\bigl[\ell_n(\hat\theta_n)-\ell_n(\theta_0)\bigr] \xrightarrow{d} \chi^2_1.$$ So all three tests
+      are asymptotically equivalent; finite-sample differences come from how imperfect the quadratic approximation is.
+    </div>
+
+    <div class="example">
+      Normal mean with known variance gives an exactly quadratic log-likelihood, so Wald, Score, and GLRT coincide exactly. Poisson is only
+      approximately quadratic near the MLE, so small finite-sample differences remain.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="transitionmap">Big Transition Map</h2>
+    <!-- ============================================================ -->
+
+    <table>
+      <tr>
+        <th>Lecture stage</th>
+        <th>Main question answered</th>
+        <th>How it connects forward</th>
+      </tr>
+      <tr>
+        <td>11 (KS / empirical CDF)</td>
+        <td>How to test whole-distribution fit</td>
+        <td>Prepares broader testing language</td>
+      </tr>
+      <tr>
+        <td>12–13 (NP, MLR, UMP)</td>
+        <td>What rejection rule is optimal</td>
+        <td>Creates the test design framework but not yet the reporting language</td>
+      </tr>
+      <tr>
+        <td>14 (p-values, CIs, duality)</td>
+        <td>How to summarize evidence and plausible parameter values</td>
+        <td>Turns a family of tests into a family of confidence sets</td>
+      </tr>
+      <tr>
+        <td>15 (Wald, Score, GLRT)</td>
+        <td>How to build practical asymptotic tests from likelihood theory</td>
+        <td>Specializes the general testing framework using likelihood geometry and sets up later chi-squared/GLRT ideas</td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="summary">Master Summary &amp; Formula Sheet</h2>
+    <!-- ============================================================ -->
+
+    <h3>Core lecture-14 formulas</h3>
+    <table>
+      <tr>
+        <th>Object</th>
+        <th>Formula</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>Simple-null p-value</td>
+        <td>$p(x)=P_{H_0}(T(X)\ge T(x))$</td>
+        <td>Tail extremeness under null</td>
+      </tr>
+      <tr>
+        <td>Composite-null p-value</td>
+        <td>$p(x)=\sup_{\theta\in\Theta_0}P_\theta(T(X)\ge T(x))$</td>
+        <td>Worst-case null calibration</td>
+      </tr>
+      <tr>
+        <td>Super-uniformity</td>
+        <td>$P_\theta(p\le\alpha)\le\alpha$</td>
+        <td>Guarantees valid level control</td>
+      </tr>
+      <tr>
+        <td>Confidence region</td>
+        <td>$P_\theta(C(X)\ni g(\theta))\ge 1-\alpha$</td>
+        <td>Procedure-level coverage</td>
+      </tr>
+      <tr>
+        <td>Test->CI inversion</td>
+        <td>$C(X)=\{a:\phi(X;a)<1\}$</td>
+        <td>Set of non-rejected null values</td>
+      </tr>
+    </table>
+
+    <h3>Core lecture-15 formulas</h3>
+    <table>
+      <tr>
+        <th>Test</th>
+        <th>Statistic</th>
+        <th>Reads what geometric feature?</th>
+      </tr>
+      <tr>
+        <td>Wald</td>
+        <td>$W=(\hat\theta-\theta_0)/\widehat{SE}$</td>
+        <td>Horizontal distance</td>
+      </tr>
+      <tr>
+        <td>Score</td>
+        <td>$Z=\ell_n'(\theta_0)/\sqrt{nI(\theta_0)}$</td>
+        <td>Slope at null</td>
+      </tr>
+      <tr>
+        <td>GLRT</td>
+        <td>$2[\ell_n(\hat\theta)-\ell_n(\theta_0)]$</td>
+        <td>Vertical likelihood drop</td>
+      </tr>
+      <tr>
+        <td>Equivalence</td>
+        <td>$W^2\approx Z^2\approx 2[\ell_n(\hat\theta)-\ell_n(\theta_0)]$</td>
+        <td>Same local quadratic backbone</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Practical guidance:</strong><br />
+      Use Wald for convenience when MLE is already in hand, Score when null-evaluation and invariance matter, and GLRT when likelihood comparison is
+      the natural primary object.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mistakes">Common Mistakes to Avoid</h2>
+    <!-- ============================================================ -->
+
+    <div class="warning">
+      <strong>1.</strong> "$p&lt;0.05$ means the null is probably false."<br />
+      No. p-value is computed under the null, not a posterior null probability.
+    </div>
+
+    <div class="warning">
+      <strong>2.</strong> "$p&gt;0.05$ means no effect."<br />
+      No. It may reflect low power or poor targeting of alternatives.
+    </div>
+
+    <div class="warning">
+      <strong>3.</strong> "A realized 95% CI contains the truth with 95% probability."<br />
+      No. Frequentist 95% is long-run coverage of the method.
+    </div>
+
+    <div class="warning">
+      <strong>4.</strong> "Wald, Score, and GLRT always agree."<br />
+      Only asymptotically; finite-sample behavior can differ.
+    </div>
+
+    <div class="warning">
+      <strong>5.</strong> "Wald intervals are always fine."<br />
+      Near boundaries or under awkward parameterization, Score/GLRT-based intervals can be safer.
+    </div>
+
+    <hr />
+    <p style="text-align: center; color: var(--subtle); font-size: 0.9rem; margin-top: 2rem">
+      Data 145 Study Guide &middot; Lectures 14–15 &middot; Standalone Review Version
+    </p>
+  </body>
+</html>

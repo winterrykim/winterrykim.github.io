@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide - Lectures 19-20</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            SD: "\\operatorname{SD}",
+            FDR: "\\operatorname{FDR}",
+            FWER: "\\operatorname{FWER}",
+            FDP: "\\operatorname{FDP}",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: #2f855a;
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: #2f855a;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: #e53e3e;
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: #e53e3e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: #dd6b20;
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: #dd6b20;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide - Lectures 19 through 20 - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#bridge1819">Bridge: From Single Tests to Many Tests</a></li>
+        <li><a href="#lec19">Lecture 19: Multiple Testing and Simultaneous Inference</a></li>
+        <li><a href="#bridge1920">Bridge: Why FWER Can Be Too Strict</a></li>
+        <li><a href="#lec20">Lecture 20: False Discovery Rate and Benjamini-Hochberg</a></li>
+        <li><a href="#comparison">Big Comparison Map</a></li>
+        <li><a href="#summary">Master Summary and Formula Sheet</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="bridge1819">Bridge: From Single Tests to Many Tests</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      By Lecture 18, the course had built a full toolbox for one question at a time: choose the right test, compute one $p$-value, and compare it to
+      one level $\alpha$. That framework works well when the scientific problem itself is singular.
+    </p>
+
+    <div class="intuition">
+      Lecture 19 changes the unit of analysis. The issue is no longer <strong>"what is the right test for one hypothesis?"</strong> It is
+      <strong>"what should error control mean when we test dozens, thousands, or even infinitely many related hypotheses at once?"</strong>
+    </div>
+
+    <p>
+      This is the natural sequel to Lecture 18. Once the class has many testing procedures available, the next real-world obstacle is that modern
+      data analysis rarely stops after one test. Variable selection, genomics, A/B testing platforms, and simultaneous confidence statements all force
+      us to think at the level of a <em>family</em> of inferences.
+    </p>
+
+    <p>
+      The conceptual move is:
+      <strong>single-test Type I error -&gt; familywise error -&gt; simultaneous inference -&gt; false discovery rate.</strong>
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec19">Lecture 19: Multiple Testing and Simultaneous Inference</h2>
+    <!-- ============================================================ -->
+
+    <h3>19.1 Motivating example: prostate cancer gene expression</h3>
+
+    <div class="example">
+      Singh et al. measured expression for $6{,}033$ genes in healthy controls and prostate cancer patients. Testing each gene separately at
+      $\alpha=0.05$ produced 478 significant genes. But if all $6{,}033$ nulls were true, we would still expect about
+      $6{,}033 \cdot 0.05 \approx 302$ false positives just from noise.
+    </div>
+
+    <p>
+      So the existence of many small $p$-values does not automatically mean we have many trustworthy discoveries. The main danger is that
+      <strong>false rejections accumulate</strong> when the number of tests is large.
+    </p>
+
+    <h3>19.2 Setup and notation</h3>
+
+    <div class="definition">
+      We test $m$ null hypotheses $H_{01},\ldots,H_{0m}$ with $p$-values $p_1,\ldots,p_m$.
+      <ul style="margin-top: 0.5rem">
+        <li>$\mathcal{R}(X)=\{i: H_{0i} \text{ is rejected}\}$ is the rejection set, with $R=|\mathcal{R}|$.</li>
+        <li>$\mathcal{H}_0=\{i: H_{0i} \text{ is true}\}$ is the set of true nulls, with $m_0=|\mathcal{H}_0|$.</li>
+        <li>A false rejection occurs when $\mathcal{R}\cap\mathcal{H}_0 \neq \emptyset$.</li>
+      </ul>
+    </div>
+
+    <div class="keyresult">
+      If all $m$ nulls are true and each test is run at level $\alpha$, then under independence:
+      $$P(\text{at least one rejection}) = 1-(1-\alpha)^m.$$
+      For $m=6{,}033$ and $\alpha=0.05$, this is essentially 1.
+    </div>
+
+    <div class="intuition">
+      A level-$0.05$ test sounds conservative in isolation. It is not conservative when repeated thousands of times. Multiple testing is mostly about
+      translating the words "Type I error" from the one-test world into the many-test world.
+    </div>
+
+    <h3>19.3 Familywise error rate (FWER)</h3>
+
+    <div class="definition">
+      The <strong>familywise error rate</strong> is the probability of making <em>any</em> false rejection:
+      $$\FWER_\theta = P_\theta(\mathcal{R}\cap\mathcal{H}_0 \neq \emptyset).$$
+      We want procedures with $\sup_\theta \FWER_\theta \leq \alpha$.
+    </div>
+
+    <p>
+      FWER is strict. It treats one false rejection among a thousand true rejections as a failure. That makes sense in high-stakes confirmatory
+      settings, but it can become very conservative in screening problems.
+    </p>
+
+    <h3>19.4 Bonferroni and where $\alpha/m$ comes from</h3>
+
+    <div class="theorem">
+      <strong>Bonferroni correction.</strong> Reject $H_{0i}$ only if $p_i \leq \alpha/m$. Then
+      $$\sup_\theta \FWER_\theta \leq \alpha.$$
+    </div>
+
+    <div class="proof">
+      This is exactly the union-bound argument from discussion:
+      $$P(\text{any false rejection}) = P\!\left(\bigcup_{i\in\mathcal{H}_0}\{\text{reject }H_{0i}\}\right)
+      \leq \sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}).$$
+      Under Bonferroni, each true null is tested at level $\alpha/m$, so
+      $$\sum_{i\in\mathcal{H}_0} P(\text{reject }H_{0i}) \leq m_0 \frac{\alpha}{m} \leq \alpha.$$
+      That is the whole reason the denominator is $m$: it is the price paid to make the sum of all possible false-rejection probabilities stay below
+      $\alpha$.
+    </div>
+
+    <div class="warning">
+      We divide by <strong>the total number of tests</strong> $m$, not the number of true nulls $m_0$, because $m_0$ is unknown. If we knew $m_0$,
+      we could use $\alpha/m_0$, but in practice we do not.
+    </div>
+
+    <div class="example">
+      In the prostate study, Bonferroni uses the threshold
+      $$\frac{0.05}{6033} \approx 8.3\times 10^{-6}.$$
+      The 478 marginal discoveries collapse to just 3 Bonferroni discoveries. So Bonferroni is valid and simple, but often extremely harsh.
+    </div>
+
+    <h3>19.5 Sidak: what independence buys you</h3>
+
+    <div class="definition">
+      If the $p$-values are independent, the <strong>Sidak correction</strong> uses
+      $$\tilde\alpha_m = 1-(1-\alpha)^{1/m}$$
+      and rejects when $p_i \leq \tilde\alpha_m$.
+    </div>
+
+    <div class="intuition">
+      Sidak is derived by asking for the probability of <em>no</em> false rejections to be at least $1-\alpha$ and multiplying independent terms.
+      But for small per-test thresholds, Sidak and Bonferroni are numerically very close. Independence helps a little, not dramatically.
+    </div>
+
+    <h3>19.6 Scheffe's method and infinitely many related tests</h3>
+
+    <p>
+      Bonferroni works best when we can literally list the hypotheses. But some simultaneous inference problems involve infinitely many comparisons,
+      all built from the same data vector.
+    </p>
+
+    <div class="definition">
+      Suppose $X \sim N_d(\mu, I_d)$ and we want to test
+      $$H_{0,\lambda}: \lambda^T \mu = 0$$
+      simultaneously for every unit vector $\lambda$.
+    </div>
+
+    <p class="small">
+      Why unit vectors? Because scaling $\lambda$ does not change the underlying null statement: if $c \neq 0$, then
+      $(c\lambda)^T\mu = 0$ is the same hypothesis as $\lambda^T\mu=0$. Normalizing $\lambda$ just removes a meaningless scale choice.
+    </p>
+
+    <div class="keyresult">
+      <strong>Scheffe's method.</strong> Reject $H_{0,\lambda}$ when
+      $$|\lambda^T X|^2 \geq \chi^2_{d,\alpha}.$$
+      This controls FWER at level $\alpha$ over all such contrasts.
+    </div>
+
+    <div class="intuition">
+      Write $Z=X-\mu \sim N_d(0,I_d)$. If $H_{0,\lambda}$ is true, then $\lambda^T X = \lambda^T Z$. The worst possible contrast over all unit vectors
+      is bounded by $\|Z\|^2$, and $\|Z\|^2 \sim \chi^2_d$. One random confidence ball in $\mu$-space controls an infinite family of contrast tests
+      at once.
+    </div>
+
+    <h3>19.7 Deduction principle and simultaneous confidence intervals</h3>
+
+    <div class="theorem">
+      If $C(X)$ is any joint $(1-\alpha)$ confidence region for $\theta$, then any conclusion deduced under the assumption
+      $\theta \in C(X)$ is automatically FWER-controlled at level $\alpha$.
+    </div>
+
+    <div class="definition">
+      Intervals $C_1(X),\ldots,C_m(X)$ are <strong>simultaneous $(1-\alpha)$ confidence intervals</strong> for
+      $g_1(\theta),\ldots,g_m(\theta)$ if
+      $$P_\theta\bigl(g_i(\theta)\in C_i(X)\text{ for all }i\bigr)\geq 1-\alpha.$$
+    </div>
+
+    <div class="proof">
+      Bonferroni also gives simultaneous intervals. If each individual interval has marginal coverage $1-\alpha/m$, then
+      $$P(\text{any interval misses}) \leq \sum_{i=1}^m \alpha/m = \alpha.$$
+      So marginal $1-\alpha/m$ intervals become simultaneous $1-\alpha$ intervals.
+    </div>
+
+    <p>
+      In correlated Gaussian settings, a deduced confidence region can beat Bonferroni. For example, if
+      $X \sim N_d(\theta,\Sigma)$ and $t_\alpha$ is the upper-$\alpha$ quantile of $\|X-\theta\|_\infty$, then
+      $$[X_i-t_\alpha,\; X_i+t_\alpha]$$
+      gives exact simultaneous intervals for all coordinates. Strong positive correlation can make $t_\alpha$ noticeably smaller than the Bonferroni
+      width.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="bridge1920">Bridge: Why FWER Can Be Too Strict</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      Lecture 19 solves the multiplicity problem by preventing even one false rejection. That is the cleanest extension of Type I error, but it may
+      over-correct in exploratory settings.
+    </p>
+
+    <div class="intuition">
+      In the prostate example, Bonferroni reduced 478 marginal hits to 3. That is wonderful if every false positive is unacceptable. It is less
+      attractive if the scientific goal is to generate a manageable shortlist for follow-up experiments.
+    </div>
+
+    <p>
+      Lecture 20 keeps the multiple-testing mindset but changes the target. Instead of asking for the probability of zero false discoveries, it asks
+      for control of the <em>fraction</em> of discoveries that are false.
+    </p>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="lec20">Lecture 20: False Discovery Rate and Benjamini-Hochberg</h2>
+    <!-- ============================================================ -->
+
+    <h3>20.1 Motivation: false fraction, not false existence</h3>
+
+    <div class="example">
+      For the same $6{,}033$ prostate-gene tests:
+      <table>
+        <tr>
+          <th>Marginal threshold</th>
+          <th>Total rejections</th>
+          <th>Expected false rejections (roughly $m\alpha$)</th>
+          <th>Estimated false fraction</th>
+        </tr>
+        <tr>
+          <td>$0.05$</td>
+          <td>478</td>
+          <td>302</td>
+          <td>About 63%</td>
+        </tr>
+        <tr>
+          <td>$0.01$</td>
+          <td>172</td>
+          <td>60</td>
+          <td>About 35%</td>
+        </tr>
+        <tr>
+          <td>$0.001$</td>
+          <td>60</td>
+          <td>6</td>
+          <td>About 10%</td>
+        </tr>
+      </table>
+      This suggests a different goal: keep the <em>proportion</em> of bad discoveries small, rather than insisting on no false discovery at all.
+    </div>
+
+    <h3>20.2 FDP and FDR</h3>
+
+    <div class="definition">
+      Let
+      <ul style="margin-top: 0.5rem">
+        <li>$R = |\mathcal{R}|$: total number of discoveries,</li>
+        <li>$V = |\mathcal{R}\cap\mathcal{H}_0|$: number of false discoveries.</li>
+      </ul>
+      Then the <strong>false discovery proportion</strong> is
+      $$\FDP = \frac{V}{R \vee 1},$$
+      where $R\vee 1 = \max(R,1)$ so that $\FDP=0$ when $R=0$.
+      The <strong>false discovery rate</strong> is
+      $$\FDR = E\!\left[\frac{V}{R\vee 1}\right] = E[\FDP].$$
+    </div>
+
+    <div class="intuition">
+      FWER asks: "did we make at least one false discovery?" FDR asks: "what fraction of our discoveries are false, on average?" They answer
+      different scientific questions.
+    </div>
+
+    <h3>20.3 Why FDR is weaker than FWER</h3>
+
+    <div class="proof">
+      Your discussion note gives the clean comparison. Consider two cases:
+      <ul style="margin-top: 0.5rem">
+        <li>If $V=0$, then $\FDP=0$.</li>
+        <li>If $V&gt;0$, then $0 &lt; \FDP = V/(R\vee 1) \leq 1 = \mathbf{1}\{V&gt;0\}$.</li>
+      </ul>
+      So in every outcome,
+      $$\FDP \leq \mathbf{1}\{V&gt;0\}.$$
+      Taking expectations gives
+      $$\FDR = E[\FDP] \leq E[\mathbf{1}\{V&gt;0\}] = P(V&gt;0) = \FWER.$$
+      Therefore every FWER-controlling procedure automatically controls FDR, but the reverse is not true.
+    </div>
+
+    <div class="warning">
+      This is why Bonferroni is usually much more conservative than BH. Bonferroni is solving a strictly harder problem.
+    </div>
+
+    <h3>20.4 The Benjamini-Hochberg (BH) procedure</h3>
+
+    <div class="definition">
+      Given $p$-values $p_1,\ldots,p_m$ and target FDR level $\alpha$:
+      <ol style="margin-top: 0.5rem">
+        <li>Sort them: $p_{(1)} \leq p_{(2)} \leq \cdots \leq p_{(m)}$.</li>
+        <li>Find the largest $k$ such that $$p_{(k)} \leq \frac{\alpha k}{m}.$$</li>
+        <li>Reject the hypotheses corresponding to $p_{(1)},\ldots,p_{(k)}$.</li>
+      </ol>
+    </div>
+
+    <div class="keyresult">
+      BH is a <strong>step-up</strong> rule. Bonferroni uses one horizontal cutoff $\alpha/m$. BH uses the rising line
+      $$y=\frac{\alpha}{m}k,$$
+      so it becomes more permissive when many small $p$-values are present.
+    </div>
+
+    <div class="example">
+      In the prostate data, BH at FDR $0.05$ rejects 21 genes, while Bonferroni rejects only 3. At FDR $0.10$, BH rejects 60 genes. So BH preserves
+      much more power in large-scale screening.
+    </div>
+
+    <h3>20.5 BH as estimated-FDP control</h3>
+
+    <p>
+      Suppose we reject all hypotheses with $p_i \leq t$. Let $R_t$ be the number of such rejections and $V_t$ the number of false ones. If null
+      $p$-values are uniform, then
+      $$E[V_t] = m_0 t \leq mt.$$
+      This suggests the conservative estimator
+      $$\widehat{\FDP}_t = \frac{mt}{R_t \vee 1}.$$
+    </p>
+
+    <div class="intuition">
+      BH chooses the largest threshold $t$ for which the estimated false-discovery proportion stays below $\alpha$. At a candidate threshold
+      $t=p_{(k)}$, we have $R_t=k$, so the condition
+      $$\widehat{\FDP}_t \leq \alpha$$
+      becomes
+      $$\frac{mp_{(k)}}{k} \leq \alpha \quad\Longleftrightarrow\quad p_{(k)} \leq \frac{\alpha k}{m}.$$
+      So the BH rule is exactly the "control estimated FDP" idea written in ordered-$p$-value form.
+    </div>
+
+    <p class="small">
+      Why do we only check thresholds at observed $p$-values? Between two consecutive ordered $p$-values, the rejection count $R_t$ does not change,
+      so $\widehat{\FDP}_t = mt/R_t$ only gets larger as $t$ increases. The best threshold in each interval is therefore its left endpoint, namely an
+      observed ordered $p$-value.
+    </p>
+
+    <h3>20.6 Proof sketch for FDR control</h3>
+
+    <div class="theorem">
+      Under independence and null uniformity, BH controls
+      $$\FDR \leq \alpha \frac{m_0}{m} \leq \alpha.$$
+    </div>
+
+    <div class="proof">
+      The course proof has four moves:
+      <ol style="margin-top: 0.5rem">
+        <li>Write $V=\sum_{i\in\mathcal{H}_0} V_i$, where $V_i=\mathbf{1}\{H_{0i}\text{ rejected}\}$.</li>
+        <li>Show $\FDR = \sum_{i\in\mathcal{H}_0} E[V_i/(R\vee 1)]$.</li>
+        <li>For a fixed true null $i$, replace $p_i$ by $0$ and call the resulting BH rejection count $R^0$. On the event that $i$ is rejected,
+          the total number of BH rejections does not change, so $R=R^0$ there.</li>
+        <li>Condition on the other $p$-values. Since $R^0$ depends only on $p_{-i}$ and $p_i\sim \text{Unif}(0,1)$ independently,
+          $$E\!\left[\frac{V_i}{R\vee 1}\right] \leq \frac{\alpha}{m}.$$
+          Summing over the $m_0$ true nulls gives the result.</li>
+      </ol>
+    </div>
+
+    <p>
+      The miracle step is the conditioning trick: once the other $p$-values are fixed, the threshold seen by one null $p$-value behaves like a fixed
+      number, and uniformity gives exactly the cancellation needed.
+    </p>
+
+    <h3>20.7 Assumptions and dependence remarks</h3>
+
+    <table>
+      <tr>
+        <th>Assumption</th>
+        <th>Role in the proof</th>
+        <th>Consequence</th>
+      </tr>
+      <tr>
+        <td>Null uniformity</td>
+        <td>Gives $P(p_i \leq t)=t$ for true nulls</td>
+        <td>Can be weakened to conservative null $p$-values</td>
+      </tr>
+      <tr>
+        <td>Independence</td>
+        <td>Makes $p_i$ independent of $p_{-i}$ and hence of $R^0$</td>
+        <td>Harder to relax; BH remains valid under certain positive dependence conditions</td>
+      </tr>
+      <tr>
+        <td>Arbitrary dependence</td>
+        <td>Breaks the basic proof</td>
+        <td>A conservative fix is BH at level $\alpha/L_m$, where $L_m=\sum_{k=1}^m 1/k$</td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="comparison">Big Comparison Map</h2>
+    <!-- ============================================================ -->
+
+    <table>
+      <tr>
+        <th>Procedure / concept</th>
+        <th>What it controls</th>
+        <th>Rule or object</th>
+        <th>Typical use</th>
+      </tr>
+      <tr>
+        <td>Marginal testing</td>
+        <td>One-test Type I error only</td>
+        <td>Reject if $p_i \leq \alpha$</td>
+        <td>Only appropriate when there is effectively one test</td>
+      </tr>
+      <tr>
+        <td>Bonferroni</td>
+        <td>FWER</td>
+        <td>Reject if $p_i \leq \alpha/m$</td>
+        <td>Safe default under arbitrary dependence</td>
+      </tr>
+      <tr>
+        <td>Sidak</td>
+        <td>FWER</td>
+        <td>Reject if $p_i \leq 1-(1-\alpha)^{1/m}$</td>
+        <td>Independence case; modest improvement over Bonferroni</td>
+      </tr>
+      <tr>
+        <td>Scheffe / deduced inference</td>
+        <td>FWER over a whole family of questions</td>
+        <td>Start from one joint confidence region</td>
+        <td>Simultaneous contrasts and geometric inference</td>
+      </tr>
+      <tr>
+        <td>Simultaneous CIs</td>
+        <td>Joint coverage of all target parameters</td>
+        <td>All intervals cover together with probability at least $1-\alpha$</td>
+        <td>Report many intervals without hidden multiplicity inflation</td>
+      </tr>
+      <tr>
+        <td>Benjamini-Hochberg</td>
+        <td>FDR</td>
+        <td>Largest $k$ with $p_{(k)} \leq \alpha k/m$</td>
+        <td>Exploratory screening with many discoveries</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Decision summary:</strong><br />
+      Use FWER language when even one false positive is costly. Use FDR language when you expect many discoveries and can tolerate a small false
+      fraction among them.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="summary">Master Summary and Formula Sheet</h2>
+    <!-- ============================================================ -->
+
+    <h3>Lecture 19 core formulas</h3>
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Comment</th>
+      </tr>
+      <tr>
+        <td>Familywise error rate</td>
+        <td>$\FWER_\theta = P_\theta(\mathcal{R}\cap\mathcal{H}_0 \neq \emptyset)$</td>
+        <td>Probability of at least one false rejection</td>
+      </tr>
+      <tr>
+        <td>Bonferroni threshold</td>
+        <td>$\alpha/m$</td>
+        <td>Comes directly from the union bound</td>
+      </tr>
+      <tr>
+        <td>Sidak threshold</td>
+        <td>$1-(1-\alpha)^{1/m}$</td>
+        <td>Requires independence</td>
+      </tr>
+      <tr>
+        <td>Scheffe rule</td>
+        <td>Reject if $|\lambda^T X|^2 \geq \chi^2_{d,\alpha}$</td>
+        <td>Controls infinitely many Gaussian contrasts</td>
+      </tr>
+      <tr>
+        <td>Simultaneous CI guarantee</td>
+        <td>$P(g_i(\theta)\in C_i(X)\text{ for all }i)\geq 1-\alpha$</td>
+        <td>All intervals must cover together</td>
+      </tr>
+    </table>
+
+    <h3>Lecture 20 core formulas</h3>
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Comment</th>
+      </tr>
+      <tr>
+        <td>False discovery proportion</td>
+        <td>$\FDP = V/(R\vee 1)$</td>
+        <td>Defined as 0 when $R=0$</td>
+      </tr>
+      <tr>
+        <td>False discovery rate</td>
+        <td>$\FDR = E[V/(R\vee 1)]$</td>
+        <td>Expected false fraction</td>
+      </tr>
+      <tr>
+        <td>FDR-FWER comparison</td>
+        <td>$\FDR \leq \FWER$</td>
+        <td>Because $\FDP \leq \mathbf{1}\{V&gt;0\}$</td>
+      </tr>
+      <tr>
+        <td>BH rejection rule</td>
+        <td>$p_{(k)} \leq \alpha k/m$</td>
+        <td>Take the largest valid $k$</td>
+      </tr>
+      <tr>
+        <td>Estimated FDP heuristic</td>
+        <td>$\widehat{\FDP}_t = mt/(R_t\vee 1)$</td>
+        <td>BH picks the largest threshold with estimate $\leq \alpha$</td>
+      </tr>
+      <tr>
+        <td>BH guarantee</td>
+        <td>$\FDR \leq \alpha m_0/m \leq \alpha$</td>
+        <td>Under independence and null uniformity</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Fast memory aid:</strong><br />
+      Bonferroni protects against <em>any</em> false discovery. BH protects against too many false discoveries <em>on average as a fraction</em>.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mistakes">Common Mistakes</h2>
+    <!-- ============================================================ -->
+
+    <div class="warning">
+      <strong>1.</strong> Treating $\alpha/m$ as a magical recipe instead of a union-bound consequence.<br />
+      If you remember the inequality $P(\cup A_i)\leq \sum P(A_i)$, you remember Bonferroni.
+    </div>
+
+    <div class="warning">
+      <strong>2.</strong> Saying FDR and FWER are basically the same.<br />
+      They are not. FWER controls the chance of any false discovery; FDR controls the expected false proportion.
+    </div>
+
+    <div class="warning">
+      <strong>3.</strong> Forgetting the $R\vee 1$ convention.<br />
+      When there are no rejections, the false discovery proportion is defined to be 0, not undefined.
+    </div>
+
+    <div class="warning">
+      <strong>4.</strong> Thinking BH guarantees there are no false positives.<br />
+      No. BH allows false discoveries; it controls their average proportion.
+    </div>
+
+    <div class="warning">
+      <strong>5.</strong> Applying BH under arbitrary dependence without comment.<br />
+      The standard proof needs independence (or stronger positive-dependence assumptions than were proved in class).
+    </div>
+
+    <hr />
+    <p style="text-align: center; color: var(--subtle); font-size: 0.9rem; margin-top: 2rem">
+      Data 145 Study Guide - Lectures 19-20 - Standalone Review Version
+    </p>
+  </body>
+</html>

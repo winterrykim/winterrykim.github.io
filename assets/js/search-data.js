@@ -44,11 +44,22 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-from-mle-to-neyman-pearson-to-reward-models",
+        },{id: "post-data-145-evidence-and-uncertainty-topic-map",
         
-          title: "From MLE to Neyman-Pearson to Reward Models",
+          title: "Data 145: Evidence and Uncertainty - Topic Map",
         
-        description: "A broad roadmap of statistical inference, inspired by Data 145, and a short bridge to modern reward-based AI.",
+        description: "A compact topic map for my Data 145 notes, with a Phase 1 synthesis and Phase 2 study references.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/data-145-evidence-and-uncertainty-topic-map/";
+          
+        },
+      },{id: "post-statistical-inference-notes-from-mle-to-neyman-pearson-to-reward-models",
+        
+          title: "Statistical Inference Notes: From MLE to Neyman-Pearson to Reward Models",
+        
+        description: "My Data 145 Phase 1 notes: a broad roadmap of statistical inference, plus a short bridge to modern reward-based AI.",
         section: "Posts",
         handler: () => {
           
