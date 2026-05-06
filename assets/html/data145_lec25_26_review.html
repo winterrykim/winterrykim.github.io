@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide - Lectures 25-26</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            MSE: "\\operatorname{MSE}",
+            iid: "\\overset{\\mathrm{iid}}{\\sim}",
+            IG: "\\operatorname{InverseGamma}",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+        --purple: #785ef0;
+        --pink: #dc267f;
+        --orange: #dd6b20;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+      li {
+        margin-bottom: 0.25rem;
+      }
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: #2f855a;
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: #2f855a;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: #e53e3e;
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: #e53e3e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: var(--orange);
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: var(--orange);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+      .diagram {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin: 1.2rem 0 0.5rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+      }
+      .diagram svg {
+        display: block;
+        width: 100%;
+        min-width: 640px;
+        height: auto;
+      }
+      .diagram-caption {
+        color: var(--subtle);
+        font-size: 0.92rem;
+        margin-bottom: 1.1rem;
+      }
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.75rem 0 1rem;
+      }
+      .pill {
+        display: inline-block;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #ffffff;
+        padding: 0.22rem 0.65rem;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+      @media (max-width: 700px) {
+        body {
+          padding: 1.5rem 1rem 3rem;
+        }
+        h1 {
+          font-size: 1.85rem;
+        }
+        .definition,
+        .theorem,
+        .proof,
+        .example,
+        .intuition,
+        .warning,
+        .keyresult,
+        .formula-box {
+          overflow-x: auto;
+        }
+        table {
+          display: block;
+          overflow-x: auto;
+        }
+        .diagram {
+          overflow-x: visible;
+          padding: 0.5rem;
+        }
+        .diagram svg {
+          min-width: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide - Lectures 25 through 26 - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#big-picture">Big Picture: Computation and Borrowing Strength</a></li>
+        <li><a href="#bayes-risk">Review: Bayes Risk, Bayes Estimators, and Posterior Means</a></li>
+        <li><a href="#mcmc">Markov Chain Monte Carlo</a></li>
+        <li><a href="#gibbs">Gibbs Sampling</a></li>
+        <li><a href="#why-gibbs">Why Gibbs Works</a></li>
+        <li><a href="#hierarchical">Hierarchical Bayes: Many Related Parameters</a></li>
+        <li><a href="#gaussian">Gaussian Many-Means Model and Shrinkage</a></li>
+        <li><a href="#unknown-hyper">Unknown Hyperparameters: Hierarchical Bayes vs Empirical Bayes</a></li>
+        <li><a href="#concentration">Hyperparameter Concentration</a></li>
+        <li><a href="#gamma-poisson">Gamma-Poisson Example and Gibbs Traces</a></li>
+        <li><a href="#summary">Formula Sheet and Recall Map</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="big-picture">Big Picture: Computation and Borrowing Strength</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      Lectures 25 and 26 fit together as a single story. Lecture 25 asks: if the posterior distribution is complicated, how can we still estimate
+      posterior expectations? Lecture 26 asks: if we have many related parameters, how can data from all of them improve each individual estimate?
+    </p>
+
+    <div class="intuition">
+      The bridge is hierarchical Bayes. A hierarchical posterior is often high-dimensional and hard to integrate directly, so Gibbs sampling is a
+      practical way to simulate from it. Once we have simulated from the posterior, we can estimate posterior means and understand shrinkage.
+    </div>
+
+    <div class="formula-box">
+      $$\text{Bayes estimator}=\text{posterior expectation}\quad\Longrightarrow\quad \text{if the integral is hard, simulate from the posterior.}$$
+    </div>
+
+    <p>The mental path is:</p>
+
+    <div class="pill-row">
+      <span class="pill">posterior mean</span>
+      <span class="pill">MCMC</span>
+      <span class="pill">Gibbs full conditionals</span>
+      <span class="pill">hierarchical model</span>
+      <span class="pill">shrinkage</span>
+      <span class="pill">hyperparameter concentration</span>
+    </div>
+
+    <p>
+      The payoff is that MCMC gives a computational tool, while hierarchical Bayes gives a statistical reason for pooling information across related
+      problems.
+    </p>
+
+    <div class="keyresult">
+      The central Lecture 26 insight is: with many parallel problems, the population-level hyperparameters can become sharply learned even when each
+      individual parameter remains noisy. That is why shrinkage can improve many individual estimates at once.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="bayes-risk">Review: Bayes Risk, Bayes Estimators, and Posterior Means</h2>
+    <!-- ============================================================ -->
+
+    <h3>2.1 Risk versus Bayes risk</h3>
+
+    <p>
+      In the frequentist setup, $\theta$ is fixed and the data $X$ are random. If $T(X)$ estimates $\theta$ and $L(\theta,T(X))$ is the loss, then the
+      risk is
+    </p>
+
+    <div class="formula-box">$$R(\theta;T)=\E_\theta[L(\theta,T(X))].$$</div>
+
+    <p>In the Bayesian setup, $\theta$ also has a prior distribution $\pi$. The Bayes risk averages over both $\theta$ and $X$:</p>
+
+    <div class="formula-box">$$r_\pi(T)=\E[L(\theta,T(X))].$$</div>
+
+    <div class="keyresult">
+      The same expectation can be decomposed in two useful ways: $$r_\pi(T)=\E\{R(\theta;T)\}=\E\{\E[L(\theta,T(X))\mid X]\}.$$ The second form says:
+      after seeing $X$, minimize the expected posterior loss.
+    </div>
+
+    <h3>2.2 Bayes estimator</h3>
+
+    <p>The Bayes estimator minimizes the posterior expected loss. Under squared-error loss, the answer is the posterior mean:</p>
+
+    <div class="keyresult">If $L(\theta,a)=(\theta-a)^2$, then $$T_{\text{Bayes}}(X)=\E[\theta\mid X].$$</div>
+
+    <p>
+      This is why computation matters. If $\E[\theta\mid X]$ is an intractable integral, we need another way to approximate it. Monte Carlo is the
+      natural idea: simulate posterior draws $\theta^{(1)},\ldots,\theta^{(m)}$ and average them.
+    </p>
+
+    <div class="formula-box">$$\E[f(\theta)\mid X]\approx \frac{1}{m}\sum_{t=1}^m f(\theta^{(t)}).$$</div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mcmc">Markov Chain Monte Carlo</h2>
+    <!-- ============================================================ -->
+
+    <h3>3.1 The basic MCMC idea</h3>
+
+    <p>
+      Suppose the target distribution $p$ is complicated, high-dimensional, or known only up to a normalizing constant. MCMC builds a Markov chain
+      whose stationary distribution is $p$. After the chain has mixed, its states behave like dependent draws from $p$.
+    </p>
+
+    <div class="definition">
+      A Markov chain Monte Carlo method constructs states $X_0,X_1,\ldots$ such that the long-run distribution of $X_t$ is the target distribution
+      $p$. After burn-in, averages along the chain approximate expectations under $p$.
+    </div>
+
+    <div class="formula-box">$$\frac{1}{m}\sum_{t=B+1}^{B+m} f(X_t)\approx \E_p[f(X)].$$</div>
+
+    <p>
+      The code-breaking example from probability is a useful memory hook. The state was a decoder, the state space was enormous, and a Metropolis
+      chain searched through likely decoders. In general Bayesian computation, we are not just searching for a mode; we want posterior averages.
+    </p>
+
+    <h3>3.2 Burn-in, mixing, trace plots, and thinning</h3>
+
+    <table>
+      <tr>
+        <th>Term</th>
+        <th>Meaning</th>
+        <th>How to remember it</th>
+      </tr>
+      <tr>
+        <td>Burn-in</td>
+        <td>The early part of the chain before it has reached its steady-state behavior.</td>
+        <td>Throw away the first $B$ draws.</td>
+      </tr>
+      <tr>
+        <td>Mixing</td>
+        <td>How quickly the chain forgets its starting point and explores the target distribution.</td>
+        <td>Good mixing means the trace wanders around the target region without a long trend.</td>
+      </tr>
+      <tr>
+        <td>Trace plot</td>
+        <td>A plot of $f(X_t)$ against iteration $t$.</td>
+        <td>Use it to diagnose drift, sticking, or slow movement.</td>
+      </tr>
+      <tr>
+        <td>Thinning</td>
+        <td>Keeping every $k$th draw to reduce autocorrelation or storage.</td>
+        <td>Useful sometimes, but not automatically better because it discards data.</td>
+      </tr>
+    </table>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 300" role="img" aria-label="Trace plot diagram showing burn-in and stationary wandering">
+        <rect x="0" y="0" width="820" height="300" fill="#ffffff" />
+        <line x1="70" y1="245" x2="770" y2="245" stroke="#2d3748" stroke-width="2" />
+        <line x1="70" y1="35" x2="70" y2="245" stroke="#2d3748" stroke-width="2" />
+        <text x="760" y="275" fill="#4a5568" font-size="16">iteration</text>
+        <text x="18" y="42" fill="#4a5568" font-size="16">value</text>
+        <line x1="255" y1="45" x2="255" y2="245" stroke="#e53e3e" stroke-width="2" stroke-dasharray="6 6" />
+        <text x="215" y="30" fill="#e53e3e" font-size="16">burn-in cutoff</text>
+        <path
+          d="M80 225 C115 210, 135 190, 160 165 C185 135, 210 122, 245 112 C285 102, 315 128, 345 115 C380 100, 415 140, 450 122 C485 105, 520 143, 555 128 C590 110, 625 150, 660 132 C700 112, 735 145, 765 125"
+          fill="none"
+          stroke="#2b6cb0"
+          stroke-width="4"
+        />
+        <rect x="92" y="60" width="130" height="34" rx="17" fill="#fff5f5" stroke="#e53e3e" />
+        <text x="112" y="82" fill="#742a2a" font-size="15">not mixed yet</text>
+        <rect x="430" y="58" width="190" height="34" rx="17" fill="#f0fff4" stroke="#38a169" />
+        <text x="450" y="80" fill="#22543d" font-size="15">wandering around target</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      Trace-plot intuition: before burn-in, the chain can still remember the starting point. After mixing, the trace should fluctuate around a stable
+      region instead of drifting persistently.
+    </p>
+
+    <div class="warning">
+      MCMC samples are not independent. The law of large numbers still has Markov-chain versions, but the effective sample size can be much smaller
+      than the number of iterations when autocorrelation is high.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="gibbs">Gibbs Sampling</h2>
+    <!-- ============================================================ -->
+
+    <h3>4.1 Full conditionals</h3>
+
+    <p>
+      Gibbs sampling is designed for a multivariate target distribution where sampling jointly is hard, but sampling one coordinate at a time is easy.
+      For a vector $\mathbf{x}=(x_1,\ldots,x_d)$, write $\mathbf{x}_{-i}$ for all coordinates except $x_i$.
+    </p>
+
+    <div class="definition">
+      The full conditional for coordinate $i$ is the distribution $$p(x_i\mid \mathbf{x}_{-i}).$$ Gibbs sampling repeatedly samples each coordinate
+      from its full conditional, holding all other coordinates fixed.
+    </div>
+
+    <h3>4.2 The complete cycle</h3>
+
+    <div class="keyresult">
+      Starting at $\mathbf{x}$, one complete Gibbs cycle does:
+      <ol>
+        <li>Draw $x_1^*\sim p(x_1\mid x_2,\ldots,x_d)$.</li>
+        <li>Draw $x_2^*\sim p(x_2\mid x_1^*,x_3,\ldots,x_d)$.</li>
+        <li>Continue through coordinate $d$.</li>
+        <li>The resulting vector is the next Markov-chain state.</li>
+      </ol>
+    </div>
+
+    <p>The process is Markov because the next complete cycle depends only on the current state, not on the entire past.</p>
+
+    <h3>4.3 Two-dimensional geometry: horizontal and vertical slices</h3>
+
+    <p>
+      For two parameters $(\alpha,\beta)$, Gibbs alternates between conditional slices. At current $\beta$, sample a new $\alpha$ from the horizontal
+      slice. Then at the new $\alpha$, sample a new $\beta$ from the vertical slice.
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 420" role="img" aria-label="Gibbs sampling two-cycle diagram">
+        <rect x="0" y="0" width="820" height="420" fill="#ffffff" />
+        <line x1="90" y1="350" x2="720" y2="350" stroke="#2d3748" stroke-width="2" />
+        <line x1="90" y1="350" x2="90" y2="55" stroke="#2d3748" stroke-width="2" />
+        <text x="700" y="382" fill="#2d3748" font-size="18">alpha</text>
+        <text x="32" y="65" fill="#2d3748" font-size="18">beta</text>
+
+        <ellipse cx="405" cy="195" rx="235" ry="110" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2" opacity="0.55" />
+        <ellipse cx="405" cy="195" rx="125" ry="58" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2" opacity="0.5" />
+        <text x="525" y="88" fill="#2b6cb0" font-size="16">joint posterior surface, viewed from above</text>
+
+        <circle cx="520" cy="240" r="7" fill="#805ad5" />
+        <text x="535" y="248" fill="#44337a" font-size="16">(alpha0, beta0)</text>
+
+        <line x1="520" y1="240" x2="270" y2="240" stroke="#2b6cb0" stroke-width="4" />
+        <line x1="270" y1="240" x2="270" y2="125" stroke="#2b6cb0" stroke-width="4" />
+        <circle cx="270" cy="125" r="7" fill="#2b6cb0" />
+        <text x="285" y="120" fill="#1a365d" font-size="16">(alpha1, beta1)</text>
+
+        <line x1="270" y1="125" x2="430" y2="125" stroke="#dd6b20" stroke-width="4" />
+        <line x1="430" y1="125" x2="430" y2="285" stroke="#dd6b20" stroke-width="4" />
+        <circle cx="430" cy="285" r="7" fill="#dd6b20" />
+        <text x="445" y="294" fill="#7b341e" font-size="16">(alpha2, beta2)</text>
+
+        <text x="145" y="228" fill="#2b6cb0" font-size="15">sample alpha | beta0</text>
+        <text x="282" y="182" fill="#2b6cb0" font-size="15">sample beta | alpha1</text>
+        <text x="438" y="115" fill="#dd6b20" font-size="15">next cycle</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      Gibbs sampling in two dimensions: each move samples one coordinate conditional on the other. One horizontal move plus one vertical move is one
+      complete cycle.
+    </p>
+
+    <h3>4.4 Why Gibbs can be slow</h3>
+
+    <ul>
+      <li>If the target has multiple modes, the chain can get stuck near one mode for a long time.</li>
+      <li>If coordinates are highly correlated, coordinate-by-coordinate moves can take baby steps along a narrow ridge.</li>
+      <li>If any full conditional is hard to sample from, each Gibbs cycle becomes expensive.</li>
+      <li>If the initial value is far from the typical posterior region, burn-in can be long.</li>
+    </ul>
+
+    <div class="intuition">
+      Gibbs is easy when the conditional slices are easy and the posterior is not too ridge-like. It can be painfully slow when the posterior is
+      highly correlated because the chain moves axis-aligned, one coordinate at a time.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="why-gibbs">Why Gibbs Works</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      The rigorous details are beyond the course, but the core idea is simple: each coordinate update is built from a conditional distribution that is
+      consistent with the target joint distribution. Therefore, if the current state already has the target distribution, the coordinate-updated state
+      still has the target distribution.
+    </p>
+
+    <h3>5.1 One-coordinate update</h3>
+
+    <p>Fix coordinate $i$. The Gibbs transition changes only $x_i$ and leaves $\mathbf{x}_{-i}$ fixed. Its transition probability/density is</p>
+
+    <div class="formula-box">$$P_i(\mathbf{x},\mathbf{x}^*)=p(x_i^*\mid \mathbf{x}_{-i}).$$</div>
+
+    <p>
+      If $\mathbf{x}$ and $\mathbf{x}^*$ differ only in coordinate $i$, then $\mathbf{x}_{-i}=\mathbf{x}^*_{-i}$. Using the factorization
+      $p(\mathbf{x})=p(\mathbf{x}_{-i})p(x_i\mid\mathbf{x}_{-i})$, the detailed-balance calculation is
+    </p>
+
+    <div class="proof">
+      $$ \begin{aligned} p(\mathbf{x})P_i(\mathbf{x},\mathbf{x}^*) &=p(\mathbf{x}_{-i})p(x_i\mid \mathbf{x}_{-i})p(x_i^*\mid \mathbf{x}_{-i})\\
+      &=p(\mathbf{x}_{-i})p(x_i^*\mid \mathbf{x}_{-i})p(x_i\mid \mathbf{x}_{-i})\\ &=p(\mathbf{x}^*)P_i(\mathbf{x}^*,\mathbf{x}). \end{aligned} $$
+      Thus the target distribution is stationary for this one-coordinate update.
+    </div>
+
+    <h3>5.2 Complete-cycle chain</h3>
+
+    <p>
+      A full Gibbs iteration is a composition of these coordinate updates. Since each update preserves the target distribution, the complete cycle
+      preserves it too. Under suitable irreducibility and aperiodicity conditions, the chain converges to the target distribution.
+    </p>
+
+    <div class="warning">
+      "Stationary distribution is correct" does not automatically mean "your finite simulation is good." You still need mixing diagnostics, enough
+      iterations, and awareness of multimodality or high autocorrelation.
+    </div>
+
+    <h3>5.3 Balance, detailed balance, and fixed-order Gibbs</h3>
+
+    <p>
+      One subtle lecture point: each one-coordinate Gibbs update satisfies detailed balance with the target distribution, but a full deterministic
+      cycle through coordinates need not be reversible. That is not a problem for stationarity. The important fact is that each coordinate update
+      preserves the target distribution, so composing the updates preserves it too.
+    </p>
+
+    <div class="intuition">
+      If the order of coordinate updates is randomly permuted each iteration, the complete cycle can also satisfy detailed balance. With a fixed
+      order, it is safer to remember the weaker but sufficient statement: the target distribution is stationary for the complete-cycle chain.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="hierarchical">Hierarchical Bayes: Many Related Parameters</h2>
+    <!-- ============================================================ -->
+
+    <h3>6.1 The statistical problem</h3>
+
+    <p>
+      Suppose there are many related problems: many baseball players, many teams, many schools, many genes, or many coordinates. Each unit has its own
+      parameter $\theta_i$, but the parameters are not completely unrelated. They come from a shared population.
+    </p>
+
+    <div class="definition">
+      A hierarchical Bayes model gives the individual parameters a common population distribution, usually controlled by hyperparameters. A generic
+      version is $$\eta\sim \text{hyperprior},\qquad \theta_i\mid \eta\iid G_\eta,\qquad X_i\mid \theta_i\sim P_{\theta_i}.$$
+    </div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 320" role="img" aria-label="Hierarchical Bayes plate diagram">
+        <rect x="0" y="0" width="820" height="320" fill="#ffffff" />
+        <rect x="95" y="75" width="630" height="190" rx="18" fill="#f7fafc" stroke="#cbd5e0" stroke-width="2" />
+        <text x="610" y="247" fill="#718096" font-size="16">for i = 1,...,d</text>
+
+        <circle cx="410" cy="65" r="42" fill="#fffaf0" stroke="#dd6b20" stroke-width="3" />
+        <text x="385" y="70" fill="#7b341e" font-size="18">eta</text>
+        <text x="322" y="24" fill="#7b341e" font-size="15">hyperparameters</text>
+
+        <circle cx="250" cy="165" r="44" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="3" />
+        <text x="226" y="171" fill="#1a365d" font-size="18">theta_i</text>
+        <circle cx="570" cy="165" r="44" fill="#f0fff4" stroke="#38a169" stroke-width="3" />
+        <text x="552" y="171" fill="#22543d" font-size="18">X_i</text>
+
+        <line x1="388" y1="99" x2="279" y2="137" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" />
+        <line x1="294" y1="165" x2="526" y2="165" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" />
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#4a5568" />
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      Hierarchical Bayes: the hyperparameter controls the population distribution of all $\theta_i$'s; each observation $X_i$ is generated from its
+      own $\theta_i$.
+    </p>
+
+    <h3>6.2 Borrowing strength</h3>
+
+    <p>
+      The phrase "borrowing strength" means that the estimate of one unit uses information from the others through the shared hyperparameter. Each
+      unit still has its own data, but the model learns a population pattern from all units together.
+    </p>
+
+    <div class="intuition">
+      Hierarchical Bayes does not literally average everybody together. It learns the population center and spread, then shrinks noisy individual
+      estimates toward that learned population structure.
+    </div>
+
+    <table>
+      <tr>
+        <th>Example</th>
+        <th>Individual parameter</th>
+        <th>Population/hyperparameter</th>
+        <th>Borrowing strength means</th>
+      </tr>
+      <tr>
+        <td>Baseball Beta-Binomial</td>
+        <td>Player batting probability $p_i$</td>
+        <td>Beta$(\alpha,\beta)$</td>
+        <td>Players with few at-bats get pulled toward the league-level batting distribution.</td>
+      </tr>
+      <tr>
+        <td>Premier League Gamma-Poisson</td>
+        <td>Team scoring rate $\theta_i$</td>
+        <td>Gamma$(\alpha,\beta)$</td>
+        <td>Team rates get shrunk toward the population of team scoring rates.</td>
+      </tr>
+      <tr>
+        <td>Gaussian many means</td>
+        <td>Mean $\theta_i$</td>
+        <td>$N(\mu,\tau^2)$</td>
+        <td>Each $X_i$ gets shrunk toward the learned center $\mu$.</td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="gaussian">Gaussian Many-Means Model and Shrinkage</h2>
+    <!-- ============================================================ -->
+
+    <h3>7.1 The model</h3>
+
+    <p>Lecture 26 studies the cleanest closed-form version of hierarchical Bayes:</p>
+
+    <div class="formula-box">$$X_i\mid \theta_i\sim N(\theta_i,1),\qquad \theta_i\iid N(\mu,\tau^2),\qquad i=1,\ldots,d.$$</div>
+
+    <p>
+      If we ignored the relationship among the $\theta_i$'s, the MLE would be $\hat\theta_i=X_i$, with per-coordinate risk 1. The hierarchical model
+      says the $\theta_i$'s are similar enough that we can improve by shrinking the noisy $X_i$'s toward a common center.
+    </p>
+
+    <h3>7.2 Oracle Bayes when $\mu$ and $\tau^2$ are known</h3>
+
+    <p>By Normal-Normal conjugacy,</p>
+
+    <div class="formula-box">$$\theta_i\mid \mu,\tau^2,X_i\sim N\!\left(\mu+\frac{\tau^2}{1+\tau^2}(X_i-\mu),\frac{\tau^2}{1+\tau^2}\right).$$</div>
+
+    <p>Define the shrinkage factor</p>
+
+    <div class="formula-box">$$\zeta=\frac{1}{1+\tau^2}.$$</div>
+
+    <p>Then the Bayes estimator under squared-error loss is</p>
+
+    <div class="keyresult">
+      $$\hat\theta_i(\mu,\zeta)=\zeta\mu+(1-\zeta)X_i.$$ This is a convex combination of the population mean $\mu$ and the individual observation
+      $X_i$.
+    </div>
+
+    <table>
+      <tr>
+        <th>Situation</th>
+        <th>Limit</th>
+        <th>Estimator behavior</th>
+      </tr>
+      <tr>
+        <td>Large population spread</td>
+        <td>$\tau^2\to\infty$, so $\zeta\to 0$</td>
+        <td>Little shrinkage: $\hat\theta_i\approx X_i$.</td>
+      </tr>
+      <tr>
+        <td>Small population spread</td>
+        <td>$\tau^2\to 0$, so $\zeta\to 1$</td>
+        <td>Strong shrinkage: $\hat\theta_i\approx \mu$.</td>
+      </tr>
+    </table>
+
+    <h3>7.3 Linear-function view</h3>
+
+    <p>The same formula can be read as a line in $X_i$:</p>
+
+    <div class="formula-box">$$\hat\theta_i=\underbrace{\zeta\mu}_{\text{intercept}}+\underbrace{(1-\zeta)}_{\text{slope}}X_i.$$</div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 420" role="img" aria-label="Shrinkage line diagram">
+        <rect x="0" y="0" width="820" height="420" fill="#ffffff" />
+        <line x1="95" y1="340" x2="735" y2="340" stroke="#2d3748" stroke-width="2" />
+        <line x1="95" y1="340" x2="95" y2="70" stroke="#2d3748" stroke-width="2" />
+        <text x="706" y="375" fill="#2d3748" font-size="18">X_i</text>
+        <text x="30" y="78" fill="#2d3748" font-size="18">estimate</text>
+
+        <line x1="120" y1="315" x2="700" y2="80" stroke="#000000" stroke-width="2" stroke-dasharray="6 6" />
+        <text x="560" y="95" fill="#000000" font-size="16">MLE identity line</text>
+
+        <line x1="120" y1="250" x2="700" y2="125" stroke="#785ef0" stroke-width="5" />
+        <text x="470" y="152" fill="#44337a" font-size="16">shrinkage line</text>
+
+        <line x1="95" y1="210" x2="735" y2="210" stroke="#dd6b20" stroke-width="2" stroke-dasharray="5 5" />
+        <text x="105" y="202" fill="#7b341e" font-size="16">population center mu</text>
+
+        <circle cx="220" cy="275" r="7" fill="#648fff" opacity="0.9" />
+        <circle cx="340" cy="225" r="7" fill="#648fff" opacity="0.9" />
+        <circle cx="510" cy="160" r="7" fill="#648fff" opacity="0.9" />
+        <circle cx="650" cy="105" r="7" fill="#648fff" opacity="0.9" />
+
+        <circle cx="220" cy="228" r="7" fill="#785ef0" />
+        <circle cx="340" cy="202" r="7" fill="#785ef0" />
+        <circle cx="510" cy="165" r="7" fill="#785ef0" />
+        <circle cx="650" cy="135" r="7" fill="#785ef0" />
+
+        <line x1="220" y1="275" x2="220" y2="228" stroke="#a0aec0" stroke-width="2" />
+        <line x1="340" y1="225" x2="340" y2="202" stroke="#a0aec0" stroke-width="2" />
+        <line x1="510" y1="160" x2="510" y2="165" stroke="#a0aec0" stroke-width="2" />
+        <line x1="650" y1="105" x2="650" y2="135" stroke="#a0aec0" stroke-width="2" />
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      The MLE uses the identity line $\hat\theta_i=X_i$. Shrinkage uses a flatter line that pulls extreme observations back toward the population
+      center.
+    </p>
+
+    <div class="intuition">
+      The page's main memory hook: hierarchical and empirical Bayes are not magic. They estimate the intercept and slope of this shrinkage line using
+      all $d$ observations, then apply the same line to each individual $X_i$.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="unknown-hyper">Unknown Hyperparameters: Hierarchical Bayes vs Empirical Bayes</h2>
+    <!-- ============================================================ -->
+
+    <h3>8.1 The two philosophies</h3>
+
+    <table>
+      <tr>
+        <th>Method</th>
+        <th>What it does with $(\mu,\tau^2)$</th>
+        <th>Output</th>
+      </tr>
+      <tr>
+        <td>Hierarchical Bayes</td>
+        <td>Puts a prior on hyperparameters and computes their posterior.</td>
+        <td>Posterior mean estimator after averaging over hyperparameter uncertainty.</td>
+      </tr>
+      <tr>
+        <td>Empirical Bayes</td>
+        <td>Estimates hyperparameters from the marginal distribution of the data.</td>
+        <td>Plug-in Bayes estimator using estimated hyperparameters.</td>
+      </tr>
+    </table>
+
+    <h3>8.2 Hierarchical Bayes formula by the tower property</h3>
+
+    <p>
+      Let $\zeta=1/(1+\tau^2)$. Conditional on $(\mu,\zeta)$, the posterior mean is the oracle shrinkage rule. Now average over the posterior
+      distribution of $(\mu,\zeta)$:
+    </p>
+
+    <div class="keyresult">
+      $$ \begin{aligned} \hat\theta_i^{\text{HB}} &=\E[\theta_i\mid X]\\ &=\E\!\left[\E[\theta_i\mid \mu,\zeta,X]\mid X\right]\\ &=\E[\zeta\mu\mid
+      X]+\bigl(1-\E[\zeta\mid X]\bigr)X_i. \end{aligned} $$
+    </div>
+
+    <p>
+      This is the same linear shrinkage rule, except the intercept $\zeta\mu$ and shrinkage factor $\zeta$ are replaced by posterior means learned
+      from the full data set.
+    </p>
+
+    <div class="intuition">
+      This is why the lecture describes hierarchical Bayes as a kind of plug-in estimator in disguise. It does not plug in one point estimate of
+      $(\mu,\zeta)$; instead it plugs in posterior averages of the two coefficients that determine the shrinkage line.
+    </div>
+
+    <h3>8.3 Empirical Bayes from the marginal distribution</h3>
+
+    <p>Under the Gaussian hierarchy, integrate out $\theta_i$:</p>
+
+    <div class="formula-box">
+      $$X_i=\theta_i+\varepsilon_i,\qquad \theta_i\sim N(\mu,\tau^2),\quad \varepsilon_i\sim N(0,1),$$ $$X_i\iid N(\mu,1+\tau^2).$$
+    </div>
+
+    <p>Therefore, the center of the observed $X_i$'s estimates $\mu$, and the spread estimates $1+\tau^2$. Since $1+\tau^2=1/\zeta$,</p>
+
+    <div class="keyresult">
+      $$\hat\mu=\bar X,\qquad \hat\zeta=\frac{1}{S^2},\qquad S^2=\frac{1}{d-1}\sum_{i=1}^d(X_i-\bar X)^2.$$ If $S^2<1$, use $\hat\zeta=1$ as a clipped
+      full-shrinkage version.
+    </div>
+
+    <div class="intuition">
+      The Gaussian case makes empirical Bayes look almost too easy because the marginal mean and variance identify the hyperparameters. In more
+      general hierarchical models, the same idea becomes: integrate out the individual $\theta_i$'s, maximize the marginal likelihood over the
+      hyperparameters, then plug those hyperparameter estimates into the Bayes update for each unit.
+    </div>
+
+    <p>The empirical-Bayes estimator is then</p>
+
+    <div class="formula-box">$$\hat\theta_i^{\text{EB}}=\hat\zeta\hat\mu+(1-\hat\zeta)X_i =\bar X+(1-\hat\zeta)(X_i-\bar X).$$</div>
+
+    <table>
+      <tr>
+        <th>Estimator</th>
+        <th>Intercept</th>
+        <th>Slope</th>
+      </tr>
+      <tr>
+        <td>MLE</td>
+        <td>$0$</td>
+        <td>$1$</td>
+      </tr>
+      <tr>
+        <td>Oracle Bayes</td>
+        <td>$\zeta\mu$</td>
+        <td>$1-\zeta$</td>
+      </tr>
+      <tr>
+        <td>Hierarchical Bayes</td>
+        <td>$\E[\zeta\mu\mid X]$</td>
+        <td>$1-\E[\zeta\mid X]$</td>
+      </tr>
+      <tr>
+        <td>Empirical Bayes</td>
+        <td>$\hat\zeta\hat\mu=\bar X/S^2$</td>
+        <td>$1-\hat\zeta=1-1/S^2$</td>
+      </tr>
+    </table>
+
+    <div class="intuition">
+      Each individual estimate still uses its own $X_i$. The sharing happens through the common coefficients, which are estimated from all $d$
+      observations.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="concentration">Hyperparameter Concentration</h2>
+    <!-- ============================================================ -->
+
+    <h3>9.1 Why many parallel problems help</h3>
+
+    <p>
+      One observation $X_i$ contains limited information about its own $\theta_i$. But the whole collection $X_1,\ldots,X_d$ contains many draws from
+      the marginal population distribution $N(\mu,1+\tau^2)$. That makes $\mu$ and $\tau^2$ learnable.
+    </p>
+
+    <div class="keyresult">
+      With many parallel problems, hyperparameters can become sharply estimated even while individual parameters remain uncertain.
+    </div>
+
+    <div class="intuition">
+      The lecture visualizes this by increasing the number of parallel Gaussian problems. For small $d$, the posterior over $\mu$ and $\tau^2$ is
+      broad. For large $d$, the same posterior becomes tight around the population values, because the cloud of $X_i$'s reveals the population center
+      and spread.
+    </div>
+
+    <p>This explains the risk behavior from the lecture simulation:</p>
+
+    <table>
+      <tr>
+        <th>Estimator</th>
+        <th>What happens as $d$ grows?</th>
+      </tr>
+      <tr>
+        <td>MLE $\hat\theta_i=X_i$</td>
+        <td>Per-coordinate risk stays at 1 because each coordinate is treated alone.</td>
+      </tr>
+      <tr>
+        <td>Oracle Bayes</td>
+        <td>Uses the true $\mu,\tau^2$ and has per-coordinate risk $\tau^2/(1+\tau^2)$.</td>
+      </tr>
+      <tr>
+        <td>Empirical Bayes</td>
+        <td>Approaches oracle because $\bar X$ and $S^2$ learn the hyperparameters.</td>
+      </tr>
+      <tr>
+        <td>Hierarchical Bayes</td>
+        <td>Approaches oracle because the posterior on the hyperparameters concentrates.</td>
+      </tr>
+    </table>
+
+    <h3>9.2 Posterior concentration under a flat hyperprior</h3>
+
+    <p>
+      After integrating out the latent $\theta_i$'s, the Gaussian hierarchy becomes ordinary inference from $X_i\iid N(\mu,1+\tau^2)$. With a flat
+      prior on $(\mu,\tau^2)$, the posterior summaries are the familiar normal-sample forms:
+    </p>
+
+    <div class="formula-box">
+      $$\mu\mid X\sim \bar X+S\sqrt{\frac{d-1}{d(d-3)}}\,t_{d-3},$$ $$(1+\tau^2)\mid X\sim \IG\!\left(\frac{d-3}{2},\frac{(d-1)S^2}{2}\right).$$
+    </div>
+
+    <p>
+      As $d$ grows, these distributions tighten. In the lecture's simulated example with $d=200$, the posterior for the hyperparameters is much more
+      concentrated than it is for small $d$.
+    </p>
+
+    <div class="intuition">
+      The individual parameters $\theta_i$ each have only one noisy observation. The hyperparameters have the entire cloud of $d$ observations. That
+      is why the population can be known better than any one individual.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="gamma-poisson">Gamma-Poisson Example and Gibbs Traces</h2>
+    <!-- ============================================================ -->
+
+    <h3>10.1 The Premier League hierarchy</h3>
+
+    <p>The lecture returns to the Gamma-Poisson Premier League model from the worksheet. For team $i$ and match $j$,</p>
+
+    <div class="formula-box">
+      $$\theta_i\mid \beta\iid \operatorname{Gamma}(\alpha,\beta),\qquad X_{ij}\mid \theta_i\sim \operatorname{Poisson}(\theta_i).$$
+    </div>
+
+    <p>
+      Here $\theta_i$ is a team scoring rate, $\alpha$ is held fixed, and $\beta$ is a hyperparameter that controls the population of scoring rates.
+      If $G_i=\sum_j X_{ij}$ is total goals for team $i$ over $m$ matches, conjugacy gives the Gibbs updates:
+    </p>
+
+    <div class="keyresult">
+      $$\theta_i\mid \beta,X\sim \operatorname{Gamma}(\alpha+G_i,\beta+m),$$ $$\beta\mid \theta\sim \operatorname{Gamma}\!\left(a+d\alpha,\
+      b+\sum_i\theta_i\right).$$
+    </div>
+
+    <p>
+      This is exactly where Lecture 25 and Lecture 26 meet. The model is hierarchical, and Gibbs sampling alternates between updating team-level rates
+      $\theta_i$ and the population-level hyperparameter $\beta$.
+    </p>
+
+    <h3>10.2 Marginal model check before Gibbs</h3>
+
+    <p>
+      Before running Gibbs, the lecture checks whether the hierarchy is a plausible model for the observed team totals. If
+      $\theta_i\sim\operatorname{Gamma}(\alpha,\beta)$ and $G_i\mid\theta_i\sim\operatorname{Poisson}(m\theta_i)$, then integrating out $\theta_i$
+      gives a negative-binomial marginal distribution:
+    </p>
+
+    <div class="formula-box">$$G_i\sim\operatorname{NegBin}\!\left(\alpha,\frac{\beta}{\beta+m}\right).$$</div>
+
+    <div class="intuition">
+      This is the empirical-Bayes instinct again: the marginal distribution across teams tells us about the population hyperparameter. If the fitted
+      marginal distribution is wildly inconsistent with the observed totals, then the hierarchy itself is suspect before we even worry about Gibbs.
+    </div>
+
+    <h3>10.3 Trace-plot interpretation</h3>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 360" role="img" aria-label="Trace plot comparison for hyperparameter and individual parameters">
+        <rect x="0" y="0" width="820" height="360" fill="#ffffff" />
+        <text x="140" y="35" fill="#1a365d" font-size="20">Hyperparameter beta</text>
+        <text x="510" y="35" fill="#1a365d" font-size="20">Individual theta_i</text>
+
+        <line x1="70" y1="285" x2="360" y2="285" stroke="#2d3748" stroke-width="2" />
+        <line x1="70" y1="80" x2="70" y2="285" stroke="#2d3748" stroke-width="2" />
+        <path
+          d="M80 180 C95 168, 110 190, 125 176 C140 162, 155 188, 170 172 C185 160, 200 190, 215 178 C230 166, 245 184, 260 174 C275 162, 290 190, 305 176 C320 166, 340 184, 355 174"
+          fill="none"
+          stroke="#2b6cb0"
+          stroke-width="3"
+        />
+        <rect x="118" y="105" width="185" height="32" rx="16" fill="#ebf4ff" stroke="#2b6cb0" />
+        <text x="135" y="126" fill="#1a365d" font-size="14">tight posterior band</text>
+
+        <line x1="455" y1="285" x2="745" y2="285" stroke="#2d3748" stroke-width="2" />
+        <line x1="455" y1="80" x2="455" y2="285" stroke="#2d3748" stroke-width="2" />
+        <path
+          d="M465 235 C480 160, 495 210, 510 135 C525 95, 540 250, 555 175 C570 110, 585 280, 600 210 C615 145, 630 260, 645 175 C660 95, 675 225, 690 155 C710 105, 730 245, 742 185"
+          fill="none"
+          stroke="#dc267f"
+          stroke-width="3"
+        />
+        <path
+          d="M465 185 C480 245, 495 170, 510 235 C525 285, 540 140, 555 220 C570 260, 585 130, 600 190 C615 235, 630 125, 645 210 C660 260, 675 155, 690 235 C710 275, 730 145, 742 210"
+          fill="none"
+          stroke="#fe6100"
+          stroke-width="3"
+          opacity="0.85"
+        />
+        <rect x="520" y="105" width="185" height="32" rx="16" fill="#fff5f5" stroke="#dc267f" />
+        <text x="535" y="126" fill="#702459" font-size="14">wider uncertainty</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      The lecture's trace-plot message: the population-level hyperparameter can have a narrow posterior band while individual rates still wander over
+      wider ranges.
+    </p>
+
+    <div class="intuition">
+      We do not know each team rate precisely after only 10 matches. But the population distribution of team rates can be learned much more reliably
+      from all 20 teams. That reliable population estimate is what makes shrinkage useful.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="summary">Formula Sheet and Recall Map</h2>
+    <!-- ============================================================ -->
+
+    <h3>11.1 Main formulas</h3>
+
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>Bayes risk</td>
+        <td>$r_\pi(T)=\E[L(\theta,T(X))]$</td>
+        <td>Risk averaged over the prior and sampling distribution.</td>
+      </tr>
+      <tr>
+        <td>Squared-loss Bayes estimator</td>
+        <td>$T(X)=\E[\theta\mid X]$</td>
+        <td>Posterior mean minimizes posterior expected squared loss.</td>
+      </tr>
+      <tr>
+        <td>MCMC estimate</td>
+        <td>$m^{-1}\sum_{t=B+1}^{B+m}f(X_t)$</td>
+        <td>Average post-burn-in chain values.</td>
+      </tr>
+      <tr>
+        <td>Gibbs full conditional</td>
+        <td>$p(x_i\mid \mathbf{x}_{-i})$</td>
+        <td>Update one coordinate holding all others fixed.</td>
+      </tr>
+      <tr>
+        <td>Gaussian oracle shrinkage</td>
+        <td>$\hat\theta_i=\zeta\mu+(1-\zeta)X_i$</td>
+        <td>Convex combination of population mean and data.</td>
+      </tr>
+      <tr>
+        <td>Shrinkage factor</td>
+        <td>$\zeta=1/(1+\tau^2)$</td>
+        <td>More population spread means less shrinkage.</td>
+      </tr>
+      <tr>
+        <td>Hierarchical Bayes shrinkage</td>
+        <td>$\E[\zeta\mu\mid X]+(1-\E[\zeta\mid X])X_i$</td>
+        <td>Posterior-mean intercept and slope.</td>
+      </tr>
+      <tr>
+        <td>Empirical Bayes shrinkage</td>
+        <td>$\bar X+(1-\hat\zeta)(X_i-\bar X)$</td>
+        <td>Plug-in shrinkage using marginal estimates.</td>
+      </tr>
+      <tr>
+        <td>Gaussian EB hyperparameter estimates</td>
+        <td>$\hat\mu=\bar X,\ \hat\zeta=1/S^2$</td>
+        <td>Mean and spread of observed $X_i$'s identify the population.</td>
+      </tr>
+      <tr>
+        <td>General EB principle</td>
+        <td>Estimate hyperparameters from the marginal distribution of the data.</td>
+        <td>Integrate out individual parameters, fit the population model, then plug in.</td>
+      </tr>
+      <tr>
+        <td>Gamma-Poisson team update</td>
+        <td>$\theta_i\mid\beta,X\sim \operatorname{Gamma}(\alpha+G_i,\beta+m)$</td>
+        <td>Conjugate Gibbs update for team rate.</td>
+      </tr>
+      <tr>
+        <td>Gamma-Poisson marginal check</td>
+        <td>$G_i\sim\operatorname{NegBin}(\alpha,\beta/(\beta+m))$</td>
+        <td>Team totals reveal whether the population hierarchy is plausible.</td>
+      </tr>
+      <tr>
+        <td>Gamma-Poisson hyperparameter update</td>
+        <td>$\beta\mid\theta\sim\operatorname{Gamma}(a+d\alpha,b+\sum_i\theta_i)$</td>
+        <td>Conjugate Gibbs update for population rate parameter.</td>
+      </tr>
+    </table>
+
+    <h3>11.2 Recall map</h3>
+
+    <div class="formula-box">
+      $$\text{posterior mean hard to compute}\Rightarrow \text{MCMC}\Rightarrow \text{Gibbs when full conditionals are easy}.$$ $$\text{many related
+      parameters}\Rightarrow \text{hierarchical model}\Rightarrow \text{learn population}\Rightarrow \text{shrink individuals}.$$
+    </div>
+
+    <div class="keyresult">
+      The conceptual one-liner for these two lectures is: Gibbs sampling is a way to compute posterior averages, and hierarchical Bayes is a reason
+      those posterior averages can improve many related estimates by learning a shared population.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mistakes">Common Mistakes</h2>
+    <!-- ============================================================ -->
+
+    <div class="warning">
+      <strong>1.</strong> Confusing the posterior mode with the posterior mean.<br />
+      The code-breaking MCMC example often looked for a high-scoring decoder, but Bayes estimators under squared loss require posterior means.
+    </div>
+
+    <div class="warning">
+      <strong>2.</strong> Forgetting burn-in.<br />
+      Early chain states can still reflect the arbitrary starting point. Posterior averages should use draws after the chain has mixed.
+    </div>
+
+    <div class="warning">
+      <strong>3.</strong> Thinking thinning automatically improves inference.<br />
+      Thinning can reduce autocorrelation or storage, but it also discards samples. It is not a universal fix.
+    </div>
+
+    <div class="warning">
+      <strong>4.</strong> Thinking Gibbs always mixes quickly.<br />
+      Gibbs can be slow for multimodal targets or highly correlated coordinates, because it moves one coordinate at a time.
+    </div>
+
+    <div class="warning">
+      <strong>5.</strong> Forgetting that full conditionals must be compatible with one target joint distribution.<br />
+      Gibbs works because the full conditionals come from the target distribution you want.
+    </div>
+
+    <div class="warning">
+      <strong>6.</strong> Confusing hierarchical Bayes with simply pooling all data into one mean.<br />
+      Hierarchical Bayes learns a population distribution and partially pools. It does not force all $\theta_i$'s to be identical.
+    </div>
+
+    <div class="warning">
+      <strong>7.</strong> Thinking empirical Bayes is fully Bayesian.<br />
+      Empirical Bayes plugs in hyperparameter estimates. Hierarchical Bayes averages over hyperparameter uncertainty.
+    </div>
+
+    <div class="warning">
+      <strong>8.</strong> Reversing the shrinkage factor interpretation.<br />
+      $\zeta=1/(1+\tau^2)$ is the weight on the population mean. Larger $\tau^2$ means less shrinkage, not more.
+    </div>
+
+    <div class="warning">
+      <strong>9.</strong> Missing where information is shared.<br />
+      In the Gaussian model, each estimate is a function of its own $X_i$, but the line's slope and intercept are learned from all observations.
+    </div>
+
+    <div class="warning">
+      <strong>10.</strong> Thinking individual uncertainty must vanish because hyperparameter uncertainty vanishes.<br />
+      With one observation per unit, each $\theta_i$ can remain uncertain even when $\mu$ and $\tau^2$ are sharply learned from many units.
+    </div>
+
+    <hr />
+    <p style="text-align: center; color: var(--subtle); font-size: 0.9rem; margin-top: 2rem">
+      Data 145 Study Guide - Lectures 25-26 - Standalone Review Version
+    </p>
+  </body>
+</html>

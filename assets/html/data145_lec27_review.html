@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Study Guide - Lecture 27</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            Var: "\\operatorname{Var}",
+            Cov: "\\operatorname{Cov}",
+            iid: "\\overset{\\mathrm{iid}}{\\sim}",
+            ATE: "\\operatorname{ATE}",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+        --orange: #dd6b20;
+        --green: #2f855a;
+        --red: #e53e3e;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.75;
+        color: var(--text);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+      }
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: var(--subtle);
+        font-style: italic;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      h4 {
+        font-size: 1.05rem;
+        color: #4a5568;
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      p {
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        padding-left: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+      li {
+        margin-bottom: 0.25rem;
+      }
+      .definition,
+      .theorem,
+      .proof,
+      .example,
+      .intuition,
+      .warning,
+      .keyresult {
+        border-left: 4px solid;
+        padding: 1rem 1.25rem;
+        margin: 1.2rem 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+      .definition::before {
+        content: "Definition";
+        display: block;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .theorem {
+        border-color: var(--green);
+        background: var(--success);
+      }
+      .theorem::before {
+        content: "Theorem";
+        display: block;
+        font-weight: bold;
+        color: var(--green);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .proof {
+        border-color: #a0aec0;
+        background: #f7fafc;
+      }
+      .proof::before {
+        content: "Proof Sketch";
+        display: block;
+        font-weight: bold;
+        color: #718096;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .example {
+        border-color: #38a169;
+        background: var(--success);
+      }
+      .example::before {
+        content: "Example";
+        display: block;
+        font-weight: bold;
+        color: #38a169;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .intuition {
+        border-color: #d69e2e;
+        background: #fffff0;
+      }
+      .intuition::before {
+        content: "Intuition";
+        display: block;
+        font-weight: bold;
+        color: #d69e2e;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .warning {
+        border-color: var(--red);
+        background: var(--warn);
+      }
+      .warning::before {
+        content: "Important";
+        display: block;
+        font-weight: bold;
+        color: var(--red);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .keyresult {
+        border-color: var(--orange);
+        background: var(--sand);
+      }
+      .keyresult::before {
+        content: "Key Result";
+        display: block;
+        font-weight: bold;
+        color: var(--orange);
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+      .toc {
+        background: var(--highlight);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .toc h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      .toc ol {
+        padding-left: 1.3rem;
+      }
+      .toc li {
+        margin: 0.3rem 0;
+      }
+      .toc a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+      .formula-box {
+        background: #f7fafc;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+      details.derivation {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-left: 4px solid #a0aec0;
+        border-radius: 8px;
+        margin: 1.2rem 0;
+        padding: 0.85rem 1rem;
+      }
+      details.derivation summary {
+        cursor: pointer;
+        color: var(--primary);
+        font-weight: 700;
+      }
+      details.derivation[open] summary {
+        margin-bottom: 0.9rem;
+      }
+      .diagram {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin: 1.2rem 0 0.5rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+      }
+      .diagram svg {
+        display: block;
+        width: 100%;
+        min-width: 640px;
+        height: auto;
+      }
+      .diagram-caption {
+        color: var(--subtle);
+        font-size: 0.92rem;
+        margin-bottom: 1.1rem;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.75rem 0 1rem;
+      }
+      .pill {
+        display: inline-block;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #ffffff;
+        padding: 0.22rem 0.65rem;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+      .small {
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+        }
+        .toc {
+          page-break-after: always;
+        }
+        h2 {
+          page-break-before: always;
+        }
+      }
+      @media (max-width: 700px) {
+        body {
+          padding: 1.5rem 1rem 3rem;
+        }
+        h1 {
+          font-size: 1.85rem;
+        }
+        .definition,
+        .theorem,
+        .proof,
+        .example,
+        .intuition,
+        .warning,
+        .keyresult,
+        .formula-box {
+          overflow-x: auto;
+        }
+        table {
+          display: block;
+          overflow-x: auto;
+        }
+        .diagram {
+          overflow-x: visible;
+          padding: 0.5rem;
+        }
+        .diagram svg {
+          min-width: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Comprehensive Study Guide - Lecture 27 - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#big-picture">Big Picture: Evidence for Causes</a></li>
+        <li><a href="#potential-outcomes">Potential Outcomes and ATE</a></li>
+        <li><a href="#rct">Randomized Controlled Trials</a></li>
+        <li><a href="#testing">Testing for a Treatment Effect</a></li>
+        <li><a href="#estimation">Estimating the Average Treatment Effect</a></li>
+        <li><a href="#standard-notation">Standard Causal Notation</a></li>
+        <li><a href="#observational">Observational Studies and Confounding</a></li>
+        <li><a href="#propensity">Propensity Scores and IPW</a></li>
+        <li><a href="#summary">Formula Sheet and Recall Map</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="big-picture">Big Picture: Evidence for Causes</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      The final lecture asks a different kind of inference question. Earlier lectures often asked whether an observed pattern is surprising under a
+      statistical model. Causal inference asks whether changing a treatment would change an outcome.
+    </p>
+
+    <div class="intuition">
+      Association is about what tends to appear together. Causation is about what would happen under an intervention. The whole lecture is about the
+      gap between those two statements.
+    </div>
+
+    <p>The main arc is:</p>
+
+    <div class="pill-row">
+      <span class="pill">potential outcomes</span>
+      <span class="pill">random assignment</span>
+      <span class="pill">sharp vs weak nulls</span>
+      <span class="pill">ATE estimation</span>
+      <span class="pill">confounding</span>
+      <span class="pill">propensity weighting</span>
+    </div>
+
+    <div class="keyresult">
+      Randomized experiments make causal inference easier because treatment assignment is independent of the potential outcomes. Observational studies
+      are harder because treatment assignment can be entangled with confounders.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="potential-outcomes">Potential Outcomes and ATE</h2>
+    <!-- ============================================================ -->
+
+    <h3>2.1 Two possible worlds per unit</h3>
+
+    <p>
+      For each unit $i$, imagine two potential outcomes before assignment happens:
+      <strong>$t_i$</strong> if the unit receives treatment and <strong>$c_i$</strong> if the unit receives control.
+    </p>
+
+    <div class="definition">
+      The pair $(t_i,c_i)$ contains the two outcomes unit $i$ could have under the two possible assignments. In the finite-population view from
+      lecture, these are fixed lists of numbers; the randomness comes from which units are assigned to treatment.
+    </div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 360" role="img" aria-label="Potential outcomes diagram showing one observed and one missing outcome for each unit">
+        <rect x="0" y="0" width="820" height="360" fill="#ffffff" />
+        <text x="42" y="44" fill="#1a365d" font-size="23" font-weight="700">Potential outcomes: two possible values, one observed</text>
+        <text x="70" y="92" fill="#1a365d" font-size="18" font-weight="700">Unit</text>
+        <text x="215" y="92" fill="#1a365d" font-size="18" font-weight="700">Treatment outcome</text>
+        <text x="480" y="92" fill="#1a365d" font-size="18" font-weight="700">Control outcome</text>
+        <text x="660" y="92" fill="#1a365d" font-size="18" font-weight="700">Observed?</text>
+
+        <line x1="50" y1="110" x2="770" y2="110" stroke="#e2e8f0" stroke-width="2" />
+
+        <text x="75" y="152" fill="#2d3748" font-size="17">i = 1</text>
+        <rect x="215" y="130" width="145" height="36" rx="18" fill="#ebf4ff" stroke="#2b6cb0" />
+        <text x="270" y="153" fill="#1a365d" font-size="17">t1</text>
+        <rect x="485" y="130" width="145" height="36" rx="18" fill="#f7fafc" stroke="#a0aec0" stroke-dasharray="6 5" />
+        <text x="540" y="153" fill="#718096" font-size="17">c1</text>
+        <text x="665" y="153" fill="#2b6cb0" font-size="16">treatment</text>
+
+        <text x="75" y="210" fill="#2d3748" font-size="17">i = 2</text>
+        <rect x="215" y="188" width="145" height="36" rx="18" fill="#f7fafc" stroke="#a0aec0" stroke-dasharray="6 5" />
+        <text x="270" y="211" fill="#718096" font-size="17">t2</text>
+        <rect x="485" y="188" width="145" height="36" rx="18" fill="#f0fff4" stroke="#38a169" />
+        <text x="540" y="211" fill="#22543d" font-size="17">c2</text>
+        <text x="665" y="211" fill="#22543d" font-size="16">control</text>
+
+        <text x="75" y="268" fill="#2d3748" font-size="17">i = 3</text>
+        <rect x="215" y="246" width="145" height="36" rx="18" fill="#ebf4ff" stroke="#2b6cb0" />
+        <text x="270" y="269" fill="#1a365d" font-size="17">t3</text>
+        <rect x="485" y="246" width="145" height="36" rx="18" fill="#f7fafc" stroke="#a0aec0" stroke-dasharray="6 5" />
+        <text x="540" y="269" fill="#718096" font-size="17">c3</text>
+        <text x="665" y="269" fill="#2b6cb0" font-size="16">treatment</text>
+
+        <text x="185" y="322" fill="#718096" font-size="15">solid = observed</text>
+        <text x="445" y="322" fill="#718096" font-size="15">dashed = missing counterfactual</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      The fundamental missing-data problem: for each unit, randomization reveals one potential outcome and hides the other.
+    </p>
+
+    <h3>2.2 Average treatment effect</h3>
+
+    <p>
+      The individual treatment effect is $t_i-c_i$, but we cannot observe it directly for any one unit. The main population target is the average:
+    </p>
+
+    <div class="keyresult">$$\tau=\frac{1}{N}\sum_{i=1}^N(t_i-c_i)=\bar t-\bar c.$$ This is the average treatment effect, or ATE.</div>
+
+    <p>The lecture uses finite-population summaries of the two potential-outcome lists:</p>
+
+    <div class="formula-box">$$S_t^2=\frac{1}{N-1}\sum_{i=1}^N(t_i-\bar t)^2,\qquad S_c^2=\frac{1}{N-1}\sum_{i=1}^N(c_i-\bar c)^2.$$</div>
+
+    <div class="intuition">
+      The ATE is a comparison of two full potential-outcome lists. We observe only pieces of those lists, so causal inference is about using the
+      assignment mechanism to justify the comparison.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="rct">Randomized Controlled Trials</h2>
+    <!-- ============================================================ -->
+
+    <h3>3.1 Randomization creates the probability model</h3>
+
+    <p>
+      In the lecture's randomized controlled trial setup, the treatment group $T$ is a simple random sample of $n$ indices from $\{1,\ldots,N\}$. The
+      control group $C$ is sampled from the remaining indices and has size $m$.
+    </p>
+
+    <div class="definition">
+      The observed treatment outcomes are $$X_1,\ldots,X_n \quad \text{the sampled } t_i\text{'s in }T,$$ and the observed control outcomes are
+      $$Y_1,\ldots,Y_m \quad \text{the sampled } c_i\text{'s in }C.$$
+    </div>
+
+    <div class="intuition">
+      The observed data are two disjoint lists, not paired observations. If a unit is in treatment, we observe its $t_i$ as one of the $X$'s and do
+      not observe its $c_i$. If a unit is in control, we observe its $c_i$ as one of the $Y$'s and do not observe its $t_i$. In reality we see
+      $$X_1,\ldots,X_n\qquad\text{and}\qquad Y_1,\ldots,Y_m,$$ not the full paired table $(t_i,c_i)$ for every person.
+    </div>
+
+    <div class="keyresult">
+      Because treatment assignment is random, $\bar X$ is an unbiased estimator of $\bar t$ and $\bar Y$ is an unbiased estimator of $\bar c$.
+      Therefore $$\hat\tau=\bar X-\bar Y$$ is an unbiased estimator of $\tau=\bar t-\bar c$.
+    </div>
+
+    <h3>3.2 Why randomization matters</h3>
+
+    <p>
+      Random assignment breaks the connection between "which units are treated" and "what those units would have been like anyway." That is what turns
+      a raw comparison of groups into causal evidence.
+    </p>
+
+    <table>
+      <tr>
+        <th>Setting</th>
+        <th>Assignment mechanism</th>
+        <th>Why comparison is hard or easy</th>
+      </tr>
+      <tr>
+        <td>Randomized trial</td>
+        <td>External random assignment</td>
+        <td>Treatment and control groups are comparable in expectation.</td>
+      </tr>
+      <tr>
+        <td>Observational study</td>
+        <td>Units effectively select or are selected into groups</td>
+        <td>Group differences can reflect confounders, not treatment effects.</td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="testing">Testing for a Treatment Effect</h2>
+    <!-- ============================================================ -->
+
+    <h3>4.1 Two null hypotheses</h3>
+
+    <p>The phrase "the treatment has no effect" can mean two different things.</p>
+
+    <table>
+      <tr>
+        <th>Null</th>
+        <th>Statement</th>
+        <th>What it allows</th>
+      </tr>
+      <tr>
+        <td>Fisher's strong / sharp null</td>
+        <td>$t_i=c_i$ for every unit $i$.</td>
+        <td>No unit-level effect at all. If one outcome is observed, the missing counterfactual is known under the null.</td>
+      </tr>
+      <tr>
+        <td>Neyman's weak null</td>
+        <td>$\bar t=\bar c$, equivalently $\tau=0$.</td>
+        <td>Some units can benefit and others can be harmed, as long as the average effect is zero.</td>
+      </tr>
+    </table>
+
+    <div class="intuition">
+      The sharp null is stronger because it fills in every missing potential outcome under the null. The weak null only says the average effect is
+      zero, so it does not usually tell us every unit's missing counterfactual.
+    </div>
+
+    <h3>4.2 Binary outcomes: Fisher's exact test</h3>
+
+    <p>
+      For binary outcomes, testing equal proportions can lead to an exact hypergeometric null distribution. If there are $w$ ones in the pooled $N$
+      units and $n$ treated units, then under the no-difference null the number of ones in the treatment group has distribution
+    </p>
+
+    <div class="formula-box">$$\operatorname{Hypergeometric}(N,w,n).$$</div>
+
+    <p>Fisher's exact test uses this distribution to compute the p-value for the observed treated count.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 300" role="img" aria-label="Text-style binary outcome selection diagram showing hypergeometric sampling">
+        <rect x="0" y="0" width="820" height="360" fill="#ffffff" />
+        <text x="45" y="42" fill="#1a365d" font-size="23" font-weight="700">Binary outcomes: choose treatment labels from one fixed row</text>
+        <text x="58" y="80" fill="#4a5568" font-size="16">Under the null, the row of outcomes is fixed; only the treatment labels are random.</text>
+
+        <text x="70" y="130" fill="#1a365d" font-size="18" font-weight="700">pooled row</text>
+        <text x="205" y="132" fill="#2d3748" font-size="30" font-family="monospace">[ 1 1 1 0 0 1 0 0 0 1 ]</text>
+        <text x="650" y="132" fill="#4a5568" font-size="16">N units, w ones</text>
+
+        <path d="M215 165 C215 195, 355 195, 355 165" fill="none" stroke="#dd6b20" stroke-width="3" />
+        <text x="235" y="220" fill="#7b341e" font-size="16">selected as treatment labels</text>
+        <text x="260" y="245" fill="#7b341e" font-size="16">count the ones selected</text>
+
+        <path d="M380 165 C380 195, 605 195, 605 165" fill="none" stroke="#718096" stroke-width="3" stroke-dasharray="7 6" />
+        <text x="445" y="220" fill="#4a5568" font-size="16">remaining labels are control</text>
+
+        <text x="88" y="282" fill="#2d3748" font-size="16">Treated success count = draw without replacement: Hypergeometric(N, w, n).</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      For binary outcomes, permutation of treatment labels reduces to a hypergeometric count: how many of the pooled successes land in the treatment
+      group?
+    </p>
+
+    <div class="intuition">
+      This is the same randomization idea as a permutation test. The permutation test shuffles labels and recomputes a statistic. When the outcome is
+      binary and the statistic is the number of successes in treatment, the shuffled-label distribution has a closed form: hypergeometric.
+    </div>
+
+    <h3>4.3 Permutation test</h3>
+
+    <p>
+      Under Fisher's sharp null, relabeling treatment and control assignments is legitimate because treatment would not change any unit's outcome. A
+      permutation test repeatedly shuffles the treatment labels, recomputes a statistic such as $\bar X-\bar Y$, and compares the observed statistic
+      to this randomization distribution.
+    </p>
+
+    <div class="keyresult">
+      A permutation test is not just "shuffle because shuffling feels fair." It is justified by an assignment mechanism and a null hypothesis under
+      which the observed outcomes would be unchanged by treatment labels.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="estimation">Estimating the Average Treatment Effect</h2>
+    <!-- ============================================================ -->
+
+    <h3>5.1 Difference in observed means</h3>
+
+    <p>
+      Testing answers whether there is evidence of an effect. But instead of only testing hypotheses about whether the ATE is zero, it is often more
+      useful to estimate the ATE itself. Then we learn roughly how big the effect is, not just whether it is distinguishable from zero.
+    </p>
+
+    <div class="keyresult">
+      $$\hat\tau=\bar X-\bar Y=\frac{1}{n}\sum_{i\in T}t_i-\frac{1}{m}\sum_{i\in C}c_i.$$ Randomization makes this an unbiased estimator of
+      $$\tau=\bar t-\bar c.$$
+    </div>
+
+    <h3>5.2 Variance: the unobservable covariance problem</h3>
+
+    <p>
+      The variance of $\hat\tau$ depends on the variability in the treatment potential outcomes, the variability in the control potential outcomes,
+      and the covariance between the two potential-outcome lists.
+    </p>
+
+    <div class="warning">
+      This is where the disjoint-list issue matters most. We can estimate the variation among observed treatment outcomes from $X_1,\ldots,X_n$ and
+      the variation among observed control outcomes from $Y_1,\ldots,Y_m$. But we cannot directly estimate how $t_i$ and $c_i$ pair within the same
+      person, because no person reveals both outcomes.
+    </div>
+
+    <details class="derivation">
+      <summary>Collapsible derivation: finite-population variance and the conservative bound</summary>
+
+      <p>
+        First recall the variance of a simple random sample sum without replacement. Suppose a population of size $N$ has mean $\mu$ and variance
+        $\sigma^2$ using the denominator $N$. Draw a simple random sample of size $n$, and let
+      </p>
+
+      <div class="formula-box">$$S_n=X_1+\cdots+X_n.$$</div>
+
+      <p>By symmetry, $\E[S_n]=n\mu$. Also, by exchangeability,</p>
+
+      <div class="formula-box">$$\Var(S_n)=n\sigma^2+n(n-1)\Cov(X_1,X_2).$$</div>
+
+      <p>To find $\Cov(X_1,X_2)$, use the census case $n=N$. Then $S_N$ is the fixed population total, so $\Var(S_N)=0$. Therefore</p>
+
+      <div class="formula-box">$$0=N\sigma^2+N(N-1)\Cov(X_1,X_2),\qquad \Cov(X_1,X_2)=-\frac{\sigma^2}{N-1}.$$</div>
+
+      <p>Plugging this back in gives the finite-population correction:</p>
+
+      <div class="formula-box">$$\Var(S_n)=n\sigma^2\frac{N-n}{N-1},\qquad \Var(\bar X)=\frac{\sigma^2}{n}\frac{N-n}{N-1}.$$</div>
+
+      <p>Apply this to the treatment and control potential-outcome lists:</p>
+
+      <div class="formula-box">$$\Var(\bar X)=\frac{\sigma_t^2}{n}\frac{N-n}{N-1},\qquad \Var(\bar Y)=\frac{\sigma_c^2}{m}\frac{N-m}{N-1}.$$</div>
+
+      <p>The estimator is $\hat\tau=\bar X-\bar Y$, so</p>
+
+      <div class="formula-box">$$\Var(\hat\tau)=\Var(\bar X)+\Var(\bar Y)-2\Cov(\bar X,\bar Y).$$</div>
+
+      <p>
+        For disjoint treatment and control samples, the cross-covariance is $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\operatorname{cov}(t,c),$$ where
+        $\operatorname{cov}(t,c)$ is the finite-population covariance of the paired potential outcomes $(t_i,c_i)$. Substituting and regrouping gives
+      </p>
+
+      <div class="formula-box">
+        $$\Var(\hat\tau)=\frac{N}{N-1}\left(\frac{\sigma_t^2}{n}+\frac{\sigma_c^2}{m}\right)-\frac{1}{N-1}
+        \left(\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)\right).$$
+      </div>
+
+      <p>Since $S_t^2=\frac{N}{N-1}\sigma_t^2$ and $S_c^2=\frac{N}{N-1}\sigma_c^2$, and since</p>
+
+      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)=\operatorname{Var}(t_i-c_i)\ge 0,$$</div>
+
+      <p>we get the conservative upper bound</p>
+
+      <div class="formula-box">$$\Var(\hat\tau)\le \frac{S_t^2}{n}+\frac{S_c^2}{m}.$$</div>
+    </details>
+
+    <div class="formula-box">
+      $$\Var(\hat\tau)=\frac{S_t^2}{n}+\frac{S_c^2}{m}-\frac{\sigma_\tau^2}{N-1},$$ where
+      $$\sigma_\tau^2=\frac{1}{N}\sum_{i=1}^N\{(t_i-c_i)-\tau\}^2.$$
+    </div>
+
+    <details class="derivation">
+      <summary>Why is the correction term negative?</summary>
+
+      <p>The last finite-population correction can be seen directly from the covariance algebra:</p>
+
+      <div class="formula-box">
+        $$\frac{1}{N-1}\left(2\operatorname{cov}(t,c)-\sigma_t^2-\sigma_c^2\right)
+        =-\frac{1}{N-1}\left(\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)\right).$$
+      </div>
+
+      <p>But the expression in parentheses is the variance of individual treatment effects:</p>
+
+      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)=\operatorname{Var}(t_i-c_i)\ge 0.$$</div>
+
+      <p>So the correction is $-\operatorname{Var}(t_i-c_i)/(N-1)\le 0$. That is why dropping it gives an upper bound on $\Var(\hat\tau)$.</p>
+    </details>
+
+    <div class="warning">
+      The term $\sigma_\tau^2$ is unobservable because it requires knowing both $t_i$ and $c_i$ for the same unit. That is exactly the fundamental
+      causal missing-data problem again.
+    </div>
+
+    <div class="intuition">
+      The sign comes from the identity $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\operatorname{cov}(t,c).$$ The $\operatorname{cov}(t,c)$ part refers to
+      paired potential outcomes for the same person. Those are often positively related: a person with a high control outcome might also tend to have
+      a high treatment outcome. The negative sign comes from $\bar X$ and $\bar Y$ being computed from disjoint groups. If randomization puts many
+      high-potential-outcome people into treatment, those same people cannot appear in control, so the control average is pushed downward. This is the
+      usual without-replacement tradeoff.
+    </div>
+
+    <p>Since $\sigma_\tau^2\ge 0$, we get the conservative upper bound</p>
+
+    <div class="keyresult">$$\Var(\hat\tau)\le \frac{S_t^2}{n}+\frac{S_c^2}{m}.$$</div>
+
+    <p>Estimate the bound using the observed sample variances:</p>
+
+    <div class="formula-box">$$\widehat{\Var}_{\mathrm{cons}}(\hat\tau)=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.$$</div>
+
+    <h3>5.3 Conservative confidence interval</h3>
+
+    <p>When the treatment and control group sizes are large enough for an approximate normal argument, use</p>
+
+    <div class="keyresult">
+      $$\hat\tau\pm 2\sqrt{\frac{S_X^2}{n}+\frac{S_Y^2}{m}}.$$ This is conservative because it estimates an upper bound on the true variance.
+    </div>
+
+    <div class="intuition">
+      The interval is conservative for a good reason: the data cannot reveal how each unit's treatment outcome would pair with its own control
+      outcome. Instead of pretending to know that covariance, we use a variance bound.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="standard-notation">Standard Causal Notation</h2>
+    <!-- ============================================================ -->
+
+    <h3>6.1 Potential-outcome notation</h3>
+
+    <p>
+      Causal inference usually switches to the following notation. This is the same setup as above, but now $n$ denotes the total number of units and
+      $n_1,n_0$ denote the treatment and control counts.
+    </p>
+
+    <table>
+      <tr>
+        <th>Symbol</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>$Z_i$</td>
+        <td>Treatment indicator: $Z_i=1$ if unit $i$ receives treatment, $0$ otherwise.</td>
+      </tr>
+      <tr>
+        <td>$Y_i(1)$</td>
+        <td>Potential outcome for unit $i$ under treatment.</td>
+      </tr>
+      <tr>
+        <td>$Y_i(0)$</td>
+        <td>Potential outcome for unit $i$ under control.</td>
+      </tr>
+      <tr>
+        <td>$\tau_i=Y_i(1)-Y_i(0)$</td>
+        <td>Individual treatment effect.</td>
+      </tr>
+      <tr>
+        <td>$\bar\tau=n^{-1}\sum_i\tau_i$</td>
+        <td>Average treatment effect.</td>
+      </tr>
+    </table>
+
+    <h3>6.2 Observed outcome</h3>
+
+    <p>The observed outcome is whichever potential outcome corresponds to the assigned group:</p>
+
+    <div class="keyresult">$$Y_i=Z_iY_i(1)+(1-Z_i)Y_i(0).$$ Equivalently, $$Y_i=Y_i(0)+Z_i\{Y_i(1)-Y_i(0)\}=Y_i(0)+Z_i\tau_i.$$</div>
+
+    <p>If $n_1=\sum_i Z_i$ and $n_0=\sum_i(1-Z_i)$, then the usual difference-in-means estimator is</p>
+
+    <div class="formula-box">$$\hat\tau=\frac{1}{n_1}\sum_i Z_iY_i-\frac{1}{n_0}\sum_i(1-Z_i)Y_i.$$</div>
+
+    <h3>6.3 Assumptions in randomized experiments</h3>
+
+    <div class="definition">
+      The main randomized-experiment assumption is $$\{Y_i(1),Y_i(0)\}\perp\!\!\!\perp Z_i.$$ In words: treatment assignment is independent of the
+      unit's potential outcomes.
+    </div>
+
+    <p>
+      The lecture also assumes no interference between units: one unit's potential outcomes are not affected by another unit's treatment assignment.
+    </p>
+
+    <div class="intuition">
+      Randomization is powerful because it gives this independence by design. In observational studies, the same independence is usually false unless
+      we condition on enough confounders.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="observational">Observational Studies and Confounding</h2>
+    <!-- ============================================================ -->
+
+    <h3>7.1 Why observational studies are harder</h3>
+
+    <p>
+      In an observational study, units are not randomly assigned. Treatment status can be related to other variables that also affect the outcome.
+      Those variables are confounders.
+    </p>
+
+    <div class="intuition">
+      This is the key break from the randomized-trial setup. In an observational study, units effectively "assign themselves" to treatment or control,
+      so it is no longer safe to assume $$\{Y(1),Y(0)\}\perp\!\!\!\perp Z.$$ The potential outcomes and the assignment can both be influenced by the
+      same confounding variable. That is why the next move is not "just compare the two groups," but "compare treated and control units after
+      accounting for the confounder."
+    </div>
+
+    <div class="example">
+      The lecture's memory example is coffee and lung cancer in the era when smoking was common in cafes. Coffee drinking was associated with lung
+      cancer, but smoking was a confounder: it affected the chance of being in the coffee group and the chance of lung cancer.
+    </div>
+
+    <p>In that example, one useful coding is:</p>
+
+    <div class="formula-box">
+      $$X_i=\begin{cases}1 & \text{if person }i\text{ smokes}\\ 0 & \text{if person }i\text{ does not smoke}\end{cases},\qquad Z_i=\begin{cases}1 &
+      \text{if person }i\text{ drinks coffee}\\ 0 & \text{if person }i\text{ does not drink coffee}\end{cases},$$ $$Y_i=\begin{cases}1 & \text{if
+      person }i\text{ gets lung cancer}\\ 0 & \text{if person }i\text{ does not get lung cancer.}\end{cases}$$
+    </div>
+
+    <p>
+      Here $X_i$ is the confounder, $Z_i$ is the treatment/group assignment, and $Y_i$ is the observed outcome. The potential outcomes would be
+      $Y_i(1)$, the lung-cancer outcome if person $i$ drank coffee, and $Y_i(0)$, the lung-cancer outcome if person $i$ did not drink coffee.
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 350" role="img" aria-label="Confounding diagram with smoking affecting coffee drinking and lung cancer">
+        <rect x="0" y="0" width="820" height="350" fill="#ffffff" />
+        <text x="58" y="42" fill="#1a365d" font-size="23" font-weight="700">Confounding: association can travel through a third variable</text>
+
+        <circle cx="410" cy="105" r="48" fill="#fffaf0" stroke="#dd6b20" stroke-width="3" />
+        <text x="403" y="100" fill="#7b341e" font-size="18" font-weight="700">X</text>
+        <text x="370" y="126" fill="#7b341e" font-size="15">confounder</text>
+
+        <circle cx="220" cy="235" r="52" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="3" />
+        <text x="207" y="241" fill="#1a365d" font-size="18">Z</text>
+        <text x="184" y="310" fill="#1a365d" font-size="15">treatment</text>
+
+        <circle cx="600" cy="235" r="52" fill="#f0fff4" stroke="#38a169" stroke-width="3" />
+        <text x="587" y="241" fill="#22543d" font-size="18">Y</text>
+        <text x="573" y="310" fill="#22543d" font-size="15">outcome</text>
+
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#4a5568" />
+          </marker>
+        </defs>
+        <line x1="374" y1="134" x2="267" y2="204" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow)" />
+        <line x1="446" y1="134" x2="553" y2="204" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow)" />
+        <line x1="272" y1="235" x2="548" y2="235" stroke="#a0aec0" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#arrow)" />
+        <text x="325" y="263" fill="#718096" font-size="15">raw association may be misleading</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      If $X$ affects both treatment $Z$ and outcome $Y$, a treated-control comparison can mix the treatment effect with pre-existing differences.
+    </p>
+
+    <h3>7.2 Conditional independence</h3>
+
+    <p>The observational-study replacement for randomization is an assumption:</p>
+
+    <div class="keyresult">
+      For each confounder value $x$, assume $$\{Y(1),Y(0)\}\perp\!\!\!\perp Z\mid X=x.$$ That is, the potential outcomes are conditionally independent
+      of the group assignment, given the confounder.
+    </div>
+
+    <p>
+      This says that within each value of $X$, treated and control units are comparable. In the coffee example, among smokers and among non-smokers
+      separately, coffee-drinker status is assumed independent of the potential lung-cancer outcomes.
+    </p>
+
+    <div class="warning">
+      This is a strong assumption. It says there are no unmeasured confounders after conditioning on $X$. If an important confounder is missing, the
+      causal interpretation can fail.
+    </div>
+
+    <h3>7.3 CATE and ATE</h3>
+
+    <div class="definition">
+      The conditional average treatment effect is $$\tau(X)=\E[Y(1)-Y(0)\mid X].$$ The overall average treatment effect is then $$\tau=\E[\tau(X)].$$
+    </div>
+
+    <div class="intuition">
+      CATE asks for the treatment effect within comparable strata. ATE averages those stratum-specific effects back over the population.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="propensity">Propensity Scores and IPW</h2>
+    <!-- ============================================================ -->
+
+    <h3>8.1 Propensity score</h3>
+
+    <p>The propensity score is the probability of receiving treatment given the observed confounder:</p>
+
+    <div class="definition">$$e(X)=\P(Z=1\mid X)=\E[Z\mid X].$$</div>
+
+    <p>
+      Under conditional independence, $e(X)$ depends on the confounder but not directly on the potential outcomes: $$\P(Z=1\mid
+      X,Y(1),Y(0))=\P(Z=1\mid X).$$
+    </p>
+
+    <h3>8.2 Inverse propensity weighting</h3>
+
+    <p>
+      If treated units are overrepresented in some stratum of $X$, each treated unit from that stratum should count less. If treated units are rare in
+      a stratum, each treated unit from that stratum should count more. That is the inverse-weighting idea.
+    </p>
+
+    <div class="keyresult">
+      With estimated propensity scores $\hat e(X_i)$, the inverse propensity weighted estimator is
+      $$\hat\tau_{\mathrm{IPW}}=\frac{1}{n}\sum_{i=1}^n\frac{Z_iY_i}{\color{red}{\hat e(X_i)}}-\frac{1}{n}\sum_{i=1}^n
+      \frac{(1-Z_i)Y_i}{\color{red}{1-\hat e(X_i)}}.$$
+    </div>
+
+    <p>The denominators come directly from the assignment probabilities within a confounder stratum:</p>
+
+    <div class="formula-box">$$e(x)=\P(Z=1\mid X=x),\qquad 1-e(x)=\P(Z=0\mid X=x).$$</div>
+
+    <div class="intuition">
+      The $Z_i$ term turns on only for treated units, so a treated observed outcome is divided by the chance of being treated, $e(X_i)$. The $(1-Z_i)$
+      term turns on only for control units, so a control observed outcome is divided by the chance of being control, $1-e(X_i)$. Rare observations get
+      larger weights because they stand in for many similar units who could have appeared in that group.
+    </div>
+
+    <div class="warning">
+      In this Horvitz-Thompson form, both weighted sums are divided by the full sample size $n$. After weighting, the first sum estimates the
+      population mean $\E[Y(1)]$ and the second estimates $\E[Y(0)]$. A separately normalized version also exists, but it is a slightly different
+      estimator.
+    </div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 330" role="img" aria-label="Inverse propensity weighting diagram">
+        <rect x="0" y="0" width="820" height="330" fill="#ffffff" />
+        <text x="54" y="42" fill="#1a365d" font-size="23" font-weight="700">IPW: reweight groups to mimic balance within confounder strata</text>
+
+        <rect x="70" y="88" width="300" height="155" rx="16" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2" />
+        <text x="100" y="120" fill="#1a365d" font-size="18" font-weight="700">High propensity stratum</text>
+        <text x="100" y="152" fill="#2d3748" font-size="16">many treated units</text>
+        <text x="100" y="185" fill="#2d3748" font-size="16">treated weight: 1/e(X)</text>
+        <text x="100" y="216" fill="#718096" font-size="15">large e(X) gives smaller treated weight</text>
+
+        <rect x="450" y="88" width="300" height="155" rx="16" fill="#fffaf0" stroke="#dd6b20" stroke-width="2" />
+        <text x="480" y="120" fill="#7b341e" font-size="18" font-weight="700">Low propensity stratum</text>
+        <text x="480" y="152" fill="#2d3748" font-size="16">few treated units</text>
+        <text x="480" y="185" fill="#2d3748" font-size="16">treated weight: 1/e(X)</text>
+        <text x="480" y="216" fill="#718096" font-size="15">small e(X) gives larger treated weight</text>
+
+        <text x="198" y="285" fill="#2b6cb0" font-size="17">downweight overrepresented treatment observations</text>
+        <text x="232" y="308" fill="#7b341e" font-size="17">upweight underrepresented treatment observations</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      Inverse propensity weighting tries to repair imbalance by making each observed unit represent the number of similar units it stands in for.
+    </p>
+
+    <h3>8.3 Why IPW targets the ATE</h3>
+
+    <p>If the true propensity score is known, if $0&lt;e(X)&lt;1$, and if conditional independence holds, then IPW has the right expectation.</p>
+
+    <div class="theorem">
+      $$\E[Y(1)]=\E\!\left[\frac{ZY}{e(X)}\right],\qquad \E[Y(0)]=\E\!\left[\frac{(1-Z)Y}{1-e(X)}\right].$$ Therefore
+      $$\tau=\E\!\left[\frac{ZY}{e(X)}-\frac{(1-Z)Y}{1-e(X)}\right].$$
+    </div>
+
+    <div class="proof">
+      Since $Y=Y(1)$ when $Z=1$, $$\E\!\left[\frac{ZY}{e(X)}\right]=\E\!\left[\frac{ZY(1)}{e(X)}\right].$$ Condition on $X$:
+      $$\E\!\left[\frac{ZY(1)}{e(X)}\mid X\right]=\frac{1}{e(X)}\E[ZY(1)\mid X].$$ By conditional independence, $$\E[ZY(1)\mid X]=\E[Z\mid
+      X]\E[Y(1)\mid X]=e(X)\E[Y(1)\mid X].$$ The $e(X)$ cancels, and iterating expectations gives $\E[Y(1)]$.
+    </div>
+
+    <div class="warning">
+      Positivity matters: if $e(X)=0$ or $e(X)=1$ for some stratum, then one group is absent there and IPW either blows up or cannot learn that
+      stratum's counterfactual comparison.
+    </div>
+
+    <div class="warning">
+      Estimating the propensity score adds another layer of uncertainty. The clean expectation identity above uses the true $e(X)$; in practice, $\hat
+      e(X)$ must be estimated carefully, and the causal interpretation still depends on no unmeasured confounding.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="summary">Formula Sheet and Recall Map</h2>
+    <!-- ============================================================ -->
+
+    <h3>9.1 Main formulas</h3>
+
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Formula</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>ATE</td>
+        <td>$\tau=N^{-1}\sum_i(t_i-c_i)=\bar t-\bar c$</td>
+        <td>Average causal effect across the finite population.</td>
+      </tr>
+      <tr>
+        <td>RCT estimator</td>
+        <td>$\hat\tau=\bar X-\bar Y$</td>
+        <td>Difference between observed treatment and control means.</td>
+      </tr>
+      <tr>
+        <td>Conservative variance estimate</td>
+        <td>$S_X^2/n+S_Y^2/m$</td>
+        <td>Usable because the exact covariance term is unobservable.</td>
+      </tr>
+      <tr>
+        <td>Observed outcome</td>
+        <td>$Y_i=Z_iY_i(1)+(1-Z_i)Y_i(0)$</td>
+        <td>Only one potential outcome is revealed.</td>
+      </tr>
+      <tr>
+        <td>Randomized experiment assumption</td>
+        <td>$\{Y_i(1),Y_i(0)\}\perp\!\!\!\perp Z_i$</td>
+        <td>Assignment independent of potential outcomes.</td>
+      </tr>
+      <tr>
+        <td>Conditional ignorability</td>
+        <td>$\{Y(1),Y(0)\}\perp\!\!\!\perp Z\mid X$</td>
+        <td>No unmeasured confounding after conditioning on $X$.</td>
+      </tr>
+      <tr>
+        <td>Propensity score</td>
+        <td>$e(X)=\P(Z=1\mid X)$</td>
+        <td>Probability of treatment within confounder strata.</td>
+      </tr>
+      <tr>
+        <td>IPW estimator</td>
+        <td>$n^{-1}\sum_i Z_iY_i/\hat e(X_i)-n^{-1}\sum_i(1-Z_i)Y_i/\{1-\hat e(X_i)\}$</td>
+        <td>Weighted comparison that corrects observed imbalance.</td>
+      </tr>
+    </table>
+
+    <h3>9.2 Recall map</h3>
+
+    <div class="formula-box">
+      $$\text{causal question}\Rightarrow \text{potential outcomes}\Rightarrow \text{one observed, one missing}.$$ $$\text{random
+      assignment}\Rightarrow \text{unbiased difference in means}.$$ $$\text{observational assignment}\Rightarrow \text{confounding}\Rightarrow
+      \text{condition or weight by }X.$$
+    </div>
+
+    <div class="keyresult">
+      The final lecture's one-line memory hook: causal inference is missing-data inference where the missing values are counterfactual outcomes, and
+      the assignment mechanism determines how credible the comparison is.
+    </div>
+
+    <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="mistakes">Common Mistakes</h2>
+    <!-- ============================================================ -->
+
+    <div class="warning">
+      <strong>1.</strong> Treating association as causation.<br />
+      A difference in observed group means is causal only if the assignment mechanism or assumptions justify comparing those groups.
+    </div>
+
+    <div class="warning">
+      <strong>2.</strong> Forgetting the missing counterfactual.<br />
+      We never observe both $Y_i(1)$ and $Y_i(0)$ for the same unit. This is why causal inference is fundamentally hard.
+    </div>
+
+    <div class="warning">
+      <strong>3.</strong> Confusing Fisher's sharp null with Neyman's weak null.<br />
+      The sharp null says no unit-level effects. The weak null says the average effect is zero.
+    </div>
+
+    <div class="warning">
+      <strong>4.</strong> Using the exact variance formula as if all terms were observable.<br />
+      The covariance between $t_i$ and $c_i$ requires seeing both potential outcomes for the same unit. Use the conservative bound instead.
+    </div>
+
+    <div class="warning">
+      <strong>5.</strong> Forgetting positivity in IPW.<br />
+      If a stratum has only treated or only control units, inverse propensity weighting cannot create the missing comparison.
+    </div>
+
+    <div class="warning">
+      <strong>6.</strong> Thinking propensity scores solve unmeasured confounding.<br />
+      Propensity methods help only for confounders that are measured and included in the treatment-assignment model.
+    </div>
+
+    <hr />
+    <p style="text-align: center; color: var(--subtle); font-size: 0.9rem; margin-top: 2rem">
+      Data 145 Study Guide - Lecture 27 - Standalone Review Version
+    </p>
+  </body>
+</html>

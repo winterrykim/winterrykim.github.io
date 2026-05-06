@@ -2,7 +2,7 @@
 layout: post
 title: "Data 145: Evidence and Uncertainty - Topic Map"
 date: 2026-04-23
-description: "A compact topic map for my Data 145 notes, with a Phase 1 synthesis and Phase 2 study references."
+description: "A compact topic map for my Data 145 Phase 1 and Phase 2 notes."
 tags: [statistics, data145, notes, statistics-inference]
 categories: [technical-blogs]
 featured: false
@@ -70,7 +70,7 @@ _styles: |
     color: #4a5568;
   }
 
-  .data145-card.bridge {
+  .data145-card.featured-note {
     background: #fffaf0;
     border-color: rgba(214, 158, 46, 0.32);
   }
@@ -100,17 +100,17 @@ My notes on **Data 145: Evidence and Uncertainty**. This page is a compact topic
   how to turn noisy data into evidence, quantify uncertainty, and make decisions without pretending randomness disappeared.
 </div>
 
-## Phase 1 Bridge
+## Phase 1 Notes
 
 <div class="data145-hub">
-  <a class="data145-card bridge" href="{% post_url 2026-03-08-from-mle-to-neyman-pearson-to-reward-models %}">
-    <span class="kicker">Data 145 Phase 1</span>
-    <strong>Statistical Inference Notes: From MLE to Neyman-Pearson to Reward Models</strong>
-    <span>A long-form roadmap for estimation, Fisher information, bootstrap, hypothesis testing, Neyman-Pearson, and a short bridge to modern AI.</span>
+  <a class="data145-card featured-note" href="{% post_url 2026-03-08-from-mle-to-neyman-pearson-to-reward-models %}">
+    <span class="kicker">Phase 1 notes</span>
+    <strong>Data 145 Phase 1: From MLE to Neyman-Pearson to Reward Models</strong>
+    <span>A long-form roadmap for estimation, Fisher information, bootstrap, hypothesis testing, Neyman-Pearson, and connections to modern AI.</span>
   </a>
 </div>
 
-## Phase 2 Notes: Topic Map
+## Phase 2 Notes
 
 <div class="data145-hub">
   <a class="data145-card" href="{{ '/assets/html/data145_lec14_15_review.html' | relative_url }}">
@@ -142,9 +142,21 @@ My notes on **Data 145: Evidence and Uncertainty**. This page is a compact topic
     <strong>Lectures 23-24: Geometry of Linear Models</strong>
     <span>Rotations, nuisance/signal/residual blocks, t, chi-squared, F, ANOVA, and regression.</span>
   </a>
+
+  <a class="data145-card" href="{{ '/assets/html/data145_lec25_26_review.html' | relative_url }}">
+    <span class="kicker">Phase 2 notes</span>
+    <strong>Lectures 25-26: Gibbs Sampling and Hierarchical Bayes</strong>
+    <span>MCMC, Gibbs full conditionals, burn-in, shrinkage, empirical Bayes, and hyperparameter concentration.</span>
+  </a>
+
+  <a class="data145-card" href="{{ '/assets/html/data145_lec27_review.html' | relative_url }}">
+    <span class="kicker">Phase 2 notes</span>
+    <strong>Lecture 27: Introduction to Causal Inference</strong>
+    <span>Potential outcomes, randomized trials, ATE estimation, confounding, propensity scores, and inverse propensity weighting.</span>
+  </a>
 </div>
 
 <div class="study-map">
   <strong>Study path:</strong>
-  start with the Phase 1 synthesis for the course narrative, then use the Phase 2 pages as topic-by-topic references.
+  use Phase 1 for the pre-midterm course narrative, then use Phase 2 as post-midterm topic-by-topic references.
 </div>
