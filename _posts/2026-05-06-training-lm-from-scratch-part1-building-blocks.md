@@ -361,6 +361,54 @@ _styles: |
     background: rgba(47, 111, 115, 0.42);
   }
 
+  .aha-box,
+  .aha-box p,
+  .aha-box li,
+  .aha-box code,
+  .cs336-map div,
+  .cs336-map div *,
+  details.refresher,
+  details.refresher p,
+  details.refresher li,
+  details.refresher table:not(.rouge-table),
+  details.refresher table:not(.rouge-table) *,
+  details.refresher code,
+  .visual-block,
+  .visual-block p,
+  .visual-block li,
+  .visual-block code,
+  .flow-node,
+  .flow-node *,
+  .mini-panel,
+  .mini-panel *,
+  .matrix-card,
+  .matrix-card *,
+  .residual-cell,
+  .rope-box,
+  .rope-formula,
+  table.token-table,
+  table.token-table * {
+    color: #203f45 !important;
+  }
+
+  .aha-box mjx-container,
+  details.refresher mjx-container,
+  .visual-block mjx-container {
+    color: #203f45 !important;
+  }
+
+  .visual-block .mini-caption,
+  .matrix-card .mini-caption,
+  .flow-node small,
+  .embedding-row span {
+    color: #4f646c !important;
+  }
+
+  details.refresher table:not(.rouge-table),
+  .post table:not(.rouge-table) {
+    background: #fff;
+  }
+
   @media (max-width: 720px) {
     .aha-box,
     details.refresher,
