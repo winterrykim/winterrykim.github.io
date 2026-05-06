@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-data-145-evidence-and-uncertainty-topic-map",
+        },{id: "post-training-a-language-model-from-scratch-part-1-building-blocks",
+        
+          title: "Training a Language Model from Scratch (Part 1: Building Blocks)",
+        
+        description: "A future-me refresher on the main pieces behind a small Transformer language model: byte-level BPE, embeddings, RoPE, attention, normalization, loss, optimization, and decoding.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/training-lm-from-scratch-part1-building-blocks/";
+          
+        },
+      },{id: "post-data-145-evidence-and-uncertainty-topic-map",
         
           title: "Data 145: Evidence and Uncertainty - Topic Map",
         
