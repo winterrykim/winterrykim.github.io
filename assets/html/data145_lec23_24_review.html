@@ -1417,30 +1417,163 @@
     <h3>6.2 Where one-way ANOVA fits</h3>
 
     <div class="definition">
-      One-way ANOVA compares $k$ group means under a common normal variance assumption. If the group sizes are $n_1,\ldots,n_k$ and $N=\sum_{g=1}^k
-      n_g$, write the observations as $Y_{gi}$ for group $g$ and observation $i$. The full model space is spanned by the $k$ group indicator vectors.
+      One-way ANOVA compares $G$ group means under a common normal variance assumption. If group $g$ has observations $$Y_{g,1},\ldots,Y_{g,n_g}
+      \overset{iid}{\sim}N(\mu_g,\sigma^2),\qquad g=1,\ldots,G,$$ then the null and alternative are $$H_0:\mu_1=\mu_2=\cdots=\mu_G
+      \qquad\text{vs}\qquad H_1:\text{not all }\mu_g\text{ are equal}.$$ Stack all observations into $$Y=(Y_{1,1},\ldots,Y_{1,n_1},Y_{2,1},\ldots,
+      Y_{G,n_G})^T\sim N_N(\theta,\sigma^2I_N),\qquad N=\sum_{g=1}^G n_g.$$
+    </div>
+
+    <div class="warning">
+      The usual one-way ANOVA model is built on three assumptions: observations are independent within and across groups, the conditional
+      distributions are approximately normal, and all groups share the same variance $\sigma^2$. A practical first check is to compare the group
+      spreads with box plots or residual plots; if one group is much more variable than the others, the pooled-variance F-test can be misleading.
     </div>
 
     <div class="keyresult">
-      For the one-way ANOVA null that all group means are equal: $$\mathcal H_0=\Span(\mathbf1_N),\qquad \dim(\mathcal H_0)=1,$$ while the full model
-      has dimension $k$. Therefore $$d_0=1,\qquad d_1=k-1,\qquad d_r=N-k.$$
+      For the one-way ANOVA null, the mean vector can only lie on the grand-mean line: $$\mathcal H_0=\Span(\mathbf1_N),\qquad d_0=\dim(\mathcal
+      H_0)=1.$$ The full model allows one constant level within each group. If $e_g$ is the group-$g$ indicator vector, for example
+      $e_1=(1,\ldots,1,0,\ldots,0)^T$, then $$\mathcal H=\Span(e_1,\ldots,e_G),\qquad \dim(\mathcal H)=G.$$ Therefore $$H_0:\theta\in\mathcal
+      H_0,\qquad H_1:\theta\in\mathcal H\setminus\mathcal H_0,$$ and $$d_1=\dim(\mathcal H)-\dim(\mathcal H_0)=G-1,\qquad d_r=N-G.$$
     </div>
 
     <div class="formula-box">
       <strong>Identify the blocks:</strong><br />
-      the grand-mean line is nuisance, the $k-1$ independent group contrasts are signal, and the within-group deviations are residual noise. Since the
+      the grand-mean line is nuisance, the $G-1$ independent group contrasts are signal, and the within-group deviations are residual noise. Since the
       signal is multidimensional and $\sigma^2$ is unknown, choose the F row.
     </div>
 
     <div class="intuition">
-      The ANOVA F-test is the same canonical F-test. The tested signal is the between-group variation, and the residual noise is the within-group
-      variation.
+      A useful correction to keep in mind: ANOVA is absolutely doing projections. The projection step creates the observed squared lengths
+      $\operatorname{SSB}$ and $\operatorname{SSW}$. The F distribution is the reference distribution that tells us whether the ratio of those lengths
+      is unusually large under $H_0$.
+    </div>
+
+    <h4>Projection view from the discussion section</h4>
+
+    <p>
+      The null and full models are nested: $\mathcal H_0\subseteq\mathcal H$. Projecting $Y$ onto $\mathcal H_0$ fits one grand mean, while projecting
+      $Y$ onto $\mathcal H$ fits one mean for each group:
+    </p>
+
+    <div class="formula-box">
+      $$P_{\mathcal H_0}Y=\bar Y_{\cdot\cdot}\mathbf1_N,$$ $$P_{\mathcal H}Y=(\underbrace{\bar Y_{1\cdot},\ldots,\bar Y_{1\cdot}}_{n_1},
+      \underbrace{\bar Y_{2\cdot},\ldots,\bar Y_{2\cdot}}_{n_2},\ldots, \underbrace{\bar Y_{G\cdot},\ldots,\bar Y_{G\cdot}}_{n_G})^T.$$
+    </div>
+
+    <div class="keyresult">
+      The key projection identity is $$\|Y-P_{\mathcal H_0}Y\|^2=\|Y-P_{\mathcal H}Y\|^2+\|P_{\mathcal H}Y-P_{\mathcal H_0}Y\|^2.$$ In words:
+      $$\text{variation not explained by the null}=\text{variation not explained by the full model}+\text{variation explained by full but not null}.$$
+    </div>
+
+    <div class="intuition">
+      The reason this is a clean sum of squares is orthogonality. The vector $Y-P_{\mathcal H}Y$ lives in $\mathcal H^\perp$ as residual noise, while
+      $P_{\mathcal H}Y-P_{\mathcal H_0}Y$ lives in the tested group-contrast space $\mathcal H\cap\mathcal H_0^\perp$. These directions are
+      perpendicular, so their squared lengths add.
+    </div>
+
+    <h4>Discussion view: what are the two RSS values doing?</h4>
+
+    <p>
+      The cleanest way to remember ANOVA is to ask what each model is allowed to explain. The null model is only allowed to fit one grand mean. The
+      full model is allowed to fit one mean per group. So $\RSS_0-\RSS$ is not a mysterious extra formula; it is the amount of error saved when the
+      model is allowed to move from one shared mean to separate group means.
+    </p>
+
+    <table>
+      <tr>
+        <th>Quantity</th>
+        <th>Model being fit</th>
+        <th>Plain-language meaning</th>
+        <th>Canonical block</th>
+      </tr>
+      <tr>
+        <td>$\RSS_0$</td>
+        <td>Null model: one grand mean</td>
+        <td>Everything left unexplained if all groups are forced to have the same mean.</td>
+        <td>$\|Z_1\|^2+\|Z_r\|^2$</td>
+      </tr>
+      <tr>
+        <td>$\RSS$</td>
+        <td>Full model: one mean per group</td>
+        <td>Only the leftover within-group scatter after fitting each group mean.</td>
+        <td>$\|Z_r\|^2$</td>
+      </tr>
+      <tr>
+        <td>$\RSS_0-\RSS$</td>
+        <td>Improvement from null to full</td>
+        <td>The between-group signal: how much fit improves by allowing group means to differ.</td>
+        <td>$\|Z_1\|^2$</td>
+      </tr>
+    </table>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 360" role="img" aria-label="ANOVA decomposition diagram: total equals between plus within">
+        <rect x="0" y="0" width="820" height="360" fill="#ffffff" />
+        <text x="35" y="42" fill="#1a365d" font-size="22" font-weight="700">ANOVA as projection lengths</text>
+        <text x="35" y="72" fill="#4a5568" font-size="16">
+          The null model's leftover error splits into group-mean signal plus within-group noise.
+        </text>
+
+        <rect x="55" y="122" width="205" height="82" rx="12" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2" />
+        <text x="82" y="152" fill="#1a365d" font-size="18">Null residual</text>
+        <text x="82" y="178" fill="#1a365d" font-size="17">RSS0</text>
+        <text x="82" y="197" fill="#718096" font-size="13">around grand mean</text>
+
+        <text x="292" y="173" fill="#2d3748" font-size="26">=</text>
+
+        <rect x="335" y="122" width="205" height="82" rx="12" fill="#fffaf0" stroke="#dd6b20" stroke-width="2" />
+        <text x="365" y="152" fill="#7b341e" font-size="18">Between groups</text>
+        <text x="365" y="178" fill="#7b341e" font-size="17">RSS0 - RSS</text>
+        <text x="365" y="197" fill="#718096" font-size="13">tested signal</text>
+
+        <text x="567" y="173" fill="#2d3748" font-size="26">+</text>
+
+        <rect x="615" y="122" width="150" height="82" rx="12" fill="#f0fff4" stroke="#38a169" stroke-width="2" />
+        <text x="647" y="152" fill="#22543d" font-size="18">Within</text>
+        <text x="647" y="178" fill="#22543d" font-size="17">RSS</text>
+        <text x="647" y="197" fill="#718096" font-size="13">residual noise</text>
+
+        <line x1="157" y1="220" x2="157" y2="270" stroke="#2b6cb0" stroke-width="2" stroke-dasharray="6 5" />
+        <line x1="437" y1="220" x2="437" y2="270" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 5" />
+        <line x1="690" y1="220" x2="690" y2="270" stroke="#38a169" stroke-width="2" stroke-dasharray="6 5" />
+
+        <text x="90" y="298" fill="#1a365d" font-size="15">total scatter around</text>
+        <text x="105" y="317" fill="#1a365d" font-size="15">grand mean</text>
+        <text x="354" y="298" fill="#7b341e" font-size="15">scatter of fitted</text>
+        <text x="348" y="317" fill="#7b341e" font-size="15">group means</text>
+        <text x="620" y="298" fill="#22543d" font-size="15">scatter around</text>
+        <text x="626" y="317" fill="#22543d" font-size="15">group means</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">
+      In one-way ANOVA, the null residual sum of squares decomposes orthogonally into between-group signal and within-group residual noise.
+    </p>
+
+    <h4>The algebra behind total = between + within</h4>
+
+    <p>For every observation, split its deviation from the grand mean into two pieces:</p>
+
+    <div class="formula-box">
+      $$Y_{gi}-\bar Y_{\cdot\cdot} = \underbrace{(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})}_{\text{between-group part}}+ \underbrace{(Y_{gi}-\bar
+      Y_{g\cdot})}_{\text{within-group part}}.$$
     </div>
 
     <div class="proof">
-      The null model fits one shared grand mean: $$\RSS_0=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2.$$ This leftover error contains
+      Squaring and summing gives a cross-term, but it vanishes within each group: $$\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})=0.$$ Therefore
+      $$\sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2 = \sum_{g=1}^G n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2+
+      \sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ In ANOVA language, $$\operatorname{SST}=\operatorname{SSB}+\operatorname{SSW}.$$ In
+      nested-model language, $$\RSS_0=(\RSS_0-\RSS)+\RSS.$$
+    </div>
+
+    <div class="intuition">
+      The factor $n_g$ in the between-group term matters. A group mean far from the grand mean is stronger evidence when it comes from many
+      observations, because the fitted group-mean vector has that same shift repeated $n_g$ times.
+    </div>
+
+    <div class="proof">
+      The null model fits one shared grand mean: $$\RSS_0=\sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2.$$ This leftover error contains
       both the group-mean mismatch and the within-group noise. The full model fits a separate mean for each group:
-      $$\RSS=\sum_{g=1}^k\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ This is only within-group noise. Therefore $$\RSS_0-\RSS=\sum_{g=1}^k n_g(\bar
+      $$\RSS=\sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ This is only within-group noise. Therefore $$\RSS_0-\RSS=\sum_{g=1}^G n_g(\bar
       Y_{g\cdot}-\bar Y_{\cdot\cdot})^2,$$ which is the between-group signal.
     </div>
 
@@ -1456,10 +1589,81 @@
       the within-group noise would suggest.
     </div>
 
+    <table>
+      <tr>
+        <th>ANOVA source</th>
+        <th>Sum of squares</th>
+        <th>Degrees of freedom</th>
+        <th>Mean square</th>
+      </tr>
+      <tr>
+        <td>Between groups / signal</td>
+        <td>$\operatorname{SSB}=\RSS_0-\RSS=\sum_g n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2$</td>
+        <td>$G-1$</td>
+        <td>$\operatorname{MSB}=\operatorname{SSB}/(G-1)$</td>
+      </tr>
+      <tr>
+        <td>Within groups / residual</td>
+        <td>$\operatorname{SSW}=\RSS=\sum_g\sum_i(Y_{gi}-\bar Y_{g\cdot})^2$</td>
+        <td>$N-G$</td>
+        <td>$\operatorname{MSW}=\operatorname{SSW}/(N-G)$</td>
+      </tr>
+      <tr>
+        <td>Total around grand mean</td>
+        <td>$\operatorname{SST}=\RSS_0=\sum_g\sum_i(Y_{gi}-\bar Y_{\cdot\cdot})^2$</td>
+        <td>$N-1$</td>
+        <td>Not used as the denominator for the F-test</td>
+      </tr>
+    </table>
+
+    <div class="keyresult">
+      Under $H_0$, $$\frac{\operatorname{SSB}}{\sigma^2}\sim\chi^2_{G-1},\qquad \frac{\operatorname{SSW}}{\sigma^2}\sim\chi^2_{N-G},$$ and the two
+      pieces are independent because they are squared lengths of orthogonal Gaussian projections. That is why
+      $$F=\frac{\operatorname{MSB}}{\operatorname{MSW}}\sim F_{G-1,N-G}.$$
+    </div>
+
     <div class="keyresult">
       If $\RSS_0$ is the total sum of squares around the grand mean and $\RSS$ is the within-group residual sum of squares, then
-      $$F=\frac{(\RSS_0-\RSS)/(k-1)}{\RSS/(N-k)}\sim F_{k-1,N-k}\quad\text{under }H_0.$$ This is one-way ANOVA written in the same nested-subspace
-      language as regression.
+      $$F=\frac{(\RSS_0-\RSS)/(G-1)}{\RSS/(N-G)}=\frac{\operatorname{SSB}/(G-1)}{\operatorname{SSW}/(N-G)}\sim F_{G-1,N-G}\quad\text{under }H_0.$$
+      This is one-way ANOVA written in the same nested-subspace language as regression.
+    </div>
+
+    <h4>Practice bridge: why manual ANOVA matches software</h4>
+
+    <p>
+      A practical ANOVA calculation is just a computational version of the projection picture. A software routine such as `stats.f_oneway` is not
+      using a different idea: it computes the same between-group and within-group sums of squares, forms the same F ratio, and then reads a right-tail
+      probability from the same $F_{G-1,N-G}$ reference distribution.
+    </p>
+
+    <div class="formula-box">
+      The manual route is: compute total variation around the grand mean, compute within-group variation around each group mean, take the difference
+      as between-group variation, then form $$F_{\mathrm{obs}}=\frac{\operatorname{SSB}/(G-1)}{\operatorname{SSW}/(N-G)}.$$ The software route and the
+      manual route agree because they are computing this same statistic and using the same right tail: $$p=P(F_{G-1,N-G}\geq F_{\mathrm{obs}}).$$
+    </div>
+
+    <div class="intuition">
+      Conceptually, the p-value is asking: if all groups truly had the same mean, how often would random within-group noise create a between-group
+      projection this large compared with the within-group projection? A small p-value says this particular signal length is too large to comfortably
+      explain as noise.
+    </div>
+
+    <div class="intuition">
+      For example, a p-value around $0.009$ would reject the equal-means null at the 5% level. The important study takeaway is not the arithmetic
+      itself, but the interpretation: the observed between-group projection is large relative to the within-group projection. ANOVA says there is
+      evidence that not all group means are equal, but it does not identify which group comparisons are responsible.
+    </div>
+
+    <div class="warning">
+      The ANOVA F-test is an omnibus mean test. It can say that the vector of group-mean contrasts is unusually long, but it does not by itself say
+      which group differs from which. It also tests means under the normal/common-variance model; it is not a full test that all empirical
+      distributions are identical. When the boxplot shows strong skewness or unequal spreads, a rank-based method such as Kruskal-Wallis is often a
+      more robust follow-up question.
+    </div>
+
+    <div class="intuition">
+      The two-sample equal-variance t-test is the $G=2$ special case of one-way ANOVA. There is only one group-contrast direction, so $d_1=G-1=1$ and
+      the ANOVA F statistic equals the square of the pooled two-sample t statistic: $$F=T^2.$$
     </div>
 
     <h3>6.3 Linear regression as projection</h3>
@@ -1478,6 +1682,38 @@
       Regression is not a separate universe from ANOVA. The fitted values are the projection onto the model subspace, and the residuals are the
       projection onto the orthogonal complement. Tests ask whether adding selected directions to the model subspace produces a signal length that is
       large relative to residual noise.
+    </div>
+
+    <h4>Practice bridge: least squares is the canonical residual</h4>
+
+    <p>
+      A common practice exercise is to verify that the canonical residual length $\|Z_r\|^2$ is the same object as the ordinary least-squares RSS.
+      This is the key bridge: least squares is not an extra procedure bolted onto the canonical model. It is exactly the projection of $Y$ onto the
+      model space.
+    </p>
+
+    <table>
+      <tr>
+        <th>Model feature</th>
+        <th>Canonical interpretation</th>
+        <th>Least-squares meaning</th>
+      </tr>
+      <tr>
+        <td>No intercept</td>
+        <td>The model space is the line generated by the predictor direction.</td>
+        <td>The fitted values are the closest point on that line; RSS is the leftover squared distance.</td>
+      </tr>
+      <tr>
+        <td>With intercept</td>
+        <td>The constant vector is a nuisance direction; the predictor signal is what remains after accounting for that constant direction.</td>
+        <td>The fitted values are the closest point in the intercept-plus-predictor plane; RSS is the squared distance left outside the plane.</td>
+      </tr>
+    </table>
+
+    <div class="intuition">
+      This is why subtracting the mean shows up in regression with an intercept. It is Gram-Schmidt in disguise: remove the nuisance direction
+      $\mathbf1$ from $x$, then test the remaining predictor direction. The slope t-test is just a signed version of "how much does $Y$ point in that
+      cleaned-up signal direction?"
     </div>
 
     <div class="definition">
@@ -1523,6 +1759,12 @@
     <div class="keyresult">
       The regression F-statistic is $$F=\frac{(\RSS_0-\RSS)/d_1}{\RSS/d_r}\sim F_{d_1,d_r}\quad\text{under }H_0.$$ Reject for large values. This asks
       whether the tested predictors improve fit more than would be expected from noise alone.
+    </div>
+
+    <div class="intuition">
+      The F-test is a whole-subspace test. When $d_1&gt;1$, it does not choose one signed direction the way a t-test does; it squares and adds the
+      projections over all tested directions. That is why ANOVA can detect "some group mean pattern is present" without saying which contrast caused
+      it. The geometry gives the observed length, and the F distribution calibrates how surprising that length is under the null.
     </div>
 
     <h3>6.5 Individual coefficient t-test and confidence interval</h3>
@@ -1610,9 +1852,9 @@
       </tr>
       <tr>
         <td>One-way ANOVA</td>
-        <td>$d_0=1$, $d_1=k-1$, $d_r=N-k$</td>
-        <td>$((\RSS_0-\RSS)/(k-1))/(\RSS/(N-k))$</td>
-        <td>$F_{k-1,N-k}$</td>
+        <td>$d_0=1$, $d_1=G-1$, $d_r=N-G$</td>
+        <td>$((\RSS_0-\RSS)/(G-1))/(\RSS/(N-G))$</td>
+        <td>$F_{G-1,N-G}$</td>
       </tr>
       <tr>
         <td>Regression single coefficient</td>
@@ -1730,8 +1972,8 @@
       </tr>
       <tr>
         <td>One-way ANOVA F</td>
-        <td>$F=((\RSS_0-\RSS)/(k-1))/(\RSS/(N-k))$</td>
-        <td>$k-1,\ N-k$</td>
+        <td>$F=((\RSS_0-\RSS)/(G-1))/(\RSS/(N-G))$</td>
+        <td>$G-1,\ N-G$</td>
       </tr>
       <tr>
         <td>Regression coefficient t</td>

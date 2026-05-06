@@ -41,18 +41,18 @@ ninja.data = [{
         
           title: "Data 145: Evidence and Uncertainty - Topic Map",
         
-        description: "A compact topic map for my Data 145 notes, with a Phase 1 synthesis and Phase 2 study references.",
+        description: "A compact topic map for my Data 145 Phase 1 and Phase 2 notes.",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2026/data-145-evidence-and-uncertainty-topic-map/";
           
         },
-      },{id: "post-statistical-inference-notes-from-mle-to-neyman-pearson-to-reward-models",
+      },{id: "post-data-145-phase-1-from-mle-to-neyman-pearson-to-reward-models",
         
-          title: "Statistical Inference Notes: From MLE to Neyman-Pearson to Reward Models",
+          title: "Data 145 Phase 1: From MLE to Neyman-Pearson to Reward Models",
         
-        description: "My Data 145 Phase 1 notes: a broad roadmap of statistical inference, plus a short bridge to modern reward-based AI.",
+        description: "My Data 145 Phase 1 notes: a broad roadmap of statistical inference, with connections to modern reward-based AI.",
         section: "Posts",
         handler: () => {
           
