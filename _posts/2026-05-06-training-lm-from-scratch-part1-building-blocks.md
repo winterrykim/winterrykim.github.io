@@ -32,6 +32,11 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.18);
     border-radius: 8px;
     background: rgba(250, 252, 252, 0.86);
+    color: #203f45;
+  }
+
+  .cs336-map div strong {
+    color: #203f45;
   }
 
   details.refresher {
@@ -40,6 +45,7 @@ _styles: |
     border: 1px solid rgba(55, 82, 95, 0.16);
     border-radius: 8px;
     background: rgba(246, 249, 250, 0.9);
+    color: #203f45;
   }
 
   details.refresher summary {
@@ -72,6 +78,7 @@ _styles: |
     width: 100%;
     margin: 1.1rem 0;
     border-collapse: collapse;
+    color: #203f45;
     font-size: 0.95rem;
   }
 
@@ -93,6 +100,7 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.18);
     border-radius: 8px;
     background: linear-gradient(180deg, rgba(250, 253, 253, 0.96), rgba(244, 249, 249, 0.92));
+    color: #203f45;
   }
 
   .visual-title {
@@ -116,6 +124,7 @@ _styles: |
     border-top: 3px solid #2f6f73;
     border-radius: 8px;
     background: #fff;
+    color: #203f45;
   }
 
   .flow-node strong {
@@ -186,6 +195,7 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.18);
     border-radius: 8px;
     background: #fff;
+    color: #203f45;
   }
 
   .mini-panel h4 {
@@ -229,6 +239,7 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.2);
     border-radius: 8px;
     background: #fff;
+    color: #203f45;
   }
 
   .matrix-card strong {
@@ -258,6 +269,7 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.2);
     border-radius: 8px;
     background: #fff;
+    color: #203f45;
     text-align: center;
     font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 0.86rem;
@@ -287,6 +299,7 @@ _styles: |
     border: 1px solid rgba(47, 111, 115, 0.22);
     border-radius: 7px;
     background: #fff;
+    color: #203f45;
     font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 0.84rem;
   }
@@ -349,14 +362,91 @@ _styles: |
   }
 
   @media (max-width: 720px) {
+    .aha-box,
+    details.refresher,
+    .visual-block {
+      padding: 0.8rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .asset-figure img {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .asset-figure p,
+    .mini-caption {
+      font-size: 0.84rem;
+    }
+
+    table {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-size: 0.86rem;
+    }
+
+    table th,
+    table td {
+      padding: 0.55rem 0.6rem;
+    }
+
+    table code {
+      white-space: nowrap;
+    }
+
+    pre,
+    .highlight,
+    mjx-container[display="true"] {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .flow-arrow {
       display: none;
     }
 
+    .cs336-map,
+    .two-column-visual,
+    .matrix-visual,
     .residual-row,
     .rope-pair-visual,
     .embedding-matrix {
       grid-template-columns: 1fr;
+    }
+
+    .flow-node,
+    .mini-panel,
+    .matrix-card,
+    .residual-cell,
+    .rope-box,
+    .token-chip,
+    .shape-chip {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .token-line,
+    .shape-line {
+      align-items: flex-start;
+    }
+
+    .rope-formula {
+      overflow-x: auto;
+      font-size: 0.76rem;
+    }
+
+    .embedding-row {
+      grid-template-columns: 3.4rem repeat(4, minmax(0, 1fr));
+    }
+
+    .embedding-row span {
+      font-size: 0.62rem;
     }
 
     .residual-op {
