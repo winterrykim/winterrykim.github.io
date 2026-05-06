@@ -1629,6 +1629,92 @@ $$
 <strong>Aha:</strong> weight decay is not looking at the current gradient direction. It gently shrinks weights toward zero as regularization, while Adam handles the gradient-based update after clipping.
 </div>
 
+<details class="refresher" markdown="1">
+<summary>Resource accounting aha: why AdamW is 4P and where the FLOPs formulas come from</summary>
+
+Let $P$ be the number of trainable scalar parameters. I sometimes wrote this as $N$, but I will use $P$ here so it does not collide with `num_layers`.
+
+For the assignment architecture, ignoring biases:
+
+$$
+P
+=
+2VD
++ n_{\text{layers}}(4D^2 + 3DF + 2D)
++ D
+$$
+
+where:
+
+- $V$ is vocab size,
+- $D$ is `d_model`,
+- $F$ is `d_ff`,
+- $2VD$ is token embedding plus LM head,
+- $4D^2$ is Q/K/V/output projection inside attention,
+- $3DF$ is the three SwiGLU matrices,
+- $2D$ is the two RMSNorm weights inside each block,
+- the final $D$ is the last RMSNorm.
+
+AdamW memory is easy to undercount because the optimizer is stateful. Around an optimizer step, the training run stores:
+
+| Tensor kind | Size |
+| --- | --- |
+| parameters $\theta$ | $P$ floats |
+| gradients $g$ | $P$ floats |
+| Adam first moment $m$ | $P$ floats |
+| Adam second moment $v$ | $P$ floats |
+
+So parameter/gradient/AdamW persistent memory is:
+
+$$
+P + P + P + P = 4P \text{ floats}
+$$
+
+With float32, that is:
+
+$$
+4P \times 4 \text{ bytes} = 16P \text{ bytes}
+$$
+
+Equivalently, if $N$ means "number of parameters", then this is $4N$ floats. The optimizer state alone is $2P$ floats, because it is just $m$ and $v$. Activations are extra and depend on batch size, context length, and which intermediate tensors are saved for backward.
+
+For FLOPs, the one rule I want to keep in my head is:
+
+$$
+[m,n] @ [n,p] \to [m,p]
+\quad\Rightarrow\quad
+2mnp \text{ FLOPs}
+$$
+
+The factor of 2 is multiply plus add along the collapsed dimension $n$.
+
+For one batch, let $B$ be batch size and $S$ be sequence length. Each Transformer layer has:
+
+| Component | Shape reason | FLOPs |
+| --- | --- | --- |
+| QKV projections | three $[BS,D] @ [D,D]$ multiplies | $6BSD^2$ |
+| Attention scores $QK^\top$ | per head $[S,d_k] @ [d_k,S]$, summed over heads | $2BS^2D$ |
+| Weighted values $AV$ | per head $[S,S] @ [S,d_k]$, summed over heads | $2BS^2D$ |
+| Output projection | one $[BS,D] @ [D,D]$ multiply | $2BSD^2$ |
+| SwiGLU FFN | $W_1$, $W_3$, and $W_2$ | $6BSDF$ |
+
+Across all layers, multiply those layer costs by $n_{\text{layers}}$. The LM head adds:
+
+$$
+2BSDV
+$$
+
+because it is $[BS,D] @ [D,V]$.
+
+The quick intuition:
+
+- FFN/projections scale like $S D^2$ or $SDF$,
+- attention matrix multiplies scale like $S^2D$,
+- so longer context makes attention grow much faster,
+- bigger model width/depth makes projections and FFN heavier.
+
+</details>
+
 Finally, checkpointing is simply saving:
 
 - model state,
