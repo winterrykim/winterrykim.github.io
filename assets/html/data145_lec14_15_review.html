@@ -249,6 +249,25 @@
         margin: 1rem 0;
         text-align: center;
       }
+      .handwritten-note {
+        margin: 1.4rem 0;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #ffffff;
+      }
+      .handwritten-note img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+      .handwritten-note figcaption {
+        margin-top: 0.65rem;
+        color: var(--subtle);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
       hr {
         border: none;
         border-top: 1px solid var(--border);
@@ -491,15 +510,81 @@
 
     <h3>15.4 Generalized likelihood ratio test (GLRT)</h3>
 
+    <p>
+      The likelihood ratio test from Lectures 12-13 compared two fixed parameter values. GLRT is the composite-hypothesis version: compare the best
+      likelihood allowed by the full model to the best likelihood allowed by the null model.
+    </p>
+
     <div class="definition">
-      $$\Lambda_n = 2\bigl[\ell_n(\hat\theta_n)-\ell_n(\theta_0)\bigr].$$ Under regularity in the one-parameter setting: $$\Lambda_n \xrightarrow{d}
-      \chi^2_1.$$
+      For i.i.d. data, write $$\ell_n(\theta)=\sum_{i=1}^n \log f_\theta(X_i).$$ Let $\hat\theta_n$ be the unrestricted MLE, and let
+      $\hat\theta_{0,n}$ be the MLE constrained to $H_0$. Using the full-over-null convention,
+      $$\Lambda_n=\frac{L_n(\hat\theta_n)}{L_n(\hat\theta_{0,n})},\qquad 2\log\Lambda_n=2\{\ell_n(\hat\theta_n)-\ell_n(\hat\theta_{0,n})\}.$$
     </div>
 
     <div class="intuition">
-      GLRT measures vertical drop from the maximum log-likelihood to the null value. It needs the MLE but does not explicitly require Fisher
-      information in the statistic.
+      GLRT measures the vertical drop from the best possible log-likelihood to the best null-constrained log-likelihood. The unrestricted fit can only
+      improve the likelihood, so $2\log\Lambda_n\ge 0$. If $H_0$ is true, the two fits should not be very different; reject for large
+      $2\log\Lambda_n$.
     </div>
+
+    <h4>Why a chi-squared limit appears</h4>
+
+    <p>
+      For a one-dimensional null such as $H_0:\theta=\theta_0$, the null-constrained MLE is just $\theta_0$. Since $\ell_n'(\hat\theta_n)=0$, a Taylor
+      expansion around $\hat\theta_n$ gives
+    </p>
+
+    <div class="formula-box">$$\ell_n(\theta_0)\approx \ell_n(\hat\theta_n)+\frac{1}{2}\ell_n''(\hat\theta_n)(\theta_0-\hat\theta_n)^2.$$</div>
+
+    <p>Rearranging the vertical drop,</p>
+
+    <div class="formula-box">$$2\{\ell_n(\hat\theta_n)-\ell_n(\theta_0)\}\approx -\ell_n''(\hat\theta_n)(\hat\theta_n-\theta_0)^2.$$</div>
+
+    <div class="intuition">
+      This is why GLRT is secretly measuring the same local quantity as Wald: distance from $\theta_0$ to $\hat\theta_n$, scaled by curvature. Under
+      $H_0$, the scaled distance behaves like a squared standard normal, so the statistic converges to $\chi^2_1$.
+    </div>
+
+    <div class="keyresult">More generally, if the null imposes $k$ restrictions, Wilks' theorem gives $$2\log\Lambda_n\xrightarrow{d}\chi^2_k.$$</div>
+
+    <figure class="handwritten-note">
+      <img src="../img/blog_img/data145/glrt_quadratic_notes.png" alt="Handwritten GLRT notes about log-likelihood curvature and Taylor expansion" />
+      <figcaption>
+        Handwritten view: GLRT compares the best fit to the null fit. Near the MLE, the log-likelihood is approximately quadratic, so the vertical
+        drop becomes a curvature-weighted squared distance.
+      </figcaption>
+    </figure>
+
+    <h4>Multinomial goodness-of-fit connection</h4>
+
+    <p>
+      For multinomial counts, GLRT becomes especially concrete. Suppose there are $c$ categories, observed counts $O_i$, and null expected counts
+      $E_i=n\theta_{0,i}$. The unrestricted MLE is $\hat\theta_i=O_i/n$, so
+    </p>
+
+    <div class="formula-box">$$2\log\Lambda=2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right).$$</div>
+
+    <div class="keyresult">
+      Under the multinomial null, $$2\log\Lambda\xrightarrow{d}\chi^2_{c-1}.$$ The degree of freedom is $c-1$ because the category probabilities must
+      sum to 1, so only $c-1$ components are free.
+    </div>
+
+    <div class="intuition">
+      Pearson's chi-squared statistic is the local quadratic approximation to the likelihood-ratio statistic: $$2\sum_{i=1}^c
+      O_i\log\left(\frac{O_i}{E_i}\right)\approx \sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i}.$$ So both are checking whether the observed count vector is
+      unusually far from the expected count vector.
+    </div>
+
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/glrt_multinomial_notes.png"
+        alt="Handwritten multinomial GLRT notes connecting likelihood-ratio chi-squared and Pearson chi-squared"
+      />
+      <figcaption>
+        Multinomial view: $2\sum_i O_i\log(O_i/E_i)$ is the likelihood-ratio chi-squared statistic, and $\sum_i (O_i-E_i)^2/E_i$ is its Pearson
+        quadratic approximation.
+      </figcaption>
+    </figure>
 
     <h3>15.5 Poisson running example ($n=30$, $\bar X=3.07$)</h3>
 
@@ -634,8 +719,8 @@
       </tr>
       <tr>
         <td>GLRT</td>
-        <td>$2[\ell_n(\hat\theta)-\ell_n(\theta_0)]$</td>
-        <td>Vertical likelihood drop</td>
+        <td>$2[\ell_n(\hat\theta)-\ell_n(\hat\theta_0)]$</td>
+        <td>Vertical drop from full fit to null fit</td>
       </tr>
       <tr>
         <td>Equivalence</td>

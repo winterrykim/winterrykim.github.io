@@ -334,29 +334,6 @@ _styles: |
     border-radius: 12px;
   }
 
-  .handwritten-note {
-    margin: 1.8rem 0;
-    padding: 0.75rem;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 12px 30px rgba(26, 54, 93, 0.08);
-  }
-
-  .handwritten-note img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-  }
-
-  .handwritten-note figcaption {
-    margin: 0.7rem 0.25rem 0.15rem;
-    color: #5f7187;
-    font-size: 0.9rem;
-    line-height: 1.45;
-  }
-
   .course-map-card strong {
     color: #18314f !important;
   }
@@ -2506,147 +2483,6 @@ when $\eta(\theta_1)>\eta(\theta_0)$, and for small values when $\eta(\theta_1)<
 
 That is the cleanest shortcut for seeing why the optimal rejection rule becomes a threshold rule in the class statistic $\sum_{i=1}^n T(X_i)$ rather than in an ad hoc summary.
 
-### Generalized likelihood ratio test
-
-The simple likelihood-ratio test compares two fixed distributions:
-
-$$
-H_0:\theta=\theta_0
-\qquad \text{vs.} \qquad
-H_1:\theta=\theta_1.
-$$
-
-The generalized likelihood ratio test, or GLRT, is what I use when the alternative is not just one fixed parameter value. The idea is:
-
-> compare the best fit allowed by the full model to the best fit allowed by the null model.
-
-For i.i.d. data, write the log-likelihood as
-
-$$
-\ell(\theta;X)=\sum_{i=1}^n \log f_\theta(X_i).
-$$
-
-If $\hat\theta$ is the unrestricted MLE and $\hat\theta_0$ is the MLE constrained to the null space, define the likelihood ratio in the "full over
-null" direction:
-
-$$
-\Lambda
-=
-\frac{L(\hat\theta;X)}{L(\hat\theta_0;X)}.
-$$
-
-Then
-
-$$
-2\log\Lambda
-=
-2\{\ell(\hat\theta;X)-\ell(\hat\theta_0;X)\}.
-$$
-
-This statistic is always nonnegative because the unrestricted MLE can fit at least as well as the null-constrained MLE. If $H_0$ is true, the two fits
-should not be too different. So the GLRT rejects for large values of $2\log\Lambda$.
-
-#### Why a chi-squared distribution appears
-
-For a one-dimensional null such as $H_0:\theta=\theta_0$, the statistic is approximately a quadratic distance between the unrestricted MLE and the
-null value. Since $\ell'(\hat\theta)=0$, a Taylor expansion around $\hat\theta$ gives
-
-$$
-\ell(\theta_0;X)
-\approx
-\ell(\hat\theta;X)
-+\frac{1}{2}\ell''(\hat\theta;X)(\theta_0-\hat\theta)^2.
-$$
-
-Rearranging, and using $-\ell''(\hat\theta;X)\approx nI(\theta_0)$ under regularity,
-
-$$
-2\{\ell(\hat\theta;X)-\ell(\theta_0;X)\}
-\approx
-nI(\theta_0)(\hat\theta-\theta_0)^2.
-$$
-
-But under $H_0$,
-
-$$
-\sqrt{nI(\theta_0)}(\hat\theta-\theta_0)\overset{d}{\to}N(0,1),
-$$
-
-so the squared version converges to $\chi_1^2$.
-
-More generally, Wilks' theorem says
-
-$$
-2\log\Lambda
-\overset{d}{\to}
-\chi^2_k,
-$$
-
-where $k$ is the number of restrictions imposed by the null, equivalently the difference between the full-model dimension and the null-model
-dimension.
-
-#### Multinomial goodness-of-fit example
-
-For a multinomial model with categories $1,\ldots,c$, let $O_i$ be the observed count in category $i$ and let $E_i=n\theta_{0,i}$ be the expected count
-under a fully specified null distribution $\theta_0$.
-
-The unrestricted MLE is
-
-$$
-\hat\theta_i=\frac{O_i}{n}.
-$$
-
-Using $\sum_i O_i=n$, the GLRT statistic becomes
-
-$$
-2\log\Lambda
-=
-2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right).
-$$
-
-This is the likelihood-ratio chi-squared statistic, often called the $G^2$ statistic. For large samples,
-
-$$
-2\log\Lambda \approx \chi^2_{c-1}.
-$$
-
-The degrees of freedom are $c-1$ because the category probabilities must sum to $1$, so one degree of freedom is lost.
-
-The Pearson chi-squared statistic is the quadratic approximation to the same likelihood-ratio statistic:
-
-$$
-2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right)
-\approx
-\sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i}.
-$$
-
-So the memory hook is:
-
-> GLRT measures the log-likelihood gap between the best full fit and the best null fit; Pearson chi-squared is the local quadratic approximation to
-> that same gap.
-
-<figure class="handwritten-note">
-  <img
-    src="{{ '/assets/img/blog_img/data145/glrt_quadratic_notes.png' | relative_url }}"
-    alt="Handwritten notes deriving the generalized likelihood ratio test using log-likelihood curvature and a Taylor expansion."
-  />
-  <figcaption>
-    Handwritten GLRT memory aid: the statistic is the log-likelihood gap between the unrestricted MLE and the null-constrained fit. A Taylor expansion
-    turns that gap into a quadratic distance, which is why a chi-squared limit appears.
-  </figcaption>
-</figure>
-
-<figure class="handwritten-note">
-  <img
-    src="{{ '/assets/img/blog_img/data145/glrt_multinomial_notes.png' | relative_url }}"
-    alt="Handwritten notes connecting GLRT, multinomial likelihood ratios, Wilks theorem, and Pearson chi-squared approximation."
-  />
-  <figcaption>
-    Handwritten multinomial GLRT note: for observed counts \(O_i\) and expected counts \(E_i\), the likelihood-ratio statistic
-    \(2\sum_i O_i\log(O_i/E_i)\) has a Pearson chi-squared approximation with \(c-1\) degrees of freedom.
-  </figcaption>
-</figure>
-
 ### Lecture 13: beyond simple vs. simple
 
 Lecture 13 generalizes the picture.
@@ -3244,28 +3080,6 @@ Bootstrap interval templates:
 
 $$
 \operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)}
-$$
-
-For GLRT, using the full-over-null convention,
-
-$$
-2\log\Lambda
-=
-2\{\ell(\hat\theta;X)-\ell(\hat\theta_0;X)\}
-\overset{d}{\to}\chi_k^2
-$$
-
-where $k$ is the number of restrictions imposed by $H_0$.
-
-For multinomial goodness-of-fit,
-
-$$
-2\log\Lambda
-=
-2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right)
-\approx
-\sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i}
-\sim \chi^2_{c-1}.
 $$
 
 Under a continuous null:

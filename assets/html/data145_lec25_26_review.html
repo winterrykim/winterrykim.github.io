@@ -258,6 +258,25 @@
         margin: 1rem 0;
         text-align: center;
       }
+      .handwritten-note {
+        margin: 1.4rem 0;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #ffffff;
+      }
+      .handwritten-note img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+      .handwritten-note figcaption {
+        margin-top: 0.65rem;
+        color: var(--subtle);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
       .diagram {
         background: #ffffff;
         border: 1px solid var(--border);
@@ -777,6 +796,17 @@
       says the $\theta_i$'s are similar enough that we can improve by shrinking the noisy $X_i$'s toward a common center.
     </p>
 
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/bayes_gaussian_many_means_example_notes.png"
+        alt="Handwritten notes introducing the Gaussian many-means example and common population assumption"
+      />
+      <figcaption>
+        Handwritten checkpoint: estimating each $\theta_i$ independently gives $\hat\theta_i=X_i$, but the hierarchical move assumes the $\theta_i$'s
+        share a common population pattern. That shared pattern is what creates borrowing strength.
+      </figcaption>
+    </figure>
+
     <h3>7.2 Oracle Bayes when $\mu$ and $\tau^2$ are known</h3>
 
     <p>By Normal-Normal conjugacy,</p>
@@ -793,6 +823,31 @@
       $$\hat\theta_i(\mu,\zeta)=\zeta\mu+(1-\zeta)X_i.$$ This is a convex combination of the population mean $\mu$ and the individual observation
       $X_i$.
     </div>
+
+    <h4>Precision view: why those weights appear</h4>
+
+    <p>Because the observation variance is 1, the data precision is 1. The prior precision is $1/\tau^2$. Posterior precision is the sum:</p>
+
+    <div class="formula-box">
+      $$\text{posterior precision}=1+\frac{1}{\tau^2}=\frac{1+\tau^2}{\tau^2},\qquad \text{posterior variance}=\frac{\tau^2}{1+\tau^2}.$$
+      $$\E[\theta_i\mid X_i,\mu,\tau^2]=\frac{\tau^2}{1+\tau^2}X_i+\frac{1}{1+\tau^2}\mu.$$
+    </div>
+
+    <div class="intuition">
+      The weight on a source is larger when that source is more precise. If $\tau^2$ is small, the prior population is tightly concentrated, so the
+      prior mean $\mu$ gets more weight. If $\tau^2$ is large, the prior population is diffuse, so the current observation $X_i$ gets more weight.
+    </div>
+
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/bayes_posterior_precision_notes.png"
+        alt="Handwritten notes deriving posterior precision and posterior mean weights in the normal-normal model"
+      />
+      <figcaption>
+        Handwritten checkpoint: the posterior mean is a precision-weighted average of data and prior. In this lecture's normalization, the data
+        variance is 1, so the weights simplify to $\tau^2/(1+\tau^2)$ on $X_i$ and $1/(1+\tau^2)$ on $\mu$.
+      </figcaption>
+    </figure>
 
     <table>
       <tr>
@@ -811,6 +866,17 @@
         <td>Strong shrinkage: $\hat\theta_i\approx \mu$.</td>
       </tr>
     </table>
+
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/bayes_oracle_shrinkage_notes.png"
+        alt="Handwritten notes explaining oracle Bayes shrinkage weights and prior variance interpretation"
+      />
+      <figcaption>
+        Handwritten checkpoint: $\zeta=1/(1+\tau^2)$ is the weight on the population mean. A smaller prior variance means the common population is
+        more trusted, so $\mu$ gets more weight; a larger prior variance means the prior is diffuse, so $X_i$ gets more weight.
+      </figcaption>
+    </figure>
 
     <h3>7.3 Linear-function view</h3>
 
@@ -909,6 +975,17 @@
       $(\mu,\zeta)$; instead it plugs in posterior averages of the two coefficients that determine the shrinkage line.
     </div>
 
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/bayes_unknown_hyperparameters_notes.png"
+        alt="Handwritten notes deriving the hierarchical Bayes estimator using the tower property"
+      />
+      <figcaption>
+        Handwritten checkpoint: when $(\mu,\tau^2)$ are unknown, use the tower property. First pretend the hyperparameters are known and apply the
+        oracle Bayes formula; then average the resulting intercept and shrinkage factor over their posterior given all of $X$.
+      </figcaption>
+    </figure>
+
     <h3>8.3 Empirical Bayes from the marginal distribution</h3>
 
     <p>Under the Gaussian hierarchy, integrate out $\theta_i$:</p>
@@ -933,6 +1010,18 @@
     <p>The empirical-Bayes estimator is then</p>
 
     <div class="formula-box">$$\hat\theta_i^{\text{EB}}=\hat\zeta\hat\mu+(1-\hat\zeta)X_i =\bar X+(1-\hat\zeta)(X_i-\bar X).$$</div>
+
+    <figure class="handwritten-note">
+      <img
+        src="../img/blog_img/data145/bayes_empirical_bayes_notes.png"
+        alt="Handwritten notes explaining empirical Bayes estimates from sample mean and sample variance"
+      />
+      <figcaption>
+        Handwritten checkpoint: empirical Bayes estimates the same two coefficients using familiar summaries. In the Gaussian case,
+        $\hat\mu\approx\bar X$ and $\hat\zeta\approx 1/S^2$. A larger sample variance means the observed cloud is more spread out, so there is less
+        shrinkage toward the common mean.
+      </figcaption>
+    </figure>
 
     <table>
       <tr>
@@ -1220,6 +1309,14 @@
       The conceptual one-liner for these two lectures is: Gibbs sampling is a way to compute posterior averages, and hierarchical Bayes is a reason
       those posterior averages can improve many related estimates by learning a shared population.
     </div>
+
+    <figure class="handwritten-note">
+      <img src="../img/blog_img/data145/bayes_summary_notes.png" alt="Handwritten final summary of hierarchical and empirical Bayes lecture" />
+      <figcaption>
+        Handwritten final map: all versions of the estimator use the same shrinkage form. The difference is whether the shrinkage coefficients are
+        known, averaged over a posterior, or estimated from the marginal distribution.
+      </figcaption>
+    </figure>
 
     <hr />
 
