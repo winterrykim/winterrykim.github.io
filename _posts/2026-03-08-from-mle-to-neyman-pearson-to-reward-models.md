@@ -67,6 +67,7 @@ _styles: |
     box-shadow:
       0 28px 80px rgba(26, 54, 93, 0.12),
       0 10px 24px rgba(26, 54, 93, 0.08);
+    color-scheme: light;
   }
 
   .post::before {
@@ -292,6 +293,76 @@ _styles: |
   .post table th {
     color: #1a365d;
     background: rgba(235, 244, 255, 0.88);
+  }
+
+  .post table,
+  .post table td,
+  .post table td *,
+  .post table th,
+  .post table th *,
+  .post blockquote,
+  .post blockquote p,
+  .course-map,
+  .course-map p,
+  .course-map-card,
+  .course-map-card strong,
+  .course-map-card span {
+    color: #2b3648 !important;
+  }
+
+  .post table th,
+  .post table th * {
+    color: #1a365d !important;
+  }
+
+  .post code:not(pre code),
+  .post p code,
+  .post li code,
+  .post td code,
+  .post th code {
+    color: #1f4d80 !important;
+    background: rgba(43, 108, 176, 0.09);
+  }
+
+  .post mjx-container,
+  .post mjx-container * {
+    color: #21344d !important;
+  }
+
+  .post mjx-container[jax='CHTML'][display='true'] {
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 12px;
+  }
+
+  .handwritten-note {
+    margin: 1.8rem 0;
+    padding: 0.75rem;
+    border: 1px solid rgba(26, 54, 93, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 12px 30px rgba(26, 54, 93, 0.08);
+  }
+
+  .handwritten-note img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  .handwritten-note figcaption {
+    margin: 0.7rem 0.25rem 0.15rem;
+    color: #5f7187;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .course-map-card strong {
+    color: #18314f !important;
+  }
+
+  .course-map-card span {
+    color: #5f7187 !important;
   }
 
   .post mjx-container[jax='CHTML'][display='true'] {
@@ -1781,11 +1852,49 @@ This lecture is conceptually important because it fixes a hidden assumption in a
 
 ### The hidden assumption
 
-Earlier lectures assumed the model family $f_\theta$ actually contains the truth.
+Earlier lectures did not assume that the exact parameter was known. They assumed something slightly different: the **model form** was correct. In
+symbols, the hidden assumption was that the true data-generating distribution could be written as
+
+$$
+g=f_{\theta_0}
+$$
+
+for some unknown parameter $\theta_0$. For example, we might not know the value of $\lambda$, but we assume the data really come from an exponential
+family $\mathrm{Exp}(\lambda)$.
 
 Lecture 9 asks:
 
 > what if the true distribution is $g$, and $g$ is not in the model family?
+
+### Why KL appears here
+
+KL is not introduced as a random new distance. It appears because MLE is built from log-likelihood.
+
+The MLE maximizes the empirical average
+
+$$
+\frac{1}{n}\sum_{i=1}^n \log f_\theta(X_i).
+$$
+
+If the data are really generated from $g$, then by the law of large numbers this empirical average is trying to maximize
+
+$$
+\mathbb{E}_g[\log f_\theta(X)].
+$$
+
+Now compare this to KL:
+
+$$
+D_{KL}(g \,\|\, f_\theta)
+=
+\mathbb{E}_g[\log g(X)]-\mathbb{E}_g[\log f_\theta(X)].
+$$
+
+The first term, $\mathbb{E}_g[\log g(X)]$, does not depend on $\theta$. So maximizing expected log-likelihood is the same as minimizing
+$D_{KL}(g \,\|\, f_\theta)$.
+
+That is the motivation: when the model is wrong, MLE still chooses the model distribution that is closest to the true data-generating distribution in
+forward KL.
 
 ### KL divergence
 
@@ -1850,6 +1959,21 @@ Lecture 10 asks what to do when that breaks:
 
 The bootstrap is the workaround: approximate the sampling distribution of $T$ by resampling, then use that approximation for standard errors and confidence intervals.
 
+### The first bootstrap choice: what distribution do I resample from?
+
+The conceptual move is always the same: I need the sampling distribution of a statistic, but I do not know the true population distribution. So I build
+a stand-in distribution and repeatedly simulate from that stand-in.
+
+| Bootstrap version | Stand-in for the population distribution | What gets resampled? | Main assumption |
+|---|---|---|---|
+| **Parametric bootstrap** | the fitted model $f_{\hat\theta}$ | new synthetic samples from $f_{\hat\theta}$ | the parametric family is trustworthy |
+| **Nonparametric bootstrap** | the empirical distribution $F_n$ | observations sampled with replacement from the data | the data are i.i.d., but no finite-dimensional model is assumed |
+
+This is the cleanest way to remember the difference:
+
+- parametric bootstrap says: **fix $\hat\theta$ and simulate from the fitted model**
+- nonparametric bootstrap says: **do not assume a model; use the empirical distribution as the model**
+
 ### Parametric bootstrap
 
 Use this when I trust a parametric family.
@@ -1903,6 +2027,15 @@ $$
 
 Then I treat $F_n$ as a stand-in for the population distribution and resample from it.
 
+The reason this is plausible is that, for each fixed $x$,
+
+$$
+F_n(x)\xrightarrow{P}F(x).
+$$
+
+Why? The indicators $I(X_i\le x)$ are i.i.d. Bernoulli random variables with mean $F(x)$, so the law of large numbers says their average converges to
+$F(x)$. This is the basic justification for letting the empirical distribution stand in for the unknown population distribution.
+
 The lecture's procedure is:
 
 1. start with i.i.d. data $X_1,\dots,X_n$
@@ -1947,6 +2080,17 @@ $$
 $$
 
 That is the same information you would otherwise write abstractly with $\alpha = 0.05$ and $\alpha/2 = 0.025$, but the 95% notation is often easier to read quickly.
+
+A compact map:
+
+| Method | What distribution is used? | 95% template |
+|---|---|---|
+| **Normal interval** | bootstrap standard error | $\hat\theta\pm 1.96\,\widehat{se}_{boot}$ |
+| **Percentile interval** | quantiles of $\hat\theta^\ast$ | $(\hat\theta^\ast_{0.025},\hat\theta^\ast_{0.975})$ |
+| **Basic / empirical interval** | quantiles of $\delta^\ast=\hat\theta^\ast-\hat\theta$ | $(\hat\theta-\delta^\ast_{0.975},\hat\theta-\delta^\ast_{0.025})$ |
+
+The percentile method uses the bootstrap estimates directly. The basic method uses the bootstrap **error** and recenters around the original
+$\hat\theta$, which is why it can help with bias.
 
 #### 1. Normal interval
 
@@ -2248,6 +2392,56 @@ $$
 
 The likelihood ratio test rejects for large LR.
 
+### Level chooses the cutoff; power evaluates it
+
+This is the notation I want to keep straight. Suppose I am testing a simple null against a simple alternative:
+
+$$
+H_0:\theta=0
+\qquad \text{vs.} \qquad
+H_1:\theta=1.
+$$
+
+If the likelihood ratio is increasing in $\bar X$, then rejecting for large LR is equivalent to rejecting for large $\bar X$:
+
+$$
+\operatorname{LR}(X)>k
+\qquad \Longleftrightarrow \qquad
+\bar X>c.
+$$
+
+The **level** condition chooses the cutoff. For example, for a right-tail test I choose $c$ so that
+
+$$
+P(\bar X>c \mid H_0)=\alpha=0.05.
+$$
+
+This equation is about controlling false rejections under the null. It is how the cutoff $c$ is calibrated.
+
+Then I keep that same cutoff and evaluate it under the alternative:
+
+$$
+P(\bar X>c \mid H_1)
+=
+P(\bar X>c \mid \theta=1).
+$$
+
+That probability is the **power** against $\theta=1$. In pure likelihood-ratio notation, the same idea is:
+
+$$
+\text{choose } k \text{ so that } P_0(\operatorname{LR}(X)>k)=\alpha,
+$$
+
+then compute
+
+$$
+P_1(\operatorname{LR}(X)>k).
+$$
+
+So the flow is:
+
+> choose the rejection region using the null distribution, then measure how often that same region catches the alternative.
+
 ### Neyman-Pearson lemma
 
 This is one of the major theorems to know.
@@ -2311,6 +2505,147 @@ $$
 when $\eta(\theta_1)>\eta(\theta_0)$, and for small values when $\eta(\theta_1)<\eta(\theta_0)$.
 
 That is the cleanest shortcut for seeing why the optimal rejection rule becomes a threshold rule in the class statistic $\sum_{i=1}^n T(X_i)$ rather than in an ad hoc summary.
+
+### Generalized likelihood ratio test
+
+The simple likelihood-ratio test compares two fixed distributions:
+
+$$
+H_0:\theta=\theta_0
+\qquad \text{vs.} \qquad
+H_1:\theta=\theta_1.
+$$
+
+The generalized likelihood ratio test, or GLRT, is what I use when the alternative is not just one fixed parameter value. The idea is:
+
+> compare the best fit allowed by the full model to the best fit allowed by the null model.
+
+For i.i.d. data, write the log-likelihood as
+
+$$
+\ell(\theta;X)=\sum_{i=1}^n \log f_\theta(X_i).
+$$
+
+If $\hat\theta$ is the unrestricted MLE and $\hat\theta_0$ is the MLE constrained to the null space, define the likelihood ratio in the "full over
+null" direction:
+
+$$
+\Lambda
+=
+\frac{L(\hat\theta;X)}{L(\hat\theta_0;X)}.
+$$
+
+Then
+
+$$
+2\log\Lambda
+=
+2\{\ell(\hat\theta;X)-\ell(\hat\theta_0;X)\}.
+$$
+
+This statistic is always nonnegative because the unrestricted MLE can fit at least as well as the null-constrained MLE. If $H_0$ is true, the two fits
+should not be too different. So the GLRT rejects for large values of $2\log\Lambda$.
+
+#### Why a chi-squared distribution appears
+
+For a one-dimensional null such as $H_0:\theta=\theta_0$, the statistic is approximately a quadratic distance between the unrestricted MLE and the
+null value. Since $\ell'(\hat\theta)=0$, a Taylor expansion around $\hat\theta$ gives
+
+$$
+\ell(\theta_0;X)
+\approx
+\ell(\hat\theta;X)
++\frac{1}{2}\ell''(\hat\theta;X)(\theta_0-\hat\theta)^2.
+$$
+
+Rearranging, and using $-\ell''(\hat\theta;X)\approx nI(\theta_0)$ under regularity,
+
+$$
+2\{\ell(\hat\theta;X)-\ell(\theta_0;X)\}
+\approx
+nI(\theta_0)(\hat\theta-\theta_0)^2.
+$$
+
+But under $H_0$,
+
+$$
+\sqrt{nI(\theta_0)}(\hat\theta-\theta_0)\overset{d}{\to}N(0,1),
+$$
+
+so the squared version converges to $\chi_1^2$.
+
+More generally, Wilks' theorem says
+
+$$
+2\log\Lambda
+\overset{d}{\to}
+\chi^2_k,
+$$
+
+where $k$ is the number of restrictions imposed by the null, equivalently the difference between the full-model dimension and the null-model
+dimension.
+
+#### Multinomial goodness-of-fit example
+
+For a multinomial model with categories $1,\ldots,c$, let $O_i$ be the observed count in category $i$ and let $E_i=n\theta_{0,i}$ be the expected count
+under a fully specified null distribution $\theta_0$.
+
+The unrestricted MLE is
+
+$$
+\hat\theta_i=\frac{O_i}{n}.
+$$
+
+Using $\sum_i O_i=n$, the GLRT statistic becomes
+
+$$
+2\log\Lambda
+=
+2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right).
+$$
+
+This is the likelihood-ratio chi-squared statistic, often called the $G^2$ statistic. For large samples,
+
+$$
+2\log\Lambda \approx \chi^2_{c-1}.
+$$
+
+The degrees of freedom are $c-1$ because the category probabilities must sum to $1$, so one degree of freedom is lost.
+
+The Pearson chi-squared statistic is the quadratic approximation to the same likelihood-ratio statistic:
+
+$$
+2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right)
+\approx
+\sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i}.
+$$
+
+So the memory hook is:
+
+> GLRT measures the log-likelihood gap between the best full fit and the best null fit; Pearson chi-squared is the local quadratic approximation to
+> that same gap.
+
+<figure class="handwritten-note">
+  <img
+    src="{{ '/assets/img/blog_img/data145/glrt_quadratic_notes.png' | relative_url }}"
+    alt="Handwritten notes deriving the generalized likelihood ratio test using log-likelihood curvature and a Taylor expansion."
+  />
+  <figcaption>
+    Handwritten GLRT memory aid: the statistic is the log-likelihood gap between the unrestricted MLE and the null-constrained fit. A Taylor expansion
+    turns that gap into a quadratic distance, which is why a chi-squared limit appears.
+  </figcaption>
+</figure>
+
+<figure class="handwritten-note">
+  <img
+    src="{{ '/assets/img/blog_img/data145/glrt_multinomial_notes.png' | relative_url }}"
+    alt="Handwritten notes connecting GLRT, multinomial likelihood ratios, Wilks theorem, and Pearson chi-squared approximation."
+  />
+  <figcaption>
+    Handwritten multinomial GLRT note: for observed counts \(O_i\) and expected counts \(E_i\), the likelihood-ratio statistic
+    \(2\sum_i O_i\log(O_i/E_i)\) has a Pearson chi-squared approximation with \(c-1\) degrees of freedom.
+  </figcaption>
+</figure>
 
 ### Lecture 13: beyond simple vs. simple
 
@@ -2909,6 +3244,28 @@ Bootstrap interval templates:
 
 $$
 \operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)}
+$$
+
+For GLRT, using the full-over-null convention,
+
+$$
+2\log\Lambda
+=
+2\{\ell(\hat\theta;X)-\ell(\hat\theta_0;X)\}
+\overset{d}{\to}\chi_k^2
+$$
+
+where $k$ is the number of restrictions imposed by $H_0$.
+
+For multinomial goodness-of-fit,
+
+$$
+2\log\Lambda
+=
+2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right)
+\approx
+\sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i}
+\sim \chi^2_{c-1}.
 $$
 
 Under a continuous null:
