@@ -368,6 +368,7 @@ _styles: |
   .cs336-map div,
   .cs336-map div *,
   details.refresher,
+  details.refresher *,
   details.refresher p,
   details.refresher li,
   details.refresher table:not(.rouge-table),
@@ -392,8 +393,17 @@ _styles: |
   }
 
   .aha-box mjx-container,
+  .aha-box mjx-container *,
   details.refresher mjx-container,
+  details.refresher mjx-container *,
   .visual-block mjx-container {
+    color: #203f45 !important;
+  }
+
+  html[data-theme="dark"] .post details.refresher,
+  html[data-theme="dark"] .post details.refresher *,
+  html[data-theme="dark"] .post details.refresher mjx-container,
+  html[data-theme="dark"] .post details.refresher mjx-container * {
     color: #203f45 !important;
   }
 
