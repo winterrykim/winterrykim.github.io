@@ -628,7 +628,7 @@ $$
 X_1, X_2, \dots, X_n
 $$
 
-are i.i.d. exponential$(\lambda)$.
+are i.i.d. $\text{Exp}(\lambda)$.
 
 ### Why this matters
 
@@ -640,26 +640,26 @@ Instead of estimating the whole waiting-time distribution directly, we estimate 
 
 ### MLE appears immediately
 
-For i.i.d. exponential$(\lambda)$ data, the MLE is
+For i.i.d. $\text{Exp}(\lambda)$ data, the MLE is
 
 $$
-\hat\lambda_{MLE} = \frac{1}{\bar X_n}.
+\hat\lambda_{\text{MLE}} = \frac{1}{\bar X_n}.
 $$
 
 This is already interesting because it is **not** just a sample mean. It is a **nonlinear function** of a sample mean.
 
 ### The probability we actually care about
 
-If $X \sim \text{Exponential}(\lambda)$, then
+If $X \sim \text{Exp}(\lambda)$, then
 
 $$
-\mathbb{P}(X \le 7) = 1 - e^{-7\lambda}.
+\mathbb{P}(X \le 7) = 1 - \exp\{-7\lambda\}.
 $$
 
 So the MLE-based plug-in estimator is
 
 $$
-\hat p_{MLE} = 1 - e^{-7\hat\lambda}.
+\hat p_{\text{MLE}} = 1 - \exp\{-7\hat\lambda\}.
 $$
 
 The lecture also compares this to a more direct empirical estimator based on the proportion of observed waits below 7 days.
@@ -685,8 +685,8 @@ That is exactly the setup for the **delta method**.
 
 - Poisson process $\Rightarrow$ exponential interarrival times
 - why the earthquake story motivates a parametric model
-- $\hat\lambda_{MLE} = 1/\bar X_n$
-- plug-in estimation of $1 - e^{-7\lambda}$
+- $\hat\lambda_{\text{MLE}} = 1/\bar X_n$
+- plug-in estimation of $1 - \exp\{-7\lambda\}$
 - why Lecture 1 motivates CLT + delta method rather than proving them
 
 ---
@@ -891,7 +891,7 @@ The intuition is geometric:
 This is not the delta method itself, but it is the same derivative-based intuition. In the exact density formula, the derivative rescales density under a transformation. In the delta method, the derivative rescales the local fluctuation of an estimator:
 
 $$
-\operatorname{sd}(g(Y_n)) \approx |g'(\theta)| \operatorname{sd}(Y_n).
+\text{sd}(g(Y_n)) \approx |g'(\theta)| \text{sd}(Y_n).
 $$
 
 So both ideas are saying: when I transform a random quantity, the derivative tells me how uncertainty gets stretched or compressed nearby.
@@ -1097,7 +1097,7 @@ For one observation,
 $$
 I(\theta)
 =
-\operatorname{Var}_\theta(\ell_1'(\theta;X))
+\text{Var}_\theta(\ell_1'(\theta;X))
 =
 \mathbb{E}_\theta[(\ell_1'(\theta;X))^2]
 =
@@ -1111,7 +1111,7 @@ For $n$ i.i.d. observations, the full-sample information is
 $$
 I_n(\theta)
 =
-\operatorname{Var}_\theta(\ell_n'(\theta))
+\text{Var}_\theta(\ell_n'(\theta))
 =
 -\mathbb{E}_\theta[\ell_n''(\theta)]
 =
@@ -1166,7 +1166,7 @@ This is where the course formalizes what it had been previewing since Lecture 1.
 Under regularity conditions,
 
 $$
-\sqrt{n}(\hat\theta_{MLE} - \theta_0)
+\sqrt{n}(\hat\theta_{\text{MLE}} - \theta_0)
 \xrightarrow{d}
 N\left(0,\frac{1}{I(\theta_0)}\right).
 $$
@@ -1174,7 +1174,7 @@ $$
 Equivalently, for large $n$,
 
 $$
-\hat\theta_{MLE}
+\hat\theta_{\text{MLE}}
 \approx
 N\left(\theta_0,\frac{1}{nI(\theta_0)}\right).
 $$
@@ -1222,7 +1222,7 @@ This is the deepest connection in the first half of the course:
 For large $n$, the standard error of the MLE is approximately
 
 $$
-\operatorname{SE}(\hat\theta_{MLE})
+\text{SE}(\hat\theta_{\text{MLE}})
 \approx
 \sqrt{\frac{1}{nI(\theta_0)}}.
 $$
@@ -1230,7 +1230,7 @@ $$
 Since $\theta_0$ is unknown, we usually plug in $\hat\theta$:
 
 $$
-\operatorname{SE}(\hat\theta_{MLE})
+\text{SE}(\hat\theta_{\text{MLE}})
 \approx
 \sqrt{\frac{1}{nI(\hat\theta)}}.
 $$
@@ -1246,7 +1246,7 @@ Lecture 5 then asks a natural question:
 The benchmark result is the Cramer-Rao lower bound:
 
 $$
-\operatorname{Var}_\theta(T) \ge \frac{1}{nI(\theta)}
+\text{Var}_\theta(T) \ge \frac{1}{nI(\theta)}
 $$
 
 for unbiased estimators $T$.
@@ -1295,13 +1295,13 @@ This lecture introduces:
 Under squared error loss,
 
 $$
-R(\theta;T) = \mathbb{E}_\theta[(T-\theta)^2] = \operatorname{MSE}_\theta(T).
+R(\theta;T) = \mathbb{E}_\theta[(T-\theta)^2] = \text{MSE}_\theta(T).
 $$
 
 And the bias-variance decomposition says
 
 $$
-\operatorname{MSE} = \operatorname{Var} + \text{Bias}^2.
+\text{MSE}_\theta(T) = \text{Var}_\theta(T) + \text{Bias}_\theta(T)^2.
 $$
 
 More explicitly, if
@@ -1324,7 +1324,7 @@ The cross term disappears because $\mathbb{E}_\theta[T-\mu]=0$. This is the basi
 
 ### The coin flip example
 
-For $X \sim \text{Binomial}(n,p)$:
+For $X \sim \text{Binom}(n,p)$:
 
 - MLE: $\hat p = X/n$
 - Laplace shrinkage estimators:
@@ -1422,7 +1422,7 @@ So for a fixed observed dataset,
 $$
 \mathbb{E}[(T(X)-p)^2 \mid X]
 =
-\operatorname{Var}(p \mid X)
+\text{Var}(p \mid X)
 +
 (\mathbb{E}[p \mid X] - T(X))^2.
 $$
@@ -1509,7 +1509,7 @@ Setup:
 $$
 p \sim \text{Beta}(\alpha,\beta),
 \qquad
-X \mid p \sim \text{Binomial}(n,p),
+X \mid p \sim \text{Binom}(n,p),
 $$
 
 Posterior:
@@ -1521,7 +1521,7 @@ $$
 If I want the posterior mode, then for a Beta$(a,b)$ distribution with $a>1$ and $b>1$,
 
 $$
-\operatorname{mode}=\frac{a-1}{a+b-2}.
+\text{mode}=\frac{a-1}{a+b-2}.
 $$
 
 So in the Beta-Binomial posterior,
@@ -1539,15 +1539,15 @@ provided $X+\alpha>1$ and $n-X+\beta>1$.
 Setup:
 
 $$
-X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Exp}(\lambda),
+X_1,\dots,X_n \overset{iid}{\sim} \text{Exp}(\lambda),
 \qquad
-\lambda \sim \mathrm{Gamma}(\alpha,\beta),
+\lambda \sim \text{Gamma}(\alpha,\beta),
 $$
 
 where I am using the shape-rate parameterization, the prior density is
 
 $$
-\pi(\lambda) \propto \lambda^{\alpha-1}e^{-\beta\lambda}.
+\pi(\lambda) \propto \lambda^{\alpha-1}\exp\{-\beta\lambda\}.
 $$
 
 Likelihood:
@@ -1555,7 +1555,7 @@ Likelihood:
 $$
 f_\lambda(x_1,\dots,x_n)
 =
-\lambda^n e^{-\lambda \sum_{i=1}^n x_i}.
+\lambda^n \exp\{-\lambda \sum_{i=1}^n x_i\}.
 $$
 
 Posterior:
@@ -1565,7 +1565,7 @@ $$
 \propto
 f_\lambda(x)\pi(\lambda)
 \propto
-\lambda^{n+\alpha-1}e^{-(\beta+\sum x_i)\lambda},
+\lambda^{n+\alpha-1}\exp\{-(\beta+\sum x_i)\lambda\},
 $$
 
 which is a Gamma density again:
@@ -1573,7 +1573,7 @@ which is a Gamma density again:
 $$
 \lambda \mid X_1,\dots,X_n
 \sim
-\mathrm{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right).
+\text{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right).
 $$
 
 So Gamma is conjugate to the Exponential likelihood, just as Beta is conjugate to the Binomial likelihood.
@@ -1595,7 +1595,7 @@ Likelihood:
 $$
 f_\theta(x_1,\dots,x_n)
 \propto_\theta
-\exp\left(-\frac{n(\bar X-\theta)^2}{2\sigma^2}\right).
+\exp\{-\frac{n(\bar X-\theta)^2}{2\sigma^2}\}.
 $$
 
 So the data enter only through $\bar X$.
@@ -1648,7 +1648,7 @@ $$
 =
 \frac{X+\alpha}{n+\alpha+\beta}
 =
-w \, \hat p_{MLE} + (1-w)\frac{\alpha}{\alpha+\beta},
+w \, \hat p_{\text{MLE}} + (1-w)\frac{\alpha}{\alpha+\beta},
 $$
 
 where
@@ -1674,7 +1674,7 @@ $$
 Since the MLE is
 
 $$
-\hat\lambda_{MLE}=\frac{1}{\bar X},
+\hat\lambda_{\text{MLE}}=\frac{1}{\bar X},
 $$
 
 I can rewrite the posterior mean as
@@ -1682,7 +1682,7 @@ I can rewrite the posterior mean as
 $$
 \mathbb{E}[\lambda \mid X]
 =
-w\,\hat\lambda_{MLE} + (1-w)\frac{\alpha}{\beta},
+w\,\hat\lambda_{\text{MLE}} + (1-w)\frac{\alpha}{\beta},
 $$
 
 with
@@ -1739,7 +1739,7 @@ for large $n$, the posterior is approximately normal around the MLE:
 $$
 \pi(\theta \mid X)
 \approx
-N\left(\hat\theta_{MLE}, \frac{1}{nI(\hat\theta_{MLE})}\right).
+N\left(\hat\theta_{\text{MLE}}, \frac{1}{nI(\hat\theta_{\text{MLE}})}\right).
 $$
 
 This is the Bernstein-von Mises phenomenon, stated informally in lecture.
@@ -1837,7 +1837,7 @@ g=f_{\theta_0}
 $$
 
 for some unknown parameter $\theta_0$. For example, we might not know the value of $\lambda$, but we assume the data really come from an exponential
-family $\mathrm{Exp}(\lambda)$.
+family $\text{Exp}(\lambda)$.
 
 Lecture 9 asks:
 
@@ -1862,13 +1862,13 @@ $$
 Now compare this to KL:
 
 $$
-D_{KL}(g \,\|\, f_\theta)
+D_{\text{KL}}(g \,\|\, f_\theta)
 =
 \mathbb{E}_g[\log g(X)]-\mathbb{E}_g[\log f_\theta(X)].
 $$
 
 The first term, $\mathbb{E}_g[\log g(X)]$, does not depend on $\theta$. So maximizing expected log-likelihood is the same as minimizing
-$D_{KL}(g \,\|\, f_\theta)$.
+$D_{\text{KL}}(g \,\|\, f_\theta)$.
 
 That is the motivation: when the model is wrong, MLE still chooses the model distribution that is closest to the true data-generating distribution in
 forward KL.
@@ -1878,7 +1878,7 @@ forward KL.
 The key object is
 
 $$
-D_{KL}(g \,\|\, f_\theta)
+D_{\text{KL}}(g \,\|\, f_\theta)
 =
 \mathbb{E}_g\left[\log \frac{g(X)}{f_\theta(X)}\right].
 $$
@@ -1890,7 +1890,7 @@ When the model is misspecified, the MLE does not converge to a "true parameter" 
 Instead, it converges to the pseudo-true value
 
 $$
-\theta^* = \arg\min_\theta D_{KL}(g \,\|\, f_\theta).
+\theta^* = \arg\min_\theta D_{\text{KL}}(g \,\|\, f_\theta).
 $$
 
 So the MLE is still doing something meaningful:
@@ -1999,7 +1999,7 @@ Use this when I do **not** want to assume a parametric family.
 Here the underlying cdf is just some unknown $F$, and I replace it by the empirical cdf
 
 $$
-F_n(x)=\frac{1}{n}\sum_{i=1}^n I(X_i\le x).
+F_n(x)=\frac{1}{n}\sum_{i=1}^n \mathbf{1}\{X_i\le x\}.
 $$
 
 Then I treat $F_n$ as a stand-in for the population distribution and resample from it.
@@ -2010,7 +2010,7 @@ $$
 F_n(x)\xrightarrow{P}F(x).
 $$
 
-Why? The indicators $I(X_i\le x)$ are i.i.d. Bernoulli random variables with mean $F(x)$, so the law of large numbers says their average converges to
+Why? The indicators $\mathbf{1}\{X_i\le x\}$ are i.i.d. Bernoulli random variables with mean $F(x)$, so the law of large numbers says their average converges to
 $F(x)$. This is the basic justification for letting the empirical distribution stand in for the unknown population distribution.
 
 The lecture's procedure is:
@@ -2252,7 +2252,7 @@ This lecture shifts attention from estimating parameters to checking entire dist
 For data $X_1,\dots,X_n$, the empirical CDF is
 
 $$
-F_n(x) = \frac{1}{n}\sum_{i=1}^n I(X_i \le x).
+F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}\{X_i \le x\}.
 $$
 
 It is the natural nonparametric summary of the sample distribution.
@@ -2275,7 +2275,7 @@ Interpretation:
 
 Under a fully specified continuous null, the null distribution of $D_n$ is **distribution-free**.
 
-That is a major fact. The lecture shows this by transforming through the null CDF to Uniform$(0,1)$.
+That is a major fact. The lecture shows this by transforming through the null CDF to $\text{Uniform}(0,1)$.
 
 So under the null, the problem effectively reduces to
 
@@ -2313,7 +2313,7 @@ $$
 
 tests whether the two samples come from the same continuous distribution.
 
-Unlike the one-sample case, there is no fixed null CDF sitting on the right-hand side. Both $F_n$ and $G_m$ are random empirical CDFs, so the convenient one-sample rewrite to Uniform$(0,1)$ versus $u$ is not the main formula to remember here. For two-sample KS, the clean object is the original
+Unlike the one-sample case, there is no fixed null CDF sitting on the right-hand side. Both $F_n$ and $G_m$ are random empirical CDFs, so the convenient one-sample rewrite to $\text{Uniform}(0,1)$ versus $u$ is not the main formula to remember here. For two-sample KS, the clean object is the original
 
 $$
 \sup_x |F_n(x) - G_m(x)|.
@@ -2364,7 +2364,7 @@ But before tackling all of those, the course solves the cleanest case first:
 If the null and alternative have densities $f_0$ and $f_1$, define
 
 $$
-\operatorname{LR}(X) = \frac{f_1(X)}{f_0(X)}.
+\text{LR}(X) = \frac{f_1(X)}{f_0(X)}.
 $$
 
 The likelihood ratio test rejects for large LR.
@@ -2382,7 +2382,7 @@ $$
 If the likelihood ratio is increasing in $\bar X$, then rejecting for large LR is equivalent to rejecting for large $\bar X$:
 
 $$
-\operatorname{LR}(X)>k
+\text{LR}(X)>k
 \qquad \Longleftrightarrow \qquad
 \bar X>c.
 $$
@@ -2406,13 +2406,13 @@ $$
 That probability is the **power** against $\theta=1$. In pure likelihood-ratio notation, the same idea is:
 
 $$
-\text{choose } k \text{ so that } P_0(\operatorname{LR}(X)>k)=\alpha,
+\text{choose } k \text{ so that } P_0(\text{LR}(X)>k)=\alpha,
 $$
 
 then compute
 
 $$
-P_1(\operatorname{LR}(X)>k).
+P_1(\text{LR}(X)>k).
 $$
 
 So the flow is:
@@ -2467,7 +2467,7 @@ $$
 and for an i.i.d. sample $X_1,\dots,X_n$, the simple-vs.-simple likelihood ratio satisfies
 
 $$
-\log \operatorname{LR}(X)
+\log \text{LR}(X)
 =
 \bigl(\eta(\theta_1)-\eta(\theta_0)\bigr)\sum_{i=1}^n T(X_i)
 -n\bigl(A(\theta_1)-A(\theta_0)\bigr).
@@ -2792,7 +2792,7 @@ These are the points that are easiest to blur together when reading the broader 
   "reject for large sample mean" is not a universal testing rule. Heavy-tailed models can break the clean normal-family intuition.
 
 - **P-values under a continuous null**:
-  under a continuous null hypothesis, a valid p-value is Uniform$(0,1)$. That is why rejecting when $p \le \alpha$ gives a level-$\alpha$ test.
+  under a continuous null hypothesis, a valid p-value is $\text{Uniform}(0,1)$. That is why rejecting when $p \le \alpha$ gives a level-$\alpha$ test.
 
 ### Core formulas
 
@@ -2853,11 +2853,11 @@ $$
 $$
 I(\theta)
 =
-\operatorname{Var}(\ell_1'(\theta;X))
+\text{Var}_\theta(\ell_1'(\theta;X))
 =
-\mathbb{E}[(\ell_1'(\theta;X))^2]
+\mathbb{E}_\theta[(\ell_1'(\theta;X))^2]
 =
--\mathbb{E}[\ell_1''(\theta;X)]
+-\mathbb{E}_\theta[\ell_1''(\theta;X)]
 $$
 
 $$
@@ -2871,13 +2871,13 @@ S_n'(\theta)=\sum_{i=1}^n S_1'(\theta;X_i)
 $$
 
 $$
-\sqrt{n}(\hat\theta_{MLE}-\theta_0)
+\sqrt{n}(\hat\theta_{\text{MLE}}-\theta_0)
 \xrightarrow{d}
 N\left(0,\frac{1}{I(\theta_0)}\right)
 $$
 
 $$
-\operatorname{Var}(T) \ge \frac{1}{nI(\theta)}
+\text{Var}_\theta(T) \ge \frac{1}{nI(\theta)}
 \quad
 \text{for unbiased } T
 $$
@@ -2888,7 +2888,7 @@ Useful reminders:
 - If an unbiased estimator reaches the Cramer-Rao bound
 
   $$
-  \operatorname{Var}(T)=\frac{1}{nI(\theta)},
+  \text{Var}_\theta(T)=\frac{1}{nI(\theta)},
   $$
 
   then it is efficient. This is the standard way to show an estimator has the best possible variance among unbiased estimators.
@@ -2896,7 +2896,7 @@ Useful reminders:
 - Separate that from the asymptotic statement: MLE is typically asymptotically efficient, not automatically finite-sample efficient.
 
 $$
-\operatorname{MSE} = \operatorname{Var} + \text{Bias}^2
+\text{MSE}_\theta(T) = \text{Var}_\theta(T) + \text{Bias}_\theta(T)^2
 $$
 
 #### High-yield model formulas
@@ -2904,25 +2904,25 @@ $$
 Bernoulli:
 
 $$
-\hat p_{MLE} = \bar X_n,
+\hat p_{\text{MLE}} = \bar X_n,
 \qquad
-\operatorname{Var}(\bar X_n)=\frac{p(1-p)}{n}
+\text{Var}_p(\bar X_n)=\frac{p(1-p)}{n}
 $$
 
 $$
-\operatorname{logit}(p)=\log\frac{p}{1-p},
+\text{logit}(p)=\log\frac{p}{1-p},
 \qquad
-\frac{d}{dp}\operatorname{logit}(p)=\frac{1}{p(1-p)}
+\frac{d}{dp}\text{logit}(p)=\frac{1}{p(1-p)}
 $$
 
 $$
-\operatorname{Var}(\operatorname{logit}(\hat p)) \approx \frac{1}{n\,p(1-p)}
+\text{Var}_p(\text{logit}(\hat p)) \approx \frac{1}{n\,p(1-p)}
 $$
 
 Poisson:
 
 $$
-\hat\lambda_{MLE} = \bar X_n,
+\hat\lambda_{\text{MLE}} = \bar X_n,
 \qquad
 I(\lambda)=\frac{1}{\lambda}
 $$
@@ -2930,31 +2930,31 @@ $$
 Exponential with rate $\lambda$:
 
 $$
-\hat\lambda_{MLE} = \frac{1}{\bar X_n},
+\hat\lambda_{\text{MLE}} = \frac{1}{\bar X_n},
 \qquad
 I(\lambda)=\frac{1}{\lambda^2},
 \qquad
-\operatorname{Var}(\hat\lambda_{MLE}) \approx \frac{\lambda^2}{n}
+\text{Var}_\lambda(\hat\lambda_{\text{MLE}}) \approx \frac{\lambda^2}{n}
 $$
 
 $$
-\mathbb{P}(X \le 7) = 1 - e^{-7\lambda}
+\mathbb{P}(X \le 7) = 1 - \exp\{-7\lambda\}
 $$
 
 Exponential with mean $\mu$:
 
 $$
-\hat\mu_{MLE} = \bar X_n,
+\hat\mu_{\text{MLE}} = \bar X_n,
 \qquad
 I(\mu)=\frac{1}{\mu^2},
 \qquad
-\operatorname{Var}(\hat\mu_{MLE}) \approx \frac{\mu^2}{n}
+\text{Var}_\mu(\hat\mu_{\text{MLE}}) \approx \frac{\mu^2}{n}
 $$
 
 Pareto with known lower cutoff $x_m$:
 
 $$
-\hat\alpha_{MLE} = \frac{n}{\sum_{i=1}^n \log(X_i/x_m)}
+\hat\alpha_{\text{MLE}} = \frac{n}{\sum_{i=1}^n \log(X_i/x_m)}
 $$
 
 #### Bayes and decision theory
@@ -2983,11 +2983,11 @@ Estimator rules worth distinguishing:
 Conjugate update patterns worth remembering:
 
 $$
-p \sim \mathrm{Beta}(\alpha,\beta),
+p \sim \text{Beta}(\alpha,\beta),
 \quad
-X \mid p \sim \mathrm{Binomial}(n,p)
+X \mid p \sim \text{Binom}(n,p)
 \quad \Rightarrow \quad
-p \mid X=x \sim \mathrm{Beta}(x+\alpha,\; n-x+\beta)
+p \mid X=x \sim \text{Beta}(x+\alpha,\; n-x+\beta)
 $$
 
 So in the Beta-Binomial model, $\alpha$ behaves like prior successes and $\beta$ behaves like prior failures. The posterior literally updates by adding observed counts: successes become $x+\alpha$ and failures become $n-x+\beta$.
@@ -3027,27 +3027,27 @@ $$
 $$
 
 $$
-\lambda \sim \mathrm{Gamma}(\alpha,\beta),
+\lambda \sim \text{Gamma}(\alpha,\beta),
 \quad
-X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Exp}(\lambda)
+X_1,\dots,X_n \overset{iid}{\sim} \text{Exp}(\lambda)
 \quad \Rightarrow \quad
-\lambda \mid X \sim \mathrm{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right)
+\lambda \mid X \sim \text{Gamma}\left(n+\alpha,\; \beta+\sum_{i=1}^n X_i\right)
 $$
 
 #### Misspecification, bootstrap, and KS
 
 $$
-D_{KL}(g \,\|\, f_\theta)
+D_{\text{KL}}(g \,\|\, f_\theta)
 =
 \mathbb{E}_g\left[\log\frac{g(X)}{f_\theta(X)}\right]
 $$
 
 $$
-\theta^* = \arg\min_\theta D_{KL}(g \,\|\, f_\theta)
+\theta^* = \arg\min_\theta D_{\text{KL}}(g \,\|\, f_\theta)
 $$
 
 $$
-F_n(x)=\frac{1}{n}\sum_{i=1}^n I(X_i \le x)
+F_n(x)=\frac{1}{n}\sum_{i=1}^n \mathbf{1}\{X_i \le x\}
 $$
 
 $$
@@ -3079,13 +3079,13 @@ Bootstrap interval templates:
 #### Hypothesis testing
 
 $$
-\operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)}
+\text{LR}(X)=\frac{f_1(X)}{f_0(X)}
 $$
 
 Under a continuous null:
 
 $$
-p \sim \mathrm{Uniform}(0,1)
+p \sim \text{Uniform}(0,1)
 $$
 
 and the rejection rule is
@@ -3102,21 +3102,21 @@ These are the kinds of structural facts that make derivations feel less random.
   in the rate parameterization,
 
   $$
-  \mathrm{Exp}(\lambda) = \mathrm{Gamma}(1,\lambda).
+  \text{Exp}(\lambda) = \text{Gamma}(1,\lambda).
   $$
 
 - Bernoulli to Binomial:
-  if $X_1,\dots,X_n \overset{iid}{\sim} \mathrm{Bernoulli}(p)$, then
+  if $X_1,\dots,X_n \overset{iid}{\sim} \text{Bernoulli}(p)$, then
 
   $$
-  \sum_{i=1}^n X_i \sim \mathrm{Binomial}(n,p).
+  \sum_{i=1}^n X_i \sim \text{Binom}(n,p).
   $$
 
 - Exponential to Gamma:
-  if $X_1,\dots,X_k \overset{iid}{\sim} \mathrm{Exponential}(\lambda)$, then
+  if $X_1,\dots,X_k \overset{iid}{\sim} \text{Exp}(\lambda)$, then
 
   $$
-  \sum_{i=1}^k X_i \sim \mathrm{Gamma}(k,\lambda)
+  \sum_{i=1}^k X_i \sim \text{Gamma}(k,\lambda)
   $$
 
   in the rate parameterization. So Gamma is the waiting-time distribution for several Poisson-process arrivals, while Exponential is the waiting time for the first arrival.
@@ -3124,13 +3124,13 @@ These are the kinds of structural facts that make derivations feel less random.
   A scaling rule that is useful right away is: if
 
   $$
-  Y \sim \mathrm{Gamma}(\alpha,\beta),
+  Y \sim \text{Gamma}(\alpha,\beta),
   $$
 
   then for any $c>0$,
 
   $$
-  cY \sim \mathrm{Gamma}\left(\alpha,\frac{\beta}{c}\right)
+  cY \sim \text{Gamma}\left(\alpha,\frac{\beta}{c}\right)
   $$
 
   in the rate parameterization.
@@ -3138,21 +3138,21 @@ These are the kinds of structural facts that make derivations feel less random.
   So if
 
   $$
-  S_n=\sum_{i=1}^n X_i \sim \mathrm{Gamma}(n,\lambda),
+  S_n=\sum_{i=1}^n X_i \sim \text{Gamma}(n,\lambda),
   $$
 
   then
 
   $$
-  \bar X_n=\frac{S_n}{n}\sim \mathrm{Gamma}(n,n\lambda).
+  \bar X_n=\frac{S_n}{n}\sim \text{Gamma}(n,n\lambda).
   $$
 
   This is a quick way to track the variance:
 
   $$
-  \operatorname{Var}(S_n)=\frac{n}{\lambda^2},
+  \text{Var}_\lambda(S_n)=\frac{n}{\lambda^2},
   \qquad
-  \operatorname{Var}(\bar X_n)=\frac{1}{n^2}\operatorname{Var}(S_n)=\frac{1}{n\lambda^2}.
+  \text{Var}_\lambda(\bar X_n)=\frac{1}{n^2}\text{Var}_\lambda(S_n)=\frac{1}{n\lambda^2}.
   $$
 
   A notation reminder that helps in these computations: once I know the distribution of the variable I care about, I should integrate against the density of that variable and use a dummy symbol on the right-hand side. In general, if $Y$ has density $f_Y$, then
@@ -3181,10 +3181,10 @@ These are the kinds of structural facts that make derivations feel less random.
   if independent gamma variables have the same rate parameter, their sum is again gamma, with shape parameters adding.
 
 - Poisson plus Poisson stays Poisson:
-  if $X \sim \mathrm{Poisson}(\lambda_1)$ and $Y \sim \mathrm{Poisson}(\lambda_2)$ are independent, then
+  if $X \sim \text{Pois}(\lambda_1)$ and $Y \sim \text{Pois}(\lambda_2)$ are independent, then
 
   $$
-  X+Y \sim \mathrm{Poisson}(\lambda_1+\lambda_2).
+  X+Y \sim \text{Pois}(\lambda_1+\lambda_2).
   $$
 
 - Normal plus Normal stays Normal:
@@ -3203,13 +3203,13 @@ These are the kinds of structural facts that make derivations feel less random.
   if $X$ has a continuous CDF $F$, then
 
   $$
-  U = F(X) \sim \mathrm{Uniform}(0,1).
+  U = F(X) \sim \text{Uniform}(0,1).
   $$
 
   This is the key CDF relationship behind two important course ideas:
 
   - in Lecture 11, it explains why the fully specified continuous-null KS test is distribution-free
-  - in the continuous-null p-value discussion, it explains why a correctly calibrated p-value is Uniform$(0,1)$
+  - in the continuous-null p-value discussion, it explains why a correctly calibrated p-value is $\text{Uniform}(0,1)$
 
 The quick mental map I want is:
 
@@ -3217,7 +3217,7 @@ The quick mental map I want is:
 - Beta prior + Binomial data $\to$ Beta posterior by updating counts
 - Exponential $\to$ Gamma by summing waiting times
 - Gamma prior + Exponential data $\to$ Gamma posterior by updating event count and total exposure
-- null CDF $\to$ Uniform$(0,1)$ by the probability integral transform
+- null CDF $\to$ $\text{Uniform}(0,1)$ by the probability integral transform
 - Normal $\to$ Chi-square by squaring and summing standard normals
 
 ### Core conceptual statements
@@ -3260,7 +3260,7 @@ In the statistics lectures, KL divergence appears when the model is misspecified
 In RLHF-style post-training, the objective often looks like
 
 $$
-\max_{\pi_\theta} \; \mathbb{E}[r(x,y)] - \beta \, KL(\pi_\theta \,\|\, \pi_{ref}).
+\max_{\pi_\theta} \; \mathbb{E}[r(x,y)] - \beta \, \text{KL}(\pi_\theta \,\|\, \pi_{\text{ref}}).
 $$
 
 That has the same flavor: improve some target objective, but pay a penalty for moving too far from a trusted reference distribution.

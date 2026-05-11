@@ -10,11 +10,11 @@
           inlineMath: [["$", "$"]],
           displayMath: [["$$", "$$"]],
           macros: {
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            SD: "\\operatorname{SD}",
+            SD: "\\text{SD}",
             phi: "\\varphi",
             Phi: "\\Phi",
           },
@@ -493,8 +493,8 @@
     </div>
 
     <div class="example">
-      This is exactly the same concentration rate we saw for i.i.d. Bernoulli$(1/2)$ sample means. The lecture's puzzle explains why that should not
-      feel accidental: among all distributions on $[0,1]$, the unique one with largest variance is Bernoulli$(1/2)$.
+      This is exactly the same concentration rate we saw for i.i.d. $\text{Bernoulli}(1/2)$ sample means. The lecture's puzzle explains why that
+      should not feel accidental: among all distributions on $[0,1]$, the unique one with largest variance is $\text{Bernoulli}(1/2)$.
     </div>
 
     <h3>21.7 Application: empirical risk in binary classification</h3>
@@ -633,8 +633,8 @@
     <h3>22.6 Example: beta-gamma algebra</h3>
 
     <p>
-      Let $X\sim \Gamma(r,\lambda)$ and $Y\sim \Gamma(s,\lambda)$ independently. Define $$U=X+Y, \qquad V=\frac{X}{X+Y}.$$ The inverse map is $$x=uv,
-      \qquad y=u(1-v).$$
+      Let $X\sim \text{Gamma}(r,\lambda)$ and $Y\sim \text{Gamma}(s,\lambda)$ independently. Define $$U=X+Y, \qquad V=\frac{X}{X+Y}.$$ The inverse map
+      is $$x=uv, \qquad y=u(1-v).$$
     </p>
 
     <div class="definition">Using the inverse Jacobian matrix, $$K=\begin{bmatrix} v &amp; u \\ 1-v &amp; -u \end{bmatrix}, \qquad |\det K|=u.$$</div>
@@ -643,7 +643,7 @@
       After substitution, the transformed density factors into a gamma density in $u$ and a beta density in $v$: $$f_{U,V}(u,v)=f_U(u)f_V(v).$$
       Therefore
       <ul style="margin-top: 0.5rem">
-        <li>$U \sim \Gamma(r+s,\lambda)$,</li>
+        <li>$U \sim \text{Gamma}(r+s,\lambda)$,</li>
         <li>$V \sim \text{Beta}(r,s)$,</li>
         <li>$U$ and $V$ are independent.</li>
       </ul>
@@ -804,7 +804,7 @@
       </tr>
       <tr>
         <td>Beta-gamma algebra</td>
-        <td>$X+Y\sim \Gamma(r+s,\lambda)$, $X/(X+Y)\sim \text{Beta}(r,s)$</td>
+        <td>$X+Y\sim \text{Gamma}(r+s,\lambda)$, $X/(X+Y)\sim \text{Beta}(r,s)$</td>
         <td>And they are independent</td>
       </tr>
     </table>

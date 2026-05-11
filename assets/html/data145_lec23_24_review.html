@@ -10,14 +10,14 @@
           inlineMath: [["$", "$"]],
           displayMath: [["$$", "$$"]],
           macros: {
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            SD: "\\operatorname{SD}",
+            SD: "\\text{SD}",
             Span: "\\operatorname{Span}",
             Col: "\\operatorname{Col}",
-            RSS: "\\operatorname{RSS}",
+            RSS: "\\text{RSS}",
             rank: "\\operatorname{rank}",
           },
         },
@@ -1287,8 +1287,8 @@
       Why does the residual block have mean 0? Start from $E[X]=\mu\mathbf1$. Since every column of $Q_r$ is perpendicular to $\mathbf1$,
       $$Q_r^T\mathbf1=0.$$ Therefore $$E[Z_r]=E[Q_r^TX]=Q_r^TE[X]=Q_r^T(\mu\mathbf1)=\mu Q_r^T\mathbf1=0.$$ The signal coordinate keeps the mean
       because $q_1$ points exactly along $\mathbf1$: $$E[Z_1]=E[q_1^TX]=q_1^T(\mu\mathbf1)=\sqrt n\,\mu.$$ Finally, because $Q$ is orthogonal,
-      $$\operatorname{Var}(Q^TX)=Q^T(\sigma^2I_n)Q=\sigma^2I_n.$$ This is the proof of the canonical rotated form
-      $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
+      $$\text{Var}(Q^TX)=Q^T(\sigma^2I_n)Q=\sigma^2I_n.$$ This is the proof of the canonical rotated form $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim
+      N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
     </div>
 
     <div class="proof">
@@ -1444,8 +1444,8 @@
 
     <div class="intuition">
       A useful correction to keep in mind: ANOVA is absolutely doing projections. The projection step creates the observed squared lengths
-      $\operatorname{SSB}$ and $\operatorname{SSW}$. The F distribution is the reference distribution that tells us whether the ratio of those lengths
-      is unusually large under $H_0$.
+      $\text{SSB}$ and $\text{SSW}$. The F distribution is the reference distribution that tells us whether the ratio of those lengths is unusually
+      large under $H_0$.
     </div>
 
     <h4>Projection view from the discussion section</h4>
@@ -1561,8 +1561,8 @@
     <div class="proof">
       Squaring and summing gives a cross-term, but it vanishes within each group: $$\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})=0.$$ Therefore
       $$\sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{\cdot\cdot})^2 = \sum_{g=1}^G n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2+
-      \sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ In ANOVA language, $$\operatorname{SST}=\operatorname{SSB}+\operatorname{SSW}.$$ In
-      nested-model language, $$\RSS_0=(\RSS_0-\RSS)+\RSS.$$
+      \sum_{g=1}^G\sum_{i=1}^{n_g}(Y_{gi}-\bar Y_{g\cdot})^2.$$ In ANOVA language, $$\text{SST}=\text{SSB}+\text{SSW}.$$ In nested-model language,
+      $$\RSS_0=(\RSS_0-\RSS)+\RSS.$$
     </div>
 
     <div class="intuition">
@@ -1598,34 +1598,34 @@
       </tr>
       <tr>
         <td>Between groups / signal</td>
-        <td>$\operatorname{SSB}=\RSS_0-\RSS=\sum_g n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2$</td>
+        <td>$\text{SSB}=\RSS_0-\RSS=\sum_g n_g(\bar Y_{g\cdot}-\bar Y_{\cdot\cdot})^2$</td>
         <td>$G-1$</td>
-        <td>$\operatorname{MSB}=\operatorname{SSB}/(G-1)$</td>
+        <td>$\text{MSB}=\text{SSB}/(G-1)$</td>
       </tr>
       <tr>
         <td>Within groups / residual</td>
-        <td>$\operatorname{SSW}=\RSS=\sum_g\sum_i(Y_{gi}-\bar Y_{g\cdot})^2$</td>
+        <td>$\text{SSW}=\RSS=\sum_g\sum_i(Y_{gi}-\bar Y_{g\cdot})^2$</td>
         <td>$N-G$</td>
-        <td>$\operatorname{MSW}=\operatorname{SSW}/(N-G)$</td>
+        <td>$\text{MSW}=\text{SSW}/(N-G)$</td>
       </tr>
       <tr>
         <td>Total around grand mean</td>
-        <td>$\operatorname{SST}=\RSS_0=\sum_g\sum_i(Y_{gi}-\bar Y_{\cdot\cdot})^2$</td>
+        <td>$\text{SST}=\RSS_0=\sum_g\sum_i(Y_{gi}-\bar Y_{\cdot\cdot})^2$</td>
         <td>$N-1$</td>
         <td>Not used as the denominator for the F-test</td>
       </tr>
     </table>
 
     <div class="keyresult">
-      Under $H_0$, $$\frac{\operatorname{SSB}}{\sigma^2}\sim\chi^2_{G-1},\qquad \frac{\operatorname{SSW}}{\sigma^2}\sim\chi^2_{N-G},$$ and the two
-      pieces are independent because they are squared lengths of orthogonal Gaussian projections. That is why
-      $$F=\frac{\operatorname{MSB}}{\operatorname{MSW}}\sim F_{G-1,N-G}.$$
+      Under $H_0$, $$\frac{\text{SSB}}{\sigma^2}\sim\chi^2_{G-1},\qquad \frac{\text{SSW}}{\sigma^2}\sim\chi^2_{N-G},$$ and the two pieces are
+      independent because they are squared lengths of orthogonal Gaussian projections. That is why $$F=\frac{\text{MSB}}{\text{MSW}}\sim
+      F_{G-1,N-G}.$$
     </div>
 
     <div class="keyresult">
       If $\RSS_0$ is the total sum of squares around the grand mean and $\RSS$ is the within-group residual sum of squares, then
-      $$F=\frac{(\RSS_0-\RSS)/(G-1)}{\RSS/(N-G)}=\frac{\operatorname{SSB}/(G-1)}{\operatorname{SSW}/(N-G)}\sim F_{G-1,N-G}\quad\text{under }H_0.$$
-      This is one-way ANOVA written in the same nested-subspace language as regression.
+      $$F=\frac{(\RSS_0-\RSS)/(G-1)}{\RSS/(N-G)}=\frac{\text{SSB}/(G-1)}{\text{SSW}/(N-G)}\sim F_{G-1,N-G}\quad\text{under }H_0.$$ This is one-way
+      ANOVA written in the same nested-subspace language as regression.
     </div>
 
     <h4>Practice bridge: why manual ANOVA matches software</h4>
@@ -1638,8 +1638,8 @@
 
     <div class="formula-box">
       The manual route is: compute total variation around the grand mean, compute within-group variation around each group mean, take the difference
-      as between-group variation, then form $$F_{\mathrm{obs}}=\frac{\operatorname{SSB}/(G-1)}{\operatorname{SSW}/(N-G)}.$$ The software route and the
-      manual route agree because they are computing this same statistic and using the same right tail: $$p=P(F_{G-1,N-G}\geq F_{\mathrm{obs}}).$$
+      as between-group variation, then form $$F_{\text{obs}}=\frac{\text{SSB}/(G-1)}{\text{SSW}/(N-G)}.$$ The software route and the manual route
+      agree because they are computing this same statistic and using the same right tail: $$p=P(F_{G-1,N-G}\geq F_{\text{obs}}).$$
     </div>
 
     <div class="intuition">
@@ -1771,7 +1771,7 @@
 
     <div class="definition">
       For a single coefficient test $H_0:\beta_j=0$, the tested subspace has $d_1=1$. The canonical F-test is equivalent to a t-test:
-      $$T=\frac{\hat\beta_j}{\widehat{\mathrm{SE}}(\hat\beta_j)}\sim t_{n-d}\quad\text{under }H_0.$$
+      $$T=\frac{\hat\beta_j}{\widehat{\text{SE}}(\hat\beta_j)}\sim t_{n-d}\quad\text{under }H_0.$$
     </div>
 
     <div class="intuition">
@@ -1780,8 +1780,8 @@
     </div>
 
     <div class="keyresult">
-      The estimated standard error is $$\widehat{\mathrm{SE}}(\hat\beta_j)=\hat\sigma\sqrt{[(X^TX)^{-1}]_{jj}}.$$ The confidence interval is
-      $$\hat\beta_j\pm t_{n-d,1-\alpha/2}\,\widehat{\mathrm{SE}}(\hat\beta_j).$$
+      The estimated standard error is $$\widehat{\text{SE}}(\hat\beta_j)=\hat\sigma\sqrt{[(X^TX)^{-1}]_{jj}}.$$ The confidence interval is
+      $$\hat\beta_j\pm t_{n-d,1-\alpha/2}\,\widehat{\text{SE}}(\hat\beta_j).$$
     </div>
 
     <div class="intuition">
@@ -1859,7 +1859,7 @@
       <tr>
         <td>Regression single coefficient</td>
         <td>$d_1=1$, $d_r=n-d$</td>
-        <td>$\hat\beta_j/\widehat{\mathrm{SE}}(\hat\beta_j)$</td>
+        <td>$\hat\beta_j/\widehat{\text{SE}}(\hat\beta_j)$</td>
         <td>$t_{n-d}$</td>
       </tr>
     </table>

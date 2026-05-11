@@ -12,11 +12,11 @@
           macros: {
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
-            MSE: "\\operatorname{MSE}",
-            iid: "\\overset{\\mathrm{iid}}{\\sim}",
-            IG: "\\operatorname{InverseGamma}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
+            MSE: "\\text{MSE}",
+            iid: "\\overset{\\text{iid}}{\\sim}",
+            IG: "\\text{InverseGamma}",
           },
         },
       };
@@ -1135,9 +1135,7 @@
 
     <p>The lecture returns to the Gamma-Poisson Premier League model from the worksheet. For team $i$ and match $j$,</p>
 
-    <div class="formula-box">
-      $$\theta_i\mid \beta\iid \operatorname{Gamma}(\alpha,\beta),\qquad X_{ij}\mid \theta_i\sim \operatorname{Poisson}(\theta_i).$$
-    </div>
+    <div class="formula-box">$$\theta_i\mid \beta\iid \text{Gamma}(\alpha,\beta),\qquad X_{ij}\mid \theta_i\sim \text{Pois}(\theta_i).$$</div>
 
     <p>
       Here $\theta_i$ is a team scoring rate, $\alpha$ is held fixed, and $\beta$ is a hyperparameter that controls the population of scoring rates.
@@ -1145,8 +1143,7 @@
     </p>
 
     <div class="keyresult">
-      $$\theta_i\mid \beta,X\sim \operatorname{Gamma}(\alpha+G_i,\beta+m),$$ $$\beta\mid \theta\sim \operatorname{Gamma}\!\left(a+d\alpha,\
-      b+\sum_i\theta_i\right).$$
+      $$\theta_i\mid \beta,X\sim \text{Gamma}(\alpha+G_i,\beta+m),$$ $$\beta\mid \theta\sim \text{Gamma}\!\left(a+d\alpha,\ b+\sum_i\theta_i\right).$$
     </div>
 
     <p>
@@ -1158,11 +1155,11 @@
 
     <p>
       Before running Gibbs, the lecture checks whether the hierarchy is a plausible model for the observed team totals. If
-      $\theta_i\sim\operatorname{Gamma}(\alpha,\beta)$ and $G_i\mid\theta_i\sim\operatorname{Poisson}(m\theta_i)$, then integrating out $\theta_i$
-      gives a negative-binomial marginal distribution:
+      $\theta_i\sim\text{Gamma}(\alpha,\beta)$ and $G_i\mid\theta_i\sim\text{Pois}(m\theta_i)$, then integrating out $\theta_i$ gives a
+      negative-binomial marginal distribution:
     </p>
 
-    <div class="formula-box">$$G_i\sim\operatorname{NegBin}\!\left(\alpha,\frac{\beta}{\beta+m}\right).$$</div>
+    <div class="formula-box">$$G_i\sim\text{NegBin}\!\left(\alpha,\frac{\beta}{\beta+m}\right).$$</div>
 
     <div class="intuition">
       This is the empirical-Bayes instinct again: the marginal distribution across teams tells us about the population hyperparameter. If the fitted
@@ -1283,17 +1280,17 @@
       </tr>
       <tr>
         <td>Gamma-Poisson team update</td>
-        <td>$\theta_i\mid\beta,X\sim \operatorname{Gamma}(\alpha+G_i,\beta+m)$</td>
+        <td>$\theta_i\mid\beta,X\sim \text{Gamma}(\alpha+G_i,\beta+m)$</td>
         <td>Conjugate Gibbs update for team rate.</td>
       </tr>
       <tr>
         <td>Gamma-Poisson marginal check</td>
-        <td>$G_i\sim\operatorname{NegBin}(\alpha,\beta/(\beta+m))$</td>
+        <td>$G_i\sim\text{NegBin}(\alpha,\beta/(\beta+m))$</td>
         <td>Team totals reveal whether the population hierarchy is plausible.</td>
       </tr>
       <tr>
         <td>Gamma-Poisson hyperparameter update</td>
-        <td>$\beta\mid\theta\sim\operatorname{Gamma}(a+d\alpha,b+\sum_i\theta_i)$</td>
+        <td>$\beta\mid\theta\sim\text{Gamma}(a+d\alpha,b+\sum_i\theta_i)$</td>
         <td>Conjugate Gibbs update for population rate parameter.</td>
       </tr>
     </table>

@@ -10,11 +10,11 @@
           inlineMath: [["$", "$"]],
           displayMath: [["$$", "$$"]],
           macros: {
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            SD: "\\operatorname{SD}",
+            SD: "\\text{SD}",
             argmax: "\\operatorname{arg\\,max}",
           },
         },
@@ -418,7 +418,7 @@
     </div>
 
     <div class="theorem">
-      Conversely, if $C(X)$ is a valid $(1-\alpha)$ confidence region, then $$\phi(x;a)=\mathbf 1\{a\notin C(x)\}$$ is a valid level-$\alpha$ test.
+      Conversely, if $C(X)$ is a valid $(1-\alpha)$ confidence region, then $$\phi(x;a)=\mathbf{1}\{a\notin C(x)\}$$ is a valid level-$\alpha$ test.
     </div>
 
     <div class="keyresult">A confidence interval is exactly the set of null values that the data do <em>not</em> reject at level $\alpha$.</div>
@@ -482,9 +482,7 @@
 
     <h3>15.2 Wald test</h3>
 
-    <div class="definition">
-      $$W=\frac{\hat\theta_n-\theta_0}{\widehat{\mathrm{SE}}(\hat\theta_n)}.$$ Reject for large $|W|$ in two-sided testing.
-    </div>
+    <div class="definition">$$W=\frac{\hat\theta_n-\theta_0}{\widehat{\text{SE}}(\hat\theta_n)}.$$ Reject for large $|W|$ in two-sided testing.</div>
 
     <p>Standard error choices discussed in class:</p>
     <ul style="padding-left: 1.2rem; margin-bottom: 0.9rem">
@@ -518,13 +516,14 @@
     <div class="definition">
       For i.i.d. data, write $$\ell_n(\theta)=\sum_{i=1}^n \log f_\theta(X_i).$$ Let $\hat\theta_n$ be the unrestricted MLE, and let
       $\hat\theta_{0,n}$ be the MLE constrained to $H_0$. Using the full-over-null convention,
-      $$\Lambda_n=\frac{L_n(\hat\theta_n)}{L_n(\hat\theta_{0,n})},\qquad 2\log\Lambda_n=2\{\ell_n(\hat\theta_n)-\ell_n(\hat\theta_{0,n})\}.$$
+      $$\text{LR}_n(\mathbf{X})=\frac{L_n(\hat\theta_n)}{L_n(\hat\theta_{0,n})},\qquad
+      2\log\text{LR}_n(\mathbf{X})=2\{\ell_n(\hat\theta_n)-\ell_n(\hat\theta_{0,n})\}.$$
     </div>
 
     <div class="intuition">
       GLRT measures the vertical drop from the best possible log-likelihood to the best null-constrained log-likelihood. The unrestricted fit can only
-      improve the likelihood, so $2\log\Lambda_n\ge 0$. If $H_0$ is true, the two fits should not be very different; reject for large
-      $2\log\Lambda_n$.
+      improve the likelihood, so $2\log\text{LR}_n(\mathbf{X})\ge 0$. If $H_0$ is true, the two fits should not be very different; reject for large
+      $2\log\text{LR}_n(\mathbf{X})$.
     </div>
 
     <h4>Why a chi-squared limit appears</h4>
@@ -545,7 +544,9 @@
       $H_0$, the scaled distance behaves like a squared standard normal, so the statistic converges to $\chi^2_1$.
     </div>
 
-    <div class="keyresult">More generally, if the null imposes $k$ restrictions, Wilks' theorem gives $$2\log\Lambda_n\xrightarrow{d}\chi^2_k.$$</div>
+    <div class="keyresult">
+      More generally, if the null imposes $k$ restrictions, Wilks' theorem gives $$2\log\text{LR}_n(\mathbf{X})\xrightarrow{d}\chi^2_k.$$
+    </div>
 
     <figure class="handwritten-note">
       <img src="../img/blog_img/data145/glrt_quadratic_notes.png" alt="Handwritten GLRT notes about log-likelihood curvature and Taylor expansion" />
@@ -562,11 +563,11 @@
       $E_i=n\theta_{0,i}$. The unrestricted MLE is $\hat\theta_i=O_i/n$, so
     </p>
 
-    <div class="formula-box">$$2\log\Lambda=2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right).$$</div>
+    <div class="formula-box">$$2\log\text{LR}(\mathbf{O})=2\sum_{i=1}^c O_i\log\left(\frac{O_i}{E_i}\right).$$</div>
 
     <div class="keyresult">
-      Under the multinomial null, $$2\log\Lambda\xrightarrow{d}\chi^2_{c-1}.$$ The degree of freedom is $c-1$ because the category probabilities must
-      sum to 1, so only $c-1$ components are free.
+      Under the multinomial null, $$2\log\text{LR}(\mathbf{O})\xrightarrow{d}\chi^2_{c-1}.$$ The degree of freedom is $c-1$ because the category
+      probabilities must sum to 1, so only $c-1$ components are free.
     </div>
 
     <div class="intuition">
@@ -762,8 +763,8 @@
     </div>
 
     <div class="warning">
-      <strong>5.</strong> "Wald intervals are always fine."<br />
-      Near boundaries or under awkward parameterization, Score/GLRT-based intervals can be safer.
+      <strong>5.</strong> "Asymptotic normal confidence intervals are always fine."<br />
+      Near boundaries or under awkward parameterization, Score/GLRT-inverted confidence regions can be safer.
     </div>
 
     <hr />
