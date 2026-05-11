@@ -268,6 +268,24 @@
         font-size: 0.92rem;
       }
 
+      .geometry-figure {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1.2rem 0;
+      }
+      .geometry-figure svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .geometry-figure figcaption {
+        color: var(--subtle);
+        font-size: 0.92rem;
+        margin-top: 0.75rem;
+      }
+
       @media print {
         body {
           max-width: 100%;
@@ -296,6 +314,7 @@
         <li><a href="#lec19">Lecture 19: Multiple Testing and Simultaneous Inference</a></li>
         <li><a href="#bridge1920">Bridge: Why FWER Can Be Too Strict</a></li>
         <li><a href="#lec20">Lecture 20: False Discovery Rate and Benjamini-Hochberg</a></li>
+        <li><a href="#study-map">Study Map: Procedures, Guarantees, and Assumptions</a></li>
         <li><a href="#comparison">Big Comparison Map</a></li>
         <li><a href="#summary">Master Summary and Formula Sheet</a></li>
         <li><a href="#mistakes">Common Mistakes</a></li>
@@ -464,6 +483,82 @@
       coordinates. Strong positive correlation can make $t_\alpha$ noticeably smaller than the Bonferroni width.
     </p>
 
+    <h3>19.8 Why Bonferroni can be wasteful under correlation</h3>
+
+    <p>
+      Bonferroni is intentionally blind to dependence. It protects against a false rejection in each coordinate separately, then adds those risks by
+      the union bound. That is why it is always safe, but it can spend probability budget on combinations of errors that the joint distribution almost
+      never produces.
+    </p>
+
+    <figure class="geometry-figure">
+      <svg viewBox="0 0 960 360" role="img" aria-label="Geometry of Bonferroni boxes versus correlated Gaussian ellipses">
+        <defs>
+          <marker id="arrow19" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#4a5568"></path>
+          </marker>
+        </defs>
+
+        <text x="150" y="28" text-anchor="middle" fill="#1a365d" font-size="18" font-weight="700">Independent</text>
+        <text x="480" y="28" text-anchor="middle" fill="#1a365d" font-size="18" font-weight="700">Positive correlation</text>
+        <text x="810" y="28" text-anchor="middle" fill="#1a365d" font-size="18" font-weight="700">Negative correlation</text>
+
+        <g transform="translate(150 165)">
+          <line x1="-105" y1="0" x2="105" y2="0" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <line x1="0" y1="105" x2="0" y2="-105" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <text x="108" y="-8" fill="#4a5568" font-size="13">Z1</text>
+          <text x="9" y="-104" fill="#4a5568" font-size="13">Z2</text>
+          <rect x="-70" y="-70" width="140" height="140" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2"></rect>
+          <circle cx="0" cy="0" r="58" fill="rgba(56,161,105,0.18)" stroke="#38a169" stroke-width="3"></circle>
+          <text x="0" y="125" text-anchor="middle" fill="#2d3748" font-size="14">Round cloud</text>
+          <text x="0" y="145" text-anchor="middle" fill="#718096" font-size="12">Bonferroni box is not too loose</text>
+        </g>
+
+        <g transform="translate(480 165)">
+          <line x1="-105" y1="0" x2="105" y2="0" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <line x1="0" y1="105" x2="0" y2="-105" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <text x="108" y="-8" fill="#4a5568" font-size="13">Z1</text>
+          <text x="9" y="-104" fill="#4a5568" font-size="13">Z2</text>
+          <rect x="-82" y="-82" width="164" height="164" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2"></rect>
+          <circle cx="-58" cy="58" r="20" fill="rgba(229,62,62,0.16)" stroke="#e53e3e" stroke-dasharray="4 4"></circle>
+          <circle cx="58" cy="-58" r="20" fill="rgba(229,62,62,0.16)" stroke="#e53e3e" stroke-dasharray="4 4"></circle>
+          <ellipse cx="0" cy="0" rx="96" ry="24" transform="rotate(45)" fill="rgba(56,161,105,0.2)" stroke="#38a169" stroke-width="3"></ellipse>
+          <text x="0" y="125" text-anchor="middle" fill="#2d3748" font-size="14">Diagonal ellipse</text>
+          <text x="0" y="145" text-anchor="middle" fill="#718096" font-size="12">(+,-) corners are mostly empty</text>
+        </g>
+
+        <g transform="translate(810 165)">
+          <line x1="-105" y1="0" x2="105" y2="0" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <line x1="0" y1="105" x2="0" y2="-105" stroke="#4a5568" stroke-width="1.8" marker-end="url(#arrow19)"></line>
+          <text x="108" y="-8" fill="#4a5568" font-size="13">Z1</text>
+          <text x="9" y="-104" fill="#4a5568" font-size="13">Z2</text>
+          <rect x="-82" y="-82" width="164" height="164" fill="#ebf4ff" stroke="#2b6cb0" stroke-width="2"></rect>
+          <circle cx="-58" cy="-58" r="20" fill="rgba(229,62,62,0.16)" stroke="#e53e3e" stroke-dasharray="4 4"></circle>
+          <circle cx="58" cy="58" r="20" fill="rgba(229,62,62,0.16)" stroke="#e53e3e" stroke-dasharray="4 4"></circle>
+          <ellipse cx="0" cy="0" rx="96" ry="24" transform="rotate(-45)" fill="rgba(56,161,105,0.2)" stroke="#38a169" stroke-width="3"></ellipse>
+          <text x="0" y="125" text-anchor="middle" fill="#2d3748" font-size="14">Anti-diagonal ellipse</text>
+          <text x="0" y="145" text-anchor="middle" fill="#718096" font-size="12">(+,+) corners are mostly empty</text>
+        </g>
+      </svg>
+      <figcaption>
+        Blue boxes represent axis-aligned Bonferroni-style simultaneous intervals. Green shapes represent the actual joint error cloud. When the
+        coordinates are strongly correlated, the joint cloud is thinner than the box, so a method that uses the covariance structure can be tighter.
+      </figcaption>
+    </figure>
+
+    <div class="intuition">
+      The firefly picture: the data point moves inside a joint error cloud. If the cloud is round, an axis-aligned box is not wildly inefficient. If
+      the cloud is a long ellipse, Bonferroni still builds a box wide enough to cover the extreme coordinate tips, including corners where the firefly
+      essentially cannot go. That unused corner area is the "wasted" probability budget.
+    </div>
+
+    <div class="warning">
+      Dependence has two slightly different stories here. For two-sided simultaneous coordinate intervals, strong correlation of either sign can make
+      the effective dimension smaller and make Bonferroni conservative. For one-sided upper-tail testing events, positive correlation makes rejection
+      events overlap more, while negative dependence can make them more disjoint; in that case the union bound can be closer to sharp. Always ask:
+      which events are overlapping?
+    </div>
+
     <hr />
 
     <!-- ============================================================ -->
@@ -610,7 +705,7 @@
           total number of BH rejections does not change, so $R=R^0$ there.
         </li>
         <li>
-          Condition on the other $p$-values. Since $R^0$ depends only on $p_{-i}$ and $p_i\sim \text{Unif}(0,1)$ independently,
+          Condition on the other $p$-values. Since $R^0$ depends only on $p_{-i}$ and $p_i\sim \text{Uniform}(0,1)$ independently,
           $$E\!\left[\frac{V_i}{R\vee 1}\right] \leq \frac{\alpha}{m}.$$ Summing over the $m_0$ true nulls gives the result.
         </li>
       </ol>
@@ -646,7 +741,87 @@
       </tr>
     </table>
 
+    <div class="intuition">
+      The phrase "positive dependence" in the BH theorem is not just "the scatterplot slopes upward" in every possible sense. The standard lecture
+      proof used full independence. A more advanced theorem allows certain positive regression dependence conditions because increasing evidence
+      against one null should not perversely make the BH rejection threshold behave in the wrong direction. Arbitrary or strongly negative dependence
+      is not covered by the basic proof.
+    </div>
+
     <hr />
+
+    <!-- ============================================================ -->
+    <h2 id="study-map">Study Map: Procedures, Guarantees, and Assumptions</h2>
+    <!-- ============================================================ -->
+
+    <p>
+      For studying, every method in Lectures 19-20 should be remembered through five questions: what is the target error concept, what is the
+      procedure, what does it achieve, what assumptions does the guarantee need, and how does it relate to the other procedures?
+    </p>
+
+    <table>
+      <tr>
+        <th>Method</th>
+        <th>Process</th>
+        <th>Achieves</th>
+        <th>Assumes / proof needs</th>
+        <th>Relationship</th>
+      </tr>
+      <tr>
+        <td>Marginal testing</td>
+        <td>Reject $H_{0i}$ when $p_i\leq\alpha$.</td>
+        <td>Controls each individual Type I error.</td>
+        <td>Only needs each true-null $p_i$ to be valid for its own test.</td>
+        <td>Baseline; fails to control family-level error when $m$ is large.</td>
+      </tr>
+      <tr>
+        <td>Bonferroni</td>
+        <td>Reject $H_{0i}$ when $p_i\leq\alpha/m$.</td>
+        <td>Controls FWER: $P(V&gt;0)\leq\alpha$.</td>
+        <td>Valid true-null $p$-values. No independence needed.</td>
+        <td>Union-bound method; safest and often most conservative.</td>
+      </tr>
+      <tr>
+        <td>Sidak</td>
+        <td>Reject $H_{0i}$ when $p_i\leq1-(1-\alpha)^{1/m}$.</td>
+        <td>Controls FWER, with a slightly larger cutoff than Bonferroni.</td>
+        <td>Independence among true-null $p$-values, plus null uniformity or conservativeness.</td>
+        <td>Independence-refined Bonferroni; usually numerically close.</td>
+      </tr>
+      <tr>
+        <td>Scheffe</td>
+        <td>Build a $\chi^2$ confidence ball, then test all contrasts from that ball.</td>
+        <td>Controls FWER over infinitely many Gaussian contrasts.</td>
+        <td>Gaussian linear-contrast setup and known covariance structure in the lecture version.</td>
+        <td>Shows that geometry can replace counting hypotheses.</td>
+      </tr>
+      <tr>
+        <td>Deduction principle</td>
+        <td>Start with one joint $1-\alpha$ confidence region and deduce all valid conclusions from it.</td>
+        <td>Any wrong deduced conclusion occurs only if the joint region missed $\theta$.</td>
+        <td>The starting confidence region must have joint coverage at least $1-\alpha$.</td>
+        <td>Generalizes Scheffe and simultaneous intervals.</td>
+      </tr>
+      <tr>
+        <td>BH</td>
+        <td>Sort $p$-values and take the largest $k$ with $p_{(k)}\leq \alpha k/m$.</td>
+        <td>Controls FDR: $E[V/(R\vee1)]\leq\alpha m_0/m\leq\alpha$.</td>
+        <td>Lecture proof needs independence and null uniformity; uniformity can relax to conservative null $p$-values.</td>
+        <td>Step-up estimated-FDP control; more powerful than FWER methods for screening.</td>
+      </tr>
+      <tr>
+        <td>BH under dependence</td>
+        <td>Use ordinary BH only under approved positive-dependence settings; otherwise reduce the target level.</td>
+        <td>PRDS-type positive dependence still allows BH control; arbitrary dependence needs a correction.</td>
+        <td>Arbitrary dependence uses the conservative Benjamini-Yekutieli level $\alpha/L_m$, $L_m=\sum_{k=1}^m1/k$.</td>
+        <td>This is the FDR analogue of asking when dependence breaks or preserves the proof.</td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+      <strong>Relationship in one line:</strong><br />
+      Bonferroni/Sidak/Scheffe/deduction control the chance of any false claim; BH controls the expected false fraction among the claims you make.
+    </div>
 
     <!-- ============================================================ -->
     <h2 id="comparison">Big Comparison Map</h2>
