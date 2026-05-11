@@ -10,11 +10,11 @@
           inlineMath: [["$", "$"]],
           displayMath: [["$$", "$$"]],
           macros: {
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            SD: "\\operatorname{SD}",
+            SD: "\\text{SD}",
             argmax: "\\operatorname{arg\\,max}",
           },
         },
@@ -345,22 +345,22 @@
     <h3>17.1 GLRT recap in one line</h3>
 
     <div class="definition">
-      $$\Lambda = \frac{\Lik(\hat\theta;X)}{\Lik(\theta_0;X)},\qquad 2\log\Lambda = 2\bigl[\ell(\hat\theta;X)-\ell(\theta_0;X)\bigr].$$ Reject for
-      large values of $2\log\Lambda$.
+      $$\text{LR}(\mathbf{X}) = \frac{\Lik(\hat\theta;X)}{\Lik(\theta_0;X)},\qquad 2\log\text{LR}(\mathbf{X}) =
+      2\bigl[\ell(\hat\theta;X)-\ell(\theta_0;X)\bigr].$$ Reject for large values of $2\log\text{LR}(\mathbf{X})$.
     </div>
 
-    <div class="keyresult">Under regularity and large $n$, for a one-parameter null: $$2\log\Lambda \xrightarrow{d} \chi^2_1.$$</div>
+    <div class="keyresult">Under regularity and large $n$, for a one-parameter null: $$2\log\text{LR}(\mathbf{X}) \xrightarrow{d} \chi^2_1.$$</div>
 
     <div class="example">
-      Poisson($\lambda$) one-sample GLRT for $H_0:\lambda=\lambda_0$: $$2\log\Lambda = 2n\left[\bar X\log\left(\frac{\bar X}{\lambda_0}\right)-(\bar
-      X-\lambda_0)\right].$$ This gives a concrete way to compute the statistic before using the $\chi^2_1$ calibration.
+      $\text{Pois}(\lambda)$ one-sample GLRT for $H_0:\lambda=\lambda_0$: $$2\log\text{LR}(\mathbf{X}) = 2n\left[\bar X\log\left(\frac{\bar
+      X}{\lambda_0}\right)-(\bar X-\lambda_0)\right].$$ This gives a concrete way to compute the statistic before using the $\chi^2_1$ calibration.
     </div>
 
     <h3>17.2 Multi-parameter extension</h3>
 
     <div class="theorem">
-      (Informal course theorem) In regular parametric models, under $H_0$: $$2\log\Lambda \xrightarrow{d} \chi^2_k,$$ where $k$ is the number of free
-      parameters constrained by the null comparison.
+      (Informal course theorem) In regular parametric models, under $H_0$: $$2\log\text{LR}(\mathbf{X}) \xrightarrow{d} \chi^2_k,$$ where $k$ is the
+      number of free parameters constrained by the null comparison.
     </div>
 
     <p>
@@ -378,7 +378,8 @@
     <p>Let $O_i$ be observed counts and $E_i=n\theta_{0,i}$ expected counts under $H_0$. With MLE $\hat\theta_i=O_i/n$, the lecture derives:</p>
 
     <div class="formula-box">
-      $$\Lambda = \prod_{i=1}^{c}\left(\frac{O_i}{E_i}\right)^{O_i}, \qquad 2\log\Lambda = 2\sum_{i=1}^{c}O_i\log\frac{O_i}{E_i}.$$
+      $$\text{LR}(\mathbf{O}) = \prod_{i=1}^{c}\left(\frac{O_i}{E_i}\right)^{O_i}, \qquad 2\log\text{LR}(\mathbf{O}) =
+      2\sum_{i=1}^{c}O_i\log\frac{O_i}{E_i}.$$
     </div>
 
     <div class="warning">
@@ -431,7 +432,7 @@
       <ol>
         <li>Estimate $\hat\lambda=\bar X$.</li>
         <li>Bin counts into categories (with sensible tail pooling).</li>
-        <li>Compute expected counts under Poisson($\hat\lambda$).</li>
+        <li>Compute expected counts under $\text{Pois}(\hat\lambda)$.</li>
         <li>Use chi-squared reference with one df deducted for estimating $\lambda$.</li>
       </ol>
     </div>
@@ -527,7 +528,7 @@
 
     <div class="example">
       Sign test (nonparametric): under symmetry and no ties, each difference is positive with probability $1/2$. So the number of positive differences
-      is Binomial$(n,1/2)$ under $H_0$.
+      is $\text{Binom}(n,1/2)$ under $H_0$.
     </div>
 
     <h3>18.3 One sample: test the entire underlying distribution</h3>
@@ -839,7 +840,7 @@
       </tr>
       <tr>
         <td>GLRT statistic</td>
-        <td>$2\log\Lambda = 2[\ell(\hat\theta)-\ell(\theta_0)]$</td>
+        <td>$2\log\text{LR}(\mathbf{X}) = 2[\ell(\hat\theta)-\ell(\theta_0)]$</td>
         <td>Reject for large values</td>
       </tr>
       <tr>

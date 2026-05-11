@@ -12,10 +12,10 @@
           macros: {
             E: "\\mathbb{E}",
             P: "\\mathbb{P}",
-            Var: "\\operatorname{Var}",
-            Cov: "\\operatorname{Cov}",
-            iid: "\\overset{\\mathrm{iid}}{\\sim}",
-            ATE: "\\operatorname{ATE}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
+            iid: "\\overset{\\text{iid}}{\\sim}",
+            ATE: "\\text{ATE}",
           },
         },
       };
@@ -581,7 +581,7 @@
       units and $n$ treated units, then under the no-difference null the number of ones in the treatment group has distribution
     </p>
 
-    <div class="formula-box">$$\operatorname{Hypergeometric}(N,w,n).$$</div>
+    <div class="formula-box">$$\text{Hypergeometric}(N,w,n).$$</div>
 
     <p>Fisher's exact test uses this distribution to compute the p-value for the observed treated count.</p>
 
@@ -690,18 +690,18 @@
       <div class="formula-box">$$\Var(\hat\tau)=\Var(\bar X)+\Var(\bar Y)-2\Cov(\bar X,\bar Y).$$</div>
 
       <p>
-        For disjoint treatment and control samples, the cross-covariance is $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\operatorname{cov}(t,c),$$ where
-        $\operatorname{cov}(t,c)$ is the finite-population covariance of the paired potential outcomes $(t_i,c_i)$. Substituting and regrouping gives
+        For disjoint treatment and control samples, the cross-covariance is $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\text{cov}(t,c),$$ where
+        $\text{cov}(t,c)$ is the finite-population covariance of the paired potential outcomes $(t_i,c_i)$. Substituting and regrouping gives
       </p>
 
       <div class="formula-box">
         $$\Var(\hat\tau)=\frac{N}{N-1}\left(\frac{\sigma_t^2}{n}+\frac{\sigma_c^2}{m}\right)-\frac{1}{N-1}
-        \left(\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)\right).$$
+        \left(\sigma_t^2+\sigma_c^2-2\text{cov}(t,c)\right).$$
       </div>
 
       <p>Since $S_t^2=\frac{N}{N-1}\sigma_t^2$ and $S_c^2=\frac{N}{N-1}\sigma_c^2$, and since</p>
 
-      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)=\operatorname{Var}(t_i-c_i)\ge 0,$$</div>
+      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\text{cov}(t,c)=\text{Var}(t_i-c_i)\ge 0,$$</div>
 
       <p>we get the conservative upper bound</p>
 
@@ -719,15 +719,14 @@
       <p>The last finite-population correction can be seen directly from the covariance algebra:</p>
 
       <div class="formula-box">
-        $$\frac{1}{N-1}\left(2\operatorname{cov}(t,c)-\sigma_t^2-\sigma_c^2\right)
-        =-\frac{1}{N-1}\left(\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)\right).$$
+        $$\frac{1}{N-1}\left(2\text{cov}(t,c)-\sigma_t^2-\sigma_c^2\right) =-\frac{1}{N-1}\left(\sigma_t^2+\sigma_c^2-2\text{cov}(t,c)\right).$$
       </div>
 
       <p>But the expression in parentheses is the variance of individual treatment effects:</p>
 
-      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\operatorname{cov}(t,c)=\operatorname{Var}(t_i-c_i)\ge 0.$$</div>
+      <div class="formula-box">$$\sigma_t^2+\sigma_c^2-2\text{cov}(t,c)=\text{Var}(t_i-c_i)\ge 0.$$</div>
 
-      <p>So the correction is $-\operatorname{Var}(t_i-c_i)/(N-1)\le 0$. That is why dropping it gives an upper bound on $\Var(\hat\tau)$.</p>
+      <p>So the correction is $-\text{Var}(t_i-c_i)/(N-1)\le 0$. That is why dropping it gives an upper bound on $\Var(\hat\tau)$.</p>
     </details>
 
     <div class="warning">
@@ -736,9 +735,9 @@
     </div>
 
     <div class="intuition">
-      The sign comes from the identity $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\operatorname{cov}(t,c).$$ The $\operatorname{cov}(t,c)$ part refers to
-      paired potential outcomes for the same person. Those are often positively related: a person with a high control outcome might also tend to have
-      a high treatment outcome. The negative sign comes from $\bar X$ and $\bar Y$ being computed from disjoint groups. If randomization puts many
+      The sign comes from the identity $$\Cov(\bar X,\bar Y)=-\frac{1}{N-1}\text{cov}(t,c).$$ The $\text{cov}(t,c)$ part refers to paired potential
+      outcomes for the same person. Those are often positively related: a person with a high control outcome might also tend to have a high treatment
+      outcome. The negative sign comes from $\bar X$ and $\bar Y$ being computed from disjoint groups. If randomization puts many
       high-potential-outcome people into treatment, those same people cannot appear in control, so the control average is pushed downward. This is the
       usual without-replacement tradeoff.
     </div>
@@ -749,7 +748,7 @@
 
     <p>Estimate the bound using the observed sample variances:</p>
 
-    <div class="formula-box">$$\widehat{\Var}_{\mathrm{cons}}(\hat\tau)=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.$$</div>
+    <div class="formula-box">$$\widehat{\Var}_{\text{cons}}(\hat\tau)=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.$$</div>
 
     <h3>5.3 Conservative confidence interval</h3>
 
@@ -955,7 +954,7 @@
 
     <div class="keyresult">
       With estimated propensity scores $\hat e(X_i)$, the inverse propensity weighted estimator is
-      $$\hat\tau_{\mathrm{IPW}}=\frac{1}{n}\sum_{i=1}^n\frac{Z_iY_i}{\color{red}{\hat e(X_i)}}-\frac{1}{n}\sum_{i=1}^n
+      $$\hat\tau_{\text{IPW}}=\frac{1}{n}\sum_{i=1}^n\frac{Z_iY_i}{\color{red}{\hat e(X_i)}}-\frac{1}{n}\sum_{i=1}^n
       \frac{(1-Z_i)Y_i}{\color{red}{1-\hat e(X_i)}}.$$
     </div>
 
