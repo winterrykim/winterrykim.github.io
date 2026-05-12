@@ -416,6 +416,33 @@ _styles: |
     line-height: 1.45;
   }
 
+  .review-detail {
+    margin: 1.35rem 0 1.6rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(43, 108, 176, 0.18);
+    border-radius: 18px;
+    background: rgba(248, 251, 255, 0.9);
+    box-shadow: 0 10px 26px rgba(26, 54, 93, 0.07);
+  }
+
+  .review-detail summary {
+    cursor: pointer;
+    color: #18314f;
+    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .review-detail[open] summary {
+    margin-bottom: 0.8rem;
+  }
+
+  .quantile-sketch {
+    width: min(720px, 100%);
+    margin: 1rem auto;
+    display: block;
+  }
+
   footer.fixed-bottom {
     border-top: 1px solid rgba(26, 54, 93, 0.08);
   }
@@ -2276,6 +2303,58 @@ Interpretation:
 Under a fully specified continuous null, the null distribution of $D_n$ is **distribution-free**.
 
 That is a major fact. The lecture shows this by transforming through the null CDF to $\text{Uniform}(0,1)$.
+
+<details class="review-detail" markdown="1">
+<summary>Review note: inverse CDF sampling and why the CDF transform gives uniforms</summary>
+
+The CDF transform is the small probability fact that makes the one-sample KS test distribution-free. Assume for this review note that $F$ is
+continuous and strictly increasing, so it has an inverse function $F^{-1}$.
+
+<svg class="quantile-sketch" viewBox="0 0 720 300" role="img" aria-label="CDF graph showing uniform y-values mapped back to x-values by the inverse CDF">
+  <defs>
+    <marker id="cdfArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#4a5568"></path>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="300" rx="18" fill="#ffffff" stroke="#d9e2ec"></rect>
+  <line x1="70" y1="240" x2="640" y2="240" stroke="#4a5568" stroke-width="2" marker-end="url(#cdfArrow)"></line>
+  <line x1="70" y1="240" x2="70" y2="40" stroke="#4a5568" stroke-width="2" marker-end="url(#cdfArrow)"></line>
+  <text x="650" y="246" fill="#4a5568" font-size="15">x</text>
+  <text x="52" y="38" fill="#4a5568" font-size="15">F(x)</text>
+  <path d="M90 224 C170 218, 210 190, 260 158 C315 122, 390 92, 520 58" fill="none" stroke="#2b6cb0" stroke-width="4"></path>
+  <line x1="70" y1="122" x2="333" y2="122" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 5"></line>
+  <line x1="333" y1="122" x2="333" y2="240" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 5"></line>
+  <circle cx="333" cy="122" r="5" fill="#dd6b20"></circle>
+  <text x="36" y="127" fill="#dd6b20" font-size="15">u</text>
+  <text x="300" y="266" fill="#dd6b20" font-size="15">F^{-1}(u)</text>
+  <text x="412" y="126" fill="#2d3748" font-size="15">start with a height u</text>
+  <text x="396" y="150" fill="#2d3748" font-size="15">map left-to-right-to-down</text>
+  <text x="396" y="174" fill="#2d3748" font-size="15">to get x = F^{-1}(u)</text>
+</svg>
+
+**Inverse direction: make a variable with CDF $F$.** Generate $U\sim\text{Uniform}(0,1)$ and set
+
+$$
+X = F^{-1}(U).
+$$
+
+Then $X$ has CDF $F$:
+
+$$
+\begin{aligned}
+F_X(x)
+&= P(X\le x) \\
+&= P(F^{-1}(U)\le x) \\
+&= P(U\le F(x)) \qquad \text{because } F \text{ is increasing}\\
+&= F_U(F(x)) \\
+&= F(x).
+\end{aligned}
+$$
+
+**Forward direction used by KS.** If $X\sim F$, then $U=F(X)\sim\text{Uniform}(0,1)$. So under a fully specified continuous null, the transformed
+sample $U_i=F(X_i)$ behaves like uniform data. That is why the one-sample KS statistic can be rewritten on the unit interval.
+
+</details>
 
 So under the null, the problem effectively reduces to
 
