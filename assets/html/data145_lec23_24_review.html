@@ -273,6 +273,24 @@
         font-size: 0.92rem;
         margin-bottom: 1.1rem;
       }
+      details.derivation {
+        border-left: 4px solid #a0aec0;
+        background: #f7fafc;
+        border-radius: 0 6px 6px 0;
+        padding: 0.85rem 1.1rem;
+        margin: 1.1rem 0;
+      }
+      details.derivation summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: #4a5568;
+      }
+      details.derivation[open] summary {
+        margin-bottom: 0.65rem;
+      }
+      details.derivation > *:last-child {
+        margin-bottom: 0;
+      }
       hr {
         border: none;
         border-top: 1px solid var(--border);
@@ -308,6 +326,7 @@
         .intuition,
         .warning,
         .keyresult,
+        details.derivation,
         .formula-box {
           overflow-x: auto;
         }
@@ -628,6 +647,11 @@
         <td>$F=\dfrac{\|Z_1\|^2/d_1}{\|Z_r\|^2/d_r}\sim F_{d_1,d_r}$</td>
       </tr>
     </table>
+
+    <div class="intuition">
+      The subscript $r$ means residual block, not one specific coordinate. If $d_r=1$, then $Z_r$ has one coordinate and $\sqrt{\|Z_r\|^2/d_r}=|Z_r|$.
+      If $d_r&gt;1$, then $Z_r$ is a vector of several residual coordinates, and $\|Z_r\|^2/d_r$ is the average squared residual coordinate.
+    </div>
 
     <div class="intuition">
       Read the table as an algebraic summary of the story. Known variance means the noise scale is fixed. Unknown variance means the residual block
@@ -1033,15 +1057,26 @@
     </div>
 
     <div class="definition">
-      Use $$Q=\frac{1}{\sqrt2}\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix},\qquad
-      Z=Q^TX=\begin{bmatrix}(X_1+X_2)/\sqrt2\\(X_2-X_1)/\sqrt2\end{bmatrix}.$$ Then $$Z\sim
-      N_2\!\left(\begin{bmatrix}\sqrt2\,\mu\\0\end{bmatrix},\sigma^2I_2\right).$$
+      Use $$Q=\frac{1}{\sqrt2}\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix},\qquad Z=Q^TX.$$ Since $X\sim N_2(\mu\mathbf1,\sigma^2I_2)$, the
+      affine transformation formula gives $$Z=Q^TX\sim N_2(Q^T\mu\mathbf1,\sigma^2Q^TQ).$$ Because $Q$ is orthogonal and $Q^T\mathbf1=(\sqrt2,0)^T$,
+      this becomes $$Z\sim N_2\!\left(\begin{bmatrix}\sqrt2\,\mu\\0\end{bmatrix},\sigma^2I_2\right).$$ Reading off the coordinates,
+      $$Z=\begin{bmatrix}(X_1+X_2)/\sqrt2\\(X_2-X_1)/\sqrt2\end{bmatrix}.$$
+    </div>
+
+    <div class="keyresult">
+      This is the $d_1=1$, $\sigma^2$ unknown row of the canonical table. In this $n=2$ example the residual block has only one coordinate, so
+      $$Z_r=Z_2,\qquad d_r=1,$$ and the table predicts $$T=\frac{Z_1}{\sqrt{\|Z_r\|^2/d_r}}=\frac{Z_1}{\sqrt{Z_2^2}}=\frac{Z_1}{|Z_2|}.$$
     </div>
 
     <div class="keyresult">
       Equivalently, the rotated axes are the orthonormal basis vectors $$q_1=\frac{1}{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix},\qquad
       q_2=\frac{1}{\sqrt2}\begin{bmatrix}-1\\1\end{bmatrix}.$$ The new coordinates are projections: $$Z_1=q_1^TX,\qquad Z_2=q_2^TX.$$ So $Z_1$ is "how
       far $X$ points along the 45-degree signal line," and $Z_2$ is "how far $X$ points along the perpendicular residual line."
+    </div>
+
+    <div class="intuition">
+      The factor $\sqrt2$ is just normalization. The raw signal direction $(1,1)$ has length $\sqrt2$, so the unit signal vector is $(1,1)/\sqrt2$.
+      Projection coordinates are taken against unit vectors, which is why the signal projection is $Z_1=(X_1+X_2)/\sqrt2$ rather than $X_1+X_2$.
     </div>
 
     <div class="keyresult">
@@ -1254,17 +1289,27 @@
     </p>
 
     <div class="intuition">
-      In your handwritten picture, this is the relationship $$\frac{\sqrt2\,\bar X}{S}=\cot\!\bigl(\angle(X,\text{45-degree signal line})\bigr).$$ The
-      point $X$ is compared to the diagonal signal line in the original coordinates; after rotation, that same comparison becomes the ratio
-      $Z_1/|Z_2|$ in canonical coordinates.
+      In your handwritten picture, this is the relationship $$\left|\frac{\sqrt2\,\bar X}{S}\right|=|\cot(\theta)|,$$ where $\theta$ is the angle from
+      the 45-degree signal line. The point $X$ is compared to the diagonal signal line in the original coordinates; after rotation, that same
+      comparison becomes the ratio $Z_1/|Z_2|$ in canonical coordinates. The signed statistic keeps the sign of the signal projection $Z_1$.
     </div>
 
-    <div class="proof">
-      The classical statistic is $$T_{\text{classical}}=\frac{\sqrt2\,\bar X}{S}.$$ The sample standard deviation still comes from subtracting the
-      sample mean. For $n=2$, $$\bar X=\frac{X_1+X_2}{2},$$ so $$X_1-\bar X=\frac{X_1-X_2}{2},\qquad X_2-\bar X=\frac{X_2-X_1}{2}.$$ Therefore
-      $$S^2=(X_1-\bar X)^2+(X_2-\bar X)^2 =\frac{(X_1-X_2)^2}{4}+\frac{(X_2-X_1)^2}{4} =\frac{(X_1-X_2)^2}{2},$$ so $$S=\frac{|X_1-X_2|}{\sqrt2}.$$
-      Since $Z_1=(X_1+X_2)/\sqrt2$ and $|Z_2|=|X_2-X_1|/\sqrt2$, $$T_{\text{classical}}=\frac{(X_1+X_2)/\sqrt2}{|X_1-X_2|/\sqrt2}=\frac{Z_1}{|Z_2|}.$$
-    </div>
+    <details class="derivation">
+      <summary>Show the algebra: the usual t-statistic equals the projection ratio</summary>
+      <p>
+        The usual one-sample statistic for testing $H_0:\mu=0$ is $$T_{\text{classical}}=\frac{\bar X}{S/\sqrt n}.$$ For $n=2$, this is
+        $$T_{\text{classical}}=\frac{\sqrt2\,\bar X}{S}.$$
+      </p>
+      <p>
+        The sample standard deviation still comes from subtracting the sample mean. For $n=2$, $$\bar X=\frac{X_1+X_2}{2},$$ so $$X_1-\bar
+        X=\frac{X_1-X_2}{2},\qquad X_2-\bar X=\frac{X_2-X_1}{2}.$$ Therefore $$S^2=(X_1-\bar X)^2+(X_2-\bar X)^2
+        =\frac{(X_1-X_2)^2}{4}+\frac{(X_2-X_1)^2}{4} =\frac{(X_1-X_2)^2}{2},$$ so $$S=\frac{|X_1-X_2|}{\sqrt2}.$$
+      </p>
+      <p>
+        Since $Z_1=(X_1+X_2)/\sqrt2$ and $|Z_2|=|X_2-X_1|/\sqrt2$,
+        $$T_{\text{classical}}=\frac{(X_1+X_2)/\sqrt2}{|X_1-X_2|/\sqrt2}=\frac{Z_1}{|Z_2|}.$$
+      </p>
+    </details>
 
     <div class="intuition">
       So the mean subtraction did not disappear. With two points, the sample mean is the midpoint, and the two centered deviations are just opposite
@@ -1278,17 +1323,24 @@
       $\mathbf1=(1,\ldots,1)^T$.
     </div>
 
+    <div class="intuition">
+      This is the same move as the $n=2$ rotation, except the residual part is no longer one perpendicular line. The signal line still has dimension
+      $d_1=1$, but the residual space $\mathbf1^\perp$ has dimension $d_r=n-1$.
+    </div>
+
     <div class="keyresult">
-      Let $$q_1=\frac{\mathbf1}{\sqrt n},\qquad Z_1=q_1^TX=\sqrt n\,\bar X.$$ Extend $q_1$ to an orthonormal basis $Q=[q_1\mid Q_r]$ and define
-      $Z_r=Q_r^TX$. Then $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
+      Let $$q_1=\frac{\mathbf1}{\sqrt n}.$$ This is a unit vector because $\|\mathbf1\|=\sqrt n$. Extend $q_1$ to an orthonormal basis $$Q=[q_1\mid
+      Q_r],$$ where the columns of $Q_r$ span the residual space $\mathbf1^\perp$. Define the rotated coordinates
+      $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}=Q^TX,\qquad Z_1=q_1^TX=\sqrt n\,\bar X,\qquad Z_r=Q_r^TX.$$
     </div>
 
     <div class="proof">
-      Why does the residual block have mean 0? Start from $E[X]=\mu\mathbf1$. Since every column of $Q_r$ is perpendicular to $\mathbf1$,
-      $$Q_r^T\mathbf1=0.$$ Therefore $$E[Z_r]=E[Q_r^TX]=Q_r^TE[X]=Q_r^T(\mu\mathbf1)=\mu Q_r^T\mathbf1=0.$$ The signal coordinate keeps the mean
-      because $q_1$ points exactly along $\mathbf1$: $$E[Z_1]=E[q_1^TX]=q_1^T(\mu\mathbf1)=\sqrt n\,\mu.$$ Finally, because $Q$ is orthogonal,
-      $$\text{Var}(Q^TX)=Q^T(\sigma^2I_n)Q=\sigma^2I_n.$$ This is the proof of the canonical rotated form $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}\sim
-      N_n\!\left(\begin{bmatrix}\sqrt n\,\mu\\0\end{bmatrix},\sigma^2I_n\right).$$
+      This is the lecture's affine-transformation step. Since $X\sim N_n(\mu\mathbf1,\sigma^2I_n)$, $$Q^TX\sim N_n(Q^T\mu\mathbf1,\sigma^2Q^TQ).$$ The
+      covariance simplifies because $Q$ is orthogonal: $$\sigma^2Q^TQ=\sigma^2I_n.$$ The mean simplifies because
+      $$Q^T\mathbf1=\begin{bmatrix}q_1^T\mathbf1\\Q_r^T\mathbf1\end{bmatrix} =\begin{bmatrix}\sqrt n\\\mathbf{0}_{n-1}\end{bmatrix}.$$ The top entry
+      is $\sqrt n$ because $q_1=\mathbf1/\sqrt n$, and the residual entries are 0 because the columns of $Q_r$ are perpendicular to $\mathbf1$.
+      Therefore $$\begin{bmatrix}Z_1\\Z_r\end{bmatrix}=Q^TX\sim N_n\!\left(\begin{bmatrix}\sqrt
+      n\,\mu\\\mathbf{0}_{n-1}\end{bmatrix},\sigma^2I_n\right).$$
     </div>
 
     <div class="proof">
@@ -1305,6 +1357,19 @@
     <div class="intuition">
       The number $n-1$ is the residual dimension: after fitting one mean direction, only $n-1$ independent noise directions remain.
     </div>
+
+    <details class="derivation">
+      <summary>Concrete bridge: more than one residual direction</summary>
+      <p>
+        For $n=3$, the signal direction is still one-dimensional: $$q_1=\frac{1}{\sqrt3}(1,1,1).$$ One possible pair of residual directions is
+        $$q_2=\frac{1}{\sqrt2}(1,-1,0),\qquad q_3=\frac{1}{\sqrt6}(1,1,-2).$$
+      </p>
+      <p>
+        Then the residual block is a vector, not a single number: $$Z_r=\begin{bmatrix}Z_2\\Z_3\end{bmatrix},\qquad d_r=2.$$ The unknown-variance t
+        denominator is $$\sqrt{\frac{\|Z_r\|^2}{d_r}}=\sqrt{\frac{Z_2^2+Z_3^2}{2}},$$ which is the projection version of the sample standard deviation
+        $S$.
+      </p>
+    </details>
 
     <div class="keyresult">
       Under $H_0:\mu=0$, $$\frac{Z_1}{\sigma}=\frac{\sqrt n\,\bar X}{\sigma}\sim N(0,1),$$ and
