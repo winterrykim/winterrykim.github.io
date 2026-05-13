@@ -657,6 +657,58 @@ $$
 
 are i.i.d. $\text{Exp}(\lambda)$.
 
+<details class="review-detail" markdown="1">
+<summary>Review note: why Poisson arrivals imply exponential waiting times</summary>
+
+Let $N(t)$ be the number of events that occur in a time window of length $t$. In a homogeneous Poisson process with rate $\lambda$,
+
+$$
+N(t)\sim \text{Pois}(\lambda t),
+\qquad
+P(N(t)=k)=\frac{\exp\{-\lambda t\}(\lambda t)^k}{k!}.
+$$
+
+<svg class="quantile-sketch" viewBox="0 0 720 190" role="img" aria-label="Timeline showing no events before time t is equivalent to first arrival time being greater than t">
+  <defs>
+    <marker id="timeArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#4a5568"></path>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="190" rx="18" fill="#ffffff" stroke="#d9e2ec"></rect>
+  <line x1="80" y1="94" x2="640" y2="94" stroke="#4a5568" stroke-width="2.5" marker-end="url(#timeArrow)"></line>
+  <circle cx="80" cy="94" r="5" fill="#2b6cb0"></circle>
+  <line x1="425" y1="55" x2="425" y2="132" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 5"></line>
+  <text x="73" y="128" fill="#2b6cb0" font-size="15">0</text>
+  <text x="420" y="150" fill="#dd6b20" font-size="15">t</text>
+  <text x="204" y="72" text-anchor="middle" fill="#2d3748" font-size="15">no arrivals in [0,t]</text>
+  <text x="204" y="122" text-anchor="middle" fill="#2d3748" font-size="15">means the first arrival time T is after t</text>
+  <circle cx="560" cy="94" r="7" fill="#38a169"></circle>
+  <text x="560" y="72" text-anchor="middle" fill="#38a169" font-size="15">first event</text>
+</svg>
+
+Let $T$ be the waiting time until the first event. The event $\{T>t\}$ means no event occurred during the whole interval $[0,t]$. So
+
+$$
+\begin{aligned}
+P(T>t)
+&=P(N(t)=0)\\
+&=\frac{\exp\{-\lambda t\}(\lambda t)^0}{0!}\\
+&=\exp\{-\lambda t\}.
+\end{aligned}
+$$
+
+Therefore the CDF of the first waiting time is the complement:
+
+$$
+F_T(t)=P(T\le t)=1-P(T>t)=1-\exp\{-\lambda t\},
+\qquad t\ge 0.
+$$
+
+This is exactly the CDF of $\text{Exp}(\lambda)$. So the reason Poisson-process interarrival times are exponential is: waiting longer than $t$ is the
+same event as seeing zero Poisson arrivals by time $t$.
+
+</details>
+
 ### Why this matters
 
 This is the first big modeling lesson:
