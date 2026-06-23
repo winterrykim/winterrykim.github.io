@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-training-a-language-model-from-scratch-part-1-building-blocks",
+        },{id: "post-training-a-language-model-from-scratch-part-2-flashattention-and-device-memory",
+        
+          title: "Training a Language Model from Scratch (Part 2: FlashAttention and Device Memory)",
+        
+        description: "A future-me note on why naive attention becomes a device-memory problem, how FlashAttention uses tiling, online softmax, log-sum-exp, and recomputation, and how Triton exposes the tile-level implementation model.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/training-lm-from-scratch-part2-flashattention-memory/";
+          
+        },
+      },{id: "post-training-a-language-model-from-scratch-part-1-building-blocks",
         
           title: "Training a Language Model from Scratch (Part 1: Building Blocks)",
         

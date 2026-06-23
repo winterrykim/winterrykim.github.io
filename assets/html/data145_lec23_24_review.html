@@ -1832,6 +1832,69 @@
       it. The geometry gives the observed length, and the F distribution calibrates how surprising that length is under the null.
     </div>
 
+    <details class="derivation">
+      <summary>Worked numeric regression example in canonical form</summary>
+      <p>
+        Test whether $w$ matters after controlling for an intercept and $x$: $$Y_i=\beta_0+\beta_1x_i+\beta_2w_i+\epsilon_i,\qquad H_0:\beta_2=0.$$
+        Use
+      </p>
+      <table>
+        <tr>
+          <th>$i$</th>
+          <th>$x_i$</th>
+          <th>$w_i$</th>
+          <th>$y_i$</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>$-2$</td>
+          <td>$2$</td>
+          <td>$4$</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>$-1$</td>
+          <td>$-1$</td>
+          <td>$-1.5$</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>$0$</td>
+          <td>$-2$</td>
+          <td>$0$</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>$1$</td>
+          <td>$-1$</td>
+          <td>$3.5$</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>$2$</td>
+          <td>$2$</td>
+          <td>$4$</td>
+        </tr>
+      </table>
+      <p>
+        The columns $\mathbf1=(1,1,1,1,1)^T$, $x=(-2,-1,0,1,2)^T$, and $w=(2,-1,-2,-1,2)^T$ are mutually orthogonal. The null model space is
+        $$\mathcal H_0=\Col(\mathbf1,x),$$ and the full model space is $$\mathcal H=\Col(\mathbf1,x,w).$$ Thus $$(d_0,d_1,d_r)=(2,1,2).$$
+      </p>
+      <p>
+        The reduced fit is $$\hat Y_0=2\mathbf1+0.5x=(1,1.5,2,2.5,3)^T,$$ so $$Y-\hat Y_0=(3,-3,-2,1,1)^T,\qquad \RSS_0=24.$$ The full fit is $$\hat
+        Y=2\mathbf1+0.5x+w=(3,0.5,0,1.5,5)^T,$$ so $$Y-\hat Y=(1,-2,0,2,-1)^T,\qquad \RSS=10.$$
+      </p>
+      <p>
+        In canonical-model language, $$\|Z_1\|^2=\RSS_0-\RSS=24-10=14,\qquad \|Z_r\|^2=\RSS=10.$$ Therefore
+        $$F=\frac{\|Z_1\|^2/d_1}{\|Z_r\|^2/d_r}=\frac{14/1}{10/2}=2.8\sim F_{1,2}\quad\text{under }H_0.$$ Because $d_1=1$, the equivalent signed t
+        statistic satisfies $$T^2=F,\qquad T=\sqrt{2.8}\approx1.67,$$ with $T\sim t_2$ under $H_0$.
+      </p>
+      <p>
+        The exam move is the identification, not the arithmetic: $Z_0$ is the projection onto $\Col(\mathbf1,x)$, $Z_1$ is the new direction
+        contributed by $w$ after accounting for $\mathbf1,x$, and $Z_r$ is the full-model residual projection.
+      </p>
+    </details>
+
     <h3>6.5 Individual coefficient t-test and confidence interval</h3>
 
     <div class="definition">
@@ -1932,6 +1995,45 @@
     <div class="formula-box">
       <strong>Unifying sentence:</strong><br />
       Every statistic above compares a tested projection to either a known variance scale or an independent residual variance estimate.
+    </div>
+
+    <h3>Exam readiness: what to cite vs. what to do</h3>
+
+    <p>
+      The lecture summary separates prerequisite facts from the new geometric skills. For exam practice, this distinction is useful: do not spend your
+      energy re-proving old distribution facts, but do be ready to use them inside the canonical model.
+    </p>
+
+    <table>
+      <tr>
+        <th>You can cite as given</th>
+        <th>You should be able to apply</th>
+      </tr>
+      <tr>
+        <td>Affine transformations of multivariate normals: if $Y=AZ+b$, then $Y\sim N(A\mu+b,A\Sigma A^T)$.</td>
+        <td>Use $Z=Q^TY$ to rotate a model into nuisance, signal, and residual coordinates.</td>
+      </tr>
+      <tr>
+        <td>For jointly normal variables, zero covariance implies independence.</td>
+        <td>Explain why orthogonal Gaussian projections are independent.</td>
+      </tr>
+      <tr>
+        <td>The reference definitions of $\chi^2$, t, and F distributions.</td>
+        <td>Choose the correct row of the four-test table from $d_1$, $d_r$, and whether $\sigma^2$ is known.</td>
+      </tr>
+      <tr>
+        <td>The OLS formula $\hat\beta=(X^TX)^{-1}X^TY$.</td>
+        <td>Translate regression into subspaces: $\mathcal H_0$, $\mathcal H$, $\mathcal H\cap\mathcal H_0^\perp$, and $\mathcal H^\perp$.</td>
+      </tr>
+      <tr>
+        <td>Standard sample variance and RSS formulas.</td>
+        <td>Recognize $\|Z_r\|^2=\RSS$ and $\|Z_1\|^2=\RSS_0-\RSS$ in nested regression and ANOVA problems.</td>
+      </tr>
+    </table>
+
+    <div class="keyresult">
+      A strong solution usually has this shape: identify the spaces, compute the dimensions, name the canonical blocks, then write the statistic. The
+      algebra should serve that geometry, not replace it.
     </div>
 
     <hr />
