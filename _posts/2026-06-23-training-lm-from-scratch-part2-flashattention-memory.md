@@ -5,6 +5,7 @@ date: 2026-06-23
 description: "A future-me note on why naive attention becomes a device-memory problem, how FlashAttention uses tiling, online softmax, log-sum-exp, and recomputation, and how Triton exposes the tile-level implementation model."
 tags: [ml, llm, transformers, systems, systems-infrastructure, flash-attention, triton, from-scratch]
 categories: [technical-blogs]
+thumbnail: /assets/img/blog_img/flash-attention/FA_tiling.png
 featured: true
 math: true
 _styles: |
