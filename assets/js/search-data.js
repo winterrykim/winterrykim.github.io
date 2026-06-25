@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-training-a-language-model-from-scratch-part-2-flashattention-and-device-memory",
+        },{id: "post-from-memory-to-photonics-solving-the-next-bottleneck-in-ai-scaling",
+        
+          title: "From Memory to Photonics: Solving the Next Bottleneck in AI Scaling",
+        
+        description: "A future-me note on how FlashAttention is IO-aware, why AI scaling turns memory movement into communication movement, and why photonics matters for the next interconnect bottleneck.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/from-memory-to-photonics-ai-scaling/";
+          
+        },
+      },{id: "post-training-a-language-model-from-scratch-part-2-flashattention-and-device-memory",
         
           title: "Training a Language Model from Scratch (Part 2: FlashAttention and Device Memory)",
         
