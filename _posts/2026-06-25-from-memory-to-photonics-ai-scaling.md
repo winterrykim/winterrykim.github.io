@@ -121,7 +121,7 @@ _styles: |
   }
 ---
 
-<p class="post-byline">w/ <a href="https://punhojark.github.io/">Junho Park</a> (Di Liang Lab, University of Michigan)</p>
+<p class="post-byline">w/ <a href="https://punhojark.github.io/">Junho Park</a> (<a href="https://lsip.engin.umich.edu/">Di Liang Lab</a>, University of Michigan)</p>
 
 In the [previous post]({% post_url 2026-06-23-training-lm-from-scratch-part2-flashattention-memory %}), I looked at FlashAttention as an example of IO-aware algorithm design.
 
