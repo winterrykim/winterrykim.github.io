@@ -271,7 +271,7 @@ This does not mean copper disappears. It means copper becomes less attractive wh
     src="{{ '/assets/img/blog_img/photonics-scaling/reach_vs_rate_annotated.png' | relative_url }}"
     alt="Reach versus data rate comparison for passive copper and fiber"
   />
-  <p>Recreated from Coherent's CLEO 2026 presentation.</p>
+  <p>Recreated from Coherent's <a href="https://cleoconference.org/2026-schedule-at-a-glance/">CLEO 2026</a> presentation.</p>
 </div>
 
 <div class="asset-figure wide">
