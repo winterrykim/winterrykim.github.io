@@ -268,6 +268,14 @@ This does not mean copper disappears. It means copper becomes less attractive wh
 
 <div class="asset-figure wide">
   <img
+    src="{{ '/assets/img/blog_img/photonics-scaling/reach_vs_rate_annotated.png' | relative_url }}"
+    alt="Reach versus data rate comparison for passive copper and fiber"
+  />
+  <p>Recreated from Coherent's CLEO 2026 presentation.</p>
+</div>
+
+<div class="asset-figure wide">
+  <img
     src="{{ '/assets/img/blog_img/photonics-scaling/interconnect_length.png' | relative_url }}"
     alt="Hand-drawn diagram of interconnect lengths from package scale to board scale to rack scale"
   />
@@ -341,8 +349,6 @@ This is the connection between FlashAttention and photonics: FlashAttention asks
 ---
 
 ## Photonics: yes, light, not electricity
-
-This is where photonics enters.
 
 Instead of sending information only as electrical signals through copper, optical communication sends information as light through fiber or optical waveguides.
 
@@ -491,7 +497,7 @@ design capability + interpretability
 
 That combination matters because photonics is not just another black-box optimization problem. If photonic devices are going to sit closer to AI infrastructure, we need tools that respect both the physics and the engineering constraints.
 
-If this direction is interesting, come see our poster at ICML AI4Physics.
+If this direction is interesting, come see our poster at [ICML AI4Physics](https://ai4physics-workshop.github.io/#:~:text=Generative%20Priors%20Accelerate%20Inverse%20Design%20for%20Regularized%2C%20High%20Performance%20Integrated%20Photonics%0ATaehan%20Kim%2C%20Junho%20Park%2C%20Mohammad%20Ali%2C%20SooHyuk%20Cho%2C%20Di%20Liang).
 
 ---
 
