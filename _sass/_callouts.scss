@@ -1,0 +1,103 @@
+// Labelled callout boxes for technical / lecture-note posts.
+//
+// Usage in a post (kramdown needs markdown="1" so the inner
+// Markdown and $$math$$ still render):
+//
+//   <div class="keyresult" markdown="1">
+//   For i.i.d. $\text{Exp}(\lambda)$ data, the MLE is $\hat\lambda = 1/\bar X$.
+//   </div>
+//
+// The label ("Key result", "Definition", ...) is added automatically.
+// Colours are mid-tones over low-alpha tints, so every box stays
+// readable in both the light and dark themes.
+
+.post {
+  .definition,
+  .theorem,
+  .proof,
+  .example,
+  .intuition,
+  .important,
+  .keyresult {
+    margin: 1.6rem 0;
+    padding: 0.9rem 1.2rem 0.95rem;
+    border-left: 4px solid;
+    border-radius: 0 8px 8px 0;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+  }
+
+  .definition {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    &::before {
+      content: "Definition";
+      color: #3b82f6;
+    }
+  }
+
+  .theorem {
+    border-color: #22a06b;
+    background: rgba(34, 160, 107, 0.1);
+    &::before {
+      content: "Theorem";
+      color: #22a06b;
+    }
+  }
+
+  .proof {
+    border-color: #94a3b8;
+    background: rgba(148, 163, 184, 0.12);
+    &::before {
+      content: "Proof sketch";
+      color: #8b95a5;
+    }
+  }
+
+  .example {
+    border-color: #14b8a6;
+    background: rgba(20, 184, 166, 0.1);
+    &::before {
+      content: "Example";
+      color: #14b8a6;
+    }
+  }
+
+  .intuition {
+    border-color: #e0a416;
+    background: rgba(224, 164, 22, 0.12);
+    &::before {
+      content: "Intuition";
+      color: #d4930a;
+    }
+  }
+
+  .important {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    &::before {
+      content: "Important";
+      color: #ef4444;
+    }
+  }
+
+  .keyresult {
+    border-color: #cf9a2b;
+    background: rgba(207, 154, 43, 0.13);
+    &::before {
+      content: "Key result";
+      color: #c2860a;
+    }
+  }
+}

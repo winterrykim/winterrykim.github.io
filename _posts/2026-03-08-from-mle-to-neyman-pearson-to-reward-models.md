@@ -9,353 +9,12 @@ featured: false
 show_on_homepage: true
 math: true
 _styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
-
-  body {
-    background:
-      radial-gradient(circle at top left, rgba(43, 108, 176, 0.12), transparent 34%),
-      radial-gradient(circle at top right, rgba(26, 54, 93, 0.08), transparent 26%),
-      linear-gradient(180deg, #f6f4ef 0%, #eef4fb 48%, #f8fbff 100%);
-    color: #243142;
-  }
-
-  #navbar.navbar,
-  footer.fixed-bottom {
-    background: rgba(247, 244, 238, 0.92);
-    backdrop-filter: blur(14px);
-  }
-
-  #navbar.navbar {
-    border-bottom: 1px solid rgba(26, 54, 93, 0.12);
-    box-shadow: 0 10px 30px rgba(26, 54, 93, 0.06);
-  }
-
-  #navbar .navbar-brand,
-  #navbar .nav-link,
-  #navbar .dropdown-item,
-  #light-toggle,
-  #search-toggle {
-    color: #21344d !important;
-  }
-
-  #navbar .navbar-nav .nav-item.active > .nav-link,
-  #navbar .navbar-nav .nav-item .nav-link:hover,
-  #navbar .dropdown-item:hover,
-  #light-toggle:hover,
-  #search-toggle:hover {
-    color: #2b6cb0 !important;
-  }
-
-  .container[role='main'] {
-    width: min(1120px, calc(100vw - 2rem));
-    max-width: none;
-    margin-top: 3.25rem !important;
-    margin-bottom: 4rem;
-  }
-
-  .post {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: none;
-    margin: 0 auto 3.5rem;
-    padding: clamp(2.25rem, 4vw, 4rem);
-    border: 1px solid rgba(34, 68, 115, 0.11);
-    border-radius: 30px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 252, 255, 0.98) 100%);
-    box-shadow:
-      0 28px 80px rgba(26, 54, 93, 0.12),
-      0 10px 24px rgba(26, 54, 93, 0.08);
-    color-scheme: light;
-  }
-
-  .post::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 10px;
-    background: linear-gradient(90deg, #1a365d 0%, #2b6cb0 52%, #7aa7d8 100%);
-  }
-
-  .post-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.75rem;
-    border-bottom: 1px solid rgba(43, 108, 176, 0.16);
-  }
-
-  .post-title,
-  .post h1,
-  .post h2,
-  .post h3,
-  .post h4 {
-    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
-    letter-spacing: -0.02em;
-    color: #18314f;
-  }
-
-  .post-title {
-    max-width: 18ch;
-    margin-bottom: 1rem;
-    font-size: clamp(2.35rem, 4.8vw, 4rem);
-    line-height: 1.02;
-    text-wrap: balance;
-  }
-
-  #markdown-content {
-    max-width: 104ch;
-  }
-
-  .post-meta,
-  .post-tags,
-  .post-tags a {
-    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
-    color: #5f7187 !important;
-    font-size: 0.84rem;
-    letter-spacing: 0.01em;
-  }
-
-  .post-meta {
-    margin-bottom: 0.85rem !important;
-    text-transform: uppercase;
-  }
-
-  .post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0 !important;
-  }
-
-  .post-tags a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.42rem 0.8rem;
-    border: 1px solid rgba(43, 108, 176, 0.16);
-    border-radius: 999px;
-    background: rgba(235, 244, 255, 0.72);
-    text-decoration: none;
-    transition:
-      transform 160ms ease,
-      background-color 160ms ease,
-      border-color 160ms ease;
-  }
-
-  .post-tags a:hover {
-    transform: translateY(-1px);
-    background: rgba(219, 234, 254, 0.9);
-    border-color: rgba(43, 108, 176, 0.28);
-    text-decoration: none;
-  }
-
-  .post-content,
-  .post-content p,
-  .post-content li {
-    font-family: 'Source Serif 4', Georgia, serif;
-    color: #2b3648;
-    font-size: 1.08rem;
-    line-height: 1.86;
-  }
-
-  #markdown-content > p:first-of-type {
-    font-size: 1.24rem;
-    line-height: 1.9;
-    color: #21344d;
-  }
-
-  .post-content p,
-  .post-content ul,
-  .post-content ol,
-  .post-content blockquote,
-  .post-content pre,
-  .post-content .highlight {
-    margin-bottom: 1.35rem;
-  }
-
-  .post h2 {
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(43, 108, 176, 0.15);
-    font-size: clamp(1.7rem, 2vw, 2.05rem);
-  }
-
-  .post h3 {
-    margin-top: 2rem;
-    margin-bottom: 0.7rem;
-    font-size: 1.34rem;
-    color: #2b5c94;
-  }
-
-  .post h4 {
-    margin-top: 1.6rem;
-    margin-bottom: 0.45rem;
-    font-size: 1.08rem;
-    color: #4a617d;
-  }
-
-  .post a:not(.post-tags a) {
-    color: #2b6cb0;
-    text-underline-offset: 0.18em;
-    text-decoration-thickness: 0.08em;
-  }
-
-  .post a:not(.post-tags a):hover {
-    color: #1f4d80;
-  }
-
-  .post strong {
-    color: #163559;
-  }
-
-  .post hr {
-    height: 1px;
-    margin: 2.5rem 0;
-    border: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(43, 108, 176, 0.24) 20%, rgba(43, 108, 176, 0.24) 80%, transparent 100%);
-  }
-
-  .post ul,
-  .post ol {
-    padding-left: 1.3rem;
-  }
-
-  .post li {
-    padding-left: 0.2rem;
-    margin-bottom: 0.28rem;
-  }
-
-  .post ul li::marker {
-    color: #2b6cb0;
-  }
-
-  .post ol li::marker {
-    color: #1a365d;
-    font-weight: 600;
-  }
-
-  .post blockquote {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 1.1rem 1.35rem;
-    border-left: 4px solid #2b6cb0;
-    border-radius: 0 18px 18px 0;
-    background: linear-gradient(180deg, rgba(235, 244, 255, 0.9) 0%, rgba(247, 250, 252, 0.96) 100%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  }
-
-  .post blockquote p {
-    color: #274261;
-    font-size: 1.08rem;
-  }
-
-  .post code {
-    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
-    color: #1f4d80;
-    background: rgba(43, 108, 176, 0.09);
-    border-radius: 0.35rem;
-    padding: 0.15rem 0.38rem;
-  }
-
-  .post pre,
-  .post .highlight {
-    overflow-x: auto;
-    border: 1px solid rgba(26, 54, 93, 0.1);
-    border-radius: 20px;
-    background: #f7fafc;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  }
-
-  .post pre code,
-  .post .highlight code {
-    background: transparent;
-    padding: 0;
-  }
-
-  .post table {
-    width: 100%;
-    overflow: hidden;
-    border-collapse: collapse;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.85);
-  }
-
-  .post table th,
-  .post table td {
-    padding: 0.8rem 1rem;
-    border-bottom: 1px solid rgba(26, 54, 93, 0.08);
-  }
-
-  .post table th {
-    color: #1a365d;
-    background: rgba(235, 244, 255, 0.88);
-  }
-
-  .post table,
-  .post table td,
-  .post table td *,
-  .post table th,
-  .post table th *,
-  .post blockquote,
-  .post blockquote p,
-  .course-map,
-  .course-map p,
-  .course-map-card,
-  .course-map-card strong,
-  .course-map-card span {
-    color: #2b3648 !important;
-  }
-
-  .post table th,
-  .post table th * {
-    color: #1a365d !important;
-  }
-
-  .post code:not(pre code),
-  .post p code,
-  .post li code,
-  .post td code,
-  .post th code {
-    color: #1f4d80 !important;
-    background: rgba(43, 108, 176, 0.09);
-  }
-
-  .post mjx-container,
-  .post mjx-container * {
-    color: #21344d !important;
-  }
-
-  .post mjx-container[jax='CHTML'][display='true'] {
-    background: rgba(255, 255, 255, 0.72);
-    border-radius: 12px;
-  }
-
-  .course-map-card strong {
-    color: #18314f !important;
-  }
-
-  .course-map-card span {
-    color: #5f7187 !important;
-  }
-
-  .post mjx-container[jax='CHTML'][display='true'] {
-    margin: 1.6rem 0 !important;
-    padding: 0.2rem 0.5rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
   .course-map {
     margin: 2rem 0 2.4rem;
-    padding: 1.25rem;
-    border: 1px solid rgba(26, 54, 93, 0.14);
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.86);
-    box-shadow: 0 12px 34px rgba(26, 54, 93, 0.08);
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 12px;
+    background: var(--global-card-bg-color);
   }
 
   .course-map h2 {
@@ -363,74 +22,58 @@ _styles: |
     margin-bottom: 0.35rem;
     padding-bottom: 0;
     border-bottom: 0;
-    font-size: clamp(1.45rem, 2vw, 1.8rem);
   }
 
-  .course-map p {
+  .course-map > p {
     margin-bottom: 1rem;
-    color: #4f6176;
-    font-size: 1rem;
+    color: var(--global-text-color-light);
   }
 
   .course-map-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.6rem;
   }
 
   .course-map-card {
     display: block;
-    min-height: 5.3rem;
-    padding: 0.85rem 0.95rem;
-    border: 1px solid rgba(43, 108, 176, 0.16);
-    border-radius: 16px;
-    background: #f8fbff;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background: var(--global-bg-color);
     text-decoration: none;
-    transition:
-      transform 160ms ease,
-      border-color 160ms ease,
-      box-shadow 160ms ease;
   }
 
   .course-map-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(43, 108, 176, 0.35);
-    box-shadow: 0 12px 24px rgba(26, 54, 93, 0.09);
+    border-color: var(--global-theme-color);
     text-decoration: none;
   }
 
   .course-map-card strong {
     display: block;
-    margin-bottom: 0.2rem;
-    color: #18314f;
-    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
-    font-size: 1rem;
-    line-height: 1.25;
+    margin-bottom: 0.15rem;
+    color: var(--global-text-color);
   }
 
   .course-map-card span {
     display: block;
-    color: #5f7187;
-    font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace;
-    font-size: 0.78rem;
-    line-height: 1.45;
+    color: var(--global-text-color-light);
+    font-size: 0.82rem;
+    line-height: 1.4;
   }
 
   .review-detail {
     margin: 1.35rem 0 1.6rem;
-    padding: 1rem 1.1rem;
-    border: 1px solid rgba(43, 108, 176, 0.18);
-    border-radius: 18px;
-    background: rgba(248, 251, 255, 0.9);
-    box-shadow: 0 10px 26px rgba(26, 54, 93, 0.07);
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background: var(--global-code-bg-color);
   }
 
   .review-detail summary {
     cursor: pointer;
-    color: #18314f;
-    font-family: 'Fraunces', 'Roboto Slab', Georgia, serif;
-    font-size: 1.05rem;
-    font-weight: 700;
+    color: var(--global-text-color);
+    font-weight: 600;
   }
 
   .review-detail[open] summary {
@@ -443,49 +86,35 @@ _styles: |
     display: block;
   }
 
-  footer.fixed-bottom {
-    border-top: 1px solid rgba(26, 54, 93, 0.08);
+  .post h2 {
+    margin-top: 3.2rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--global-theme-color);
+    font-weight: 700;
   }
 
-  footer.fixed-bottom .container,
-  footer.fixed-bottom a {
-    color: #4f6176;
+  .post h3 {
+    margin-top: 2rem;
+    font-weight: 700;
   }
 
-  @media (max-width: 768px) {
-    .container[role='main'] {
-      width: auto;
-      margin-top: 2.2rem !important;
-      padding-left: 0.8rem;
-      padding-right: 0.8rem;
-    }
+  .post table {
+    width: 100%;
+    margin: 1.6rem 0;
+    border-collapse: collapse;
+    font-size: 0.98rem;
+  }
 
-    .post {
-      padding: 1.35rem 1rem 2rem;
-      border-radius: 24px;
-    }
+  .post table th,
+  .post table td {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--global-divider-color);
+    text-align: left;
+    vertical-align: top;
+  }
 
-    .post-title {
-      max-width: none;
-      font-size: 2.3rem;
-    }
-
-    .post-content,
-    .post-content p,
-    .post-content li,
-    #markdown-content > p:first-of-type {
-      font-size: 1.02rem;
-      line-height: 1.78;
-    }
-
-    .post-tags {
-      gap: 0.45rem;
-    }
-
-    .course-map {
-      padding: 1rem;
-      border-radius: 18px;
-    }
+  .post table th {
+    background: var(--global-code-bg-color);
   }
 ---
 
@@ -649,6 +278,7 @@ The lecture argues that:
 
 That motivates a **homogeneous Poisson process** with rate $\lambda$.
 
+<div class="definition" markdown="1">
 If the process is Poisson with rate $\lambda$, then the interarrival times
 
 $$
@@ -656,6 +286,7 @@ X_1, X_2, \dots, X_n
 $$
 
 are i.i.d. $\text{Exp}(\lambda)$.
+</div>
 
 <details class="review-detail" markdown="1">
 <summary>Review note: why Poisson arrivals imply exponential waiting times</summary>
@@ -719,27 +350,35 @@ Instead of estimating the whole waiting-time distribution directly, we estimate 
 
 ### MLE appears immediately
 
+<div class="keyresult" markdown="1">
 For i.i.d. $\text{Exp}(\lambda)$ data, the MLE is
 
 $$
 \hat\lambda_{\text{MLE}} = \frac{1}{\bar X_n}.
 $$
+</div>
 
+<div class="intuition" markdown="1">
 This is already interesting because it is **not** just a sample mean. It is a **nonlinear function** of a sample mean.
+</div>
 
 ### The probability we actually care about
 
+<div class="keyresult" markdown="1">
 If $X \sim \text{Exp}(\lambda)$, then
 
 $$
 \mathbb{P}(X \le 7) = 1 - \exp\{-7\lambda\}.
 $$
+</div>
 
+<div class="keyresult" markdown="1">
 So the MLE-based plug-in estimator is
 
 $$
 \hat p_{\text{MLE}} = 1 - \exp\{-7\hat\lambda\}.
 $$
+</div>
 
 The lecture also compares this to a more direct empirical estimator based on the proportion of observed waits below 7 days.
 
@@ -814,6 +453,7 @@ That fact gets used repeatedly.
 
 #### 2. Continuous mapping theorem
 
+<div class="theorem" markdown="1">
 If $g:\mathbb{R}\to\mathbb{R}$ is continuous, then
 
 $$
@@ -821,6 +461,7 @@ X_n \xrightarrow{d} X
 \quad \Rightarrow \quad
 g(X_n) \xrightarrow{d} g(X).
 $$
+</div>
 
 And the same statement is true with probability convergence:
 
@@ -854,6 +495,7 @@ The lecture also stresses a subtle warning here: the analogous statement is **no
 
 The practical version to remember is:
 
+<div class="theorem" markdown="1">
 if
 
 $$
@@ -867,6 +509,7 @@ then
 $$
 X_n Y_n \xrightarrow{d} cX.
 $$
+</div>
 
 This is the tool that lets us combine a random term with a deterministic or asymptotically deterministic term.
 
@@ -898,6 +541,7 @@ This is a small technical detail, but it is the reason convergence in distributi
 
 The version to remember is:
 
+<div class="keyresult" markdown="1">
 If
 
 $$
@@ -911,6 +555,7 @@ $$
 \xrightarrow{d}
 N\left(0, (g'(\theta))^2 \sigma^2\right).
 $$
+</div>
 
 ### Why it matters
 
@@ -926,11 +571,13 @@ That matters all over the place:
 
 ### Intuition
 
+<div class="intuition" markdown="1">
 The reason it works is local linearization:
 
 $$
 g(Y_n) \approx g(\theta) + g'(\theta)(Y_n - \theta).
 $$
+</div>
 
 So asymptotically, $g(Y_n)$ behaves like a constant plus a scaled version of $Y_n$.
 
@@ -1050,6 +697,7 @@ This is simple but conceptually huge. A lot of the course can be summarized as:
 
 ### Likelihood and why MLE makes sense
 
+<div class="definition" markdown="1">
 For i.i.d. data, the likelihood is
 
 $$
@@ -1061,6 +709,7 @@ and the log-likelihood is
 $$
 \ell_n(\theta;X) = \sum_{i=1}^n \log f_\theta(X_i).
 $$
+</div>
 
 For one observation, I will write
 
@@ -1155,6 +804,7 @@ There is one caveat from the lecture worth remembering: this is still only a heu
 
 ### Score function
 
+<div class="definition" markdown="1">
 The score is the derivative of the log-likelihood:
 
 $$
@@ -1166,11 +816,13 @@ At the true parameter, its expectation is zero:
 $$
 \mathbb{E}_{\theta_0}[S_n(\theta_0)] = 0.
 $$
+</div>
 
 This makes the score look like a centered random fluctuation around the truth, which is exactly why it later enters asymptotic normality.
 
 ### Fisher information
 
+<div class="definition" markdown="1">
 For one observation,
 
 $$
@@ -1184,7 +836,9 @@ I(\theta)
 $$
 
 This is the one-sample Fisher information.
+</div>
 
+<div class="keyresult" markdown="1">
 For $n$ i.i.d. observations, the full-sample information is
 
 $$
@@ -1196,6 +850,7 @@ I_n(\theta)
 =
 nI(\theta).
 $$
+</div>
 
 So here:
 
@@ -1242,6 +897,7 @@ This is where the course formalizes what it had been previewing since Lecture 1.
 
 ### The main theorem
 
+<div class="theorem" markdown="1">
 Under regularity conditions,
 
 $$
@@ -1249,6 +905,7 @@ $$
 \xrightarrow{d}
 N\left(0,\frac{1}{I(\theta_0)}\right).
 $$
+</div>
 
 Equivalently, for large $n$,
 
@@ -1298,6 +955,7 @@ This is the deepest connection in the first half of the course:
 
 ### Approximate inference from the theorem
 
+<div class="keyresult" markdown="1">
 For large $n$, the standard error of the MLE is approximately
 
 $$
@@ -1305,6 +963,7 @@ $$
 \approx
 \sqrt{\frac{1}{nI(\theta_0)}}.
 $$
+</div>
 
 Since $\theta_0$ is unknown, we usually plug in $\hat\theta$:
 
@@ -1322,6 +981,7 @@ Lecture 5 then asks a natural question:
 
 > Even if the MLE is good, could some other estimator have smaller variance?
 
+<div class="theorem" markdown="1">
 The benchmark result is the Cramer-Rao lower bound:
 
 $$
@@ -1329,6 +989,7 @@ $$
 $$
 
 for unbiased estimators $T$.
+</div>
 
 So if an unbiased estimator reaches this bound, it is efficient.
 
@@ -1371,17 +1032,21 @@ This lecture introduces:
 - **loss** $L(\theta,a)$: how bad action $a$ is when the truth is $\theta$
 - **risk** $R(\theta;T)$: expected loss of estimator $T$
 
+<div class="definition" markdown="1">
 Under squared error loss,
 
 $$
 R(\theta;T) = \mathbb{E}_\theta[(T-\theta)^2] = \text{MSE}_\theta(T).
 $$
+</div>
 
+<div class="keyresult" markdown="1">
 And the bias-variance decomposition says
 
 $$
 \text{MSE}_\theta(T) = \text{Var}_\theta(T) + \text{Bias}_\theta(T)^2.
 $$
+</div>
 
 More explicitly, if
 
@@ -1451,6 +1116,7 @@ So it is inadmissible.
 
 Lecture 6 then sharpens the comparison language.
 
+<div class="definition" markdown="1">
 An estimator $T_1$ is **inadmissible** if there exists another estimator $T_2$ such that
 
 $$
@@ -1466,6 +1132,7 @@ R(\theta;T_2) < R(\theta;T_1)
 $$
 
 In that case, $T_2$ **dominates** $T_1$. An estimator that is not inadmissible is called **admissible**.
+</div>
 
 For the four estimators in this lecture:
 
@@ -1547,6 +1214,7 @@ Lecture 7 turns the decision-theory motivation into full Bayesian inference.
 
 ### The basic identity
 
+<div class="definition" markdown="1">
 The posterior is
 
 $$
@@ -1558,6 +1226,7 @@ That is:
 $$
 \text{posterior} \propto \text{likelihood} \times \text{prior}.
 $$
+</div>
 
 A distinction worth keeping straight:
 
@@ -1813,6 +1482,7 @@ This is why likelihood-based summaries remain central even in Bayesian inference
 
 Lecture 7 also gives the key asymptotic message:
 
+<div class="theorem" markdown="1">
 for large $n$, the posterior is approximately normal around the MLE:
 
 $$
@@ -1820,6 +1490,7 @@ $$
 \approx
 N\left(\hat\theta_{\text{MLE}}, \frac{1}{nI(\hat\theta_{\text{MLE}})}\right).
 $$
+</div>
 
 This is the Bernstein-von Mises phenomenon, stated informally in lecture.
 
@@ -1875,11 +1546,13 @@ For the conceptual arc of this post, the first three matter more than the last.
 
 ### Jeffreys prior
 
+<div class="definition" markdown="1">
 The headline formula is
 
 $$
 \pi_J(\theta) \propto \sqrt{I(\theta)}.
 $$
+</div>
 
 Why it matters:
 
@@ -1954,6 +1627,7 @@ forward KL.
 
 ### KL divergence
 
+<div class="definition" markdown="1">
 The key object is
 
 $$
@@ -1961,16 +1635,19 @@ D_{\text{KL}}(g \,\|\, f_\theta)
 =
 \mathbb{E}_g\left[\log \frac{g(X)}{f_\theta(X)}\right].
 $$
+</div>
 
 ### The main message
 
 When the model is misspecified, the MLE does not converge to a "true parameter" inside the family, because there may not be one.
 
+<div class="keyresult" markdown="1">
 Instead, it converges to the pseudo-true value
 
 $$
 \theta^* = \arg\min_\theta D_{\text{KL}}(g \,\|\, f_\theta).
 $$
+</div>
 
 So the MLE is still doing something meaningful:
 
@@ -2176,11 +1853,13 @@ Cons:
 
 So the lecture does not say "never use it," but it does say the justification depends on approximate normality and centering.
 
+<div class="keyresult" markdown="1">
 For a 95% interval, this is the familiar
 
 $$
 \hat\theta \pm 1.96\,\widehat{se}_{boot}.
 $$
+</div>
 
 #### 2. Percentile interval
 
@@ -2212,11 +1891,13 @@ Cons from the lecture:
 - can behave badly if the estimator is biased
 - the theoretical justification is shaky unless the estimator is roughly unbiased and roughly normal
 
+<div class="keyresult" markdown="1">
 So for a 95% interval, the percentile method is just:
 
 $$
 (q^{\ast}_{0.025},q^{\ast}_{0.975}).
 $$
+</div>
 
 #### 3. Basic / empirical bootstrap interval
 
@@ -2328,21 +2009,25 @@ This lecture shifts attention from estimating parameters to checking entire dist
 
 ### The empirical CDF
 
+<div class="definition" markdown="1">
 For data $X_1,\dots,X_n$, the empirical CDF is
 
 $$
 F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}\{X_i \le x\}.
 $$
+</div>
 
 It is the natural nonparametric summary of the sample distribution.
 
 ### KS statistic
 
+<div class="definition" markdown="1">
 For testing whether the data come from a fully specified continuous CDF $F$,
 
 $$
 D_n = \sup_x |F_n(x) - F(x)|.
 $$
+</div>
 
 This is the Kolmogorov-Smirnov statistic.
 
@@ -2492,11 +2177,13 @@ But before tackling all of those, the course solves the cleanest case first:
 
 ### Likelihood ratio test
 
+<div class="definition" markdown="1">
 If the null and alternative have densities $f_0$ and $f_1$, define
 
 $$
 \text{LR}(X) = \frac{f_1(X)}{f_0(X)}.
 $$
+</div>
 
 The likelihood ratio test rejects for large LR.
 
@@ -2595,6 +2282,7 @@ $$
 f_\theta(x)=h(x)\exp\{\eta(\theta)T(x)-A(\theta)\},
 $$
 
+<div class="keyresult" markdown="1">
 and for an i.i.d. sample $X_1,\dots,X_n$, the simple-vs.-simple likelihood ratio satisfies
 
 $$
@@ -2603,6 +2291,7 @@ $$
 \bigl(\eta(\theta_1)-\eta(\theta_0)\bigr)\sum_{i=1}^n T(X_i)
 -n\bigl(A(\theta_1)-A(\theta_0)\bigr).
 $$
+</div>
 
 So for fixed $\theta_0,\theta_1$, the log-LR is linear in $\sum_{i=1}^n T(X_i)$, which means the LR itself is a strictly monotone function of that same statistic. Therefore the Neyman-Pearson test rejects for large values of
 
@@ -3388,11 +3077,13 @@ After reading the CDSS 94 notes on RL, a few ideas felt like modern echoes of th
 
 In the statistics lectures, KL divergence appears when the model is misspecified: the MLE under the wrong family moves toward the KL-closest approximation to the truth.
 
+<div class="keyresult" markdown="1">
 In RLHF-style post-training, the objective often looks like
 
 $$
 \max_{\pi_\theta} \; \mathbb{E}[r(x,y)] - \beta \, \text{KL}(\pi_\theta \,\|\, \pi_{\text{ref}}).
 $$
+</div>
 
 That has the same flavor: improve some target objective, but pay a penalty for moving too far from a trusted reference distribution.
 
