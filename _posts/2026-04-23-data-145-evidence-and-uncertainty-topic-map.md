@@ -9,87 +9,70 @@ featured: false
 show_on_homepage: true
 math: true
 _styles: |
-  .course-frame {
-    padding: 1rem 1.15rem;
-    border: 1px solid rgba(43, 108, 176, 0.18);
-    border-left: 4px solid #2b6cb0;
-    border-radius: 12px;
-    background: rgba(235, 244, 255, 0.72);
-    margin: 1.25rem 0 1.75rem;
+  .post h2 {
+    margin-top: 3.2rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--global-theme-color);
+    font-weight: 700;
   }
 
-  .course-frame strong {
-    color: #1a365d;
+  .course-frame,
+  .study-map {
+    margin: 1.5rem 0;
+    padding: 0.9rem 1.2rem;
+    border-left: 3px solid var(--global-theme-color);
+    border-radius: 0 8px 8px 0;
+    background: var(--global-code-bg-color);
   }
 
-  .phase-heading {
-    margin-top: 2rem;
-    margin-bottom: 0.55rem;
-    color: #1a365d;
-  }
-
-  .phase-note {
-    color: #4a5568;
-    margin-bottom: 1rem;
+  .course-frame strong,
+  .study-map strong {
+    color: var(--global-text-color);
   }
 
   .data145-hub {
     display: grid;
-    gap: 1rem;
+    gap: 0.7rem;
     margin: 1.5rem 0 2rem;
   }
 
   .data145-card {
     display: block;
-    padding: 1.1rem 1.2rem;
-    border: 1px solid rgba(43, 108, 176, 0.18);
-    border-radius: 18px;
-    background: #ffffff;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background: var(--global-bg-color);
     text-decoration: none;
-    transition:
-      transform 160ms ease,
-      box-shadow 160ms ease,
-      border-color 160ms ease;
   }
 
   .data145-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(43, 108, 176, 0.42);
-    box-shadow: 0 14px 34px rgba(26, 54, 93, 0.12);
+    border-color: var(--global-theme-color);
     text-decoration: none;
   }
 
   .data145-card strong {
     display: block;
-    margin-bottom: 0.35rem;
-    color: #1a365d;
-    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    color: var(--global-text-color);
+    font-size: 1.02rem;
   }
 
   .data145-card span {
-    color: #4a5568;
+    color: var(--global-text-color-light);
   }
 
   .data145-card.featured-note {
-    background: #fffaf0;
-    border-color: rgba(214, 158, 46, 0.32);
+    border-left: 3px solid var(--global-theme-color);
   }
 
   .data145-card .kicker {
     display: block;
     margin-bottom: 0.3rem;
-    color: #2b6cb0;
-    font-size: 0.78rem;
+    color: var(--global-text-color-light);
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-  }
-
-  .study-map {
-    padding: 1rem 1.1rem;
-    border-left: 4px solid #2b6cb0;
-    border-radius: 12px;
-    background: rgba(235, 244, 255, 0.75);
   }
 ---
 
