@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-from-memory-to-photonics-solving-the-next-bottleneck-in-ai-scaling",
+        },{id: "post-from-kv-cache-to-a-state-matrix-linear-attention-and-deltanet",
+        
+          title: "From KV Cache to a State Matrix: Linear Attention and DeltaNet",
+        
+        description: "Notes on viewing linear attention as a compressed key-value state and DeltaNet as an error-correcting update to that state.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/linear-attention-and-deltanet/";
+          
+        },
+      },{id: "post-from-memory-to-photonics-solving-the-next-bottleneck-in-ai-scaling",
         
           title: "From Memory to Photonics: Solving the Next Bottleneck in AI Scaling",
         
