@@ -42,6 +42,9 @@
           %}
         {% endif %}
       {% endif %}
+      {% if entry.highlight %}
+        <div class="venue-highlight">{{ entry.highlight }}</div>
+      {% endif %}
     </div>
   {% endif %}
 
@@ -86,9 +89,11 @@
           {% if forloop.first == false -%}
             {%- if forloop.length > 2 %}, {% elsif forloop.length == 2 %}  {% endif %}
           {%- endif %}
-          {%- if forloop.last and author_array_limit == author_array_size %}and {% endif -%}
+          {%- if forloop.last and author_array_limit == author_array_size and author.last != 'others' %}and {% endif -%}
         {% endif %}
-        {%- if author_is_self -%}
+        {%- if author.last == 'others' -%}
+          <em>et al.</em>
+        {%- elsif author_is_self -%}
           <strong class="author-self">
             {{- author.first }}
             {{ author_last_html -}}
@@ -114,7 +119,11 @@
         {%- endif -%}
         {% assign more_authors_show = '' %}
         {%- for author in entry.author_array offset: author_array_limit -%}
-          {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author.last %}
+          {% if author.last == 'others' %}
+            {% assign more_authors_show = more_authors_show | append: 'et al.' %}
+          {% else %}
+            {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author.last %}
+          {% endif %}
           {% unless forloop.last %}
             {% assign more_authors_show = more_authors_show | append: ', ' %}
           {% endunless %}
@@ -207,7 +216,7 @@
         <a href="https://doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button">DOI</a>
       {% endif %}
       {% if entry.arxiv %}
-        <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
+        <a href="https://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
       {% endif %}
       {% if entry.bibtex_show %}
         <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>

@@ -49,6 +49,10 @@ body.sticky-bottom-footer {
 /* 1) The LEFT COLUMN container (must stay transparent) */
 .publications .abbr,
 .bibliography .abbr {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   background: transparent !important;
   padding: 0 !important;
 }
@@ -61,18 +65,21 @@ body.sticky-bottom-footer {
 .bibliography .abbr .badge {
   display: inline-flex !important;
   align-items: center;
+  justify-content: center;
+  width: auto !important;
+  text-align: center;
 
   background: var(--global-theme-color, #7b2cbf) !important;
   color: #fff !important;
 
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
 
-  padding: 4px 10px !important;
-  border-radius: 999px !important;
+  padding: 4px 8px !important;
+  border-radius: 0.45rem !important;
 
   /* make long labels fit nicely */
-  max-width: 220px; /* bump to 260/300 if you want */
+  max-width: 100%;
   white-space: normal; /* allow wrap */
   word-break: break-word; /* prevent overflow */
   line-height: 1.15;
@@ -88,6 +95,18 @@ body.sticky-bottom-footer {
 .bibliography .abbr abbr *,
 .bibliography .abbr .badge * {
   color: #fff !important;
+}
+
+@media (min-width: 576px) {
+  ol.bibliography > li > .row > .abbr {
+    flex: 0 0 22%;
+    max-width: 22%;
+  }
+
+  ol.bibliography > li > .row > div[id] {
+    flex: 0 0 78%;
+    max-width: 78%;
+  }
 }
 
 /* Publications: make PDF/HTML links look like bordered buttons */
@@ -123,6 +142,28 @@ body.sticky-bottom-footer {
   color: var(--global-text-color-light);
   font-size: 0.8rem;
   margin-top: 0.15rem;
+}
+
+.publications .venue-highlight,
+.bibliography .venue-highlight {
+  width: 100%;
+  color: var(--global-theme-color);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 0.3rem;
+  text-align: center;
+}
+
+.publications .title,
+.publications .author,
+.publications .contribution-note,
+.publications .links,
+.bibliography .title,
+.bibliography .author,
+.bibliography .contribution-note,
+.bibliography .links {
+  text-align: left;
 }
 
 /* Remove numbering from publications list */
