@@ -564,7 +564,10 @@
       </div>
       <div class="topic-card">
         <h3>Use Gaussian geometry</h3>
-        <p><strong><em>z</em>, <em>t</em>, χ<sup>2</sup>, <em>F</em>, regression, ANOVA.</strong> Rotate data into nuisance, tested, and residual directions.</p>
+        <p>
+          <strong><em>z</em>, <em>t</em>, χ<sup>2</sup>, <em>F</em>, regression, ANOVA.</strong> Rotate data into nuisance, tested, and residual
+          directions.
+        </p>
       </div>
       <div class="topic-card bayes">
         <h3>Borrow strength</h3>
@@ -581,8 +584,8 @@
     <h2 id="test-map">Test Decision Map</h2>
 
     <p>
-      Begin at the top and classify the problem before reaching for a formula. The branches separate sample structure, model restrictions, linear-model
-      questions, and multiplicity goals.
+      Begin at the top and classify the problem before reaching for a formula. The branches separate sample structure, model restrictions,
+      linear-model questions, and multiplicity goals.
     </p>
 
     <div class="legend" aria-label="Decision map legend">
@@ -601,24 +604,66 @@
       <svg viewBox="0 0 2500 650" role="img" aria-labelledby="decisionTitle decisionDesc">
         <title id="decisionTitle">Decision tree for choosing a statistical test</title>
         <desc id="decisionDesc">
-          Classify the data as one sample, paired, two independent groups, three or more groups, likelihood restrictions, a linear model, or many tests,
-          then select a procedure based on the target question.
+          Classify the data as one sample, paired, two independent groups, three or more groups, likelihood restrictions, a linear model, or many
+          tests, then select a procedure based on the target question.
         </desc>
         <defs>
           <marker id="decision-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L10,4 L0,8 Z" fill="#4a5568"></path>
           </marker>
           <style>
-            .edge { fill: none; stroke: #4a5568; stroke-width: 2; marker-end: url(#decision-arrow); }
-            .node { stroke-width: 2; rx: 12; ry: 12; }
-            .sample-node { fill: #ebf8ff; stroke: #2b6cb0; }
-            .test-node { fill: #f0fff4; stroke: #2f855a; }
-            .step-node { fill: #fffaf0; stroke: #dd6b20; }
-            .model-node { fill: #faf5ff; stroke: #6b46c1; }
-            .multiple-node { fill: #fff5f5; stroke: #c53030; }
-            .node-title { fill: #1a365d; font: 700 18px Georgia, serif; text-anchor: middle; }
-            .node-sub { fill: #2d3748; font: 14px Georgia, serif; text-anchor: middle; }
-            .node-small { fill: #4a5568; font: 12px Georgia, serif; text-anchor: middle; }
+            .edge {
+              fill: none;
+              stroke: #4a5568;
+              stroke-width: 2;
+              marker-end: url(#decision-arrow);
+            }
+            .node {
+              stroke-width: 2;
+              rx: 12;
+              ry: 12;
+            }
+            .sample-node {
+              fill: #ebf8ff;
+              stroke: #2b6cb0;
+            }
+            .test-node {
+              fill: #f0fff4;
+              stroke: #2f855a;
+            }
+            .step-node {
+              fill: #fffaf0;
+              stroke: #dd6b20;
+            }
+            .model-node {
+              fill: #faf5ff;
+              stroke: #6b46c1;
+            }
+            .multiple-node {
+              fill: #fff5f5;
+              stroke: #c53030;
+            }
+            .node-title {
+              fill: #1a365d;
+              font:
+                700 18px Georgia,
+                serif;
+              text-anchor: middle;
+            }
+            .node-sub {
+              fill: #2d3748;
+              font:
+                14px Georgia,
+                serif;
+              text-anchor: middle;
+            }
+            .node-small {
+              fill: #4a5568;
+              font:
+                12px Georgia,
+                serif;
+              text-anchor: middle;
+            }
           </style>
         </defs>
 
@@ -805,18 +850,12 @@
     <div class="two-column">
       <div class="topic-card">
         <h3>Delta method</h3>
-        <div class="formula-box">
-          $$\sqrt n\{g(\hat\theta)-g(\theta_0)\}\Rightarrow
-          N\!\left(0,\frac{[g'(\theta_0)]^2}{I(\theta_0)}\right).$$
-        </div>
+        <div class="formula-box">$$\sqrt n\{g(\hat\theta)-g(\theta_0)\}\Rightarrow N\!\left(0,\frac{[g'(\theta_0)]^2}{I(\theta_0)}\right).$$</div>
         <p>Use for smooth transformed targets. If $g'(\theta_0)=0$ or the model is nonregular, first-order theory can fail.</p>
       </div>
       <div class="topic-card decision">
         <h3>Cramér–Rao lower bound</h3>
-        <div class="formula-box">
-          $$E_\theta[T]=g(\theta)\quad\Longrightarrow\quad
-          \Var_\theta(T)\ge \frac{[g'(\theta)]^2}{nI(\theta)}.$$
-        </div>
+        <div class="formula-box">$$E_\theta[T]=g(\theta)\quad\Longrightarrow\quad \Var_\theta(T)\ge \frac{[g'(\theta)]^2}{nI(\theta)}.$$</div>
         <p>This is a finite-sample lower bound for unbiased estimators under regularity conditions.</p>
       </div>
     </div>
@@ -874,8 +913,7 @@
       <div class="topic-card decision">
         <h3>Risk and MSE</h3>
         <div class="formula-box">
-          $$R(\theta;T)=E_\theta[L(\theta,T(X))],\qquad
-          \operatorname{MSE}_\theta(T)=\Var_\theta(T)+\operatorname{Bias}_\theta(T)^2.$$
+          $$R(\theta;T)=E_\theta[L(\theta,T(X))],\qquad \operatorname{MSE}_\theta(T)=\Var_\theta(T)+\operatorname{Bias}_\theta(T)^2.$$
         </div>
         <p>An estimator dominates another if its risk is never larger and is strictly smaller somewhere.</p>
       </div>
@@ -902,9 +940,7 @@
           <li>Recognize the posterior family.</li>
           <li>Summarize according to the loss.</li>
         </ol>
-        <div class="formula-box">
-          $$\pi(\theta\mid x)\propto_\theta f_\theta(x)\pi(\theta).$$
-        </div>
+        <div class="formula-box">$$\pi(\theta\mid x)\propto_\theta f_\theta(x)\pi(\theta).$$</div>
       </div>
       <div class="topic-card bayes">
         <h3>Bayes estimator by loss</h3>
@@ -969,16 +1005,15 @@
       <div class="topic-card robust">
         <h3>Wrong-model target</h3>
         <div class="formula-box">
-          $$D_{\mathrm{KL}}(g\|f)=E_g\!\left[\log\frac{g(X)}{f(X)}\right],\qquad
-          \hat\theta\xrightarrow{P}\arg\min_\theta D_{\mathrm{KL}}(g\|f_\theta).$$
+          $$D_{\mathrm{KL}}(g\|f)=E_g\!\left[\log\frac{g(X)}{f(X)}\right],\qquad \hat\theta\xrightarrow{P}\arg\min_\theta
+          D_{\mathrm{KL}}(g\|f_\theta).$$
         </div>
         <p>Under misspecification, the MLE targets the closest model member—not a literal “true” parameter.</p>
       </div>
       <div class="topic-card robust">
         <h3>Sandwich variance</h3>
         <div class="formula-box">
-          $$I=-E_g[\ell_1''(\theta^*;X)],\quad J=E_g[\ell_1'(\theta^*;X)^2],$$
-          $$\sqrt n(\hat\theta-\theta^*)\Rightarrow N(0,I^{-1}JI^{-1}).$$
+          $$I=-E_g[\ell_1''(\theta^*;X)],\quad J=E_g[\ell_1'(\theta^*;X)^2],$$ $$\sqrt n(\hat\theta-\theta^*)\Rightarrow N(0,I^{-1}JI^{-1}).$$
         </div>
         <p>The information identity $I=J$ requires correct specification.</p>
       </div>
@@ -1035,17 +1070,13 @@
     <div class="two-column">
       <div class="topic-card">
         <h3>Neyman–Pearson and MLR</h3>
-        <div class="formula-box">
-          $$\operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)};\qquad \text{reject for large LR}.$$
-        </div>
+        <div class="formula-box">$$\operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)};\qquad \text{reject for large LR}.$$</div>
         <p>The NP lemma gives the most powerful level-$\alpha$ test for a fixed simple alternative.</p>
         <p>If an exponential family has a monotone likelihood ratio in $T(X)$, thresholding $T$ can give a one-sided UMP test.</p>
       </div>
       <div class="topic-card">
         <h3>p-values and test–CI duality</h3>
-        <div class="formula-box">
-          $$p(x)=\sup_{\theta\in\Theta_0}P_\theta\{T(X)\ge T(x)\}.$$
-        </div>
+        <div class="formula-box">$$p(x)=\sup_{\theta\in\Theta_0}P_\theta\{T(X)\ge T(x)\}.$$</div>
         <p>A valid p-value satisfies $P_\theta\{p(X)\le t\}\le t$ under every null parameter.</p>
         <p>A $1-\alpha$ confidence region contains the parameter values whose level-$\alpha$ tests do not reject.</p>
       </div>
@@ -1054,18 +1085,12 @@
     <div class="two-column">
       <div class="topic-card">
         <h3>GLRT</h3>
-        <div class="formula-box">
-          $$G^2=2\{\ell_n(\hat\theta)-\ell_n(\hat\theta_0)\}
-          \Rightarrow \chi^2_{\dim(\Theta)-\dim(\Theta_0)}.$$
-        </div>
+        <div class="formula-box">$$G^2=2\{\ell_n(\hat\theta)-\ell_n(\hat\theta_0)\} \Rightarrow \chi^2_{\dim(\Theta)-\dim(\Theta_0)}.$$</div>
         <p>Use for regular nested parametric hypotheses. Unlike NP, this is not a finite-sample most-powerful guarantee.</p>
       </div>
       <div class="topic-card">
         <h3>Goodness of fit</h3>
-        <div class="formula-box">
-          $$X^2=\sum_j\frac{(O_j-E_j)^2}{E_j},\qquad
-          G^2=2\sum_j O_j\log\frac{O_j}{E_j}.$$
-        </div>
+        <div class="formula-box">$$X^2=\sum_j\frac{(O_j-E_j)^2}{E_j},\qquad G^2=2\sum_j O_j\log\frac{O_j}{E_j}.$$</div>
         <p>With $k$ cells and $r$ parameters estimated from the data, the asymptotic degrees of freedom are $k-1-r$.</p>
       </div>
     </div>
@@ -1261,9 +1286,7 @@
       <div class="topic-card decision">
         <h3>Quantities to separate</h3>
         <div class="formula-box">
-          $$\operatorname{FWER}=P(V&gt;0),\qquad
-          \operatorname{FDP}=\frac{V}{R\vee1},\qquad
-          \operatorname{FDR}=E[\operatorname{FDP}].$$
+          $$\operatorname{FWER}=P(V&gt;0),\qquad \operatorname{FDP}=\frac{V}{R\vee1},\qquad \operatorname{FDR}=E[\operatorname{FDP}].$$
         </div>
         <p>$R$ is the number of discoveries and $V$ is the number of false discoveries. Under the global null, FDR = FWER.</p>
       </div>
@@ -1280,9 +1303,8 @@
     <h3>Gaussian geometry</h3>
 
     <div class="formula-box">
-      $$\sum_{i=1}^d Z_i^2\sim\chi^2_d,\qquad
-      T=\frac{Z}{\sqrt{V/d}}\sim t_d,\qquad
-      F=\frac{V_1/d_1}{V_2/d_2}\sim F_{d_1,d_2},\qquad t_d^2\sim F_{1,d}.$$
+      $$\sum_{i=1}^d Z_i^2\sim\chi^2_d,\qquad T=\frac{Z}{\sqrt{V/d}}\sim t_d,\qquad F=\frac{V_1/d_1}{V_2/d_2}\sim F_{d_1,d_2},\qquad t_d^2\sim
+      F_{1,d}.$$
     </div>
 
     <p>Independence of the signal and residual projections is the engine behind the exact $t$ and $F$ calibrations.</p>
@@ -1299,9 +1321,7 @@
       </div>
       <div class="topic-card">
         <h3>Regression and ANOVA</h3>
-        <div class="formula-box">
-          $$F=\frac{(\operatorname{RSS}_0-\operatorname{RSS})/d_1}{\operatorname{RSS}/(n-d)}\sim F_{d_1,n-d}.$$
-        </div>
+        <div class="formula-box">$$F=\frac{(\operatorname{RSS}_0-\operatorname{RSS})/d_1}{\operatorname{RSS}/(n-d)}\sim F_{d_1,n-d}.$$</div>
         <p>For one-way ANOVA, $d_1=g-1$ and the full-model residual degrees of freedom are $n-g$.</p>
       </div>
     </div>
@@ -1316,14 +1336,12 @@
     <h2 id="empirical-bayes">Hierarchical and Empirical Bayes</h2>
 
     <p>
-      The many-means problem is where the course’s estimation, decision, and Bayesian threads meet. Each coordinate is noisy, but the collection teaches
-      us how strongly to shrink.
+      The many-means problem is where the course’s estimation, decision, and Bayesian threads meet. Each coordinate is noisy, but the collection
+      teaches us how strongly to shrink.
     </p>
 
     <div class="formula-box">
-      $$X_i\mid\theta_i\sim N(\theta_i,1),\qquad
-      \theta_i\stackrel{\mathrm{iid}}{\sim}N(\mu,\tau^2),\qquad
-      \zeta=\frac{1}{1+\tau^2}.$$
+      $$X_i\mid\theta_i\sim N(\theta_i,1),\qquad \theta_i\stackrel{\mathrm{iid}}{\sim}N(\mu,\tau^2),\qquad \zeta=\frac{1}{1+\tau^2}.$$
     </div>
 
     <table>
@@ -1440,7 +1458,9 @@
         <li><strong>Exponential rate:</strong> use $\sum X_i\sim\operatorname{Gamma}(n,\lambda)$ and inverse moments.</li>
         <li><strong>German tank:</strong> start from $P(X_{(n)}\le x)=(x/\theta)^n$ and bias-correct the maximum.</li>
         <li><strong>Normal–normal posterior:</strong> posterior precision = prior precision + data precision.</li>
-        <li><strong>Bayes estimator:</strong> decompose posterior squared loss into posterior variance plus squared distance from the posterior mean.</li>
+        <li>
+          <strong>Bayes estimator:</strong> decompose posterior squared loss into posterior variance plus squared distance from the posterior mean.
+        </li>
         <li><strong>NP proof:</strong> compare where two rejection regions disagree; the LR region buys more power per Type I error cost.</li>
         <li><strong>Normal GLRT:</strong> decompose total squared distance into residual variation plus $n(\bar X-\mu_0)^2$.</li>
         <li><strong>GOF degrees of freedom:</strong> begin with $k-1$ and subtract fitted parameters.</li>
@@ -1477,8 +1497,8 @@
     </div>
 
     <div class="keyresult">
-      For every problem, write this chain before computing: model and assumptions → target or null → statistic or estimator → calibration distribution,
-      posterior, or asymptotic law → degrees of freedom or standard error → interpretation.
+      For every problem, write this chain before computing: model and assumptions → target or null → statistic or estimator → calibration
+      distribution, posterior, or asymptotic law → degrees of freedom or standard error → interpretation.
     </div>
 
     <hr />
