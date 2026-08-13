@@ -52,7 +52,7 @@ ninja.data = [{
         
           title: "From Memory to Photonics: Solving the Next Bottleneck in AI Scaling",
         
-        description: "A future-me note on how FlashAttention is IO-aware, why AI scaling turns memory movement into communication movement, and why photonics matters for the next interconnect bottleneck.",
+        description: "A systems view connecting FlashAttention&#39;s IO-aware lesson to distributed communication, WDM, optical I/O, and compact inverse-designed photonic devices.",
         section: "Posts",
         handler: () => {
           
