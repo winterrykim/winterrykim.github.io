@@ -137,9 +137,15 @@ My notes on **Data 145: Evidence and Uncertainty**. This page is a compact topic
     <strong>Lecture 27: Introduction to Causal Inference</strong>
     <span>Potential outcomes, randomized trials, ATE estimation, confounding, propensity scores, and inverse propensity weighting.</span>
   </a>
+
+  <a class="data145-card featured-note" href="{{ '/assets/html/data145_final_review_cheat_sheet.html' | relative_url }}">
+    <span class="kicker">Final review</span>
+    <strong>Compact Cheat Sheet and Test Decision Map</strong>
+    <span>A course-wide final review with a complete test-selection map, compact formulas, assumptions, and common exam traps.</span>
+  </a>
 </div>
 
 <div class="study-map">
   <strong>Study path:</strong>
-  use Phase 1 for the pre-midterm course narrative, then use Phase 2 as post-midterm topic-by-topic references.
+  use Phase 1 for the pre-midterm course narrative, Phase 2 as post-midterm topic-by-topic references, and the compact cheat sheet for final-pass review.
 </div>
