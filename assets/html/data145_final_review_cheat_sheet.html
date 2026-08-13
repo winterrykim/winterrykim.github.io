@@ -1,0 +1,1487 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data 145 Final Review - Compact Cheat Sheet</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          macros: {
+            E: "\\mathbb{E}",
+            P: "\\mathbb{P}",
+            Var: "\\text{Var}",
+            Cov: "\\text{Cov}",
+          },
+        },
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --accent: #2b6cb0;
+        --highlight: #ebf4ff;
+        --warn: #fff5f5;
+        --success: #f0fff4;
+        --sand: #fffaf0;
+        --border: #e2e8f0;
+        --text: #2d3748;
+        --subtle: #718096;
+        --orange: #dd6b20;
+        --green: #2f855a;
+        --red: #e53e3e;
+        --violet: #6b46c1;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        background: #fafbfc;
+        color: var(--text);
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.75;
+      }
+
+      h1 {
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--accent);
+        color: var(--primary);
+        font-size: 2rem;
+        line-height: 1.25;
+      }
+
+      .subtitle {
+        margin-bottom: 1rem;
+        color: var(--subtle);
+        font-size: 1rem;
+        font-style: italic;
+      }
+
+      .scope-note {
+        margin-bottom: 2rem;
+        padding: 0.85rem 1rem;
+        border-left: 4px solid var(--orange);
+        border-radius: 0 6px 6px 0;
+        background: var(--sand);
+        font-size: 0.94rem;
+      }
+
+      h2 {
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--border);
+        color: var(--primary);
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent);
+        font-size: 1.2rem;
+      }
+
+      h4 {
+        margin-top: 1.1rem;
+        margin-bottom: 0.35rem;
+        color: #4a5568;
+        font-size: 1.04rem;
+      }
+
+      p {
+        margin-bottom: 0.9rem;
+      }
+
+      ul,
+      ol {
+        margin-bottom: 0.9rem;
+        padding-left: 1.3rem;
+      }
+
+      li {
+        margin-bottom: 0.25rem;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .toc {
+        margin: 1.5rem 0 2rem;
+        padding: 1.5rem 2rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--highlight);
+      }
+
+      .toc h3 {
+        margin-top: 0;
+        color: var(--primary);
+      }
+
+      .toc ol {
+        margin-bottom: 0;
+      }
+
+      .toc li {
+        margin: 0.3rem 0;
+      }
+
+      .toc a {
+        text-decoration: none;
+      }
+
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .topic-grid,
+      .two-column {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 1rem 0;
+      }
+
+      .topic-card {
+        min-width: 0;
+        padding: 0.9rem 1rem;
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--accent);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .topic-card h3,
+      .topic-card h4 {
+        margin-top: 0;
+        color: var(--primary);
+      }
+
+      .topic-card p:last-child,
+      .topic-card ul:last-child,
+      .topic-card table:last-child {
+        margin-bottom: 0;
+      }
+
+      .topic-card.decision {
+        border-top-color: var(--orange);
+      }
+
+      .topic-card.bayes {
+        border-top-color: var(--violet);
+      }
+
+      .topic-card.robust {
+        border-top-color: var(--green);
+      }
+
+      .course-map-grid {
+        gap: 0.65rem;
+      }
+
+      .course-map-grid .topic-card,
+      .course-map-grid .topic-card.decision,
+      .course-map-grid .topic-card.bayes,
+      .course-map-grid .topic-card.robust {
+        padding: 0.8rem 1rem;
+        border-top: 1px solid var(--border);
+        border-left: 3px solid #a0aec0;
+        border-radius: 4px;
+        background: #fff;
+      }
+
+      .course-map-grid .topic-card h3 {
+        margin-bottom: 0.3rem;
+        font-size: 1.08rem;
+      }
+
+      .definition,
+      .theorem,
+      .warning,
+      .keyresult {
+        margin: 1.2rem 0;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid;
+        border-radius: 0 6px 6px 0;
+      }
+
+      .definition {
+        border-color: var(--accent);
+        background: var(--highlight);
+      }
+
+      .theorem {
+        border-color: var(--green);
+        background: var(--success);
+      }
+
+      .warning {
+        border-color: var(--red);
+        background: var(--warn);
+      }
+
+      .keyresult {
+        border-color: var(--orange);
+        background: var(--sand);
+      }
+
+      .definition::before,
+      .theorem::before,
+      .warning::before,
+      .keyresult::before {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .definition::before {
+        color: var(--accent);
+        content: "Fast recognition rule";
+      }
+
+      .theorem::before {
+        color: var(--green);
+        content: "Key result";
+      }
+
+      .warning::before {
+        color: var(--red);
+        content: "Important";
+      }
+
+      .keyresult::before {
+        color: var(--orange);
+        content: "Exam workflow";
+      }
+
+      .formula-box {
+        margin: 1rem 0;
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #f7fafc;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        margin: 1rem 0;
+        border-collapse: collapse;
+        font-size: 0.93rem;
+      }
+
+      th,
+      td {
+        padding: 0.58rem 0.72rem;
+        border: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background: #f7fafc;
+      }
+
+      .table-wrap {
+        margin: 1rem 0;
+        overflow-x: auto;
+      }
+
+      .table-wrap table {
+        min-width: 720px;
+        margin: 0;
+      }
+
+      .decision-tree {
+        position: relative;
+        margin: 1.2rem 0 0.55rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .decision-start {
+        margin: 1rem 0 0.75rem;
+        padding: 0.72rem 1rem;
+        border: 2px solid var(--accent);
+        border-radius: 8px;
+        background: var(--highlight);
+        color: var(--primary);
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .decision-start span {
+        display: block;
+        color: var(--subtle);
+        font-size: 0.9rem;
+        font-weight: 400;
+      }
+
+      .decision-tree svg {
+        display: block;
+        width: 100%;
+        min-width: 1720px;
+        height: auto;
+      }
+
+      .diagram-caption {
+        margin-bottom: 1.1rem;
+        color: var(--subtle);
+        font-size: 0.92rem;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin: 0.75rem 0 0;
+      }
+
+      .legend span,
+      .pill {
+        display: inline-block;
+        padding: 0.2rem 0.62rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--primary);
+        font-size: 0.88rem;
+      }
+
+      .legend .sample {
+        border-color: #90cdf4;
+        background: #ebf8ff;
+      }
+
+      .legend .model {
+        border-color: #d6bcfa;
+        background: #faf5ff;
+      }
+
+      .legend .multiple {
+        border-color: #feb2b2;
+        background: #fff5f5;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.75rem 0 1rem;
+      }
+
+      details.derivation {
+        margin: 1.2rem 0;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--border);
+        border-left: 4px solid #a0aec0;
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      details.derivation summary {
+        cursor: pointer;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      details.derivation[open] summary {
+        margin-bottom: 0.9rem;
+      }
+
+      hr {
+        margin: 2rem 0;
+        border: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-note {
+        margin-top: 2rem;
+        color: var(--subtle);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 1.5rem 1rem 3rem;
+        }
+
+        h1 {
+          font-size: 1.85rem;
+        }
+
+        .topic-grid,
+        .two-column {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          padding: 1.25rem 1.5rem;
+        }
+
+        .decision-tree {
+          padding: 0.5rem;
+        }
+
+        .decision-tree svg {
+          min-width: 1480px;
+        }
+
+        .formula-box,
+        .definition,
+        .theorem,
+        .warning,
+        .keyresult {
+          overflow-x: auto;
+        }
+
+        table {
+          display: block;
+          max-width: 100%;
+          overflow-x: auto;
+        }
+      }
+
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 1rem;
+          background: #fff;
+          font-size: 11px;
+        }
+
+        .toc {
+          page-break-after: always;
+        }
+
+        h2 {
+          page-break-before: always;
+        }
+
+        .topic-card,
+        .definition,
+        .theorem,
+        .warning,
+        .keyresult {
+          break-inside: avoid;
+        }
+
+        .decision-tree svg {
+          min-width: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data 145: Evidence and Uncertainty</h1>
+    <p class="subtitle">
+      Compact Final Review and Test-Selection Guide - Spring 2026<br />
+      Instructors: Ani Adhikari, William Fithian
+    </p>
+
+    <div class="scope-note">
+      <strong>How to use this page:</strong> start with the course map, use the decision tree to identify a testing family, then check the compact
+      tables for assumptions, calibration, and common traps. This is a final-pass reference rather than a replacement for the lecture guides.
+    </div>
+
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#course-map">Big Picture: The Course in Eight Jobs</a></li>
+        <li><a href="#test-map">Test Decision Map</a></li>
+        <li><a href="#estimation">Estimation and Decision Theory</a></li>
+        <li><a href="#bayes-robust">Bayesian Inference, Robustness, and Bootstrap</a></li>
+        <li><a href="#testing">Hypothesis Testing Foundations</a></li>
+        <li><a href="#test-reference">Compact Test Reference</a></li>
+        <li><a href="#multiple-linear">Multiple Testing and Linear Models</a></li>
+        <li><a href="#empirical-bayes">Hierarchical and Empirical Bayes</a></li>
+        <li><a href="#theorems-traps">Theorems, Derivation Skeletons, and Exam Traps</a></li>
+      </ol>
+    </div>
+
+    <h2 id="course-map">Big Picture: The Course in Eight Jobs</h2>
+
+    <p>
+      Data 145 methods look less like a list when they are organized by the job they perform. Name the job first; then identify the random object that
+      calibrates the answer.
+    </p>
+
+    <div class="topic-grid course-map-grid">
+      <div class="topic-card">
+        <h3>Estimate</h3>
+        <p><strong>MLE, plug-in, Fisher information, delta method.</strong> Maximize likelihood, attach standard errors, and transform estimates.</p>
+      </div>
+      <div class="topic-card decision">
+        <h3>Judge estimators</h3>
+        <p><strong>Risk, MSE, admissibility, shrinkage.</strong> “Good” depends on the loss function, not only on unbiasedness.</p>
+      </div>
+      <div class="topic-card bayes">
+        <h3>Update beliefs</h3>
+        <p><strong>Bayesian inference.</strong> Posterior is proportional to likelihood times prior; the estimator depends on the loss.</p>
+      </div>
+      <div class="topic-card robust">
+        <h3>Survive wrong models</h3>
+        <p><strong>KL projection, sandwich variance, bootstrap.</strong> Separate the target of estimation from its sampling uncertainty.</p>
+      </div>
+      <div class="topic-card">
+        <h3>Test hypotheses</h3>
+        <p><strong>NP, MLR, UMP, GLRT, and p-values.</strong> Control Type I error while comparing or maximizing power.</p>
+      </div>
+      <div class="topic-card decision">
+        <h3>Handle many tests</h3>
+        <p><strong>Bonferroni, Sidak, and BH.</strong> Decide whether the goal is family-wise error control or false-discovery control.</p>
+      </div>
+      <div class="topic-card">
+        <h3>Use Gaussian geometry</h3>
+        <p><strong><em>z</em>, <em>t</em>, χ<sup>2</sup>, <em>F</em>, regression, ANOVA.</strong> Rotate data into nuisance, tested, and residual directions.</p>
+      </div>
+      <div class="topic-card bayes">
+        <h3>Borrow strength</h3>
+        <p><strong>Hierarchical and empirical Bayes.</strong> Learn shrinkage from many parallel noisy problems.</p>
+      </div>
+    </div>
+
+    <div class="definition">
+      First classify the structure of the data, then name the target or null question, and only then choose the test statistic and its calibration.
+    </div>
+
+    <hr />
+
+    <h2 id="test-map">Test Decision Map</h2>
+
+    <p>
+      Begin at the top and classify the problem before reaching for a formula. The branches separate sample structure, model restrictions, linear-model
+      questions, and multiplicity goals.
+    </p>
+
+    <div class="legend" aria-label="Decision map legend">
+      <span class="sample">Sample structure</span>
+      <span>Test or reduction</span>
+      <span class="model">Model-based method</span>
+      <span class="multiple">Multiple-testing method</span>
+    </div>
+
+    <div class="decision-start">
+      Start: What test should I use?
+      <span>Classify the structure first, then scroll across the complete map.</span>
+    </div>
+
+    <div class="decision-tree">
+      <svg viewBox="0 0 2500 650" role="img" aria-labelledby="decisionTitle decisionDesc">
+        <title id="decisionTitle">Decision tree for choosing a statistical test</title>
+        <desc id="decisionDesc">
+          Classify the data as one sample, paired, two independent groups, three or more groups, likelihood restrictions, a linear model, or many tests,
+          then select a procedure based on the target question.
+        </desc>
+        <defs>
+          <marker id="decision-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L10,4 L0,8 Z" fill="#4a5568"></path>
+          </marker>
+          <style>
+            .edge { fill: none; stroke: #4a5568; stroke-width: 2; marker-end: url(#decision-arrow); }
+            .node { stroke-width: 2; rx: 12; ry: 12; }
+            .sample-node { fill: #ebf8ff; stroke: #2b6cb0; }
+            .test-node { fill: #f0fff4; stroke: #2f855a; }
+            .step-node { fill: #fffaf0; stroke: #dd6b20; }
+            .model-node { fill: #faf5ff; stroke: #6b46c1; }
+            .multiple-node { fill: #fff5f5; stroke: #c53030; }
+            .node-title { fill: #1a365d; font: 700 18px Georgia, serif; text-anchor: middle; }
+            .node-sub { fill: #2d3748; font: 14px Georgia, serif; text-anchor: middle; }
+            .node-small { fill: #4a5568; font: 12px Georgia, serif; text-anchor: middle; }
+          </style>
+        </defs>
+
+        <rect class="node sample-node" x="1100" y="22" width="300" height="64"></rect>
+        <text class="node-title" x="1250" y="50">What test should I use?</text>
+        <text class="node-sub" x="1250" y="70">Classify structure first</text>
+
+        <path class="edge" d="M1250 86 L175 130"></path>
+        <path class="edge" d="M1250 86 L485 130"></path>
+        <path class="edge" d="M1250 86 L805 130"></path>
+        <path class="edge" d="M1250 86 L1115 130"></path>
+        <path class="edge" d="M1250 86 L1545 130"></path>
+        <path class="edge" d="M1250 86 L1880 130"></path>
+        <path class="edge" d="M1250 86 L2350 130"></path>
+
+        <rect class="node sample-node" x="60" y="130" width="230" height="75"></rect>
+        <text class="node-title" x="175" y="160">One sample</text>
+        <text class="node-sub" x="175" y="181">single group</text>
+
+        <rect class="node sample-node" x="370" y="130" width="230" height="75"></rect>
+        <text class="node-title" x="485" y="160">Paired data</text>
+        <text class="node-sub" x="485" y="181">before/after or matched</text>
+
+        <rect class="node sample-node" x="670" y="130" width="270" height="75"></rect>
+        <text class="node-title" x="805" y="160">Two independent</text>
+        <text class="node-sub" x="805" y="181">separate groups</text>
+
+        <rect class="node sample-node" x="1000" y="130" width="230" height="75"></rect>
+        <text class="node-title" x="1115" y="160">Three+ groups</text>
+        <text class="node-sub" x="1115" y="181">independent samples</text>
+
+        <rect class="node model-node" x="1425" y="130" width="240" height="75"></rect>
+        <text class="node-title" x="1545" y="160">Likelihood tests</text>
+        <text class="node-sub" x="1545" y="181">model restrictions</text>
+
+        <rect class="node model-node" x="1770" y="130" width="220" height="75"></rect>
+        <text class="node-title" x="1880" y="160">Linear model</text>
+        <text class="node-sub" x="1880" y="181">regression / ANOVA</text>
+
+        <rect class="node multiple-node" x="2250" y="130" width="200" height="75"></rect>
+        <text class="node-title" x="2350" y="160">Many tests</text>
+        <text class="node-sub" x="2350" y="181">FWER or FDR?</text>
+
+        <path class="edge" d="M175 205 L105 300"></path>
+        <path class="edge" d="M175 205 L285 300"></path>
+        <path class="edge" d="M175 205 L190 445"></path>
+
+        <rect class="node test-node" x="20" y="300" width="170" height="86"></rect>
+        <text class="node-title" x="105" y="326">Mean / prop</text>
+        <text class="node-sub" x="105" y="348">z, t, or Binomial</text>
+        <text class="node-small" x="105" y="369">Z=(xbar-mu0)/SE</text>
+
+        <rect class="node test-node" x="205" y="300" width="160" height="86"></rect>
+        <text class="node-title" x="285" y="326">Known CDF</text>
+        <text class="node-sub" x="285" y="348">One-sample KS</text>
+        <text class="node-small" x="285" y="369">Dn=sup|Fn-F0|</text>
+
+        <rect class="node test-node" x="100" y="445" width="180" height="92"></rect>
+        <text class="node-title" x="190" y="471">Categorical fit</text>
+        <text class="node-sub" x="190" y="493">Chi-square GOF / G2</text>
+        <text class="node-small" x="190" y="514">sum(O-E)^2/E</text>
+
+        <path class="edge" d="M485 205 L485 300"></path>
+        <rect class="node step-node" x="390" y="300" width="190" height="82"></rect>
+        <text class="node-title" x="485" y="327">Reduce first</text>
+        <text class="node-sub" x="485" y="349">D = X - Y</text>
+        <text class="node-small" x="485" y="369">then one-sample test</text>
+        <path class="edge" d="M485 382 L425 445"></path>
+        <path class="edge" d="M485 382 L610 445"></path>
+
+        <rect class="node test-node" x="340" y="445" width="170" height="86"></rect>
+        <text class="node-title" x="425" y="471">Mean of D</text>
+        <text class="node-sub" x="425" y="493">One-sample t / z</text>
+        <text class="node-small" x="425" y="514">t=Dbar/(SD/sqrt n)</text>
+
+        <rect class="node test-node" x="525" y="445" width="170" height="86"></rect>
+        <text class="node-title" x="610" y="471">Sign test</text>
+        <text class="node-sub" x="610" y="493">distribution-free</text>
+        <text class="node-small" x="610" y="514">S~Binom(k,1/2)</text>
+
+        <path class="edge" d="M805 205 L700 300"></path>
+        <path class="edge" d="M805 205 L890 300"></path>
+        <path class="edge" d="M805 205 L800 445"></path>
+
+        <rect class="node test-node" x="615" y="300" width="170" height="92"></rect>
+        <text class="node-title" x="700" y="326">Equal means</text>
+        <text class="node-sub" x="700" y="348">Welch / pooled t</text>
+        <text class="node-small" x="700" y="369">(xbar-ybar)/SE</text>
+
+        <rect class="node test-node" x="805" y="300" width="170" height="92"></rect>
+        <text class="node-title" x="890" y="326">Equal distributions</text>
+        <text class="node-sub" x="890" y="348">Two-sample KS</text>
+        <text class="node-small" x="890" y="369">Dmn=sup|Fm-Gn|</text>
+
+        <rect class="node test-node" x="705" y="445" width="190" height="92"></rect>
+        <text class="node-title" x="800" y="471">Ranks / custom</text>
+        <text class="node-sub" x="800" y="493">Wilcoxon / perm</text>
+        <text class="node-small" x="800" y="514">rank sum or T; relabel</text>
+
+        <path class="edge" d="M1115 205 L1075 300"></path>
+        <path class="edge" d="M1115 205 L1265 300"></path>
+
+        <rect class="node test-node" x="985" y="300" width="180" height="92"></rect>
+        <text class="node-title" x="1075" y="326">Normal means</text>
+        <text class="node-sub" x="1075" y="348">One-way ANOVA</text>
+        <text class="node-small" x="1075" y="369">F=between/within</text>
+
+        <rect class="node test-node" x="1175" y="300" width="180" height="92"></rect>
+        <text class="node-title" x="1265" y="326">No model form</text>
+        <text class="node-sub" x="1265" y="348">k-sample perm</text>
+        <text class="node-small" x="1265" y="369">fix sizes; relabel</text>
+
+        <path class="edge" d="M1545 205 L1480 300"></path>
+        <path class="edge" d="M1545 205 L1670 300"></path>
+
+        <rect class="node model-node" x="1395" y="300" width="170" height="92"></rect>
+        <text class="node-title" x="1480" y="326">Simple / 1-sided</text>
+        <text class="node-sub" x="1480" y="348">NP LR or MLR</text>
+        <text class="node-small" x="1480" y="369">LR=f1/f0; monotone T</text>
+
+        <rect class="node model-node" x="1585" y="300" width="170" height="92"></rect>
+        <text class="node-title" x="1670" y="326">Nested null</text>
+        <text class="node-sub" x="1670" y="348">GLRT</text>
+        <text class="node-small" x="1670" y="369">G2=2 Delta ell; chi-square</text>
+
+        <path class="edge" d="M1880 205 L1830 300"></path>
+        <path class="edge" d="M1880 205 L2035 300"></path>
+
+        <rect class="node model-node" x="1740" y="300" width="180" height="92"></rect>
+        <text class="node-title" x="1830" y="326">One coefficient</text>
+        <text class="node-sub" x="1830" y="348">Coefficient t</text>
+        <text class="node-small" x="1830" y="369">t=bhat/SE(bhat)</text>
+
+        <rect class="node model-node" x="1945" y="300" width="180" height="92"></rect>
+        <text class="node-title" x="2035" y="326">Restrictions</text>
+        <text class="node-sub" x="2035" y="348">Regression F</text>
+        <text class="node-small" x="2035" y="369">F=((RSS0-RSS)/d1)/(RSS/df)</text>
+
+        <path class="edge" d="M2350 205 L2275 300"></path>
+        <path class="edge" d="M2350 205 L2418 300"></path>
+        <path class="edge" d="M2350 205 L2340 445"></path>
+
+        <rect class="node multiple-node" x="2200" y="300" width="150" height="92"></rect>
+        <text class="node-title" x="2275" y="326">FWER</text>
+        <text class="node-sub" x="2275" y="348">Bonferroni / Sidak</text>
+        <text class="node-small" x="2275" y="369">p &lt;= alpha/m</text>
+
+        <rect class="node multiple-node" x="2355" y="300" width="125" height="92"></rect>
+        <text class="node-title" x="2418" y="326">FDR</text>
+        <text class="node-sub" x="2418" y="348">BH</text>
+        <text class="node-small" x="2418" y="369">p(k)&lt;=alpha k/m</text>
+
+        <rect class="node multiple-node" x="2255" y="445" width="170" height="92"></rect>
+        <text class="node-title" x="2340" y="471">Pairwise means</text>
+        <text class="node-sub" x="2340" y="493">test each pair</text>
+        <text class="node-small" x="2340" y="514">4 groups: m=6</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">The full map is horizontally scrollable so the labels stay readable on smaller screens.</p>
+
+    <div class="warning">
+      $X^2$, $G^2$, KS, GLRT, ANOVA $F$, and permutation discrepancy tests reject for large values. Two-sided mean tests reject for large absolute
+      values; sign and binomial tests use both tails for two-sided alternatives.
+    </div>
+
+    <hr />
+
+    <h2 id="estimation">Estimation and Decision Theory</h2>
+
+    <h3>Regular MLE workflow</h3>
+
+    <ol>
+      <li>Write $L(\theta)=\prod_i f_\theta(X_i)$ and $\ell_n(\theta)=\sum_i\log f_\theta(X_i)$.</li>
+      <li>Differentiate: $S_n(\theta)=\ell_n'(\theta)$; solve $S_n(\hat\theta)=0$ or inspect the boundary and support.</li>
+      <li>Compute $I(\theta)=E_\theta[S_1(\theta;X)^2]$; under a correct regular model, $I(\theta)=-E_\theta[\ell_1''(\theta;X)]$.</li>
+      <li>Use asymptotic normality and plug in $\hat\theta$ for the standard error.</li>
+    </ol>
+
+    <div class="formula-box">
+      $$\sqrt n(\hat\theta-\theta_0)\Rightarrow N\!\left(0,\frac{1}{I(\theta_0)}\right),\qquad
+      \widehat{\operatorname{SE}}(\hat\theta)=\frac{1}{\sqrt{nI(\hat\theta)}}.$$
+    </div>
+
+    <div class="two-column">
+      <div class="topic-card">
+        <h3>Delta method</h3>
+        <div class="formula-box">
+          $$\sqrt n\{g(\hat\theta)-g(\theta_0)\}\Rightarrow
+          N\!\left(0,\frac{[g'(\theta_0)]^2}{I(\theta_0)}\right).$$
+        </div>
+        <p>Use for smooth transformed targets. If $g'(\theta_0)=0$ or the model is nonregular, first-order theory can fail.</p>
+      </div>
+      <div class="topic-card decision">
+        <h3>Cramér–Rao lower bound</h3>
+        <div class="formula-box">
+          $$E_\theta[T]=g(\theta)\quad\Longrightarrow\quad
+          \Var_\theta(T)\ge \frac{[g'(\theta)]^2}{nI(\theta)}.$$
+        </div>
+        <p>This is a finite-sample lower bound for unbiased estimators under regularity conditions.</p>
+      </div>
+    </div>
+
+    <h3>Common models</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>MLE</th>
+            <th>$I(\theta)$ per observation</th>
+            <th>Key note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>$\operatorname{Bernoulli}(p)$</td>
+            <td>$\hat p=\bar X$</td>
+            <td>$1/[p(1-p)]$</td>
+            <td>For logit targets, $g'(p)=1/[p(1-p)]$.</td>
+          </tr>
+          <tr>
+            <td>$\operatorname{Pois}(\lambda)$</td>
+            <td>$\hat\lambda=\bar X$</td>
+            <td>$1/\lambda$</td>
+            <td>$\bar X$ is finite-sample efficient for $\lambda$.</td>
+          </tr>
+          <tr>
+            <td>$\operatorname{Exp}(\lambda)$, rate</td>
+            <td>$\hat\lambda=1/\bar X$</td>
+            <td>$1/\lambda^2$</td>
+            <td>Do not confuse rate with the mean parameterization.</td>
+          </tr>
+          <tr>
+            <td>$N(\mu,\sigma^2)$, $\sigma^2$ known</td>
+            <td>$\hat\mu=\bar X$</td>
+            <td>$1/\sigma^2$</td>
+            <td>Exact normal sampling distribution.</td>
+          </tr>
+          <tr>
+            <td>$\operatorname{Unif}(0,\theta)$</td>
+            <td>$\hat\theta=X_{(n)}$</td>
+            <td>Regular identity fails</td>
+            <td>The support depends on $\theta$; regular MLE theory does not apply.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Decision theory</h3>
+
+    <div class="two-column">
+      <div class="topic-card decision">
+        <h3>Risk and MSE</h3>
+        <div class="formula-box">
+          $$R(\theta;T)=E_\theta[L(\theta,T(X))],\qquad
+          \operatorname{MSE}_\theta(T)=\Var_\theta(T)+\operatorname{Bias}_\theta(T)^2.$$
+        </div>
+        <p>An estimator dominates another if its risk is never larger and is strictly smaller somewhere.</p>
+      </div>
+      <div class="topic-card decision">
+        <h3>Bias can help</h3>
+        <p>Shrinkage may add bias while reducing variance enough to lower total risk. Unbiasedness is a constraint, not a universal objective.</p>
+        <p><strong>Admissible:</strong> no other estimator dominates it. <strong>Minimax:</strong> minimizes the worst-case risk.</p>
+      </div>
+    </div>
+
+    <hr />
+
+    <h2 id="bayes-robust">Bayesian Inference, Robustness, and Bootstrap</h2>
+
+    <h3>Posterior workflow and conjugacy</h3>
+
+    <div class="two-column">
+      <div class="topic-card bayes">
+        <h3>Posterior</h3>
+        <ol>
+          <li>Write the likelihood kernel in $\theta$.</li>
+          <li>Multiply by the prior kernel.</li>
+          <li>Collect powers and exponential terms.</li>
+          <li>Recognize the posterior family.</li>
+          <li>Summarize according to the loss.</li>
+        </ol>
+        <div class="formula-box">
+          $$\pi(\theta\mid x)\propto_\theta f_\theta(x)\pi(\theta).$$
+        </div>
+      </div>
+      <div class="topic-card bayes">
+        <h3>Bayes estimator by loss</h3>
+        <table>
+          <tr>
+            <th>Loss</th>
+            <th>Estimator</th>
+          </tr>
+          <tr>
+            <td>Squared error</td>
+            <td>Posterior mean</td>
+          </tr>
+          <tr>
+            <td>Absolute error</td>
+            <td>Posterior median</td>
+          </tr>
+          <tr>
+            <td>0–1 / MAP-like</td>
+            <td>Posterior mode</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Likelihood</th>
+            <th>Prior</th>
+            <th>Posterior pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Binomial / Bernoulli</td>
+            <td>$\operatorname{Beta}(a,b)$</td>
+            <td>$\operatorname{Beta}(a+x,b+n-x)$</td>
+          </tr>
+          <tr>
+            <td>Poisson</td>
+            <td>$\operatorname{Gamma}(a,b)$ on rate</td>
+            <td>Gamma with shape $a+\sum x_i$ and rate $b+n$</td>
+          </tr>
+          <tr>
+            <td>Normal mean, variance known</td>
+            <td>Normal</td>
+            <td>Posterior precision = prior precision + data precision</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="theorem">
+      Bernstein–von Mises: for a regular one-parameter model and large $n$, the posterior is approximately
+      $N(\hat\theta_{\mathrm{MLE}},1/[nI(\hat\theta_{\mathrm{MLE}})])$. This is different from the many-parameter asymptotics used in empirical Bayes.
+    </div>
+
+    <h3>Misspecification and resampling</h3>
+
+    <div class="two-column">
+      <div class="topic-card robust">
+        <h3>Wrong-model target</h3>
+        <div class="formula-box">
+          $$D_{\mathrm{KL}}(g\|f)=E_g\!\left[\log\frac{g(X)}{f(X)}\right],\qquad
+          \hat\theta\xrightarrow{P}\arg\min_\theta D_{\mathrm{KL}}(g\|f_\theta).$$
+        </div>
+        <p>Under misspecification, the MLE targets the closest model member—not a literal “true” parameter.</p>
+      </div>
+      <div class="topic-card robust">
+        <h3>Sandwich variance</h3>
+        <div class="formula-box">
+          $$I=-E_g[\ell_1''(\theta^*;X)],\quad J=E_g[\ell_1'(\theta^*;X)^2],$$
+          $$\sqrt n(\hat\theta-\theta^*)\Rightarrow N(0,I^{-1}JI^{-1}).$$
+        </div>
+        <p>The information identity $I=J$ requires correct specification.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Bootstrap choice</th>
+            <th>Rule</th>
+            <th>Use or trap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Parametric</td>
+            <td>Sample $X^*\sim f_{\hat\theta}$.</td>
+            <td>Efficient when the model is trusted; inherits misspecification.</td>
+          </tr>
+          <tr>
+            <td>Nonparametric</td>
+            <td>Sample with replacement from the observed data.</td>
+            <td>Fewer modeling assumptions.</td>
+          </tr>
+          <tr>
+            <td>Normal interval</td>
+            <td>$T\pm z_{1-\alpha/2}\widehat{\operatorname{sd}}(T^*)$</td>
+            <td>Needs approximate normality and low bias.</td>
+          </tr>
+          <tr>
+            <td>Percentile interval</td>
+            <td>$[q^*_{\alpha/2},q^*_{1-\alpha/2}]$</td>
+            <td>Simple, but can be bias-sensitive.</td>
+          </tr>
+          <tr>
+            <td>Basic interval</td>
+            <td>$[2T-q^*_{1-\alpha/2},2T-q^*_{\alpha/2}]$</td>
+            <td>Reflects the bootstrap error distribution.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="definition">
+      Nonparametric methods trade model-based efficiency for robustness. They are not automatically assumption-free: permutation tests require
+      exchangeability, rank tests target rank or distributional features, and bootstrap validity still depends on a stable sampling problem.
+    </div>
+
+    <hr />
+
+    <h2 id="testing">Hypothesis Testing Foundations</h2>
+
+    <div class="two-column">
+      <div class="topic-card">
+        <h3>Neyman–Pearson and MLR</h3>
+        <div class="formula-box">
+          $$\operatorname{LR}(X)=\frac{f_1(X)}{f_0(X)};\qquad \text{reject for large LR}.$$
+        </div>
+        <p>The NP lemma gives the most powerful level-$\alpha$ test for a fixed simple alternative.</p>
+        <p>If an exponential family has a monotone likelihood ratio in $T(X)$, thresholding $T$ can give a one-sided UMP test.</p>
+      </div>
+      <div class="topic-card">
+        <h3>p-values and test–CI duality</h3>
+        <div class="formula-box">
+          $$p(x)=\sup_{\theta\in\Theta_0}P_\theta\{T(X)\ge T(x)\}.$$
+        </div>
+        <p>A valid p-value satisfies $P_\theta\{p(X)\le t\}\le t$ under every null parameter.</p>
+        <p>A $1-\alpha$ confidence region contains the parameter values whose level-$\alpha$ tests do not reject.</p>
+      </div>
+    </div>
+
+    <div class="two-column">
+      <div class="topic-card">
+        <h3>GLRT</h3>
+        <div class="formula-box">
+          $$G^2=2\{\ell_n(\hat\theta)-\ell_n(\hat\theta_0)\}
+          \Rightarrow \chi^2_{\dim(\Theta)-\dim(\Theta_0)}.$$
+        </div>
+        <p>Use for regular nested parametric hypotheses. Unlike NP, this is not a finite-sample most-powerful guarantee.</p>
+      </div>
+      <div class="topic-card">
+        <h3>Goodness of fit</h3>
+        <div class="formula-box">
+          $$X^2=\sum_j\frac{(O_j-E_j)^2}{E_j},\qquad
+          G^2=2\sum_j O_j\log\frac{O_j}{E_j}.$$
+        </div>
+        <p>With $k$ cells and $r$ parameters estimated from the data, the asymptotic degrees of freedom are $k-1-r$.</p>
+      </div>
+    </div>
+
+    <h3>Likelihood-ratio simplification directions</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Model / alternative</th>
+          <th>LR monotone in</th>
+          <th>Reject direction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$N(\mu,\sigma^2)$ known, $\mu_1&gt;\mu_0$</td>
+          <td>$\bar X$</td>
+          <td>Large $\bar X$</td>
+        </tr>
+        <tr>
+          <td>$\operatorname{Exp}(\lambda)$ rate, $\lambda_1&gt;\lambda_0$</td>
+          <td>$\sum X_i$ decreasing</td>
+          <td>Small $\sum X_i$</td>
+        </tr>
+        <tr>
+          <td>$\operatorname{Binom}(n,p)$, $p_1&gt;p_0$</td>
+          <td>$X$</td>
+          <td>Large $X$</td>
+        </tr>
+        <tr>
+          <td>Pareto shape $\theta_1&lt;\theta_0$</td>
+          <td>$\sum\log X_i$</td>
+          <td>Large sum for the smaller, heavier-tail shape</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      A p-value is a tail probability under the null; it is not $P(H_0\mid X)$. UMP claims usually require a one-sided alternative and monotone
+      likelihood ratio structure. Wald and score tests are outside this final-review scope; the score function is still used for MLE and Fisher
+      information.
+    </div>
+
+    <hr />
+
+    <h2 id="test-reference">Compact Test Reference</h2>
+
+    <p>Use this table after the decision map. The last column is as important as the formula: it says when the calibration is justified.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Situation</th>
+            <th>Method</th>
+            <th>Statistic or rule</th>
+            <th>Calibration</th>
+            <th>Assumptions / traps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>One mean, $\sigma$ known</td>
+            <td>$z$-test</td>
+            <td>$Z=(\bar X-\mu_0)/(\sigma/\sqrt n)$</td>
+            <td>$N(0,1)$</td>
+            <td>Normal model or justified large-$n$ approximation.</td>
+          </tr>
+          <tr>
+            <td>One normal mean, $\sigma$ unknown</td>
+            <td>One-sample $t$</td>
+            <td>$T=(\bar X-\mu_0)/(S/\sqrt n)$</td>
+            <td>$t_{n-1}$</td>
+            <td>IID normal for exact finite-sample calibration.</td>
+          </tr>
+          <tr>
+            <td>Paired before/after</td>
+            <td>Paired $t$</td>
+            <td>One-sample $t$ on $D_i=X_i-Y_i$</td>
+            <td>$t_{n-1}$</td>
+            <td>Preserve the pairing; do not treat samples as independent.</td>
+          </tr>
+          <tr>
+            <td>Paired, small or non-normal</td>
+            <td>Sign test</td>
+            <td>$S=\#\{D_i&gt;0\}$ after dropping ties</td>
+            <td>$\operatorname{Binom}(k,1/2)$</td>
+            <td>Positive and negative signs are equally likely under $H_0$.</td>
+          </tr>
+          <tr>
+            <td>Two independent means</td>
+            <td>Welch $t$ by default</td>
+            <td>$(\bar X-\bar Y)/\widehat{\operatorname{SE}}$</td>
+            <td>Welch–Satterthwaite $t$</td>
+            <td>Use pooled $t$ only when equal variances are justified.</td>
+          </tr>
+          <tr>
+            <td>One fully specified continuous CDF</td>
+            <td>One-sample KS</td>
+            <td>$D_n=\sup_x|F_n(x)-F_0(x)|$</td>
+            <td>KS distribution</td>
+            <td>If parameters are estimated, refit inside a parametric bootstrap.</td>
+          </tr>
+          <tr>
+            <td>Two full distributions</td>
+            <td>Two-sample KS</td>
+            <td>$D_{m,n}=\sup_x|F_m(x)-G_n(x)|$</td>
+            <td>Exact, permutation, or asymptotic</td>
+            <td>Independent samples; cleanest for continuous distributions without ties.</td>
+          </tr>
+          <tr>
+            <td>Two samples, rank / location comparison</td>
+            <td>Wilcoxon rank-sum</td>
+            <td>Rank sum for one group</td>
+            <td>Permutation over labels</td>
+            <td>Targets ranks or a distributional shift, not automatically the mean.</td>
+          </tr>
+          <tr>
+            <td>Categorical goodness of fit</td>
+            <td>Pearson $X^2$ or $G^2$</td>
+            <td>$\sum(O-E)^2/E$ or $2\sum O\log(O/E)$</td>
+            <td>$\chi^2_{k-1-r}$</td>
+            <td>Expected counts must support the asymptotic approximation.</td>
+          </tr>
+          <tr>
+            <td>Three or more normal group means</td>
+            <td>One-way ANOVA</td>
+            <td>Between-group / within-group variation</td>
+            <td>$F_{g-1,n-g}$</td>
+            <td>Normal equal-variance model.</td>
+          </tr>
+          <tr>
+            <td>Three or more groups, no model form</td>
+            <td>$k$-sample permutation</td>
+            <td>Recompute a chosen discrepancy after relabeling</td>
+            <td>Permutation distribution</td>
+            <td>Exchangeability under the null; keep group sizes fixed.</td>
+          </tr>
+          <tr>
+            <td>Simple vs. simple hypotheses</td>
+            <td>NP likelihood ratio</td>
+            <td>Reject for large $f_1(X)/f_0(X)$</td>
+            <td>Choose cutoff under $H_0$</td>
+            <td>Optimal for the specified simple alternative only.</td>
+          </tr>
+          <tr>
+            <td>Composite nested parametric model</td>
+            <td>GLRT</td>
+            <td>$2\{\ell(\hat\theta)-\ell(\hat\theta_0)\}$</td>
+            <td>Asymptotic $\chi^2$</td>
+            <td>Regular nested models; degrees of freedom = dimension difference.</td>
+          </tr>
+          <tr>
+            <td>One regression coefficient</td>
+            <td>Coefficient $t$</td>
+            <td>$\hat\beta_j/\widehat{\operatorname{SE}}(\hat\beta_j)$</td>
+            <td>$t_{n-d}$</td>
+            <td>Normal linear model; $d$ is full-model dimension.</td>
+          </tr>
+          <tr>
+            <td>$d_1$ regression restrictions</td>
+            <td>Regression $F$</td>
+            <td>$[(\operatorname{RSS}_0-\operatorname{RSS})/d_1]/[\operatorname{RSS}/(n-d)]$</td>
+            <td>$F_{d_1,n-d}$</td>
+            <td>The denominator uses full-model residual variance.</td>
+          </tr>
+          <tr>
+            <td>Many hypotheses, FWER goal</td>
+            <td>Bonferroni / Sidak</td>
+            <td>$p_i\le\alpha/m$ or $p_i\le1-(1-\alpha)^{1/m}$</td>
+            <td>FWER control</td>
+            <td>Bonferroni allows any dependence; exact Sidak needs independence.</td>
+          </tr>
+          <tr>
+            <td>Many hypotheses, discovery goal</td>
+            <td>Benjamini–Hochberg</td>
+            <td>Largest $k$ with $p_{(k)}\le\alpha k/m$</td>
+            <td>FDR control</td>
+            <td>Independence or suitable positive dependence conditions.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr />
+
+    <h2 id="multiple-linear">Multiple Testing and Linear Models</h2>
+
+    <h3>Multiple testing</h3>
+
+    <div class="two-column">
+      <div class="topic-card decision">
+        <h3>Quantities to separate</h3>
+        <div class="formula-box">
+          $$\operatorname{FWER}=P(V&gt;0),\qquad
+          \operatorname{FDP}=\frac{V}{R\vee1},\qquad
+          \operatorname{FDR}=E[\operatorname{FDP}].$$
+        </div>
+        <p>$R$ is the number of discoveries and $V$ is the number of false discoveries. Under the global null, FDR = FWER.</p>
+      </div>
+      <div class="topic-card decision">
+        <h3>Procedure choice</h3>
+        <ul>
+          <li><strong>Bonferroni:</strong> valid p-values, any dependence; conservative FWER control.</li>
+          <li><strong>Sidak:</strong> independent true-null p-values; sharper FWER threshold.</li>
+          <li><strong>BH:</strong> screening and discovery; controls expected false-discovery proportion under its dependence conditions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Gaussian geometry</h3>
+
+    <div class="formula-box">
+      $$\sum_{i=1}^d Z_i^2\sim\chi^2_d,\qquad
+      T=\frac{Z}{\sqrt{V/d}}\sim t_d,\qquad
+      F=\frac{V_1/d_1}{V_2/d_2}\sim F_{d_1,d_2},\qquad t_d^2\sim F_{1,d}.$$
+    </div>
+
+    <p>Independence of the signal and residual projections is the engine behind the exact $t$ and $F$ calibrations.</p>
+
+    <div class="two-column">
+      <div class="topic-card">
+        <h3>Canonical split</h3>
+        <p>Rotate $Y\sim N_n(\theta,\sigma^2I)$ into independent blocks $Z=(Z_0,Z_1,Z_r)$.</p>
+        <ul>
+          <li>$Z_0$: nuisance directions, ignored by the test.</li>
+          <li>$Z_1$: tested signal, with dimension $d_1$.</li>
+          <li>$Z_r$: residual noise, with dimension $d_r=n-\dim(\Theta)$.</li>
+        </ul>
+      </div>
+      <div class="topic-card">
+        <h3>Regression and ANOVA</h3>
+        <div class="formula-box">
+          $$F=\frac{(\operatorname{RSS}_0-\operatorname{RSS})/d_1}{\operatorname{RSS}/(n-d)}\sim F_{d_1,n-d}.$$
+        </div>
+        <p>For one-way ANOVA, $d_1=g-1$ and the full-model residual degrees of freedom are $n-g$.</p>
+      </div>
+    </div>
+
+    <div class="keyresult">
+      For a linear-model problem, identify the null subspace, the added signal directions, and the residual directions before writing the statistic.
+      Degrees of freedom are dimensions, not numbers to memorize in isolation.
+    </div>
+
+    <hr />
+
+    <h2 id="empirical-bayes">Hierarchical and Empirical Bayes</h2>
+
+    <p>
+      The many-means problem is where the course’s estimation, decision, and Bayesian threads meet. Each coordinate is noisy, but the collection teaches
+      us how strongly to shrink.
+    </p>
+
+    <div class="formula-box">
+      $$X_i\mid\theta_i\sim N(\theta_i,1),\qquad
+      \theta_i\stackrel{\mathrm{iid}}{\sim}N(\mu,\tau^2),\qquad
+      \zeta=\frac{1}{1+\tau^2}.$$
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Estimator</th>
+          <th>Form</th>
+          <th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Coordinatewise MLE</td>
+          <td>$\hat\theta_i=X_i$</td>
+          <td>No sharing across coordinates.</td>
+        </tr>
+        <tr>
+          <td>Oracle Bayes</td>
+          <td>$\zeta\mu+(1-\zeta)X_i$</td>
+          <td>Uses known population shrinkage.</td>
+        </tr>
+        <tr>
+          <td>Hierarchical Bayes</td>
+          <td>$E[\zeta\mu\mid X]+\{1-E[\zeta\mid X]\}X_i$</td>
+          <td>Integrates over hyperparameter uncertainty.</td>
+        </tr>
+        <tr>
+          <td>Empirical Bayes</td>
+          <td>Plug estimated $\mu$ and $\tau^2$ into the oracle rule</td>
+          <td>Learns the shrinkage coefficient from the ensemble.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="theorem">
+      Small $\tau^2$ means the group-level effects are similar, so shrink strongly toward $\mu$. Large $\tau^2$ means the effects are heterogeneous,
+      so trust each $X_i$ more. Here the useful asymptotic is large dimension $d$, not many observations for each $\theta_i$.
+    </div>
+
+    <hr />
+
+    <h2 id="theorems-traps">Theorems, Derivation Skeletons, and Exam Traps</h2>
+
+    <h3>One-line theorem index</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Result</th>
+            <th>Statement</th>
+            <th>Use / trap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cramér–Rao</td>
+            <td>$\Var_\theta(T)\ge[g'(\theta)]^2/[nI(\theta)]$ for unbiased $T$.</td>
+            <td>Regular finite-sample lower bound.</td>
+          </tr>
+          <tr>
+            <td>MLE asymptotic normality</td>
+            <td>$\sqrt n(\hat\theta-\theta_0)\Rightarrow N(0,1/I(\theta_0))$.</td>
+            <td>Standard errors and large-sample intervals.</td>
+          </tr>
+          <tr>
+            <td>Delta method</td>
+            <td>Multiply asymptotic variance by $[g'(\theta_0)]^2$.</td>
+            <td>Smooth transformed targets.</td>
+          </tr>
+          <tr>
+            <td>Bernstein–von Mises</td>
+            <td>Posterior $\approx N(\hat\theta_{\mathrm{MLE}},1/[nI(\hat\theta)])$.</td>
+            <td>Regular large-$n$ one-parameter Bayes.</td>
+          </tr>
+          <tr>
+            <td>Neyman–Pearson</td>
+            <td>LR test is most powerful for simple vs. simple hypotheses.</td>
+            <td>Optimality is for a fixed alternative.</td>
+          </tr>
+          <tr>
+            <td>MLR $\Rightarrow$ UMP</td>
+            <td>Threshold a monotone statistic for one-sided alternatives.</td>
+            <td>Usually not a two-sided result.</td>
+          </tr>
+          <tr>
+            <td>Wilks / GLRT</td>
+            <td>$2\Delta\ell\Rightarrow\chi^2_{\text{dimension difference}}$.</td>
+            <td>Regular nested composite tests.</td>
+          </tr>
+          <tr>
+            <td>Rotational invariance</td>
+            <td>Orthogonal Gaussian projections are independent and chi-squared by dimension.</td>
+            <td>Foundation of $t$, $F$, regression, and ANOVA.</td>
+          </tr>
+          <tr>
+            <td>Bonferroni</td>
+            <td>$P(\bigcup_i A_i)\le\sum_iP(A_i)$.</td>
+            <td>FWER control without independence.</td>
+          </tr>
+          <tr>
+            <td>Benjamini–Hochberg</td>
+            <td>Under its conditions, FDR $\le\alpha m_0/m\le\alpha$.</td>
+            <td>Expected false-discovery proportion, not FWER.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details class="derivation" open>
+      <summary>Top derivation skeletons</summary>
+      <ol>
+        <li><strong>MLE asymptotic:</strong> Taylor-expand $0=S_n(\hat\theta)$ around $\theta_0$.</li>
+        <li><strong>Exponential rate:</strong> use $\sum X_i\sim\operatorname{Gamma}(n,\lambda)$ and inverse moments.</li>
+        <li><strong>German tank:</strong> start from $P(X_{(n)}\le x)=(x/\theta)^n$ and bias-correct the maximum.</li>
+        <li><strong>Normal–normal posterior:</strong> posterior precision = prior precision + data precision.</li>
+        <li><strong>Bayes estimator:</strong> decompose posterior squared loss into posterior variance plus squared distance from the posterior mean.</li>
+        <li><strong>NP proof:</strong> compare where two rejection regions disagree; the LR region buys more power per Type I error cost.</li>
+        <li><strong>Normal GLRT:</strong> decompose total squared distance into residual variation plus $n(\bar X-\mu_0)^2$.</li>
+        <li><strong>GOF degrees of freedom:</strong> begin with $k-1$ and subtract fitted parameters.</li>
+        <li><strong>$t/F$:</strong> numerator is a signal projection; denominator is an independent residual-noise projection.</li>
+        <li><strong>BH:</strong> sort p-values and find the largest crossing of $p_{(k)}\le\alpha k/m$.</li>
+      </ol>
+    </details>
+
+    <h3>Common traps</h3>
+
+    <div class="two-column">
+      <div class="topic-card decision">
+        <ul>
+          <li><strong>Exponential rate vs. mean:</strong> $\hat\lambda=1/\bar X$ but $\hat\theta=\bar X$.</li>
+          <li><strong>Parameter-dependent support:</strong> regular Fisher and MLE asymptotics can fail.</li>
+          <li><strong>Wrong degrees of freedom:</strong> GOF uses $k-1-r$; linear-model residual df is $n-\dim(\Theta)$.</li>
+          <li><strong>Paired data:</strong> reduce to differences before testing.</li>
+          <li><strong>Mean vs. distribution:</strong> a mean test and a KS test answer different questions.</li>
+          <li><strong>Pooled variance:</strong> use only when the equal-variance model is justified.</li>
+          <li><strong>KS after fitting:</strong> the textbook null is invalid; use a parametric bootstrap with refitting.</li>
+        </ul>
+      </div>
+      <div class="topic-card decision">
+        <ul>
+          <li><strong>p-value:</strong> not the probability that the null is true.</li>
+          <li><strong>Credible vs. confidence interval:</strong> different probability statements.</li>
+          <li><strong>Bonferroni:</strong> does not require independence.</li>
+          <li><strong>Sidak:</strong> exact product calibration does require independence.</li>
+          <li><strong>BH:</strong> controls an expected false fraction, not the chance of any false discovery.</li>
+          <li><strong>Bootstrap:</strong> estimates uncertainty; it does not automatically improve a point estimator.</li>
+          <li><strong>Empirical Bayes:</strong> large $d$ learns shrinkage; it is not large $n$ for every coordinate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="keyresult">
+      For every problem, write this chain before computing: model and assumptions → target or null → statistic or estimator → calibration distribution,
+      posterior, or asymptotic law → degrees of freedom or standard error → interpretation.
+    </div>
+
+    <hr />
+    <p class="footer-note">Data 145 Study Guide - Compact Final Review - Standalone Review Version</p>
+  </body>
+</html>
