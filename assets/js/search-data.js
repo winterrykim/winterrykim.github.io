@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "post-from-kv-cache-to-a-state-matrix-linear-attention-and-deltanet",
+        },{id: "post-personal-thoughts-on-ai-agents-for-science",
+        
+          title: "Personal Thoughts on AI Agents for Science",
+        
+        description: "Thoughts from applying AI agents to drug discovery: verifiable problems, incomplete scientific labels, statistical evaluation, and experimental feedback.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/personal-thoughts-on-ai-agents-for-science/";
+          
+        },
+      },{id: "post-from-kv-cache-to-a-state-matrix-linear-attention-and-deltanet",
         
           title: "From KV Cache to a State Matrix: Linear Attention and DeltaNet",
         
