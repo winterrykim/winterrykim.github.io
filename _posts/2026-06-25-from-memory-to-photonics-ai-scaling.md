@@ -142,7 +142,6 @@ When a model outgrows one accelerator, we distribute its work across many device
 - **data parallelism** synchronizes gradients
 - **pipeline parallelism** sends activations between stages
 - **mixture-of-experts models** create all-to-all routing patterns
-- **inference systems** can shard weights or KV cache across devices
 
 These strategies let the system scale, but they do not remove movement. Activations, gradients, expert routes, weights, and cache state still cross between devices.
 
@@ -459,7 +458,7 @@ Sensitivity analysis shows which regions of a finished device are most vulnerabl
     src="{{ '/assets/img/blog_img/photonics-scaling/geometry_sensitivity_fabrication.png' | relative_url }}"
     alt="SEM images of inverse-designed wavelength demultiplexers with magnified fabrication deviations"
   />
-  <p>Fabricated wavelength demultiplexers reveal local process deviations that motivate geometry-level sensitivity analysis.</p>
+  <p>Sensitivity analysis identifies which deviations matter most for optical performance.</p>
 </div>
 
 ### Refine: fabrication-friendly trimming
