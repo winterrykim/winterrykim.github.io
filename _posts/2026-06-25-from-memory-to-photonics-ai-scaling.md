@@ -8,18 +8,6 @@ categories: [technical-blogs]
 thumbnail: /assets/img/blog_img/photonics-scaling/photonics_layer.png
 featured: true
 _styles: |
-  .aha-box {
-    margin: 1.35rem 0;
-    padding: 1rem 1.1rem;
-    border-left: 3px solid var(--global-theme-color);
-    border-radius: 0;
-    background: var(--global-code-bg-color);
-  }
-
-  .aha-box strong {
-    color: var(--global-theme-color);
-  }
-
   .asset-figure {
     margin: 1.4rem 0;
     text-align: center;
@@ -146,15 +134,29 @@ _styles: |
 
 <p class="post-byline">With <a href="https://punhojark.github.io/">Junho Park</a> (<a href="https://lsip.engin.umich.edu/">Di Liang Lab</a>, University of Michigan)</p>
 
-In the [previous post]({% post_url 2026-06-23-training-lm-from-scratch-part2-flashattention-memory %}), I looked at FlashAttention as an example of IO-aware algorithm design.
+In the [previous post]({% post_url 2026-06-23-training-lm-from-scratch-part2-flashattention-memory %}), I used FlashAttention to show how exact attention can be computed with less data transfer between HBM and on-chip memory.
 
-That post ended with a simple observation: same exact attention, different memory story. Naive attention materializes large intermediate tensors in HBM. FlashAttention streams over tiles, keeps online softmax statistics on chip, and recomputes what it needs later. It changes the schedule, not the memory hardware.
+When a model outgrows one accelerator, we distribute its work across many devices:
 
-<div class="aha-box">
-<strong>The previous post in one line:</strong> align computation with the memory hierarchy and avoid moving data when we do not need to.
+- **tensor parallelism** exchanges intermediate activations
+- **data parallelism** synchronizes gradients
+- **pipeline parallelism** sends activations between stages
+- **mixture-of-experts models** create all-to-all routing patterns
+- **inference systems** can shard weights or KV cache across devices
+
+These strategies let the system scale, but they do not remove movement. Activations, gradients, expert routes, weights, and cache state still cross between devices.
+
+## The next bottleneck is movement
+
+Once data leaves one accelerator, performance depends on the physical link carrying it. Algorithms can reduce the traffic, but the remaining bits still have to cross between devices, servers, and racks. Photonics changes that link.
+
+<div class="asset-figure wide">
+  <img
+    src="{{ '/assets/img/blog_img/photonics-scaling/photonics_layer.png' | relative_url }}"
+    alt="Hierarchy showing FlashAttention inside an accelerator and photonics between accelerators, servers, racks, and data centers"
+  />
+  <p>FlashAttention changes how data moves inside an accelerator. Photonics changes the physical link for data that must move between accelerators, servers, racks, and data centers.</p>
 </div>
-
-This post keeps that lens and zooms out. Once a model no longer fits on one accelerator, activations, gradients, expert routes, and cache state also move between devices, servers, and racks. Algorithms can remove some of that traffic, but the remaining bytes still need a physical link. Photonics changes that link.
 
 ---
 
@@ -189,15 +191,7 @@ Photonics mostly enters through the third constraint.
 
 ## Scaling changes the bottleneck
 
-Training and serving large models often require many accelerators:
-
-- tensor parallelism exchanges intermediate activations
-- data parallelism synchronizes gradients
-- pipeline parallelism sends activations between stages
-- mixture-of-experts models create all-to-all routing patterns
-- inference can shard weights or KV cache across devices
-
-This is not networking as a separate IT concern. Communication can sit directly in the critical path of the model.
+As the system becomes physically larger, communication becomes a larger part of the bottleneck.
 
 Physical systems also grow along three axes. Vendor definitions vary, so we can use these terms as a rough map:
 
@@ -223,8 +217,6 @@ Physical systems also grow along three axes. Vendor definitions vary, so we can 
   />
   <p>Each direction adds compute, but it also adds links and makes communication a larger part of the machine.</p>
 </div>
-
-As the system becomes physically larger, data movement between machines becomes harder to treat as an afterthought.
 
 ---
 
@@ -396,7 +388,7 @@ This creates a second density problem. The package has limited area, and its sho
 
 More wavelengths require more routing functions, which puts more devices against a limited package edge and increases the pressure for compact, low-loss components.
 
-That density pressure is what leads from the system problem to inverse design.
+That density pressure is what leads from the system problem to inverse design: smaller devices let us fit more wavelength-routing functions near the package edge and turn WDM's channel advantage into package-level bandwidth.
 
 ---
 
@@ -444,25 +436,53 @@ If we discard every failed optimization or fabrication run and keep only the bes
 
 ## Where our work fits
 
-Compactness alone is not enough. Our work asks two basic questions: can we start optimization from more useful designs, and can we identify which regions are most sensitive to fabrication changes?
+Our work explores three stages of a more scalable and evidence-driven photonic design loop:
 
-The broader goal is to reuse useful information across design cycles instead of restarting each search from scratch.
+### Learn: reuse prior optimization efforts
 
-This is the direction behind our work on [generative priors for integrated photonics]({{ '/publications/' | relative_url }}) and [interpretable geometry sensitivity](https://pubs.aip.org/aip/aep/article/1/3/036106/3397071/Interpretable-geometry-sensitivity-for-inverse).
-
----
-
-## The next bottleneck is movement
-
-This brings us back to FlashAttention. It changes the schedule to avoid memory traffic inside an accelerator. Photonics changes the physical link for traffic that still has to cross between accelerators.
+Archived designs can provide informed starting geometries before electromagnetic refinement.
 
 <div class="asset-figure wide">
   <img
-    src="{{ '/assets/img/blog_img/photonics-scaling/photonics_layer.png' | relative_url }}"
-    alt="Hierarchy showing FlashAttention inside an accelerator and photonics between accelerators, servers, racks, and data centers"
+    src="{{ '/assets/img/blog_img/photonics-scaling/generative_priors_pipeline.png' | relative_url }}"
+    alt="Pipeline comparing uninformed initialization with cVAE learned priors followed by FDTD adjoint optimization"
   />
-  <p>The same systems lens applied at two different levels of the memory and communication hierarchy.</p>
+  <p>Archived inverse-designed devices train a conditional VAE that proposes informed starting geometries before FDTD adjoint optimization.</p>
 </div>
+
+### Understand: identify feature sensitivity
+
+Sensitivity analysis shows which regions of a finished device are most vulnerable to fabrication changes.
+
+<div class="asset-figure wide dark">
+  <img
+    src="{{ '/assets/img/blog_img/photonics-scaling/geometry_sensitivity_fabrication.png' | relative_url }}"
+    alt="SEM images of inverse-designed wavelength demultiplexers with magnified fabrication deviations"
+  />
+  <p>Fabricated wavelength demultiplexers reveal local process deviations that motivate geometry-level sensitivity analysis.</p>
+</div>
+
+### Refine: fabrication-friendly trimming
+
+Optimization information can rank candidate layout edits, while forward simulation verifies each accepted change.
+
+<div class="asset-figure wide">
+  <img
+    src="{{ '/assets/img/blog_img/photonics-scaling/solver_native_trimming_workflow.png' | relative_url }}"
+    alt="Workflow for solver-native attribution and iterative geometry removal verified by forward electromagnetic simulations"
+  />
+  <p>Solver-native attribution ranks low-impact regions for iterative removal, and forward electromagnetic solves verify each accepted change.</p>
+</div>
+
+Together, the loop is: reuse prior knowledge → identify fabrication-critical features → refine with physics-based verification.
+
+These directions currently include one [APL Engineering Physics paper](https://pubs.aip.org/aip/aep/article/1/3/036106/3397071/Interpretable-geometry-sensitivity-for-inverse) and two [IEEE Photonics Conference 2026 oral presentations]({{ '/publications/' | relative_url }}). Our longer-term goal is an end-to-end design loop for photonic integrated circuits.
+
+---
+
+## Movement is part of the architecture
+
+FlashAttention and photonics operate at different layers, but they expose the same systems lesson: useful compute depends on moving data efficiently.
 
 Compact inverse-designed components help fit optical functions near the package edge, while fabrication-aware design helps make those components practical.
 
@@ -477,4 +497,6 @@ Faster arithmetic still matters, but AI scaling increasingly depends on moving i
 - [OIF: Next Generation CEI-224G Framework](https://www.oiforum.com/wp-content/uploads/OIF-FD-CEI-224G-01.0.pdf)
 - [Coherent: Technology Innovation Briefing](https://cdn.prod.website-files.com/67b66b7d2a3d3a0f9c895fbd/67debb9322330cf373d1c5d2_Technology%20Innovation%20Briefing%20-%20Final.pdf)
 - [SPINS: Nanophotonic inverse design software architecture and practical considerations](https://arxiv.org/abs/1910.04829)
+- [Generative Priors Accelerate Inverse Design for Regularized, High-Performance Integrated Photonics]({{ '/publications/' | relative_url }})
 - [Interpretable geometry sensitivity for inverse design of integrated photonics](https://pubs.aip.org/aip/aep/article/1/3/036106/3397071/Interpretable-geometry-sensitivity-for-inverse)
+- [Solver-Native Adjoint Attribution for Trimming Inverse-Designed Photonic Layouts]({{ '/publications/' | relative_url }})
