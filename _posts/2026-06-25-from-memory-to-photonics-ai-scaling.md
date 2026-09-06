@@ -293,12 +293,12 @@ The direction is **front-panel modules → optics on the circuit board → optic
 
 An optical transceiver sends and receives data using light. Coherent's image below shows the inside of a transceiver module and how similar components can be arranged around a switch or processor.
 
-<div class="asset-figure dark">
+<div class="asset-figure wide">
   <img
-    src="{{ '/assets/img/blog_img/photonics-scaling/coherent_optical_transceiver.png' | relative_url }}"
-    alt="Coherent image showing an opened optical transceiver above a CPO illustration, with labels for electronic circuits, detectors, lasers, and passive optics"
+    src="{{ '/assets/img/blog_img/photonics-scaling/coherent_optical_transceiver_annotated.png' | relative_url }}"
+    alt="Annotated Coherent transceiver and CPO image with red boxes around detectors and passive optics, and an arrow pointing to passive optics as the device design focus"
   />
-  <p>A transceiver module above and a CPO illustration below. Source: <a href="https://cdn.prod.website-files.com/67b66b7d2a3d3a0f9c895fbd/67debb9322330cf373d1c5d2_Technology%20Innovation%20Briefing%20-%20Final.pdf">Coherent's Technology Innovation Briefing</a>.</p>
+  <p>The passive-optics callout shows where devices such as our wavelength demultiplexers fit. Annotated from <a href="https://cdn.prod.website-files.com/67b66b7d2a3d3a0f9c895fbd/67debb9322330cf373d1c5d2_Technology%20Innovation%20Briefing%20-%20Final.pdf">Coherent's Technology Innovation Briefing</a>.</p>
 </div>
 
 A front-panel module can usually be replaced on its own. When optics shares a package with an expensive processor, a faulty component may require more extensive repair. The design also has to account for the processor's heat and the precise alignment needed to get light into and out of the fibers.
