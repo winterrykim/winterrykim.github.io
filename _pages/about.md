@@ -15,9 +15,9 @@ selected_papers: false
 announcements:
   enabled: false
 
-# Renders the curated reading paths from _data/topic_paths.yml.
+# Curated reading paths remain available on the Blog page.
 topic_paths:
-  enabled: true
+  enabled: false
 
 latest_posts:
   enabled: false
